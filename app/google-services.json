@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "659514777297",
+    "project_id": "library-189100"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659514777297:android:431141e91201c5fb",
+        "android_client_info": {
+          "package_name": "com.example.omd.library"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659514777297-6a1ji2nmnvuuku9m3388l2cok5pr0mpk.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "659514777297-ch29gi5nhi51nn9kgl2i4hob0hkm0sdm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.omd.library",
+            "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw1pqXYq1-1uPzoUVd3hp_8E_WnvHrcbg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

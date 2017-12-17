@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+    <android.support.v7.widget.AppCompatSpinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:background="#01579B"
+        app:backgroundTint="#00E5FF"
+       android:spinnerMode="dropdown"
+        ></android.support.v7.widget.AppCompatSpinner>
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expandable_normal_user"
+        android:layout_below="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical"
+
+        >
+       <include layout="@layout/normal_user_layout"/>
+
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expandable_publisher"
+        android:layout_below="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical"
+        >
+
+            <include layout="@layout/publisher_layout"/>
+
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expandable_lib"
+        android:layout_below="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical"
+
+        >
+        <include layout="@layout/library_layout"/>
+
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+</com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>
+

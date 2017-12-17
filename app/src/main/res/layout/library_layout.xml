@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="highlight"
+            app:met_helperText="required"
+            app:met_maxCharacters="50"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_singleLineEllipsis="true"
+            app:met_helperTextAlwaysShown="true"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_iconLeft="@drawable/lib_icon"
+            app:met_floatingLabelText="Library name"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+            />
+
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_commission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Commission"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="optional"
+            app:met_helperTextAlwaysShown="true"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/commession_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Country"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="30"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/location_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_expertise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Expertise"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="50"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/job_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+
+
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+            >
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/lib_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:backgroundTint="@color/colorPrimary"
+                android:background="@color/colorPrimary"
+                ></android.support.v7.widget.AppCompatSpinner>
+
+            <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/library_spinner_expanded"
+                android:layout_below="@+id/lib_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:ael_expanded="false"
+                app:ael_duration="500"
+                app:ael_interpolator="linear"
+                app:ael_orientation="vertical"
+                >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/library_otherType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:met_autoValidate="true"
+                    app:met_floatingLabelAnimating="true"
+                    app:met_floatingLabel="highlight"
+                    app:met_floatingLabelText="Other Type"
+                    app:met_floatingLabelAlwaysShown="true"
+                    app:met_helperTextAlwaysShown="true"
+                    app:met_maxCharacters="20"
+                    app:met_checkCharactersCountAtBeginning="true"
+                    app:met_singleLineEllipsis="true"
+                    app:met_floatingLabelTextColor="@color/base"
+                    app:met_helperTextColor="@color/label"
+                    app:met_textColor="@color/base"
+                    app:met_underlineColor="@color/label"
+                    app:met_errorColor="@color/error"
+                    app:met_baseColor="@color/base"
+                    app:met_primaryColor="@color/base"
+                    app:met_textColorHint="@color/base"
+
+
+
+
+
+                    />
+
+            </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+        </RelativeLayout>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Password"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="10"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/password_icon"
+            android:inputType="textPassword"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+            />
+        <Button
+            android:id="@+id/library_signup_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signup_btn_bg"
+            android:text="sign up"
+            android:textColor="@color/base"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textSize="@dimen/_12sdp"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:facebook="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/logoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/star_big_on"
+
+            />
+        <com.romainpiel.shimmer.ShimmerTextView
+            android:id="@+id/shimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:text="Welcom in, Library"
+            app:reflectionColor="@color/reflectioncolor"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_below="@+id/logo"
+            />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/_60sdp"
+            >
+
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base"
+                android:layout_marginBottom="@dimen/_1sdp"
+                >
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/email_icons"
+                    android:hint="Email"
+                    android:padding="@dimen/_3sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:singleLine="true"
+                    android:inputType="textEmailAddress"
+
+                    />
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+            <com.wrapp.floatlabelededittext.FloatLabeledEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/base"
+                android:layout_marginBottom="@dimen/_5sdp"
+                >
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/pass_icon"
+                    android:hint="Password"
+                    android:textSize="@dimen/_12sdp"
+                    android:padding="@dimen/_3sdp"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:maxLength="15"
+
+                    />
+            </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:text="Forget password ?"
+                android:textColor="@color/base"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="normal"
+                android:layout_marginBottom="@dimen/_5sdp"
+                />
+            <Button
+                android:id="@+id/signinBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/signup_btn_bg"
+                android:text="Sign in"
+                android:textColor="@color/base"
+                android:textAllCaps="false"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+
+                />
+
+        </LinearLayout>
+
+    <TextView
+        android:id="@+id/login_fragment_signuptv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Don’t have an account yet? Signup Now."
+        android:textColor="@drawable/signup_tv_bg"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:clickable="true"
+        />
+
+    </com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>
+
+

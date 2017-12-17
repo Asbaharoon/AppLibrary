@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.omd.library.Activities.ChooserSingin"
+    android:background="@drawable/screengradint"
+
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="5dp"
+        >
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/chooser_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:id="@+id/logoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/AppBar"
+        >
+        <ImageView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/star_big_on"
+
+            />
+        <com.romainpiel.shimmer.ShimmerTextView
+            android:id="@+id/shimmer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:text="Welcom in, Library"
+            app:reflectionColor="@color/reflectioncolor"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_below="@+id/logo"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/_20sdp"
+        android:layout_below="@+id/logoContainer"
+
+        >
+        <Button
+            android:id="@+id/chooser_signinBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:text="Sign in with my account"
+            android:textColor="@android:color/white"
+            android:background="@drawable/signin_btn_bg"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textAllCaps="false"
+            android:textSize="@dimen/_12sdp"
+
+            />
+        <com.facebook.login.widget.LoginButton
+            xmlns:facebook="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/facebook_signinBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/_25sdp"
+            android:paddingBottom="@dimen/_25sdp"
+            android:paddingLeft="@dimen/_12sdp"
+            facebook:com_facebook_login_text="Sign in with Facebook"
+            facebook:com_facebook_confirm_logout="false"
+
+            />
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleSigninBtn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_65sdp"
+            android:gravity="center"
+
+            ></com.google.android.gms.common.SignInButton>
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="title_activity_chooser_singin">Library</string>
+    <string name="facebook_app_id">156588275066033</string>
+    <string name="fb_login_protocol_scheme">fb156588275066033</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+
+
+
+    <string-array name="spinnerArray">
+        <item>Normal user</item>
+        <item>Publisher</item>
+        <item>Library</item>
+    </string-array>
+    <string-array name="libType">
+        <item>Public library</item>
+        <item>National library</item>
+        <item>Specialized library</item>
+        <item>Academy library</item>
+        <item>School library</item>
+        <item>Other</item>
+    </string-array>
+    <string name="title_activity_home">HomeActivity</string>
+</resources>

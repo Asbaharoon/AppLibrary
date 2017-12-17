@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_firstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="first name"
+            app:met_helperText="required"
+            app:met_maxCharacters="15"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_singleLineEllipsis="true"
+            app:met_helperTextAlwaysShown="true"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_iconLeft="@drawable/username_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_lasttName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Last name"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="15"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/username_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Email"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="30"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/email_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Phone"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="optional"
+            app:met_helperTextAlwaysShown="true"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/phone_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+            />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Country"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="30"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/location_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_expertise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Expertise"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="optional"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="50"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/job_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_website"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Website"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="optional"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="100"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/link_icon"
+            android:hint="https://www.example.com"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/publisher_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Password"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_maxCharacters="10"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/password_icon"
+            android:inputType="textPassword"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+
+
+            />
+        <Button
+            android:id="@+id/signup_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signup_btn_bg"
+            android:text="sign up"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/base"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>
