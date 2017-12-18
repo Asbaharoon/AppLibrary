@@ -28,9 +28,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="20dp"
-            android:text="Welcom in, Library"
-            app:reflectionColor="@color/reflectioncolor"
+            android:textSize="@dimen/_14sdp"
+            android:text="Welcom to, Library"
+            app:reflectionColor="@color/home_toolbar_start"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_below="@+id/logo"
             />
@@ -46,8 +46,8 @@
             <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/base"
                 android:layout_marginBottom="@dimen/_1sdp"
+                android:background="@color/base"
                 >
                 <EditText
                     android:layout_width="match_parent"
@@ -65,8 +65,8 @@
             <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/base"
                 android:layout_marginBottom="@dimen/_5sdp"
+                android:background="@color/base"
                 >
                 <EditText
                     android:layout_width="match_parent"
@@ -83,45 +83,139 @@
                     />
             </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
-                android:text="Forget password ?"
-                android:textColor="@color/base"
-                android:textSize="@dimen/_12sdp"
-                android:textStyle="normal"
-                android:layout_marginBottom="@dimen/_5sdp"
-                />
-            <Button
-                android:id="@+id/signinBtn"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/signup_btn_bg"
-                android:text="Sign in"
-                android:textColor="@color/base"
-                android:textAllCaps="false"
-                android:textSize="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                >
+                <com.andexert.library.RippleView
+                    android:id="@+id/ripple_checkbox_rememberMe"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:rv_centered="true"
+                    app:rv_type="rectangle"
+                    app:rv_rippleDuration="800"
+                    app:rv_alpha="200"
+                    app:rv_zoom="true"
+                    app:rv_zoomDuration="200"
+                    app:rv_zoomScale="1.05"
+                    app:rv_color="@color/colorPrimary"
+                    android:layout_gravity="center|right"
+                    android:gravity="center|left"
 
-                />
+                    >
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Remember me"
+                        android:textColor="@color/base"
+                        app:backgroundTint="@color/signupbtn_start"
+                        app:buttonTint="@color/signupbtn_start"
+                        android:checked="false"
+                        android:gravity="center|left"
+                        android:textSize="@dimen/_12sdp"
+                        />
+                </com.andexert.library.RippleView>
+                <com.andexert.library.RippleView
+                    android:id="@+id/ripple_et_forget_password"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    app:rv_centered="true"
+                    app:rv_type="rectangle"
+                    app:rv_rippleDuration="800"
+                    app:rv_alpha="200"
+                    app:rv_zoom="true"
+                    app:rv_zoomDuration="200"
+                    app:rv_zoomScale="1.05"
+                    app:rv_color="@color/colorPrimary"
+                    android:layout_gravity="center|left"
+                    android:gravity="center|left"
+
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|left"
+                        android:text="Forget password ?"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:scrollHorizontally="true"
+                        android:textColor="@color/base"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="normal"
+                        android:gravity="right|center"
+
+
+                        />
+                </com.andexert.library.RippleView>
+
+            </LinearLayout>
+
+
+            <com.andexert.library.RippleView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                app:rv_centered="true"
+                app:rv_type="rectangle"
+                app:rv_rippleDuration="400"
+                app:rv_alpha="200"
+                app:rv_zoom="true"
+                app:rv_zoomDuration="200"
+                app:rv_zoomScale="1.05"
+                >
+                <Button
+                    android:id="@+id/signinBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Sign in"
+                    android:textColor="@color/base"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_bg"
+                    android:textSize="@dimen/_12sdp"
+
+                    />
+            </com.andexert.library.RippleView>
+
 
         </LinearLayout>
 
+    <com.andexert.library.RippleView
+        android:id="@+id/ripple_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:rv_centered="true"
+        app:rv_type="rectangle"
+        app:rv_rippleDuration="800"
+        app:rv_alpha="200"
+        app:rv_zoom="true"
+        app:rv_zoomDuration="200"
+        app:rv_zoomScale="1.05"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:rv_color="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+
+        >
     <TextView
         android:id="@+id/login_fragment_signuptv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don’t have an account yet? Signup Now."
-        android:textColor="@drawable/signup_tv_bg"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
+        android:textColor="@color/base"
         android:textSize="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_5sdp"
         android:clickable="true"
+        android:paddingTop="@dimen/_2sdp"
+        android:paddingBottom="@dimen/_2sdp"
         />
-
+    </com.andexert.library.RippleView>
     </com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>
 
 

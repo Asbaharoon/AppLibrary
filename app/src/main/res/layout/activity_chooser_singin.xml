@@ -48,9 +48,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@android:color/white"
-            android:textSize="20dp"
-            android:text="Welcom in, Library"
-            app:reflectionColor="@color/reflectioncolor"
+            android:textSize="@dimen/_14sdp"
+            android:text="Welcom to, Library"
+            app:reflectionColor="@color/home_toolbar_start"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_below="@+id/logo"
             />
@@ -65,6 +65,19 @@
         android:layout_below="@+id/logoContainer"
 
         >
+        <com.andexert.library.RippleView
+            android:id="@+id/ripple_signinBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_centered="true"
+            app:rv_type="rectangle"
+            app:rv_rippleDuration="400"
+            app:rv_alpha="200"
+            app:rv_zoom="true"
+            app:rv_zoomDuration="200"
+            app:rv_zoomScale="1.05"
+            android:layout_marginBottom="@dimen/_5sdp"
+            >
         <Button
             android:id="@+id/chooser_signinBtn"
             android:layout_width="match_parent"
@@ -72,30 +85,58 @@
             android:text="Sign in with my account"
             android:textColor="@android:color/white"
             android:background="@drawable/signin_btn_bg"
-            android:layout_marginBottom="@dimen/_5sdp"
             android:textAllCaps="false"
             android:textSize="@dimen/_12sdp"
 
             />
-        <com.facebook.login.widget.LoginButton
-            xmlns:facebook="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/facebook_signinBtn"
-            android:layout_width="match_parent"
+        </com.andexert.library.RippleView>
+        <com.andexert.library.RippleView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/_25sdp"
-            android:paddingBottom="@dimen/_25sdp"
-            android:paddingLeft="@dimen/_12sdp"
-            facebook:com_facebook_login_text="Sign in with Facebook"
-            facebook:com_facebook_confirm_logout="false"
+            app:rv_centered="true"
+            app:rv_type="rectangle"
+            app:rv_rippleDuration="400"
+            app:rv_alpha="200"
+            app:rv_zoom="true"
+            app:rv_zoomDuration="200"
+            app:rv_zoomScale="1.05"
+            android:layout_marginBottom="@dimen/_5sdp"
+            >
+            <com.facebook.login.widget.LoginButton
+                xmlns:facebook="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/facebook_signinBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_25sdp"
+                android:paddingBottom="@dimen/_25sdp"
+                android:paddingLeft="@dimen/_12sdp"
+                facebook:com_facebook_login_text="Sign in with Facebook"
+                facebook:com_facebook_confirm_logout="false"
 
-            />
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/googleSigninBtn"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_65sdp"
-            android:gravity="center"
+                />
+        </com.andexert.library.RippleView>
+        <com.andexert.library.RippleView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rv_centered="true"
+            app:rv_type="rectangle"
+            app:rv_rippleDuration="400"
+            app:rv_alpha="200"
+            app:rv_zoom="true"
+            app:rv_zoomDuration="200"
+            app:rv_zoomScale="1.05"
+            app:rv_color="@color/whit_gray"
+            android:layout_marginBottom="@dimen/_5sdp"
+            >
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/googleSigninBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_65sdp"
+                android:gravity="center"
 
-            ></com.google.android.gms.common.SignInButton>
+                ></com.google.android.gms.common.SignInButton>
+        </com.andexert.library.RippleView>
+
     </LinearLayout>
 
 

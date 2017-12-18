@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.andexert.library.RippleView;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.R;
 import com.example.omd.library.Services.GoogleUserData.ModelDataImp;
@@ -46,6 +47,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     private ShimmerTextView shimmerTextView;
     private Button singin_with_account_btn;
+    private RippleView ripple_signinBtn;
     private LoginButton facebook_lognBtn;
     private SignInButton googleSininBtn;
     private CallbackManager callbackManager;
@@ -96,8 +98,13 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         Toolbar toolbar = (Toolbar) findViewById(R.id.chooser_toolbar);
         setSupportActionBar(toolbar);
         ///////////////////////////////////////////////////////////////
-        singin_with_account_btn = (Button) findViewById(R.id.chooser_signinBtn);
-        singin_with_account_btn.setOnClickListener(this);
+        ripple_signinBtn = (RippleView) findViewById(R.id.ripple_signinBtn);
+        ripple_signinBtn.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                NavigateTOActivity_Login();
+            }
+        });
         ///////////////////////////////////////////////////////////////
         facebook_lognBtn = (LoginButton) findViewById(R.id.facebook_signinBtn);
         facebook_lognBtn.setReadPermissions(Arrays.asList("email","public_profile"));
@@ -134,9 +141,6 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     {
         switch (view.getId())
         {
-            case R.id.chooser_signinBtn:
-                NavigateTOActivity_Login();
-                break;
             case R.id.googleSigninBtn:
                 isConnected = connection.CheckConnection();
                 if (isConnected==true)

@@ -24,8 +24,9 @@
     <color name="btnsignin_start">#EF6C00</color>
     <color name="btnsignin_center">#F57C00</color>
     <color name="btnsignin_end">#FFAB40</color>
+    <color name="signupbtn_start">#0D47A1</color>
     <color name="signupbtn_center">#0277BD</color>
-    <color name="signupbtn_end">#0288D1</color>
+    <color name="signupbtn_end">#0D47A1</color>
 
 
     <!--library layout-->
@@ -34,4 +35,9 @@
     <color name="black">#000</color>
     <color name="dark_gray">#424242</color>
     <color name="whit_gray">#F5F5F5</color>
+    <color name="toolbar_homepage">#1565C0</color>
+    <color name="ahnav">#1565C0</color>
+    <color name="home_toolbar_start">#0D47A1</color>
+    <color name="home_toolbar_center">#1E88E5</color>
+
 </resources>

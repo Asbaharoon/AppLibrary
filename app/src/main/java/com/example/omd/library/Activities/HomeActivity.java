@@ -156,7 +156,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         AHBottomNavigationAdapter adapter = new AHBottomNavigationAdapter(this,R.menu.navbar_menu);
         navBar.setDefaultBackgroundColor(ContextCompat.getColor(this,R.color.base));
         navBar.setInactiveColor(ContextCompat.getColor(this,R.color.dark_gray));
-        navBar.setAccentColor(ContextCompat.getColor(this, R.color.darkblue));
+        navBar.setAccentColor(ContextCompat.getColor(this, R.color.ahnav));
         adapter.setupWithBottomNavigation(navBar);
         navBar.setCurrentItem(0);
         navBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);

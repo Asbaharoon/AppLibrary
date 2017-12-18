@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="160dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/whiteBlue"
+    android:background="@drawable/homepage_toolbar"
     android:padding="16dp"
-    android:gravity="bottom"
-    >
+    android:gravity="bottom">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userPhoto"
         android:layout_width="@dimen/_60sdp"
@@ -16,27 +16,32 @@
         />
     <TextView
         android:id="@+id/userName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
         android:textSize="@dimen/_14sdp"
         android:textColor="@color/base"
-        android:maxLength="15"
-        android:scrollHorizontally="true"
         android:ellipsize="end"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        tools:ignore="MissingPrefix"
+
 
         />
     <TextView
         android:id="@+id/userEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:singleLine="true"
         android:textSize="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/base"
-        android:maxLength="50"
-        android:scrollHorizontally="true"
         android:ellipsize="end"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:scrollHorizontally="true"
+        tools:ignore="MissingPrefix"
+
+
 
         />
 
