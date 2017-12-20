@@ -63,7 +63,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
     private void setUpShimmer() {
         Shimmer shimmer = new Shimmer();
-        shimmer.setDuration(5000).setDirection(Shimmer.ANIMATION_DIRECTION_RTL);
+        shimmer.setDuration(3000).setDirection(Shimmer.ANIMATION_DIRECTION_RTL);
         shimmer.start(shimmerTextView);
     }
 

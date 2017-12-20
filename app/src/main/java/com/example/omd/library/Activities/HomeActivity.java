@@ -10,10 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -26,17 +25,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
-import com.example.omd.library.Adapters.ViewPagerAdapter;
-import com.example.omd.library.Fragments.Chat_Fragment;
-import com.example.omd.library.Fragments.Library_Fragment;
-import com.example.omd.library.Fragments.Publisher_Fragment;
-import com.example.omd.library.Fragments.University_Fragment;
+import com.example.omd.library.Fragments.Home_Fragment;
+import com.example.omd.library.Fragments.News_Fragment;
+import com.example.omd.library.Fragments.Settings_Fragment;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.R;
 import com.example.omd.library.Services.GoogleUserData.PresenterImp;
 import com.example.omd.library.Services.GoogleUserData.ViewData;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -47,9 +43,6 @@ import com.google.android.gms.common.api.Status;
 import com.rom4ek.arcnavigationview.ArcNavigationView;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewData,GoogleApiClient.OnConnectionFailedListener{
@@ -58,9 +51,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ArcNavigationView arcNavigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-    private AHBottomNavigation navBar;
+    /*private AHBottomNavigation navBar;
     private ViewPager pager;
-    private List<Fragment> fragmentList;
+    private List<Fragment> fragmentList;*/
     private PresenterImp presenterImp;
     private CircleImageView im_userImage;
     private TextView tv_userName,tv_userEmail;
@@ -69,6 +62,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginManager manager;
+    private AccessTokenTracker accessTokenTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,16 +71,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         manager = LoginManager.getInstance();
         initView();
         setUpDrawer();
-        setUpnavBar();
-        setUpViewPager();
+        /*setUpnavBar();
+        setUpViewPager();*/
         setUpSigninWithGoogle();
         setUpAlertDialog();
         setUpProgressDialog();
-
-
-
-
-
+        getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
 
     }
 
@@ -111,13 +101,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         presenterImp =new PresenterImp(this,this);
         presenterImp.getUserData();
         /////////////////////////////////////////////////////////////
-        pager = (ViewPager) findViewById(R.id.pager);
+       /* pager = (ViewPager) findViewById(R.id.pager);*/
         /////////////////////////////////////////////////////////////
         arcNavigationView = (ArcNavigationView) findViewById(R.id.arcDrawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //////////////////////////////////////////////////////////////
-        navBar = (AHBottomNavigation) findViewById(R.id.bottom_navBar);
+       // navBar = (AHBottomNavigation) findViewById(R.id.bottom_navBar);
 
         //////////////////////////////////////////////////////////////
 
@@ -133,74 +123,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     {
         apiClient = new GoogleApiClient.Builder(HomeActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
         apiClient.connect();
-
-    }
-    private void setUpViewPager()
-    {
-        fragmentList = new ArrayList<>();
-        fragmentList.add(new Chat_Fragment());
-        fragmentList.add(new University_Fragment());
-        fragmentList.add(new Library_Fragment());
-        fragmentList.add(new Publisher_Fragment());
-
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.AddFragment(fragmentList);
-        pager.setAdapter(adapter);
-        pager.beginFakeDrag();
-
-
-
-    }
-    private void setUpnavBar()
-    {
-        AHBottomNavigationAdapter adapter = new AHBottomNavigationAdapter(this,R.menu.navbar_menu);
-        navBar.setDefaultBackgroundColor(ContextCompat.getColor(this,R.color.base));
-        navBar.setInactiveColor(ContextCompat.getColor(this,R.color.dark_gray));
-        navBar.setAccentColor(ContextCompat.getColor(this, R.color.ahnav));
-        adapter.setupWithBottomNavigation(navBar);
-        navBar.setCurrentItem(0);
-        navBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-        if (navBar.getCurrentItem()==0)
-        {
-            pager.setCurrentItem(0);
-        }
-        navBar.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-                if (position==0)
-                {
-                    pager.setCurrentItem(0);
-                    navBar.setCurrentItem(position,false);
-                    return true;
-                }
-                else if (position==1)
-                {
-
-                    pager.setCurrentItem(1);
-
-                    navBar.setCurrentItem(position,false);
-                    return true;
-
-                }
-                else if (position==2)
-                {
-                    pager.setCurrentItem(2);
-
-                    navBar.setCurrentItem(position,false);
-                    return true;
-
-                }
-                else if (position==3)
-                {
-
-                    pager.setCurrentItem(3);
-                    navBar.setCurrentItem(position,false);
-                    return true;
-
-                }
-                return false;
-            }
-        });
 
     }
 
@@ -268,19 +190,33 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
          if (item.getItemId()==R.id.home)
         {
-            Toast.makeText(this, "home", Toast.LENGTH_SHORT).show();
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
             {
                 drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
+                    }
+                },500);
                 return true;
             }
         }
         else if (item.getItemId()==R.id.chat)
         {
-            Toast.makeText(this, "chat", Toast.LENGTH_SHORT).show();
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
             {
                 drawerLayout.closeDrawer(GravityCompat.START);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
+                    }
+                },500);
+
                 return true;
             }
         }
@@ -299,15 +235,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
             {
                 drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer,new News_Fragment()).commit();
+                    }
+                },500);
+
                 return true;
             }
         }
         else if (item.getItemId()==R.id.settings)
         {
+
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
             {
                 drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer,new Settings_Fragment()).commit();
+                    }
+                },500);
                 return true;
             }
         }
@@ -337,7 +289,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     tv_userEmail.setText(userData.getUserEmail().toString().isEmpty()?"":userData.getUserEmail().toString());
 
                 }
-            },5000);
+            },500);
 
         }else
             {
@@ -350,6 +302,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void run() {
                 manager.unregisterCallback(callbackManager);
+                accessTokenTracker.stopTracking();
                 manager.logOut();
                 apiClient.disconnect();
                 Auth.GoogleSignInApi.signOut(apiClient);
