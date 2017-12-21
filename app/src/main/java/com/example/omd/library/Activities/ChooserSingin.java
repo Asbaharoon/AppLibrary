@@ -80,36 +80,6 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void setUpUserProfile()
-    {
-
-         tokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-
-            }
-        };
-         profileTracker =new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-                getUserData(currentProfile);
-            }
-        };
-         tokenTracker.startTracking();
-         profileTracker.startTracking();
-
-
-    }
-    private void setUpProgressdialog()
-    {
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Sign in....");
-        ProgressBar progressBar =new ProgressBar(this);
-        Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
-        dialog.setIndeterminateDrawable(drawable);
-        dialog.setCancelable(false);
-    }
     private void initView()
     {
         modelDataImp = new ModelDataImp(this);
@@ -142,6 +112,36 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
 
     }
+    private void setUpUserProfile()
+    {
+
+         tokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+
+            }
+        };
+         profileTracker =new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                getUserData(currentProfile);
+            }
+        };
+         tokenTracker.startTracking();
+         profileTracker.startTracking();
+
+
+    }
+    private void setUpProgressdialog()
+    {
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Sign in....");
+        ProgressBar progressBar =new ProgressBar(this);
+        Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        dialog.setIndeterminateDrawable(drawable);
+        dialog.setCancelable(false);
+    }
     private void CheckedUserLoginWithGoogle()
     {
         OptionalPendingResult<GoogleSignInResult> result = Auth.GoogleSignInApi.silentSignIn(apiClient);
@@ -156,15 +156,12 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
     private void setUpShimmer()
     {
         Shimmer shimmer = new Shimmer();
         shimmer.setDuration(3000).setDirection(Shimmer.ANIMATION_DIRECTION_RTL);
         shimmer.start(shimmerTextView);
     }
-
-
     @Override
     public void onClick(View view)
     {
@@ -202,20 +199,17 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
     private void signinWithGoogle()
     {
         Intent intent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         startActivityForResult(intent,RC_GOOGLE_SIGNIN);
 
     }
-
     private void NavigateTOActivity_Login()
     {
         Intent intent = new Intent(ChooserSingin.this,LoginActivity.class);
         startActivity(intent);
     }
-
     @Override
     public void onSuccess(LoginResult loginResult)
     {
@@ -231,8 +225,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         tokenTracker.startTracking();
        profileTracker.startTracking();
     }
-
-    private void getUserData(Profile profile) {
+    private void getUserData(Profile profile)
+    {
 
         if (profile!=null)
         {
@@ -270,21 +264,17 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
             }
 
     }
-
-
     @Override
     public void onCancel()
     {
         dialog.dismiss();
     }
-
     @Override
     public void onError(FacebookException error)
     {
         dialog.dismiss();
         Toast.makeText(this, "Error "+error.getMessage(), Toast.LENGTH_LONG).show();
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -309,13 +299,13 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
         }
     }
-
-    private void navigateToHomeActivity() {
+    private void navigateToHomeActivity()
+    {
         Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
     }
-
-    private void getUserDataFromGoogle(GoogleSignInAccount account) {
+    private void getUserDataFromGoogle(GoogleSignInAccount account)
+    {
         this.account=account;
 
             if (account!=null)
@@ -347,25 +337,22 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
 
     }
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult)
     {
         Toast.makeText(this, "Error "+connectionResult.getErrorMessage(), Toast.LENGTH_SHORT).show();
         dialog.dismiss();
     }
-
-
-
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         Profile profile = Profile.getCurrentProfile();
         getUserData(profile);
     }
-
     @Override
-    protected void onStop() {
+    protected void onStop()
+    {
         super.onStop();
         profileTracker.stopTracking();
         tokenTracker.stopTracking();

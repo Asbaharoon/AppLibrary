@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private ShimmerTextView shimmerTextView;
     private FragmentTransactionExtended fragmentTransactionExtended;
     private Button singninBtn;
-    private RippleView rippleView;
+    private RippleView rippleView,ripple_et_forget_password;
     Context mContext;
     Handler handler;
     @Nullable
@@ -44,6 +44,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         navigate_to_signup_fragment();
             }
         });
+        ripple_et_forget_password.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                navigate_to_ForgetPassword_fragment();
+            }
+        });
         setUpShimmer();
         return view;
     }
@@ -55,6 +61,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         shimmerTextView = (ShimmerTextView) view.findViewById(R.id.shimmer);
         handler= new Handler();
         rippleView = (RippleView) view.findViewById(R.id.ripple_et);
+        ripple_et_forget_password = (RippleView) view.findViewById(R.id.ripple_et_forget_password);
         singninBtn = (Button) view.findViewById(R.id.signinBtn);
         singninBtn.setOnClickListener(this);
         signupTv = (TextView) view.findViewById(R.id.login_fragment_signuptv);
@@ -98,6 +105,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 getActivity().getFragmentManager().popBackStack();
             }
     }
+
+    private void navigate_to_ForgetPassword_fragment() {
+
+        if (getActivity().getFragmentManager().getBackStackEntryCount()==0)
+        {
+            FragmentTransaction transaction = getActivity().getFragmentManager().beginTransaction();
+            fragmentTransactionExtended = new FragmentTransactionExtended(mContext,transaction,new LoginFragment(),new ForgetPassword_Fragment(),R.id.fragmentContainer);
+            fragmentTransactionExtended.commit();
+            fragmentTransactionExtended.addTransition(FragmentTransactionExtended.ZOOM_SLIDE_VERTICAL);
+        }
+        else
+        {
+            getActivity().getFragmentManager().popBackStack();
+        }
+    }
+
 
 
 

@@ -27,7 +27,9 @@
         app:ael_orientation="vertical"
 
         >
-       <include layout="@layout/normal_user_layout"/>
+       <include
+           android:id="@+id/normal_user_layout"
+           layout="@layout/normal_user_layout" />
 
 
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
@@ -43,7 +45,10 @@
         app:ael_orientation="vertical"
         >
 
-            <include layout="@layout/publisher_layout"/>
+            <include
+                android:id="@+id/publisher_layout"
+                layout="@layout/publisher_layout"
+                />
 
 
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
@@ -60,7 +65,9 @@
         app:ael_orientation="vertical"
 
         >
-        <include layout="@layout/library_layout"/>
+        <include
+            android:id="@+id/library_layout"
+            layout="@layout/library_layout"/>
 
 
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>

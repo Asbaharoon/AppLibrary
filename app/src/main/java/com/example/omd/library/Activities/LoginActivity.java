@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initView();
+
         getFragmentManager().beginTransaction().add(R.id.fragmentContainer,new LoginFragment()).commit();
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.example.omd.library", PackageManager.GET_SIGNATURES);
@@ -40,9 +40,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void initView() {
-
-
-    }
 
 }

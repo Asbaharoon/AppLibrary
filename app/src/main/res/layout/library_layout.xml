@@ -37,6 +37,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
             />
@@ -64,6 +66,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
 
@@ -92,6 +96,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
 
@@ -111,7 +117,7 @@
             app:met_maxCharacters="50"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/job_icon"
+            app:met_iconLeft="@drawable/expertise_icon"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"
             app:met_textColor="@color/base"
@@ -120,6 +126,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
 
@@ -209,6 +217,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_12sdp"
+
 
             />
         <com.andexert.library.RippleView

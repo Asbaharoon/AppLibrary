@@ -22,4 +22,8 @@
         <item>Other</item>
     </string-array>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="invalid_firstName">invalid First name</string>
+    <string name="invalid_lastName">invalid Last name</string>
+    <string name="invalidEmail">invalid Email</string>
+    <string name="invalid_url">invalid url</string>
 </resources>

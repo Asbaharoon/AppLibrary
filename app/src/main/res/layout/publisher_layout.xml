@@ -19,6 +19,7 @@
             android:id="@+id/publisher_firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="first name"
             app:met_helperText="required"
@@ -37,12 +38,15 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
             />
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/publisher_lasttName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
@@ -62,6 +66,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
             />
@@ -69,6 +75,7 @@
             android:id="@+id/publisher_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
@@ -88,6 +95,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
 
@@ -96,6 +105,7 @@
             android:id="@+id/publisher_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="phone"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
@@ -114,6 +124,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
             />
@@ -141,6 +153,7 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
 
 
 
@@ -159,7 +172,7 @@
             app:met_maxCharacters="50"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/job_icon"
+            app:met_iconLeft="@drawable/expertise_icon"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"
             app:met_textColor="@color/base"
@@ -168,6 +181,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_12sdp"
+
 
 
             />
@@ -175,6 +190,7 @@
             android:id="@+id/publisher_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textUri"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
@@ -195,6 +211,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
 
@@ -223,6 +241,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+
 
 
             />
