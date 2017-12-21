@@ -129,7 +129,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         });
         ///////////////////////////////////////////////////////////////
         facebook_lognBtn = (LoginButton) findViewById(R.id.facebook_signinBtn);
-        facebook_lognBtn.setReadPermissions(Arrays.asList("email","public_profile"));
+        facebook_lognBtn.setReadPermissions(Arrays.asList("email","public_profile","user_friends"));
         facebook_lognBtn.registerCallback(callbackManager,this);
 
         ////////////////////////////////////////////////////////////////
