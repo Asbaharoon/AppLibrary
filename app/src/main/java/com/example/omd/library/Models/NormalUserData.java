@@ -1,5 +1,7 @@
 package com.example.omd.library.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,13 +9,19 @@ import java.io.Serializable;
  */
 
 public class NormalUserData implements Serializable {
+    @SerializedName("user_username")
     private String userId;
+    @SerializedName("user_name")
     private String userName;
+    @SerializedName("user_email")
     private String userEmail;
+    @SerializedName("user_country")
     private String userCountry;
+    @SerializedName("user_phone")
     private String userPhone;
     private String userJob;
     private String userInterests;
+    @SerializedName("photo_link")
     private String userPhoto;
 
     public NormalUserData() {

@@ -1,4 +1,4 @@
-package com.example.omd.library.Services.GoogleUserData;
+package com.example.omd.library.Services.SocialUserData;
 
 /**
  * Created by Delta on 16/12/2017.

@@ -17,8 +17,9 @@ import android.widget.Toast;
 import com.andexert.library.RippleView;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.R;
-import com.example.omd.library.Services.GoogleUserData.ModelDataImp;
+import com.example.omd.library.Services.SocialUserData.ModelDataImp;
 import com.example.omd.library.Services.NetworkConnection;
+import com.example.omd.library.Services.UserClient;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -42,6 +43,14 @@ import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChooserSingin extends AppCompatActivity implements View.OnClickListener,FacebookCallback<LoginResult>,GoogleApiClient.OnConnectionFailedListener{
 
@@ -76,7 +85,6 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         setUpProgressdialog();
         setUpUserProfile();
         CheckedUserLoginWithGoogle();
-
 
     }
 
@@ -150,6 +158,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
             GoogleSignInAccount account = result.get().getSignInAccount();
             if (account!=null)
             {
+
                 getUserDataFromGoogle(account);
 
             }
@@ -236,26 +245,53 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
             String userPhoto = "https://graph.facebook.com/" + userID+"/picture?type=large";
             NormalUserData userData = new NormalUserData(userName,"","","","","",userPhoto);
             userData.setUserId(userID);
+
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(getString(R.string.facebook_url))
+                    .addConverterFactory(GsonConverterFactory.create());
+            Retrofit retrofit = builder.build();
+            UserClient client = retrofit.create(UserClient.class);
             if (userData!=null)
             {
-                modelDataImp.setUserData(userData);
-
-                new Handler().postDelayed(new Runnable() {
+                Map<String,String> map = new HashMap<>();
+                map.put("user_username",userData.getUserId());
+                map.put("user_name",userData.getUserName());
+                map.put("photo_link",userData.getUserPhoto());
+                Call<NormalUserData> normalUserDataCall = client.UploadUserDataWithFacebook(map);
+                normalUserDataCall.enqueue(new Callback<NormalUserData>() {
                     @Override
-                    public void run() {
-                        dialog.dismiss();
-                        navigateToHomeActivity();
+                    public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
+                        if (response.isSuccessful())
+                        {
+                            NormalUserData normalUserData = response.body();
+                            if (normalUserData!=null)
+                            {
+                                modelDataImp.setUserData(normalUserData);
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                        navigateToHomeActivity();
+                                    }
+                                },2000);
+                            }
+                            else
+                            {
+                                dialog.dismiss();
+                            }
+                        }
                     }
-                },2000);
 
+                    @Override
+                    public void onFailure(Call<NormalUserData> call, Throwable t) {
 
-
+                        dialog.dismiss();
+                    }
+                });
             }
-            else
-                {
-                    dialog.dismiss();
 
-                }
+
 
         }else
             {
@@ -306,6 +342,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     }
     private void getUserDataFromGoogle(GoogleSignInAccount account)
     {
+        dialog.show();
         this.account=account;
 
             if (account!=null)
@@ -315,8 +352,53 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 if (userData!=null)
                 {
 
-                    modelDataImp.setUserData(userData);
-                    navigateToHomeActivity();
+                    dialog.show();
+                    Retrofit.Builder builder = new Retrofit.Builder()
+                            .baseUrl(getString(R.string.gmail_url))
+                            .addConverterFactory(GsonConverterFactory.create());
+                    Retrofit retrofit = builder.build();
+                    UserClient client = retrofit.create(UserClient.class);
+                    Map<String,String> map = new HashMap<>();
+                    map.put("user_username",userData.getUserId());
+                    map.put("user_name",userData.getUserName());
+                    map.put("photo_link",userData.getUserPhoto());
+                    map.put("user_email",userData.getUserEmail());
+                    Call<NormalUserData> normalUserDataCall = client.UploadUserDataWithGoogle(map);
+                    normalUserDataCall.enqueue(new Callback<NormalUserData>() {
+                        @Override
+                        public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
+
+                            NormalUserData normalUserData = response.body();
+                            if (normalUserData!=null)
+                            {
+
+                                modelDataImp.setUserData(normalUserData);
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        dialog.dismiss();
+                                        navigateToHomeActivity();
+                                    }
+                                },2000);
+                            }
+                            else
+                            {
+                                Auth.GoogleSignInApi.signOut(apiClient);
+                                apiClient.disconnect();
+                                dialog.dismiss();
+                                Toast.makeText(ChooserSingin.this, "nodata", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<NormalUserData> call, Throwable t) {
+
+                            dialog.dismiss();
+                        }
+                    });
+                }
+
 
 
                 }else
@@ -324,13 +406,6 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                         apiClient.disconnect();
 
                     }
-            }
-            else
-                {
-
-                    apiClient.disconnect();
-
-                }
 
 
 

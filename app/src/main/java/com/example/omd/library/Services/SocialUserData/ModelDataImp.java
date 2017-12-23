@@ -1,4 +1,4 @@
-package com.example.omd.library.Services.GoogleUserData;
+package com.example.omd.library.Services.SocialUserData;
 
 import android.content.Context;
 

@@ -30,8 +30,8 @@ import com.example.omd.library.Fragments.News_Fragment;
 import com.example.omd.library.Fragments.Settings_Fragment;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.R;
-import com.example.omd.library.Services.GoogleUserData.PresenterImp;
-import com.example.omd.library.Services.GoogleUserData.ViewData;
+import com.example.omd.library.Services.SocialUserData.PresenterImp;
+import com.example.omd.library.Services.SocialUserData.ViewData;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
@@ -286,7 +286,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 public void run() {
                     Picasso.with(HomeActivity.this).load(Uri.parse(userData.getUserPhoto())).fit().into(im_userImage);
                     tv_userName.setText(userData.getUserName().toString().isEmpty()?"":userData.getUserName().toString());
-                    tv_userEmail.setText(userData.getUserEmail().toString().isEmpty()?"":userData.getUserEmail().toString());
+                    tv_userEmail.setText(userData.getUserEmail()==null?"":userData.getUserEmail().toString());
 
                 }
             },500);
