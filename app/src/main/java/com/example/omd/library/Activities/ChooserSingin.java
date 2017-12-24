@@ -17,9 +17,9 @@ import android.widget.Toast;
 import com.andexert.library.RippleView;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.R;
-import com.example.omd.library.Services.SocialUserData.ModelDataImp;
+import com.example.omd.library.Login_Register.Social_Login.ModelDataImp;
 import com.example.omd.library.Services.NetworkConnection;
-import com.example.omd.library.Services.UserClient;
+import com.example.omd.library.Services.Service;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -250,7 +250,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                     .baseUrl(getString(R.string.facebook_url))
                     .addConverterFactory(GsonConverterFactory.create());
             Retrofit retrofit = builder.build();
-            UserClient client = retrofit.create(UserClient.class);
+            Service client = retrofit.create(Service.class);
             if (userData!=null)
             {
                 Map<String,String> map = new HashMap<>();
@@ -357,7 +357,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                             .baseUrl(getString(R.string.gmail_url))
                             .addConverterFactory(GsonConverterFactory.create());
                     Retrofit retrofit = builder.build();
-                    UserClient client = retrofit.create(UserClient.class);
+                    Service client = retrofit.create(Service.class);
                     Map<String,String> map = new HashMap<>();
                     map.put("user_username",userData.getUserId());
                     map.put("user_name",userData.getUserName());

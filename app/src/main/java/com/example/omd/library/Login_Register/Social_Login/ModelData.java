@@ -1,4 +1,4 @@
-package com.example.omd.library.Services.SocialUserData;
+package com.example.omd.library.Login_Register.Social_Login;
 
 import com.example.omd.library.Models.NormalUserData;
 

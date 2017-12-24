@@ -1,0 +1,41 @@
+package com.example.omd.library.Login_Register.Registration;
+
+import com.example.omd.library.Models.NormalUserData;
+
+/**
+ * Created by Delta on 24/12/2017.
+ */
+
+public interface Model_Interactor {
+    interface onCompleteListener
+    {
+        void setNormalUserFirstName_Error();
+        void setNormalUserLastName_Error();
+        void setNormalUserEmail_Error();
+        void setNormalUserCountry_Error();
+        void setNormalUserPassword_Error();
+
+        void setPublisherFirstName_Error();
+        void setPublisherLastName_Error();
+        void setPublisherEmail_Error();
+        void setPublisherCountry_Error();
+        void setPublisherPassword_Error();
+
+        void setLibraryName_Error();
+        void setLibraryCommission_Error();
+        void setLibraryOtherType_Error();
+        void setLibraryCountry_Error();
+        void setLibraryPassword_Error();
+
+        void showProgress_Dialog();
+        void hideProgress_Dialog();
+        void navigate_TO_HomeActivity();
+        void onNormalUserDataSuccess(NormalUserData normalUserData);
+        void onPublisherDataSuccess();
+        void onLibraryDataSuccess();
+        void onFailed(String error);
+    }
+    void NormalUserRegistration(String first_name,String last_name,String email,String country,String password,String phone,String job,String interests,Model_Interactor.onCompleteListener listener);
+    void PublisherRegistration(String first_name,String last_name,String email,String country,String password,String phone,String expertise,String website_url,Model_Interactor.onCompleteListener listener);
+    void LibraryRegistration (String libName,String libCommession,String libCountry,String libExpertise,String libType,String libOtherType,String libPassword,Model_Interactor.onCompleteListener listener);
+}

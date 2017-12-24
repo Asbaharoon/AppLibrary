@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             app:met_floatingLabel="highlight"
             app:met_helperText="required"
-            app:met_maxCharacters="50"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_singleLineEllipsis="true"
@@ -38,6 +37,10 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
+            android:inputType="textPersonName"
+            app:met_maxCharacters="50"
+            android:maxLength="50"
+
 
 
 
@@ -67,6 +70,7 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
+            android:inputType="text"
 
 
 
@@ -84,7 +88,6 @@
             app:met_floatingLabelAlwaysShown="true"
             app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
-            app:met_maxCharacters="30"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
             app:met_iconLeft="@drawable/location_icon"
@@ -97,6 +100,10 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
+            android:inputType="text"
+            android:maxLength="15"
+            app:met_maxCharacters="15"
+
 
 
 
@@ -114,7 +121,6 @@
             app:met_floatingLabelAlwaysShown="true"
             app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
-            app:met_maxCharacters="50"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
             app:met_iconLeft="@drawable/expertise_icon"
@@ -127,6 +133,10 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
+            android:inputType="text"
+            app:met_maxCharacters="50"
+            android:maxLength="50"
+
 
 
 
@@ -170,8 +180,8 @@
                     app:met_floatingLabel="highlight"
                     app:met_floatingLabelText="Other Type"
                     app:met_floatingLabelAlwaysShown="true"
-                    app:met_helperTextAlwaysShown="true"
                     app:met_maxCharacters="20"
+                    app:met_helperTextAlwaysShown="true"
                     app:met_checkCharactersCountAtBeginning="true"
                     app:met_singleLineEllipsis="true"
                     app:met_floatingLabelTextColor="@color/base"
@@ -182,6 +192,10 @@
                     app:met_baseColor="@color/base"
                     app:met_primaryColor="@color/base"
                     app:met_textColorHint="@color/base"
+                    android:textSize="@dimen/_14sdp"
+                    android:inputType="text"
+                    android:maxLength="20"
+
 
 
 
@@ -204,7 +218,6 @@
             app:met_floatingLabelAlwaysShown="true"
             app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
-            app:met_maxCharacters="10"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
             app:met_iconLeft="@drawable/password_icon"
@@ -218,6 +231,9 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_12sdp"
+            android:maxLength="15"
+            app:met_maxCharacters="15"
+
 
 
             />
@@ -235,7 +251,7 @@
             android:layout_marginBottom="@dimen/_5sdp"
             >
             <Button
-                android:id="@+id/library_signup_btn"
+                android:id="@+id/lib_SignInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="sign up"

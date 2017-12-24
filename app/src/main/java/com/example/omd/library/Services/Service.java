@@ -13,7 +13,7 @@ import retrofit2.http.POST;
  * Created by Delta on 23/12/2017.
  */
 
-public interface UserClient {
+public interface Service {
     @FormUrlEncoded
     @POST("api/facebooklogin")
     Call<NormalUserData> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
