@@ -43,6 +43,14 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
+    public void setNormalUser_invalidEmail_Error() {
+        if (viewData!=null)
+        {
+            viewData.setNormalUser_invalidEmail_Error();
+        }
+    }
+
+    @Override
     public void setNormalUserCountry_Error() {
         if (viewData!=null)
         {
@@ -81,6 +89,15 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
             viewData.setPublisherEmail_Error();
         }
     }
+
+    @Override
+    public void setPublisher_invalidEmail_Error() {
+        if (viewData!=null)
+        {
+            viewData.setPublisher_invalidEmail_Error();
+        }
+    }
+
 
     @Override
     public void setPublisherCountry_Error() {

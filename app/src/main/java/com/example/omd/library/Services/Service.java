@@ -1,6 +1,6 @@
 package com.example.omd.library.Services;
 
-import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.User;
 
 import java.util.Map;
 
@@ -16,10 +16,10 @@ import retrofit2.http.POST;
 public interface Service {
     @FormUrlEncoded
     @POST("api/facebooklogin")
-    Call<NormalUserData> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
+    Call<User> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
 
     @FormUrlEncoded
     @POST("api/gmaillogin")
-    Call<NormalUserData> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
+    Call<User> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
 
 }

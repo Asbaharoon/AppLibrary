@@ -28,11 +28,8 @@ import android.widget.Toast;
 import com.example.omd.library.Fragments.Home_Fragment;
 import com.example.omd.library.Fragments.News_Fragment;
 import com.example.omd.library.Fragments.Settings_Fragment;
-import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.User;
 import com.example.omd.library.R;
-import com.example.omd.library.Login_Register.Social_Login.PresenterImp;
-import com.example.omd.library.Login_Register.Social_Login.ViewData;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
@@ -45,16 +42,12 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,ViewData,GoogleApiClient.OnConnectionFailedListener{
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,GoogleApiClient.OnConnectionFailedListener{
 
     private Toolbar toolbar;
     private ArcNavigationView arcNavigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
-    /*private AHBottomNavigation navBar;
-    private ViewPager pager;
-    private List<Fragment> fragmentList;*/
-    private PresenterImp presenterImp;
     private CircleImageView im_userImage;
     private TextView tv_userName,tv_userEmail;
     private GoogleApiClient apiClient;
@@ -62,7 +55,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginManager manager;
-    private AccessTokenTracker accessTokenTracker;
+    private static User user_Data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,13 +64,99 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         manager = LoginManager.getInstance();
         initView();
         setUpDrawer();
-        /*setUpnavBar();
-        setUpViewPager();*/
         setUpSigninWithGoogle();
         setUpAlertDialog();
         setUpProgressDialog();
         getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
+        getDataFrom_Intent();
+       // CheckuserType();
+    }
 
+    /*private void CheckuserType() {
+        final LovelyCustomDialog dialog = new LovelyCustomDialog(HomeActivity.this)
+                .setCancelable(false)
+                .setIcon(R.drawable.commession_icon)
+                .setIconTintColor(ActivityCompat.getColor(HomeActivity.this,R.color.base))
+                .setTopColor(ActivityCompat.getColor(HomeActivity.this,R.color.colorPrimary));
+        if (user_Data.getUserCountry()==null)
+        {
+
+
+
+            final View view = getLayoutInflater().inflate(R.layout.alertdialog_choose_usertype,null);
+            final BubbleImageView bubbleImageView = (BubbleImageView) view.findViewById(R.id.bubble_userImage);
+            Button confirm = (Button) view.findViewById(R.id.confirmBtn);
+            Picasso.with(HomeActivity.this).load(user_Data.getUserPhotoUrl().toString()).into(bubbleImageView);
+            final RadioButton rb_normaluser = (RadioButton) view.findViewById(R.id.rb_normaluser);
+            final RadioButton rb_library = (RadioButton) view.findViewById(R.id.rb_library);
+            final RadioButton rb_publisher = (RadioButton) view.findViewById(R.id.rb_publisher);
+
+            confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    if (rb_normaluser.isChecked())
+                    {
+                        String userType = rb_normaluser.getText().toString();
+                        Toast.makeText(HomeActivity.this, "user is "+userType, Toast.LENGTH_SHORT).show();
+
+                    }
+                    else if (rb_library.isChecked())
+                    {
+                        String userType = rb_library.getText().toString();
+                        Toast.makeText(HomeActivity.this, "user is "+userType, Toast.LENGTH_SHORT).show();
+
+                    }
+                    else if (rb_publisher.isChecked())
+                    {
+                        String userType = rb_library.getText().toString();
+                        Toast.makeText(HomeActivity.this, "user is "+userType, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+            });
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    dialog.create();
+                    dialog.setView(view);
+                    dialog.show();
+
+                }
+            },1000);
+
+
+        }
+        else
+        {
+            dialog.dismiss();
+        }
+    }*/
+
+    private void getDataFrom_Intent() {
+        Intent intent = getIntent();
+        if (intent.hasExtra("userData"))
+        {
+            User UserData = (User) intent.getSerializableExtra("userData");
+
+            if (UserData!=null)
+            {
+                HomeActivity.user_Data= UserData;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Picasso.with(HomeActivity.this).load(Uri.parse(user_Data.getUserPhotoUrl())).fit().into(im_userImage);
+                        tv_userName.setText(user_Data.getUserName().toString().isEmpty()?"":user_Data.getUserName().toString());
+                        tv_userEmail.setText(user_Data.getUserEmail()==null?"":user_Data.getUserEmail().toString());
+
+                    }
+                },500);
+            }
+        }
     }
 
     private void setUpProgressDialog()
@@ -98,8 +177,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         /////////////////////////////////////////////////////////////
-        presenterImp =new PresenterImp(this,this);
-        presenterImp.getUserData();
+       /* presenterImp =new PresenterImp(this,this);
+        presenterImp.getUserData();*/
         /////////////////////////////////////////////////////////////
        /* pager = (ViewPager) findViewById(R.id.pager);*/
         /////////////////////////////////////////////////////////////
@@ -148,7 +227,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         SignOut();
                         progressDialog.dismiss();
                     }
-                },3000);
+                },4000);
 
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -165,11 +244,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onResult(@NonNull Status status) {
                 apiClient.disconnect();
-                manager.unregisterCallback(callbackManager);
-                manager.logOut();
-                finish();
+
             }
         });
+        manager.unregisterCallback(callbackManager);
+        manager.logOut();
+        finish();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -182,8 +262,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
     @Override
@@ -276,49 +354,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
-    @Override
-    public void OnSuccess(final NormalUserData userData) {
-        if (userData!=null)
-        {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Picasso.with(HomeActivity.this).load(Uri.parse(userData.getUserPhoto())).fit().into(im_userImage);
-                    tv_userName.setText(userData.getUserName().toString().isEmpty()?"":userData.getUserName().toString());
-                    tv_userEmail.setText(userData.getUserEmail()==null?"":userData.getUserEmail().toString());
-
-                }
-            },500);
-
-        }else
-            {
-                NavigateToChooserActivity();
-            }
-    }
-
-    private void NavigateToChooserActivity() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                manager.unregisterCallback(callbackManager);
-                accessTokenTracker.stopTracking();
-                manager.logOut();
-                apiClient.disconnect();
-                Auth.GoogleSignInApi.signOut(apiClient);
-                finish();
-            }
-        },5000);
-
-
-
-
-    }
-
-    @Override
-    public void OnFailed(String message) {
-        Toast.makeText(this, "Error "+message, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -342,11 +377,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     intent.addCategory(Intent.CATEGORY_HOME);
                     startActivity(intent);
                 }
-            },1500);
+            },500);
 
         }
 
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 }

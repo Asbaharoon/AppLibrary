@@ -37,9 +37,10 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="textPersonName"
             app:met_maxCharacters="50"
             android:maxLength="50"
+            android:inputType="textAutoComplete"
+
 
 
 
@@ -56,7 +57,7 @@
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Commission"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -70,8 +71,9 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="text"
-
+            android:inputType="textAutoComplete"
+            app:met_maxCharacters="20"
+            android:maxLength="20"
 
 
 
@@ -100,7 +102,7 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="text"
+            android:inputType="textAutoComplete"
             android:maxLength="15"
             app:met_maxCharacters="15"
 
@@ -133,7 +135,7 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="text"
+            android:inputType="textAutoComplete"
             app:met_maxCharacters="50"
             android:maxLength="50"
 
@@ -193,7 +195,7 @@
                     app:met_primaryColor="@color/base"
                     app:met_textColorHint="@color/base"
                     android:textSize="@dimen/_14sdp"
-                    android:inputType="text"
+                    android:inputType="textAutoComplete"
                     android:maxLength="20"
 
 

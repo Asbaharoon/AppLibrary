@@ -395,6 +395,12 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     }
 
     @Override
+    public void setNormalUser_invalidEmail_Error() {
+        n_userEmail.setError("invalid email");
+
+    }
+
+    @Override
     public void setNormalUserCountry_Error() {
         n_userCountry.setError("empty field");
 
@@ -423,6 +429,12 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     public void setPublisherEmail_Error() {
 
         publisherEmail.setError("empty field");
+
+    }
+
+    @Override
+    public void setPublisher_invalidEmail_Error() {
+        publisherEmail.setError("invalid email");
 
     }
 

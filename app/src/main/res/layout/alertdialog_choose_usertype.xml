@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/_5sdp"
+        >
+<com.github.siyamed.shapeimageview.BubbleImageView
+    android:id="@+id/bubble_userImage"
+    android:layout_width="@dimen/_60sdp"
+    android:layout_height="@dimen/_60sdp"
+    app:siArrowPosition="right"
+    android:src="@drawable/user_profile"
+    />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Who are you ?"
+            android:textSize="@dimen/_14sdp"
+            android:textColor="@color/black"
+            android:padding="@dimen/_5sdp"
+            />
+    </LinearLayout>
+<RadioGroup
+    android:id="@+id/rb_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RadioButton
+        android:id="@+id/rb_normaluser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Normal user"
+        app:buttonTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        android:checked="true"
+        android:textSize="@dimen/_12sdp"
+        />
+    <RadioButton
+        android:id="@+id/rb_library"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Library"
+        app:buttonTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_12sdp"
+
+        />
+    <RadioButton
+        android:id="@+id/rb_publisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="publisher"
+        app:buttonTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/_12sdp"
+        />
+</RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginBottom="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        >
+
+        <Button
+            android:id="@+id/confirmBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/base"
+            android:textSize="@dimen/_12sdp"
+            />
+    </LinearLayout>
+</LinearLayout>

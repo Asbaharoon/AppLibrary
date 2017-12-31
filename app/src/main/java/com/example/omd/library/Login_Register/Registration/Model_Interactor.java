@@ -12,12 +12,14 @@ public interface Model_Interactor {
         void setNormalUserFirstName_Error();
         void setNormalUserLastName_Error();
         void setNormalUserEmail_Error();
+        void setNormalUser_invalidEmail_Error();
         void setNormalUserCountry_Error();
         void setNormalUserPassword_Error();
 
         void setPublisherFirstName_Error();
         void setPublisherLastName_Error();
         void setPublisherEmail_Error();
+        void setPublisher_invalidEmail_Error();
         void setPublisherCountry_Error();
         void setPublisherPassword_Error();
 
