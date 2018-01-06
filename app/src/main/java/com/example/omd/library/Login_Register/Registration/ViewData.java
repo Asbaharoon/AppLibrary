@@ -37,5 +37,5 @@ public interface ViewData {
     void onNormalUserDataSuccess(NormalUserData normalUserData);
     void onPublisherDataSuccess(PublisherModel publisherModel);
     void onLibraryDataSuccess(LibraryModel libraryModel);
-
+//
 }

@@ -26,6 +26,7 @@ import com.romainpiel.shimmer.ShimmerTextView;
  */
 
 public class LoginFragment extends Fragment implements View.OnClickListener{
+    //
     private TextView signupTv;
     private ShimmerTextView shimmerTextView;
     private ExpandableRelativeLayout login_expandlayout;

@@ -19,7 +19,7 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
 
     }
 
-
+//
     @Override
     public void setNormalUserFirstName_Error() {
         if (viewData!=null)

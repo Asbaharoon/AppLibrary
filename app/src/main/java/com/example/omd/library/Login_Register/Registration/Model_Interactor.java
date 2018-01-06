@@ -40,6 +40,7 @@ public interface Model_Interactor {
         void onLibraryDataSuccess(LibraryModel libraryModel);
         void onFailed(String error);
     }
+    //
     void NormalUserRegistration(String userType,String first_name,String last_name,String email,String country,String password,String phone,String job,String interests,Model_Interactor.onCompleteListener listener);
     void PublisherRegistration(String userType,String first_name,String last_name,String email,String country,String password,String phone,String expertise,String website_url,Model_Interactor.onCompleteListener listener);
     void LibraryRegistration (String userType,String libName,String libEmail,String libCommession,String libCountry,String libExpertise,String libType,String libOtherType,String libPassword,Model_Interactor.onCompleteListener listener);

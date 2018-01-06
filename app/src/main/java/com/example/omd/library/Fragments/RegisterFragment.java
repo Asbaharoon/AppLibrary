@@ -33,6 +33,7 @@ import com.rengwuxian.materialedittext.validation.RegexpValidator;
  */
 
 public class RegisterFragment extends Fragment implements ViewData,View.OnClickListener{
+
     private ExpandableRelativeLayout layout_normal_user,layout_pub,layout_lib,library_spinner_expanded;
     private AppCompatSpinner spinner,lib_spinner;
     private MaterialEditText n_userFirstName,n_userLastName,n_userEmail,n_userPhone,n_userCountry,n_userJob,n_userInterests,n_userPassword;

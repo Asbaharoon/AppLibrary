@@ -41,6 +41,7 @@
             android:maxLength="50"
             android:inputType="textAutoComplete"
 
+
             />
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/library_email"
