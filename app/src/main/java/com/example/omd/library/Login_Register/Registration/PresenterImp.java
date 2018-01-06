@@ -1,7 +1,9 @@
 package com.example.omd.library.Login_Register.Registration;
 
 import com.example.omd.library.Fragments.RegisterFragment;
+import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.PublisherModel;
 
 /**
  * Created by Delta on 24/12/2017.
@@ -124,6 +126,14 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
+    public void setLibraryEmail_Error() {
+        if (viewData!=null)
+        {
+            viewData.setLibraryEmail_Error();
+        }
+    }
+
+    @Override
     public void setLibraryCommission_Error() {
         if (viewData!=null)
         {
@@ -192,19 +202,19 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
-    public void onPublisherDataSuccess() {
+    public void onPublisherDataSuccess(PublisherModel publisherModel) {
 
         if (viewData!=null)
         {
-            viewData.onPublisherDataSuccess();
+            viewData.onPublisherDataSuccess(publisherModel);
         }
     }
 
     @Override
-    public void onLibraryDataSuccess() {
+    public void onLibraryDataSuccess(LibraryModel libraryModel) {
         if (viewData!=null)
         {
-            viewData.onLibraryDataSuccess();
+            viewData.onLibraryDataSuccess(libraryModel);
         }
     }
 
@@ -220,22 +230,22 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
 
 
     @Override
-    public void NormalUserRegistration(String first_name, String last_name, String email, String country, String password, String phone, String job, String interests) {
+    public void NormalUserRegistration(String userType,String first_name, String last_name, String email, String country, String password, String phone, String job, String interests) {
         interactor = new Model_InteractorImp();
-        interactor.NormalUserRegistration(first_name,last_name,email,country,password,phone,job,interests,this);
+        interactor.NormalUserRegistration(userType,first_name,last_name,email,country,password,phone,job,interests,this);
     }
 
     @Override
-    public void PublisherRegistration(String first_name, String last_name, String email, String country, String password, String phone, String expertise, String website_url) {
+    public void PublisherRegistration(String userType,String first_name, String last_name, String email, String country, String password, String phone, String expertise, String website_url) {
         interactor = new Model_InteractorImp();
-        interactor.PublisherRegistration(first_name,last_name,email,country,password,phone,expertise,website_url,this);
+        interactor.PublisherRegistration(userType,first_name,last_name,email,country,password,phone,expertise,website_url,this);
 
     }
 
     @Override
-    public void LibraryRegistration(String libName, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword) {
+    public void LibraryRegistration(String userType,String libName,String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword) {
         interactor = new Model_InteractorImp();
-        interactor.LibraryRegistration(libName,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,this);
+        interactor.LibraryRegistration(userType,libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,this);
 
     }
 }

@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.omd.library.Login_Register.Registration.PresenterImp;
 import com.example.omd.library.Login_Register.Registration.ViewData;
+import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.R;
 import com.example.omd.library.Services.Tags;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -35,7 +37,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     private AppCompatSpinner spinner,lib_spinner;
     private MaterialEditText n_userFirstName,n_userLastName,n_userEmail,n_userPhone,n_userCountry,n_userJob,n_userInterests,n_userPassword;
     private MaterialEditText publisher_firstName,publisher_lastName,publisherEmail,publisherCountry,publisherPhone,publisherExpertise,publisher_webSite,publisherPassword;
-    private MaterialEditText libraryName,libraryCommission,libraryCountry,libraryExpertise,libraryPassword,library_otherType;
+    private MaterialEditText libraryName,libraryEmail,libraryCommission,libraryCountry,libraryExpertise,libraryPassword,library_otherType;
     private Button n_SignInBtn,lib_SignInBtn,pub_SignInBtn;
     Context mContext;
     Handler handler;
@@ -336,6 +338,10 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
             libraryName.setShowClearButton(true);
             libraryName.addValidator(new RegexpValidator("invalid library name","[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
 
+            libraryEmail = (MaterialEditText) libraryView.findViewById(R.id.library_email);
+            libraryEmail.setAutoValidate(true);
+            libraryEmail.setShowClearButton(true);
+            libraryEmail.addValidator(new RegexpValidator(getString(R.string.invalidEmail), Tags.email_Regex));
 
             libraryCommission = (MaterialEditText) libraryView.findViewById(R.id.library_commission);
             libraryCommission.setAutoValidate(true);
@@ -458,6 +464,11 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     }
 
     @Override
+    public void setLibraryEmail_Error() {
+        libraryEmail.setError("invalid email");
+    }
+
+    @Override
     public void setLibraryCommission_Error() {
         libraryCommission.setError("empty field");
 
@@ -507,12 +518,12 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     }
 
     @Override
-    public void onPublisherDataSuccess() {
+    public void onPublisherDataSuccess(PublisherModel publisherModel) {
         Toast.makeText(mContext, "pub success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onLibraryDataSuccess() {
+    public void onLibraryDataSuccess(LibraryModel libraryModel) {
         Toast.makeText(mContext, "lib success", Toast.LENGTH_SHORT).show();
     }
 
@@ -522,6 +533,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
         switch (view.getId())
         {
             case R.id.n_SignInBtn:
+                String userType1=spinner.getSelectedItem().toString();
                 String n_fname = n_userFirstName.getText().toString();
                 String n_lname = n_userLastName.getText().toString();
                 String n_email = n_userEmail.getText().toString();
@@ -530,10 +542,11 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                 String n_phone = n_userPhone.getText().toString();
                 String n_job = n_userJob.getText().toString();
                 String n_interests =n_userInterests.getText().toString();
-                presenter.NormalUserRegistration(n_fname,n_lname,n_email,n_country,n_password,n_phone,n_job,n_interests);
+                presenter.NormalUserRegistration(userType1,n_fname,n_lname,n_email,n_country,n_password,n_phone,n_job,n_interests);
                 break;
 
             case R.id.pub_SignInBtn:
+                String userType2=spinner.getSelectedItem().toString();
                 String pub_fname = publisher_firstName.getText().toString();
                 String pub_lname = publisher_lastName.getText().toString();
                 String pub_email = publisherEmail.getText().toString();
@@ -542,10 +555,12 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                 String pub_phone = publisherPhone.getText().toString();
                 String pub_expertise = publisherExpertise.getText().toString();
                 String pub_weburl =publisher_webSite.getText().toString();
-                presenter.PublisherRegistration(pub_fname,pub_lname,pub_email,pub_country,pub_password,pub_phone,pub_expertise,pub_weburl);
+                presenter.PublisherRegistration(userType2,pub_fname,pub_lname,pub_email,pub_country,pub_password,pub_phone,pub_expertise,pub_weburl);
                 break;
             case R.id.lib_SignInBtn:
+                String userType3=spinner.getSelectedItem().toString();
                 String lib_name = libraryName.getText().toString();
+                String lib_email=libraryEmail.getText().toString();
                 String lib_commission = libraryCommission.getText().toString();
                 String lib_country = libraryCountry.getText().toString();
                 String lib_expertise = libraryExpertise.getText().toString();
@@ -556,7 +571,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                 {
                     lib_otherType = library_otherType.getText().toString();
                 }
-                presenter.LibraryRegistration(lib_name,lib_commission,lib_country,lib_expertise,lib_type,lib_otherType,lib_password);
+                presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_commission,lib_country,lib_expertise,lib_type,lib_otherType,lib_password);
                 break;
         }
 

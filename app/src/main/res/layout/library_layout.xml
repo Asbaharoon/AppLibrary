@@ -41,12 +41,38 @@
             android:maxLength="50"
             android:inputType="textAutoComplete"
 
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Email"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/email_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+            android:maxLength="30"
+            app:met_maxCharacters="30"
 
 
 
 
             />
-
 
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/library_commission"

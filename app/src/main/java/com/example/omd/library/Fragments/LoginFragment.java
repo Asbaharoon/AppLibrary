@@ -17,6 +17,7 @@ import com.andexert.library.RippleView;
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 import com.example.omd.library.Activities.HomeActivity;
 import com.example.omd.library.R;
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -27,6 +28,7 @@ import com.romainpiel.shimmer.ShimmerTextView;
 public class LoginFragment extends Fragment implements View.OnClickListener{
     private TextView signupTv;
     private ShimmerTextView shimmerTextView;
+    private ExpandableRelativeLayout login_expandlayout;
     private FragmentTransactionExtended fragmentTransactionExtended;
     private Button singninBtn;
     private RippleView rippleView,ripple_et_forget_password;
@@ -59,6 +61,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private void initView(View view) {
         mContext = view.getContext();
         shimmerTextView = (ShimmerTextView) view.findViewById(R.id.shimmer);
+        login_expandlayout = (ExpandableRelativeLayout) view.findViewById(R.id.login_expandlayout);
+        login_expandlayout.collapse();
         handler= new Handler();
         rippleView = (RippleView) view.findViewById(R.id.ripple_et);
         ripple_et_forget_password = (RippleView) view.findViewById(R.id.ripple_et_forget_password);
@@ -122,6 +126,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     }
 
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                login_expandlayout.expand();
+            }
+        },1100);
+    }
 }

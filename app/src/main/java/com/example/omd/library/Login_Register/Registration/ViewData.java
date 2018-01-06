@@ -1,6 +1,8 @@
 package com.example.omd.library.Login_Register.Registration;
 
+import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.PublisherModel;
 
 /**
  * Created by Delta on 24/12/2017.
@@ -22,6 +24,7 @@ public interface ViewData {
     void setPublisherPassword_Error();
 
     void setLibraryName_Error();
+    void setLibraryEmail_Error();
     void setLibraryCommission_Error();
     void setLibraryOtherType_Error();
     void setLibraryCountry_Error();
@@ -32,7 +35,7 @@ public interface ViewData {
     void navigateTO_HomeActivity();
     void setError(String error);
     void onNormalUserDataSuccess(NormalUserData normalUserData);
-    void onPublisherDataSuccess();
-    void onLibraryDataSuccess();
+    void onPublisherDataSuccess(PublisherModel publisherModel);
+    void onLibraryDataSuccess(LibraryModel libraryModel);
 
 }

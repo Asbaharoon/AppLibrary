@@ -35,12 +35,23 @@
             android:layout_below="@+id/logo"
             />
     </LinearLayout>
+
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/login_expandlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_60sdp"
+        app:ael_expanded="false"
+        app:ael_duration="1000"
+        app:ael_interpolator="bounce"
+        app:ael_orientation="vertical"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="@dimen/_60sdp"
             >
 
             <com.wrapp.floatlabelededittext.FloatLabeledEditText
@@ -185,6 +196,8 @@
 
 
         </LinearLayout>
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
     <com.andexert.library.RippleView
         android:id="@+id/ripple_et"

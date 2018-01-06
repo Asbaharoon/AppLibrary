@@ -23,6 +23,8 @@ public class NormalUserData implements Serializable {
     private String userInterests;
     @SerializedName("photo_link")
     private String userPhoto;
+    private String userType;
+
 
     public NormalUserData() {
     }
@@ -43,6 +45,14 @@ public class NormalUserData implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getUserName() {
