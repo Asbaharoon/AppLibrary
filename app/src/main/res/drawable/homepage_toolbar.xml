@@ -3,9 +3,9 @@
     <gradient
         android:type="linear"
         android:angle="180"
-        android:startColor="@color/home_toolbar_start"
-        android:centerColor="@color/home_toolbar_center"
-        android:endColor="@color/home_toolbar_start"
+        android:startColor="@color/colorPrimary"
+        android:centerColor="@color/centercolor"
+        android:endColor="@color/colorPrimary"
         />
 
 </shape>

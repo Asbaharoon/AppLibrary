@@ -167,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         progressDialog.setCancelable(false);
         ProgressBar progressBar = new ProgressBar(this);
         Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.centercolor), PorterDuff.Mode.SRC_IN);
         progressDialog.setIndeterminateDrawable(drawable);
     }
     private void initView()

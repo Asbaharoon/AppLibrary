@@ -49,7 +49,7 @@ public class Home_Fragment extends Fragment {
         AHBottomNavigationAdapter adapter = new AHBottomNavigationAdapter(getActivity(),R.menu.navbar_menu);
         navBar.setDefaultBackgroundColor(ContextCompat.getColor(mContext,R.color.base));
         navBar.setInactiveColor(ContextCompat.getColor(mContext,R.color.dark_gray));
-        navBar.setAccentColor(ContextCompat.getColor(mContext, R.color.ahnav));
+        navBar.setAccentColor(ContextCompat.getColor(mContext, R.color.centercolor));
         adapter.setupWithBottomNavigation(navBar);
         navBar.setCurrentItem(0);
         navBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);

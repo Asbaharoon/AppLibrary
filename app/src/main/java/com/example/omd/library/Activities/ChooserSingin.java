@@ -146,7 +146,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         dialog.setMessage("Sign in....");
         ProgressBar progressBar =new ProgressBar(this);
         Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.centercolor), PorterDuff.Mode.SRC_IN);
         dialog.setIndeterminateDrawable(drawable);
         dialog.setCancelable(false);
     }
