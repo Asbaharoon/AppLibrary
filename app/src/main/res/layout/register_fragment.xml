@@ -10,9 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
-        android:background="#01579B"
-        app:backgroundTint="#00E5FF"
+        android:background="@color/centercolor"
+        android:backgroundTint="@color/centercolor"
        android:spinnerMode="dropdown"
+        android:layout_marginBottom="@dimen/_10sdp"
         ></android.support.v7.widget.AppCompatSpinner>
     <com.github.aakira.expandablelayout.ExpandableRelativeLayout
 

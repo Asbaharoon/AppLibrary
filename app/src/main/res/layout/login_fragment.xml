@@ -113,8 +113,8 @@
                         android:layout_height="wrap_content"
                         android:text="Remember me"
                         android:textColor="@color/base"
-                        app:backgroundTint="@color/signupbtn_start"
-                        app:buttonTint="@color/signupbtn_start"
+                        app:backgroundTint="@color/colorPrimary"
+                        app:buttonTint="@color/colorPrimary"
                         android:checked="false"
                         android:gravity="center|left"
                         android:textSize="@dimen/_12sdp"
@@ -204,17 +204,38 @@
         android:layout_alignParentEnd="true"
 
         >
-    <TextView
-        android:id="@+id/login_fragment_signuptv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Don’t have an account yet? Signup Now."
-        android:textColor="@color/base"
-        android:textSize="@dimen/_12sdp"
-        android:clickable="true"
-        android:paddingTop="@dimen/_2sdp"
-        android:paddingBottom="@dimen/_2sdp"
-        />
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         >
+         <TextView
+             android:id="@+id/login_fragment_signuptv"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Don’t have an account yet? "
+             android:textColor="@color/centercolor"
+             android:textSize="@dimen/_12sdp"
+             android:clickable="true"
+             android:paddingTop="@dimen/_2sdp"
+             android:paddingBottom="@dimen/_2sdp"
+             android:layout_gravity="right"
+             android:gravity="right"
+             />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Signup Now."
+             android:textColor="@color/label"
+             android:textSize="@dimen/_12sdp"
+             android:clickable="true"
+             android:paddingTop="@dimen/_2sdp"
+             android:paddingBottom="@dimen/_2sdp"
+             android:layout_gravity="left"
+             android:gravity="left"
+             />
+     </LinearLayout>
+
     </com.andexert.library.RippleView>
     </com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>
 

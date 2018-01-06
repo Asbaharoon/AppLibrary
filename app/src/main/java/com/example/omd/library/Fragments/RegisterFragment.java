@@ -2,7 +2,6 @@ package com.example.omd.library.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -104,7 +103,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
         spinner.setSelection(0);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext,R.layout.spinner_row,getResources().getStringArray(R.array.spinnerArray));
         spinner.setAdapter(adapter);
-        spinner.getBackground().setColorFilter(ContextCompat.getColor(mContext,R.color.label), PorterDuff.Mode.SRC_ATOP);
+        //spinner.getBackground().setColorFilter(ContextCompat.getColor(mContext,R.color.label), PorterDuff.Mode.SRC_ATOP);
 
         if (spinner.getSelectedItem().toString().equals("Normal user"))
         {

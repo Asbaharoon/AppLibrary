@@ -21,7 +21,7 @@
             android:id="@+id/chooser_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@drawable/chooser_activity_toolbar"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -37,7 +37,7 @@
             android:layout_height="@dimen/_70sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:scaleType="fitXY"
             android:src="@android:drawable/star_big_on"
 
@@ -51,7 +51,7 @@
             android:textSize="@dimen/_14sdp"
             android:text="Welcom to, Library"
             app:reflectionColor="@color/home_toolbar_start"
-            android:layout_marginBottom="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_20sdp"
             android:layout_below="@+id/logo"
             />
     </LinearLayout>
@@ -87,6 +87,8 @@
             android:background="@drawable/signin_btn_bg"
             android:textAllCaps="false"
             android:textSize="@dimen/_12sdp"
+            android:drawableLeft="@drawable/mail"
+            android:paddingLeft="@dimen/_11sdp"
 
             />
         </com.andexert.library.RippleView>
