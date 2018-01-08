@@ -13,6 +13,42 @@
         android:orientation="vertical"
         >
 
+        <FrameLayout
+            android:id="@+id/userPhoto_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/add_photo_tv"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_photo"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                app:civ_border_width="@dimen/_1sdp"
+                app:civ_border_color="@color/base"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
+
+                />
+            <TextView
+                android:id="@+id/addPhoto_tv"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:textColor="@color/base"
+                android:textSize="@dimen/_12sdp"
+                android:text="Add Photo"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:background="@drawable/add_photo_tv"
+                android:padding="@dimen/_3sdp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </FrameLayout>
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/user_firstName"
             android:layout_width="match_parent"

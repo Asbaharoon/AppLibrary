@@ -1,5 +1,7 @@
 package com.example.omd.library.Activities;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -40,5 +42,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.fragmentContainer);
+        fragment.onActivityResult(requestCode, resultCode, data);
+    }
 }

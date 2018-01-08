@@ -2,9 +2,16 @@ package com.example.omd.library.Fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.OpenableColumns;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.view.Gravity;
@@ -14,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +35,11 @@ import com.example.omd.library.Services.Tags;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
+
+import java.io.FileNotFoundException;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Delta on 08/12/2017.
@@ -36,6 +49,8 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
 
     private ExpandableRelativeLayout layout_normal_user,layout_pub,layout_lib,library_spinner_expanded;
     private AppCompatSpinner spinner,lib_spinner;
+    private FrameLayout n_userPhoto_container;
+    private CircleImageView n_circleImageView;
     private MaterialEditText n_userFirstName,n_userLastName,n_userEmail,n_userPhone,n_userCountry,n_userJob,n_userInterests,n_userPassword;
     private MaterialEditText publisher_firstName,publisher_lastName,publisherEmail,publisherCountry,publisherPhone,publisherExpertise,publisher_webSite,publisherPassword;
     private MaterialEditText libraryName,libraryEmail,libraryCommission,libraryCountry,libraryExpertise,libraryPassword,library_otherType;
@@ -43,6 +58,11 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     Context mContext;
     Handler handler;
     PresenterImp presenter;
+    public Uri userImage_URI=null;
+    public Bitmap userBitmap_image=null;
+    private static final int IMAGE_REQUEST=200;
+    private TextView addPhoto_tv;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +78,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
 
     private void initView(View view)
     {
+
         handler = new Handler();
         mContext = view.getContext();
         layout_normal_user = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_normal_user);
@@ -224,6 +245,11 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
         View userView = view.findViewById(R.id.normal_user_layout);
         if (userView!=null)
         {
+            n_userPhoto_container = (FrameLayout) userView.findViewById(R.id.userPhoto_container);
+            n_userPhoto_container.setOnClickListener(this);
+            addPhoto_tv = (TextView) userView.findViewById(R.id.addPhoto_tv);
+            n_circleImageView = (CircleImageView) userView.findViewById(R.id.user_photo);
+
             n_userFirstName = (MaterialEditText) userView.findViewById(R.id.user_firstName);
             n_userFirstName.setAutoValidate(true);
             n_userFirstName.addValidator(new RegexpValidator("invalid first name","[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
@@ -526,6 +552,8 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     @Override
     public void onLibraryDataSuccess(LibraryModel libraryModel) {
         Toast.makeText(mContext, "lib success", Toast.LENGTH_SHORT).show();
+        CreateDialog();
+
     }
 
 
@@ -574,7 +602,78 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                 }
                 presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_commission,lib_country,lib_expertise,lib_type,lib_otherType,lib_password);
                 break;
+
+            case R.id.userPhoto_container:
+                SelectUserPhoto();
+                break;
+
+
         }
 
+    }
+
+    private void SelectUserPhoto() {
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("image/*");
+            getActivity().startActivityForResult(intent.createChooser(intent,"Choose your photo"),IMAGE_REQUEST);
+
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode==IMAGE_REQUEST)
+        {
+
+            if (data!=null)
+            {
+
+
+                try {
+                    userImage_URI = data.getData();
+                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI,null,null,null,null);
+                    if (cursor.moveToFirst())
+                    {
+                        String imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        Toast.makeText(mContext, ""+imageName, Toast.LENGTH_SHORT).show();
+
+                    }
+                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
+                    n_circleImageView.setImageBitmap(userBitmap_image);
+                    addPhoto_tv.setVisibility(View.GONE);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+    }
+
+    private void CreateDialog()
+    {
+        LovelyStandardDialog dialog = new LovelyStandardDialog(getActivity())
+                .setTitle("Select Library Location...")
+                .setMessage("Your current location is the library location ?")
+                .setTopColor(ActivityCompat.getColor(getActivity(),R.color.centercolor))
+                .setIcon(R.drawable.help_menu_icon)
+                .setCancelable(false)
+                .setPositiveButton("yes", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                })
+                .setPositiveButtonColor(ContextCompat.getColor(getActivity(),R.color.centercolor))
+                .setNegativeButton("Select Location", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+        dialog.create();
+        dialog.show();
     }
 }

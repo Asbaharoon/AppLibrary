@@ -17,6 +17,9 @@ public class User implements Serializable {
     private String userEmail;
     @SerializedName("photo_link")
     private String userPhotoUrl;
+    private String userType;
+
+
 
     public User(String userName, String userEmail, String userPhotoUrl) {
         this.userName = userName;
@@ -30,6 +33,14 @@ public class User implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getUserName() {
