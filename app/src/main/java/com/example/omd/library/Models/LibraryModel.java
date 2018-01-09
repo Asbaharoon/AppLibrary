@@ -16,9 +16,10 @@ public class LibraryModel implements Serializable {
     private String lib_expertise;
     private String lib_type;
     private String lib_password;
+    private String lat;
+    private String lng;
 
-    public LibraryModel() {
-    }
+
 
 
     public LibraryModel(String lib_name, String lib_email, String lib_commission, String lib_country, String lib_expertise, String lib_type, String lib_password) {
@@ -101,6 +102,25 @@ public class LibraryModel implements Serializable {
 
     public void setLib_password(String lib_password) {
         this.lib_password = lib_password;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public LibraryModel() {
     }
 
 }

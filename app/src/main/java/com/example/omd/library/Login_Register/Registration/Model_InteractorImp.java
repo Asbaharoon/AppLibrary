@@ -81,7 +81,7 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
     @Override
-    public void LibraryRegistration(String userType,String libName,String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword, onCompleteListener listener) {
+    public void LibraryRegistration(String userType,String libName,String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword,String lat,String lng, onCompleteListener listener) {
         if (TextUtils.isEmpty(libName))
         {
             listener.setLibraryName_Error();
@@ -117,9 +117,17 @@ public class Model_InteractorImp implements Model_Interactor {
             {
             listener.setLibraryPassword_Error();
             }
+            else if (TextUtils.isEmpty(lat))
+            {
+                listener.setLibraryLatitude_Error();
+            }
+            else if (TextUtils.isEmpty(lng))
+            {
+                listener.setLibraryLongitude_Error();
+            }
             else
                 {
-                Registration_LibraryData(libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,listener);
+                Registration_LibraryData(libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,lat,lng,listener);
 
                 }
         }
@@ -132,9 +140,17 @@ public class Model_InteractorImp implements Model_Interactor {
         {
             listener.setLibraryPassword_Error();
         }
+        else if (TextUtils.isEmpty(lat))
+        {
+            listener.setLibraryLatitude_Error();
+        }
+        else if (TextUtils.isEmpty(lng))
+        {
+            listener.setLibraryLongitude_Error();
+        }
         else
         {
-            Registration_LibraryData(libName,libEmail, libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,listener);
+            Registration_LibraryData(libName,libEmail, libCommission,libCountry,libExpertise,libType,libOtherType,lat,lng,libPassword,listener);
         }
     }
 
@@ -150,7 +166,7 @@ public class Model_InteractorImp implements Model_Interactor {
         //inside Response write this line after initialize publisher object
         listener.onPublisherDataSuccess(new PublisherModel());
     }
-    private void Registration_LibraryData(String libName,String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword, onCompleteListener listener)
+    private void Registration_LibraryData(String libName,String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword,String lat,String lng, onCompleteListener listener)
     {
         //
         //write the code here

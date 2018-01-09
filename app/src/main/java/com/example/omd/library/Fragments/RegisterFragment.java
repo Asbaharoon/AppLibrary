@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.omd.library.Activities.MapsActivity;
 import com.example.omd.library.Login_Register.Registration.PresenterImp;
 import com.example.omd.library.Login_Register.Registration.ViewData;
 import com.example.omd.library.Models.LibraryModel;
@@ -33,6 +35,7 @@ import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.R;
 import com.example.omd.library.Services.Tags;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.google.android.gms.maps.model.LatLng;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
@@ -61,7 +64,15 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     public Uri userImage_URI=null;
     public Bitmap userBitmap_image=null;
     private static final int IMAGE_REQUEST=200;
+    private static final int REQUEST_CODE=300;
+    private static final int PERMISSION_REQUEST=400;
     private TextView addPhoto_tv;
+
+    private static final String INTERNET="android.permission.INTERNET";
+    private static final String ACCESS_COARSE_LOCATION="android.permission.ACCESS_COARSE_LOCATION";
+    private static final String ACCESS_FINE_LOCATION="android.permission.ACCESS_FINE_LOCATION";
+    private static LatLng latLng =null;
+    private static LibraryModel model;
 
     @Nullable
     @Override
@@ -72,6 +83,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
         init_normalUserView(view);
         init_publisherView(view);
         init_libraryView(view);
+
         presenter = new PresenterImp(this);
         return view;
     }
@@ -520,6 +532,16 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     }
 
     @Override
+    public void setLibraryLatitude_Error() {
+        CreateDialog();
+    }
+
+    @Override
+    public void setLibraryLongitude_Error() {
+        CreateDialog();
+    }
+
+    @Override
     public void showProgressDialog() {
 
     }
@@ -552,7 +574,29 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
     @Override
     public void onLibraryDataSuccess(LibraryModel libraryModel) {
         Toast.makeText(mContext, "lib success", Toast.LENGTH_SHORT).show();
-        CreateDialog();
+         model= libraryModel;
+        if (TextUtils.isEmpty(model.getLat())&&TextUtils.isEmpty(model.getLng()))
+        {
+
+
+
+        }
+        else
+            {
+                if (latLng!=null)
+                {
+                    model.setLat(String.valueOf(latLng.latitude));
+                    model.setLng(String.valueOf(latLng.longitude));
+                    Toast.makeText(mContext, "name"+model.getLib_name()+"\n"+"lat"+model.getLat(), Toast.LENGTH_SHORT).show();
+                }
+                else
+                    {
+                        Toast.makeText(mContext, "null", Toast.LENGTH_SHORT).show();
+                        CreateDialog();
+
+                    }
+                Toast.makeText(mContext, "null2", Toast.LENGTH_SHORT).show();
+            }
 
     }
 
@@ -600,7 +644,7 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                 {
                     lib_otherType = library_otherType.getText().toString();
                 }
-                presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_commission,lib_country,lib_expertise,lib_type,lib_otherType,lib_password);
+                presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_commission,lib_country,lib_expertise,lib_type,lib_otherType,lib_password,"","");
                 break;
 
             case R.id.userPhoto_container:
@@ -650,6 +694,33 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                 }
             }
         }
+        else if (REQUEST_CODE==requestCode&&resultCode==getActivity().RESULT_OK)
+        {
+            if (data!=null)
+            {
+                if (data.hasExtra("lat")&&data.hasExtra("lng"))
+                {
+                    double lat = data.getExtras().getDouble("lat");
+                    double lng = data.getExtras().getDouble("lng");
+                    latLng = new LatLng(lat,lng);
+                    String userType=spinner.getSelectedItem().toString();
+                    String lib_name = libraryName.getText().toString();
+                    String lib_email=libraryEmail.getText().toString();
+                    String lib_commission = libraryCommission.getText().toString();
+                    String lib_country = libraryCountry.getText().toString();
+                    String lib_expertise = libraryExpertise.getText().toString();
+                    String lib_password = libraryPassword.getText().toString();
+                    String lib_type = lib_spinner.getSelectedItem().toString();
+                    String lib_otherType="";
+                    if (lib_type.equals("Other"))
+                    {
+                        lib_otherType = library_otherType.getText().toString();
+                    }
+                    presenter.LibraryRegistration(userType,lib_name,lib_email,lib_commission,lib_country,lib_expertise,lib_type,lib_otherType,lib_password,String.valueOf(lat),String.valueOf(lng));
+                }
+
+            }
+        }
     }
 
     private void CreateDialog()
@@ -671,9 +742,19 @@ public class RegisterFragment extends Fragment implements ViewData,View.OnClickL
                     @Override
                     public void onClick(View view) {
 
+                                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                                getActivity().startActivityForResult(intent,REQUEST_CODE);
+
+
                     }
                 });
         dialog.create();
         dialog.show();
     }
+
+
+
+
+
+
 }

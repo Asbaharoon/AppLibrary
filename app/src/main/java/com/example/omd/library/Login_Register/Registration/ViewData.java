@@ -29,6 +29,8 @@ public interface ViewData {
     void setLibraryOtherType_Error();
     void setLibraryCountry_Error();
     void setLibraryPassword_Error();
+    void setLibraryLatitude_Error();
+    void setLibraryLongitude_Error();
 
     void showProgressDialog();
     void hideProgressDialog();

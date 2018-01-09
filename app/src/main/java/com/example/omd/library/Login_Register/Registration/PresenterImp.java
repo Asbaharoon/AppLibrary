@@ -166,6 +166,22 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
+    public void setLibraryLatitude_Error() {
+        if (viewData!=null)
+        {
+            viewData.setLibraryLatitude_Error();
+        }
+    }
+
+    @Override
+    public void setLibraryLongitude_Error() {
+        if (viewData!=null)
+        {
+            viewData.setLibraryLongitude_Error();
+        }
+    }
+
+    @Override
     public void showProgress_Dialog() {
         if (viewData!=null)
         {
@@ -243,9 +259,11 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
-    public void LibraryRegistration(String userType,String libName,String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword) {
+    public void LibraryRegistration(String userType, String libName, String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword, String lat, String lng) {
         interactor = new Model_InteractorImp();
-        interactor.LibraryRegistration(userType,libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,this);
+        interactor.LibraryRegistration(userType,libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,lat,lng,this);
 
     }
+
+
 }
