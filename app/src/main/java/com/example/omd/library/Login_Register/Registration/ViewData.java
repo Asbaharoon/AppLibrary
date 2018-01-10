@@ -29,13 +29,11 @@ public interface ViewData {
     void setLibraryOtherType_Error();
     void setLibraryCountry_Error();
     void setLibraryPassword_Error();
-    void setLibraryLatitude_Error();
-    void setLibraryLongitude_Error();
+    void setLibraryLat_Lng_Error();
 
     void showProgressDialog();
     void hideProgressDialog();
-    void navigateTO_HomeActivity();
-    void setError(String error);
+    void onFailed(String error);
     void onNormalUserDataSuccess(NormalUserData normalUserData);
     void onPublisherDataSuccess(PublisherModel publisherModel);
     void onLibraryDataSuccess(LibraryModel libraryModel);

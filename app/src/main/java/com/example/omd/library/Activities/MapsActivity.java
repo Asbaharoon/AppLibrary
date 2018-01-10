@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -105,20 +106,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                             List<Address> addresses = geocoder.getFromLocationName(lib_loc,1);
                             if (addresses.size()>0)
                             {
-                                latLng = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
-                                mMap.clear();
+                                if (addresses.get(0)!=null)
+                                {
+                                    latLng = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
+                                    mMap.clear();
 
-                                mMap.setMyLocationEnabled(false);
-                                mMap.addMarker(new MarkerOptions()
-                                        .icon(BitmapDescriptorFactory.defaultMarker())
-                                        .title(TextUtils.isEmpty(addresses.get(0).getLocality().toString())?"unknown":addresses.get(0).getLocality().toString())
-                                        .position(new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude())));
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
-                                tv_ok.setVisibility(View.VISIBLE);
+                                    mMap.setMyLocationEnabled(false);
+                                    mMap.addMarker(new MarkerOptions()
+                                            .icon(BitmapDescriptorFactory.defaultMarker())
+                                            .title(addresses.get(0).getLocality().toString().isEmpty()||addresses.get(0).getLocality().toString()==null?"unknown":addresses.get(0).getLocality().toString())
+                                            .position(new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude())));
+                                    Log.e("title", addresses.get(0).getLocality());
+                                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
+                                    tv_ok.setVisibility(View.VISIBLE);
 
 
-                                InputMethodManager methodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                methodManager.hideSoftInputFromWindow(library_search_ed.getWindowToken(),0);
+                                    InputMethodManager methodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    methodManager.hideSoftInputFromWindow(library_search_ed.getWindowToken(),0);
+
+                                }
+                                else
+                                    {
+
+                                    }
 
                             }
                             else

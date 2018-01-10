@@ -1,5 +1,7 @@
 package com.example.omd.library.Login_Register.Registration;
 
+import android.content.Context;
+
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
@@ -31,20 +33,18 @@ public interface Model_Interactor {
         void setLibraryOtherType_Error();
         void setLibraryCountry_Error();
         void setLibraryPassword_Error();
-        void setLibraryLatitude_Error();
-        void setLibraryLongitude_Error();
+        void setLibraryLat_lng_Error();
 
 
         void showProgress_Dialog();
         void hideProgress_Dialog();
-        void navigate_TO_HomeActivity();
         void onNormalUserDataSuccess(NormalUserData normalUserData);
         void onPublisherDataSuccess(PublisherModel publisherModel);
         void onLibraryDataSuccess(LibraryModel libraryModel);
         void onFailed(String error);
     }
     //
-    void NormalUserRegistration(String userType,String first_name,String last_name,String email,String country,String password,String phone,String job,String interests,Model_Interactor.onCompleteListener listener);
-    void PublisherRegistration(String userType,String first_name,String last_name,String email,String country,String password,String phone,String expertise,String website_url,Model_Interactor.onCompleteListener listener);
-    void LibraryRegistration (String userType,String libName,String libEmail,String libCommession,String libCountry,String libExpertise,String libType,String libOtherType,String libPassword,String lat,String lng,Model_Interactor.onCompleteListener listener);
+    void NormalUserRegistration(String userType, String first_name, String last_name, String email, String country, String password, String phone, String job, String interests, Model_Interactor.onCompleteListener listener, Context context);
+    void PublisherRegistration(String userType,String first_name,String last_name,String email,String country,String password,String phone,String expertise,String website_url,Model_Interactor.onCompleteListener listener,Context context);
+    void LibraryRegistration (String userType,String libName,String libEmail,String libCommession,String libCountry,String libExpertise,String libType,String libOtherType,String libPassword,String lat,String lng,Model_Interactor.onCompleteListener listener,Context context);
 }

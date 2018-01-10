@@ -209,7 +209,7 @@ public class PlaceAutocompleteAdapter
         // 60s for a result from the API.
         try {
             Tasks.await(results, 60, TimeUnit.SECONDS);
-        } catch (ExecutionException | InterruptedException | TimeoutException e) {
+        } catch (ExecutionException | InterruptedException | TimeoutException e ) {
             e.printStackTrace();
         }
 

@@ -1,6 +1,7 @@
 package com.example.omd.library.Login_Register.Registration;
 
-import com.example.omd.library.Fragments.RegisterFragment;
+import android.content.Context;
+
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
@@ -10,16 +11,17 @@ import com.example.omd.library.Models.PublisherModel;
  */
 
 public class PresenterImp implements Presenter,Model_Interactor.onCompleteListener {
-    RegisterFragment mContext;
+    Context mContext;
     ViewData viewData;
     Model_Interactor interactor;
-    public PresenterImp(RegisterFragment mContext) {
+    public PresenterImp(Context mContext,ViewData viewData) {
         this.mContext = mContext;
-        this.viewData =  mContext;
+        this.viewData=viewData;
+
 
     }
 
-//
+
     @Override
     public void setNormalUserFirstName_Error() {
         if (viewData!=null)
@@ -166,20 +168,13 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
-    public void setLibraryLatitude_Error() {
+    public void setLibraryLat_lng_Error() {
         if (viewData!=null)
         {
-            viewData.setLibraryLatitude_Error();
+            viewData.setLibraryLat_Lng_Error();
         }
     }
 
-    @Override
-    public void setLibraryLongitude_Error() {
-        if (viewData!=null)
-        {
-            viewData.setLibraryLongitude_Error();
-        }
-    }
 
     @Override
     public void showProgress_Dialog() {
@@ -199,14 +194,6 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
         }
     }
 
-    @Override
-    public void navigate_TO_HomeActivity() {
-        if (viewData!=null)
-        {
-            viewData.navigateTO_HomeActivity();
-
-        }
-    }
 
     @Override
     public void onNormalUserDataSuccess(NormalUserData normalUserData) {
@@ -239,7 +226,7 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     public void onFailed(String error) {
         if (viewData!=null)
         {
-            viewData.setError(error);
+            viewData.onFailed(error);
 
         }
     }
@@ -248,20 +235,20 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     @Override
     public void NormalUserRegistration(String userType,String first_name, String last_name, String email, String country, String password, String phone, String job, String interests) {
         interactor = new Model_InteractorImp();
-        interactor.NormalUserRegistration(userType,first_name,last_name,email,country,password,phone,job,interests,this);
+        interactor.NormalUserRegistration(userType,first_name,last_name,email,country,password,phone,job,interests,this,mContext);
     }
 
     @Override
     public void PublisherRegistration(String userType,String first_name, String last_name, String email, String country, String password, String phone, String expertise, String website_url) {
         interactor = new Model_InteractorImp();
-        interactor.PublisherRegistration(userType,first_name,last_name,email,country,password,phone,expertise,website_url,this);
+        interactor.PublisherRegistration(userType,first_name,last_name,email,country,password,phone,expertise,website_url,this,mContext);
 
     }
 
     @Override
     public void LibraryRegistration(String userType, String libName, String libEmail, String libCommission, String libCountry, String libExpertise, String libType, String libOtherType, String libPassword, String lat, String lng) {
         interactor = new Model_InteractorImp();
-        interactor.LibraryRegistration(userType,libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,lat,lng,this);
+        interactor.LibraryRegistration(userType,libName,libEmail,libCommission,libCountry,libExpertise,libType,libOtherType,libPassword,lat,lng,this,mContext);
 
     }
 

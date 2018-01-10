@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.LoginActivity"
+            android:screenOrientation="portrait"
+            ></activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -46,6 +48,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".Activities.ChooserSingin"
             android:label="@string/title_activity_chooser_singin"
             android:theme="@style/AppTheme">
@@ -59,7 +62,9 @@
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".Activities.MapsActivity"></activity>
+        <activity android:name=".Activities.MapsActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>
