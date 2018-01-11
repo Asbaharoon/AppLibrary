@@ -116,7 +116,7 @@
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Phone"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
