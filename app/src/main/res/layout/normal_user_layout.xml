@@ -150,7 +150,7 @@
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Phone"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -201,19 +201,19 @@
 
             />
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/user_job"
+            android:id="@+id/user_userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Job"
+            app:met_floatingLabelText="UserName"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/job_icon"
+            app:met_iconLeft="@drawable/pssword_icon"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"
             app:met_textColor="@color/base"
@@ -230,36 +230,7 @@
 
 
             />
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/user_interests"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_autoValidate="true"
-            app:met_floatingLabelAnimating="true"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Interests"
-            app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
-            app:met_helperTextAlwaysShown="true"
-            app:met_checkCharactersCountAtBeginning="true"
-            app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/interests_icon"
-            app:met_floatingLabelTextColor="@color/base"
-            app:met_helperTextColor="@color/label"
-            app:met_textColor="@color/base"
-            app:met_underlineColor="@color/label"
-            app:met_errorColor="@color/error"
-            app:met_baseColor="@color/base"
-            app:met_primaryColor="@color/base"
-            app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
-            android:maxLength="100"
-            app:met_maxCharacters="100"
 
-
-
-
-            />
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/user_password"
             android:layout_width="match_parent"

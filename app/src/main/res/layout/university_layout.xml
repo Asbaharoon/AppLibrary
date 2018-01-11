@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
+    android:id="@+id/lib_scrollView"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -7,6 +8,7 @@
     android:scrollbars="none"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
+
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,19 +18,18 @@
         >
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_firstName"
+            android:id="@+id/university_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="first name"
             app:met_helperText="required"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_singleLineEllipsis="true"
             app:met_helperTextAlwaysShown="true"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_iconLeft="@drawable/username_icon"
+            app:met_iconLeft="@drawable/university_icon"
+            app:met_floatingLabelText="University name"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"
             app:met_textColor="@color/base"
@@ -38,45 +39,14 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:maxLength="15"
-            app:met_maxCharacters="15"
-
-
-
-            />
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_lasttName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            app:met_autoValidate="true"
-            app:met_floatingLabelAnimating="true"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Last name"
-            app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
-            app:met_helperTextAlwaysShown="true"
-            app:met_checkCharactersCountAtBeginning="true"
-            app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/username_icon"
-            app:met_floatingLabelTextColor="@color/base"
-            app:met_helperTextColor="@color/label"
-            app:met_textColor="@color/base"
-            app:met_underlineColor="@color/label"
-            app:met_errorColor="@color/error"
-            app:met_baseColor="@color/base"
-            app:met_primaryColor="@color/base"
-            app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
-            android:maxLength="15"
-            app:met_maxCharacters="15"
-
-
+            app:met_maxCharacters="50"
+            android:maxLength="50"
+            android:inputType="textAutoComplete"
 
 
             />
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_email"
+            android:id="@+id/university_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -99,24 +69,24 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:maxLength="25"
+            android:maxLength="30"
             app:met_maxCharacters="30"
 
 
 
 
             />
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_phone"
+            android:id="@+id/university_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Phone"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -130,13 +100,47 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
+            android:inputType="phone"
+            app:met_maxCharacters="20"
+            android:maxLength="20"
+
+
+
+            />
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/university_major"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="University Major"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/commession_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+            android:maxLength="30"
+            app:met_maxCharacters="30"
+
 
 
 
             />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_country"
+            android:id="@+id/university_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
@@ -158,16 +162,19 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="text"
+            android:inputType="textAutoComplete"
             android:maxLength="15"
             app:met_maxCharacters="15"
 
 
 
 
+
+
             />
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_address"
+            android:id="@+id/university_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
@@ -189,58 +196,28 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="text"
-            android:maxLength="15"
-            app:met_maxCharacters="15"
+            android:inputType="textAutoComplete"
+            android:maxLength="100"
+            app:met_maxCharacters="100"
 
 
-
-
-            />
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_town"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:met_autoValidate="true"
-            app:met_floatingLabelAnimating="true"
-            app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Town"
-            app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
-            app:met_helperTextAlwaysShown="true"
-            app:met_checkCharactersCountAtBeginning="true"
-            app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/location_icon"
-            app:met_floatingLabelTextColor="@color/base"
-            app:met_helperTextColor="@color/label"
-            app:met_textColor="@color/base"
-            app:met_underlineColor="@color/label"
-            app:met_errorColor="@color/error"
-            app:met_baseColor="@color/base"
-            app:met_primaryColor="@color/base"
-            app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
-            android:inputType="text"
-            android:maxLength="15"
-            app:met_maxCharacters="15"
 
 
 
 
             />
 
-
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_website"
+            android:id="@+id/university_website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textUri"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Website"
+            app:met_floatingLabelText="UniversitySite"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -263,14 +240,15 @@
 
 
             />
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_userName"
+            android:id="@+id/university_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="UserName"
+            app:met_floatingLabelText="Username"
             app:met_floatingLabelAlwaysShown="true"
             app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
@@ -286,15 +264,18 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:maxLength="20"
-            app:met_maxCharacters="20"
+            android:inputType="textAutoComplete"
+            app:met_maxCharacters="50"
+            android:maxLength="50"
+
+
 
 
 
 
             />
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/publisher_password"
+            android:id="@+id/university_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
@@ -316,10 +297,9 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_12sdp"
             android:maxLength="15"
             app:met_maxCharacters="15"
-
 
 
 
@@ -338,14 +318,13 @@
             android:layout_marginBottom="@dimen/_5sdp"
             >
             <Button
-                android:id="@+id/pub_SignInBtn"
+                android:id="@+id/university_SignInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="sign up"
-                android:textSize="@dimen/_12sdp"
                 android:textColor="@color/base"
+                android:textSize="@dimen/_12sdp"
                 android:background="@drawable/button_bg"
-
 
                 />
         </com.andexert.library.RippleView>

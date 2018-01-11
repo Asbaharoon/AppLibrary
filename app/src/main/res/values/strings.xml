@@ -12,6 +12,8 @@
         <item>Normal user</item>
         <item>Publisher</item>
         <item>Library</item>
+        <item>University</item>
+        <item>Company</item>
     </string-array>
     <string-array name="libType">
         <item>Public library</item>
@@ -19,6 +21,10 @@
         <item>Specialized library</item>
         <item>Academy library</item>
         <item>School library</item>
+        <item>University library</item>
+        <item>Children library</item>
+        <item>Electronic library</item>
+        <item>Migratory library</item>
         <item>Other</item>
     </string-array>
     <string name="title_activity_home">HomeActivity</string>

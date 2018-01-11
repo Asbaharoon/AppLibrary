@@ -72,5 +72,45 @@
 
 
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expandable_university"
+        android:layout_below="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical"
+        >
+
+        <include
+            android:id="@+id/university_layout"
+            layout="@layout/university_layout"
+            />
+
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expandable_company"
+        android:layout_below="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ael_expanded="false"
+        app:ael_duration="500"
+        app:ael_interpolator="linear"
+        app:ael_orientation="vertical"
+        >
+
+        <include
+            android:id="@+id/company_layout"
+            layout="@layout/company_layout"
+            />
+
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
 </com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>
 

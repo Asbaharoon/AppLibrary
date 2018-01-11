@@ -18,7 +18,7 @@ import com.example.omd.library.R;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
 
     @Override
@@ -59,4 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             fragment.onRequestPermissionsResult(requestCode,permissions,grantResults);
         }
     }
+
+
+
 }

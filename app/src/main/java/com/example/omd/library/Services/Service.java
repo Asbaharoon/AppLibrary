@@ -1,5 +1,8 @@
 package com.example.omd.library.Services;
 
+import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.User;
 
 import java.util.Map;
@@ -21,5 +24,17 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/gmaillogin")
     Call<User> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/registration")
+    Call<NormalUserData>NormalUserRegistration(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/registration")
+    Call<PublisherModel>PublisherRegistration(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/registration")
+    Call<LibraryModel>LibraryRegistration(@FieldMap Map<String,String> map);
 
 }

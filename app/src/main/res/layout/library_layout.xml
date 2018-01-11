@@ -78,19 +78,19 @@
             />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/library_commission"
+            android:id="@+id/library_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Commission"
+            app:met_floatingLabelText="Phone"
             app:met_floatingLabelAlwaysShown="true"
             app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/commession_icon"
+            app:met_iconLeft="@drawable/phone_icon"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"
             app:met_textColor="@color/base"
@@ -100,7 +100,7 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="textAutoComplete"
+            android:inputType="phone"
             app:met_maxCharacters="20"
             android:maxLength="20"
 
@@ -141,20 +141,21 @@
 
 
             />
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/library_expertise"
+            android:id="@+id/library_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Expertise"
+            app:met_floatingLabelText="Address"
             app:met_floatingLabelAlwaysShown="true"
             app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
-            app:met_iconLeft="@drawable/expertise_icon"
+            app:met_iconLeft="@drawable/location_icon"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"
             app:met_textColor="@color/base"
@@ -165,8 +166,8 @@
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
             android:inputType="textAutoComplete"
-            app:met_maxCharacters="50"
-            android:maxLength="50"
+            android:maxLength="100"
+            app:met_maxCharacters="100"
 
 
 
@@ -174,6 +175,7 @@
 
 
             />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -201,6 +203,7 @@
                 app:ael_interpolator="linear"
                 app:ael_orientation="vertical"
                 >
+
 
                 <com.rengwuxian.materialedittext.MaterialEditText
                     android:id="@+id/library_otherType"
@@ -238,6 +241,39 @@
 
         </RelativeLayout>
 
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/library_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:met_autoValidate="true"
+            app:met_floatingLabelAnimating="true"
+            app:met_floatingLabel="highlight"
+            app:met_floatingLabelText="Username"
+            app:met_floatingLabelAlwaysShown="true"
+            app:met_helperText="required"
+            app:met_helperTextAlwaysShown="true"
+            app:met_checkCharactersCountAtBeginning="true"
+            app:met_singleLineEllipsis="true"
+            app:met_iconLeft="@drawable/pssword_icon"
+            app:met_floatingLabelTextColor="@color/base"
+            app:met_helperTextColor="@color/label"
+            app:met_textColor="@color/base"
+            app:met_underlineColor="@color/label"
+            app:met_errorColor="@color/error"
+            app:met_baseColor="@color/base"
+            app:met_primaryColor="@color/base"
+            app:met_textColorHint="@color/base"
+            android:textSize="@dimen/_14sdp"
+            android:inputType="textAutoComplete"
+            app:met_maxCharacters="50"
+            android:maxLength="50"
+
+
+
+
+
+
+            />
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/library_password"
             android:layout_width="match_parent"

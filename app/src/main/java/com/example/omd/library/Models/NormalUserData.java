@@ -19,23 +19,21 @@ public class NormalUserData implements Serializable {
     private String userCountry;
     @SerializedName("user_phone")
     private String userPhone;
-    private String userJob;
-    private String userInterests;
     @SerializedName("photo_link")
     private String userPhoto;
+    @SerializedName("user_type")
     private String userType;
 
 
     public NormalUserData() {
     }
 
-    public NormalUserData(String userName, String userEmail, String userCountry, String userPhone, String userJob, String userInterests, String userPhoto) {
+    public NormalUserData(String userName, String userEmail, String userCountry, String userPhone, String userPhoto) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userCountry = userCountry;
         this.userPhone = userPhone;
-        this.userJob = userJob;
-        this.userInterests = userInterests;
+
         this.userPhoto = userPhoto;
     }
 
@@ -87,21 +85,6 @@ public class NormalUserData implements Serializable {
         this.userPhone = userPhone;
     }
 
-    public String getUserJob() {
-        return userJob;
-    }
-
-    public void setUserJob(String userJob) {
-        this.userJob = userJob;
-    }
-
-    public String getUserInterests() {
-        return userInterests;
-    }
-
-    public void setUserInterests(String userInterests) {
-        this.userInterests = userInterests;
-    }
 
     public String getUserPhoto() {
         return userPhoto;

@@ -21,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
+import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +51,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,20 +62,23 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterFragment extends Fragment implements ViewData, View.OnClickListener {
 
-    private ExpandableRelativeLayout layout_normal_user, layout_pub, layout_lib, library_spinner_expanded;
+    private ExpandableRelativeLayout layout_normal_user, layout_pub, layout_lib, library_spinner_expanded,layout_university,layout_company;
     private AppCompatSpinner spinner, lib_spinner;
     private FrameLayout n_userPhoto_container;
     private CircleImageView n_circleImageView;
-    private MaterialEditText n_userFirstName, n_userLastName, n_userEmail, n_userPhone, n_userCountry, n_userJob, n_userInterests, n_userPassword;
-    private MaterialEditText publisher_firstName, publisher_lastName, publisherEmail, publisherCountry, publisherPhone, publisherExpertise, publisher_webSite, publisherPassword;
-    private MaterialEditText libraryName, libraryEmail, libraryCommission, libraryCountry, libraryExpertise, libraryPassword, library_otherType;
-    private Button n_SignInBtn, lib_SignInBtn, pub_SignInBtn;
-    private ScrollView lib_scrollView;
+    private MaterialEditText n_userFirstName, n_userLastName,n_user_userName, n_userEmail, n_userPhone, n_userCountry, n_userPassword;
+    private MaterialEditText publisher_firstName, publisher_lastName, publisherEmail, publisherCountry, publisherPhone, publisherTown,publisherUsername,publisherAddress, publisher_webSite, publisherPassword;
+    private MaterialEditText libraryName, libraryEmail, libraryPhone, libraryCountry,libraryAddress, libraryUsername, libraryPassword, library_otherType;
+    private MaterialEditText universityName, universityEmail, universityPhone, universityCountry,universityAddress, universityMajor,universityUsername, universityPassword,universitySite;
+    private MaterialEditText companyName,companyUsername,companyEmail, companyPhone,companyCountry, companyPassword,companySite,companyTown,companyAddress;
+
+    private Button n_SignInBtn, lib_SignInBtn,pub_SignInBtn, uni_SignInBtn,comp_SignInBtn;
     Context mContext;
     Handler handler;
     PresenterImp presenter;
     public Uri userImage_URI = null;
     public Bitmap userBitmap_image = null;
+    public String imageName=null;
     private static final int IMAGE_REQUEST = 200;
     private static final int REQUEST_CODE = 300;
     private TextView addPhoto_tv;
@@ -92,6 +96,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         init_normalUserView(view);
         init_publisherView(view);
         init_libraryView(view);
+        init_universityView(view);
+        init_companyView(view);
+        initView(view);
 
         presenter = new PresenterImp(mContext,this);
         return view;
@@ -101,9 +108,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
         handler = new Handler();
         mContext = view.getContext();
+        spinner = (AppCompatSpinner) view.findViewById(R.id.spinner);
         layout_normal_user = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_normal_user);
         layout_pub = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_publisher);
         layout_lib = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_lib);
+        layout_university = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_university);
+        layout_company = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_company);
         library_spinner_expanded = (ExpandableRelativeLayout) view.findViewById(R.id.library_spinner_expanded);
         library_spinner_expanded.collapse();
         layout_normal_user.collapse();
@@ -115,13 +125,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         final ArrayAdapter<String> adapter_type = new ArrayAdapter<String>(mContext, R.layout.spinner_row, getResources().getStringArray(R.array.libType));
         lib_spinner.setAdapter(adapter_type);
 
-
         spinner.setSelection(0);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_row, getResources().getStringArray(R.array.spinnerArray));
         spinner.setAdapter(adapter);
 
         if (spinner.getSelectedItem().toString().equals("Normal user")) {
-            if (layout_pub.isExpanded() || layout_lib.isExpanded()) {
+               if (layout_pub.isExpanded() || layout_lib.isExpanded()) {
                 layout_pub.collapse();
                 layout_lib.collapse();
                 handler.postDelayed(new Runnable() {
@@ -140,7 +149,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 }, 1000);
             }
         }
-
         lib_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -172,10 +180,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 ((TextView) adapterView.getSelectedView()).setGravity(Gravity.CENTER);
                 ((TextView) adapterView.getSelectedView()).setTextColor(ContextCompat.getColor(mContext, R.color.label));
                 if (adapterView.getSelectedItem().toString().equals("Normal user")) {
-                    if (layout_pub.isExpanded() || layout_lib.isExpanded()) {
+
+                              if (layout_pub.isExpanded() || layout_lib.isExpanded()||layout_university.isExpanded()||layout_company.isExpanded()) {
 
                         layout_pub.collapse();
                         layout_lib.collapse();
+                        layout_company.collapse();
+                        layout_university.collapse();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -192,10 +203,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
                     }
                 } else if (adapterView.getSelectedItem().toString().equals("Publisher")) {
-                    if (layout_normal_user.isExpanded() || layout_lib.isExpanded()) {
+                    if (layout_normal_user.isExpanded() || layout_lib.isExpanded()||layout_university.isExpanded()||layout_company.isExpanded()) {
 
                         layout_normal_user.collapse();
                         layout_lib.collapse();
+                        layout_company.collapse();
+                        layout_university.collapse();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -212,10 +225,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     }
 
                 } else if (adapterView.getSelectedItem().toString().equals("Library")) {
-                    if (layout_normal_user.isExpanded() || layout_pub.isExpanded()) {
+                    if (layout_normal_user.isExpanded() || layout_pub.isExpanded()||layout_university.isExpanded()||layout_company.isExpanded()) {
 
                         layout_normal_user.collapse();
                         layout_pub.collapse();
+                        layout_company.collapse();
+                        layout_university.collapse();
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
@@ -230,7 +245,54 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                             }
                         }, 1000);
                     }
+
                 }
+                else if (spinner.getSelectedItem().toString().equals("University"))
+                {
+                    if (layout_normal_user.isExpanded() || layout_pub.isExpanded()||layout_lib.isExpanded()||layout_company.isExpanded()) {
+
+                        layout_normal_user.collapse();
+                        layout_pub.collapse();
+                        layout_lib.collapse();
+                        layout_company.collapse();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                layout_university.expand();
+                            }
+                        }, 1000);
+                    } else {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                layout_university.expand();
+                            }
+                        }, 1000);
+                    }
+
+                }else if (spinner.getSelectedItem().toString().equals("Company")) {
+                    if (layout_normal_user.isExpanded() || layout_pub.isExpanded()||layout_lib.isExpanded()||layout_university.isExpanded()) {
+
+                        layout_normal_user.collapse();
+                        layout_pub.collapse();
+                        layout_lib.collapse();
+                        layout_university.collapse();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                layout_company.expand();
+                            }
+                        }, 1000);
+                    } else {
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                layout_company.expand();
+                            }
+                        }, 1000);
+                    }
+                }
+
             }
 
             @Override
@@ -251,13 +313,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             n_userFirstName = (MaterialEditText) userView.findViewById(R.id.user_firstName);
             n_userFirstName.setAutoValidate(true);
-            n_userFirstName.addValidator(new RegexpValidator("invalid first name", "[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
+            n_userFirstName.addValidator(new RegexpValidator("invalid first name", Tags.name_Regex));
             n_userFirstName.setShowClearButton(true);
 
             n_userLastName = (MaterialEditText) userView.findViewById(R.id.user_lastName);
             n_userLastName.setAutoValidate(true);
             n_userLastName.setShowClearButton(true);
-            n_userLastName.addValidator(new RegexpValidator("invalid last name", "[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
+            n_userLastName.addValidator(new RegexpValidator("invalid last name", Tags.name_Regex));
 
 
             n_userEmail = (MaterialEditText) userView.findViewById(R.id.user_email);
@@ -275,20 +337,16 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             n_userCountry.addValidator(new RegexpValidator("invalid country name", ".+"));
 
 
-            n_userJob = (MaterialEditText) userView.findViewById(R.id.user_job);
-            n_userJob.setAutoValidate(true);
-            n_userJob.setShowClearButton(true);
-
-
-            n_userInterests = (MaterialEditText) userView.findViewById(R.id.user_interests);
-            n_userInterests.setAutoValidate(true);
-            n_userInterests.setShowClearButton(true);
+            n_user_userName = (MaterialEditText) userView.findViewById(R.id.user_userName);
+            n_user_userName.setAutoValidate(true);
+            n_user_userName.addValidator(new RegexpValidator("invalid username", Tags.username_Regex));
+            n_user_userName.setShowClearButton(true);
 
 
             n_userPassword = (MaterialEditText) userView.findViewById(R.id.user_password);
             n_userPassword.setAutoValidate(true);
             n_userPassword.setShowClearButton(true);
-            n_userPassword.addValidator(new RegexpValidator("invalid password", "[A-Za-z0-9_.-]+"));
+            n_userPassword.addValidator(new RegexpValidator("invalid password", Tags.pass_Regex));
 
 
             n_SignInBtn = (Button) userView.findViewById(R.id.n_SignInBtn);
@@ -304,13 +362,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             publisher_firstName = (MaterialEditText) publisherView.findViewById(R.id.publisher_firstName);
             publisher_firstName.setAutoValidate(true);
             publisher_firstName.setShowClearButton(true);
-            publisher_firstName.addValidator(new RegexpValidator("invalid first name", "[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
+            publisher_firstName.addValidator(new RegexpValidator("invalid first name", Tags.name_Regex));
 
 
             publisher_lastName = (MaterialEditText) publisherView.findViewById(R.id.publisher_lasttName);
             publisher_lastName.setAutoValidate(true);
             publisher_lastName.setShowClearButton(true);
-            publisher_lastName.addValidator(new RegexpValidator("invalid last name", "[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
+            publisher_lastName.addValidator(new RegexpValidator("invalid last name", Tags.name_Regex));
 
 
             publisherEmail = (MaterialEditText) publisherView.findViewById(R.id.publisher_email);
@@ -328,9 +386,23 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             publisherPhone.setAutoValidate(true);
             publisherPhone.setShowClearButton(true);
 
-            publisherExpertise = (MaterialEditText) publisherView.findViewById(R.id.publisher_expertise);
-            publisherExpertise.setAutoValidate(true);
-            publisherExpertise.setShowClearButton(true);
+            publisherAddress = (MaterialEditText) publisherView.findViewById(R.id.publisher_address);
+            publisherAddress.setAutoValidate(true);
+            publisherAddress.setShowClearButton(true);
+            publisherAddress.addValidator(new RegexpValidator("invalid address", ".+"));
+
+
+            publisherTown = (MaterialEditText) publisherView.findViewById(R.id.publisher_town);
+            publisherTown.setAutoValidate(true);
+            publisherTown.setShowClearButton(true);
+            publisherTown.addValidator(new RegexpValidator("invalid town", ".+"));
+
+
+            publisherUsername = (MaterialEditText) publisherView.findViewById(R.id.publisher_userName);
+            publisherUsername.setAutoValidate(true);
+            publisherUsername.setShowClearButton(true);
+            publisherUsername.addValidator(new RegexpValidator("invalid username", Tags.username_Regex));
+
 
             publisher_webSite = (MaterialEditText) publisherView.findViewById(R.id.publisher_website);
             publisher_webSite.setAutoValidate(true);
@@ -340,7 +412,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             publisherPassword = (MaterialEditText) publisherView.findViewById(R.id.publisher_password);
             publisherPassword.setAutoValidate(true);
             publisherPassword.setShowClearButton(true);
-            publisherPassword.addValidator(new RegexpValidator("invalid password", "[A-Za-z0-9_.-]+"));
+            publisherPassword.addValidator(new RegexpValidator("invalid password", Tags.pass_Regex));
 
             pub_SignInBtn = (Button) publisherView.findViewById(R.id.pub_SignInBtn);
             pub_SignInBtn.setOnClickListener(this);
@@ -354,22 +426,19 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         View libraryView = view.findViewById(R.id.library_layout);
         if (libraryView != null) {
 
-            lib_scrollView = (ScrollView) libraryView.findViewById(R.id.lib_scrollView);
-
             libraryName = (MaterialEditText) libraryView.findViewById(R.id.library_Name);
             libraryName.setAutoValidate(true);
             libraryName.setShowClearButton(true);
-            libraryName.addValidator(new RegexpValidator("invalid library name", "[^0-9@!#$%^&*()-\\*\\+<>/\\+~\\s]+"));
+            libraryName.addValidator(new RegexpValidator("invalid library name", Tags.name_Regex));
 
             libraryEmail = (MaterialEditText) libraryView.findViewById(R.id.library_email);
             libraryEmail.setAutoValidate(true);
             libraryEmail.setShowClearButton(true);
             libraryEmail.addValidator(new RegexpValidator(getString(R.string.invalidEmail), Tags.email_Regex));
 
-            libraryCommission = (MaterialEditText) libraryView.findViewById(R.id.library_commission);
-            libraryCommission.setAutoValidate(true);
-            libraryCommission.setShowClearButton(true);
-            libraryCommission.addValidator(new RegexpValidator("invalid commission", ".+"));
+            libraryPhone = (MaterialEditText) libraryView.findViewById(R.id.library_phone);
+            libraryPhone.setAutoValidate(true);
+            libraryPhone.setShowClearButton(true);
 
 
             libraryCountry = (MaterialEditText) libraryView.findViewById(R.id.library_country);
@@ -377,16 +446,23 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             libraryCountry.setShowClearButton(true);
             libraryCountry.addValidator(new RegexpValidator("invalid country", ".+"));
 
+            libraryAddress = (MaterialEditText) libraryView.findViewById(R.id.library_address);
+            libraryAddress.setAutoValidate(true);
+            libraryAddress.setShowClearButton(true);
+            libraryAddress.addValidator(new RegexpValidator("invalid address", ".+"));
 
-            libraryExpertise = (MaterialEditText) libraryView.findViewById(R.id.library_expertise);
-            libraryExpertise.setAutoValidate(true);
-            libraryExpertise.setShowClearButton(true);
+
+            libraryUsername = (MaterialEditText) libraryView.findViewById(R.id.library_username);
+            libraryUsername.setAutoValidate(true);
+            libraryUsername.setShowClearButton(true);
+            libraryUsername.addValidator(new RegexpValidator("invalid username", Tags.username_Regex));
+
 
 
             libraryPassword = (MaterialEditText) libraryView.findViewById(R.id.library_password);
             libraryPassword.setAutoValidate(true);
             libraryPassword.setShowClearButton(true);
-            libraryPassword.addValidator(new RegexpValidator("invalid password", "[A-Za-z0-9_.-]+"));
+            libraryPassword.addValidator(new RegexpValidator("invalid password", Tags.pass_Regex));
 
 
             library_otherType = (MaterialEditText) libraryView.findViewById(R.id.library_otherType);
@@ -402,10 +478,139 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     }
 
+    private void init_universityView(View view)
+    {
+        View universityView = view.findViewById(R.id.university_layout);
+        if (universityView != null) {
+
+            universityName = (MaterialEditText) universityView.findViewById(R.id.university_Name);
+            universityName.setAutoValidate(true);
+            universityName.addValidator(new RegexpValidator("invalid name", Tags.name_Regex));
+            universityName.setShowClearButton(true);
+
+
+
+            universityEmail = (MaterialEditText) universityView.findViewById(R.id.university_email);
+            universityEmail.setAutoValidate(true);
+            universityEmail.setShowClearButton(true);
+            universityEmail.addValidator(new RegexpValidator(getString(R.string.invalidEmail), Tags.email_Regex));
+
+            universityPhone = (MaterialEditText) universityView.findViewById(R.id.university_phone);
+            universityPhone.setAutoValidate(true);
+            universityPhone.setShowClearButton(true);
+
+            universityCountry = (MaterialEditText) universityView.findViewById(R.id.university_country);
+            universityCountry.setAutoValidate(true);
+            universityCountry.setShowClearButton(true);
+            universityCountry.addValidator(new RegexpValidator("invalid country name", ".+"));
+
+            universityAddress = (MaterialEditText) universityView.findViewById(R.id.university_address);
+            universityAddress.setAutoValidate(true);
+            universityAddress.setShowClearButton(true);
+            universityAddress.addValidator(new RegexpValidator("invalid address", ".+"));
+
+
+            universityMajor = (MaterialEditText) universityView.findViewById(R.id.university_major);
+            universityMajor.setAutoValidate(true);
+            universityMajor.setShowClearButton(true);
+            universityMajor.addValidator(new RegexpValidator("invalid major", ".+"));
+
+
+            universitySite = (MaterialEditText) universityView.findViewById(R.id.university_website);
+            universitySite.setAutoValidate(true);
+            universitySite.setShowClearButton(true);
+            universitySite.addValidator(new RegexpValidator(getString(R.string.invalid_url), Tags.url_Regex));
+
+
+            universityUsername = (MaterialEditText) universityView.findViewById(R.id.university_username);
+            universityUsername.setAutoValidate(true);
+            universityUsername.setShowClearButton(true);
+            universityUsername.addValidator(new RegexpValidator("invalid username", Tags.username_Regex));
+
+
+            universityPassword = (MaterialEditText) universityView.findViewById(R.id.university_password);
+            universityPassword.setAutoValidate(true);
+            universityPassword.setShowClearButton(true);
+            universityPassword.addValidator(new RegexpValidator("invalid password", Tags.pass_Regex));
+
+
+            uni_SignInBtn = (Button) universityView.findViewById(R.id.university_SignInBtn);
+            uni_SignInBtn.setOnClickListener(this);
+    }
+    }
+
+    private void init_companyView(View view)
+    {
+        View companyView = view.findViewById(R.id.company_layout);
+        if (companyView != null) {
+
+            companyName = (MaterialEditText) companyView.findViewById(R.id.company_Name);
+            companyName.setAutoValidate(true);
+            companyName.addValidator(new RegexpValidator("invalid name", Tags.name_Regex));
+            companyName.setShowClearButton(true);
+
+
+            companyEmail = (MaterialEditText) companyView.findViewById(R.id.company_email);
+            companyEmail.setAutoValidate(true);
+            companyEmail.setShowClearButton(true);
+            companyEmail.addValidator(new RegexpValidator(getString(R.string.invalidEmail), Tags.email_Regex));
+
+
+            companyPhone = (MaterialEditText) companyView.findViewById(R.id.company_phone);
+            companyPhone.setAutoValidate(true);
+            companyPhone.setShowClearButton(true);
+
+            companyCountry = (MaterialEditText) companyView.findViewById(R.id.company_country);
+            companyCountry.setAutoValidate(true);
+            companyCountry.setShowClearButton(true);
+            companyCountry.addValidator(new RegexpValidator("invalid country name", ".+"));
+
+            companyAddress = (MaterialEditText) companyView.findViewById(R.id.company_address);
+            companyAddress.setAutoValidate(true);
+            companyAddress.setShowClearButton(true);
+            companyAddress.addValidator(new RegexpValidator("invalid address", ".+"));
+
+
+            companyTown = (MaterialEditText) companyView.findViewById(R.id.company_town);
+            companyTown.setAutoValidate(true);
+            companyTown.setShowClearButton(true);
+            companyTown.addValidator(new RegexpValidator("invalid town name", ".+"));
+
+
+            companySite = (MaterialEditText) companyView.findViewById(R.id.company_website);
+            companySite.setAutoValidate(true);
+            companySite.setShowClearButton(true);
+            companySite.addValidator(new RegexpValidator(getString(R.string.invalid_url), Tags.url_Regex));
+
+
+            companyUsername = (MaterialEditText) companyView.findViewById(R.id.company_username);
+            companyUsername.setAutoValidate(true);
+            companyUsername.setShowClearButton(true);
+            companyUsername.addValidator(new RegexpValidator("invalid user name", Tags.username_Regex));
+
+
+
+            companyPassword = (MaterialEditText) companyView.findViewById(R.id.company_password);
+            companyPassword.setAutoValidate(true);
+            companyPassword.setShowClearButton(true);
+            companyPassword.addValidator(new RegexpValidator("invalid password", Tags.pass_Regex));
+
+
+            comp_SignInBtn = (Button) companyView.findViewById(R.id.company_SignInBtn);
+            comp_SignInBtn.setOnClickListener(this);
+        }
+    }
+
 
     @Override
     public void setNormalUserFirstName_Error() {
         n_userFirstName.setError("empty field");
+
+    }
+
+    @Override
+    public void setNormalUser_invalidFirstName_Error() {
+        n_userFirstName.setError("invalid first name");
 
     }
 
@@ -416,6 +621,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
+    public void setNormalUser_invalidLastName_Error() {
+
+        n_userLastName.setError("invalid last name");
+    }
+
+    @Override
     public void setNormalUserEmail_Error() {
         n_userEmail.setError("empty field");
 
@@ -423,7 +634,23 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
-    public void setNormalUser_invalidEmail_Error() {
+    public void setNormalUser_invalidUsername_Error() {
+        n_user_userName.setError("invalid username");
+    }
+
+    @Override
+    public void setNormalUserPhone_Error() {
+        n_userPhone.setError("empty field");
+    }
+
+    @Override
+    public void setNormalUser_username_Error() {
+        n_user_userName.setError("invalid username");
+    }
+
+    @Override
+    public void setNormalUser_invalidEmail_Error()
+    {
         n_userEmail.setError("invalid email");
 
     }
@@ -443,13 +670,30 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
+    public void setNormalUser_invalidPassword_Error() {
+        n_userPassword.setError("invalid password");
+    }
+
+    @Override
     public void setPublisherFirstName_Error() {
         publisher_firstName.setError("empty field");
     }
 
     @Override
+    public void setPublisher_invalidFirstName_Error() {
+
+        publisher_firstName.setError("invalid first name");
+    }
+
+    @Override
     public void setPublisherLastName_Error() {
         publisher_lastName.setError("empty field");
+
+    }
+
+    @Override
+    public void setPublisher_invalidLastName_Error() {
+        publisher_lastName.setError("invalid last name");
 
     }
 
@@ -467,10 +711,46 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
+    public void setPublisherPhone_Error() {
+        publisherPhone.setError("empty field");
+    }
+
+    @Override
     public void setPublisherCountry_Error() {
         publisherCountry.setError("empty field");
 
 
+    }
+
+    @Override
+    public void setPublisherAddress_Error() {
+        publisherAddress.setError("empty field");
+    }
+
+    @Override
+    public void setPublisherTown_Error() {
+        publisherTown.setError("empty field");
+    }
+
+    @Override
+    public void setPublisher_site_Error() {
+        publisher_webSite.setError("empty field");
+    }
+
+    @Override
+    public void setPublisher_invalidSite_Error() {
+        publisher_webSite.setError("invalid site url");
+
+    }
+
+    @Override
+    public void setPublisher_username_Error() {
+        publisherUsername.setError("invalid username");
+    }
+
+    @Override
+    public void setPublisher_invalidUsername_Error() {
+        publisherUsername.setError("invalid user name");
     }
 
     @Override
@@ -481,22 +761,37 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
+    public void setPublisher_invalidPassword_Error() {
+        publisherPassword.setError("invalid password");
+    }
+
+    @Override
     public void setLibraryName_Error() {
         libraryName.setError("empty field");
 
     }
 
     @Override
+    public void setLibrary_invalidName_Error() {
+
+        libraryName.setError("invalid name");
+    }
+
+    @Override
     public void setLibraryEmail_Error() {
+        libraryEmail.setError("empty field");
+    }
+
+    @Override
+    public void setLibrary_invalidEmail_Error() {
         libraryEmail.setError("invalid email");
     }
 
     @Override
-    public void setLibraryCommission_Error() {
-        libraryCommission.setError("empty field");
-
-
+    public void setLibraryPhone_Error() {
+        libraryPhone.setError("empty field");
     }
+
 
     @Override
     public void setLibraryOtherType_Error() {
@@ -507,13 +802,33 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     @Override
     public void setLibraryCountry_Error() {
+        libraryCountry.setError("empty field");
+    }
 
+    @Override
+    public void setLibraryAddress_Error() {
+        libraryAddress.setError("empty field");
+    }
+
+    @Override
+    public void setLibraryUsername_Error() {
+        libraryUsername.setError("empty field");
+    }
+
+    @Override
+    public void setLibrary_invalidUsername_Error() {
+        libraryUsername.setError("invalid username");
     }
 
     @Override
     public void setLibraryPassword_Error() {
         libraryPassword.setError("empty field");
 
+    }
+
+    @Override
+    public void setLibrary_invalidPassword_Error() {
+        libraryPassword.setError("invalid password");
     }
 
     @Override
@@ -526,6 +841,171 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             }
         },1000);
+
+    }
+
+    @Override
+    public void setUniversityName_Error() {
+        universityName.setError("empty field");
+    }
+
+    @Override
+    public void setUniversity_invalidName_Error() {
+        universityName.setError("invalid name");
+    }
+
+    @Override
+    public void setUniversityEmail_Error() {
+        universityEmail.setError("empty field");
+
+    }
+
+    @Override
+    public void setUniversity_invalidEmail_Error() {
+        universityEmail.setError("invalid field");
+
+    }
+
+    @Override
+    public void setUniversityPhone_Error() {
+        universityPhone.setError("empty field");
+    }
+
+    @Override
+    public void setUniversityCountry_Error() {
+        universityCountry.setError("empty field");
+    }
+
+    @Override
+    public void setUniversityAddress_Error() {
+        universityAddress.setError("empty field");
+    }
+
+    @Override
+    public void setUniversitySite_Error() {
+        universitySite.setError("empty field");
+
+    }
+
+    @Override
+    public void setUniversity_invalidSite_Error() {
+        universitySite.setError("invalid site url");
+
+    }
+
+    @Override
+    public void setUniversityMajor_Error() {
+        universityMajor.setError("empty field");
+    }
+
+    @Override
+    public void setUniversityUsername_Error() {
+        universityUsername.setError("empty field");
+    }
+
+    @Override
+    public void setUniversity_invalidUsername_Error() {
+        universityUsername.setError("invalid username");
+    }
+
+    @Override
+    public void setUniversityPassword_Error() {
+        universityPassword.setError("empty field");
+
+    }
+
+
+    @Override
+    public void setUniversity_invalidPassword_Error() {
+        universityPassword.setError("invalid password");
+
+    }
+
+    @Override
+    public void setUniversityLat_Lng_Error() {
+
+    }
+
+    @Override
+    public void setCompanyName_Error() {
+        companyName.setError("empty field");
+    }
+
+    @Override
+    public void setCompany_invalidName_Error() {
+        companyName.setError("invalid name");
+    }
+
+    @Override
+    public void setCompanyEmail_Error() {
+        companyEmail.setError("empty field");
+
+    }
+
+    @Override
+    public void setCompany_invalidEmail_Error() {
+        companyEmail.setError("invalid email");
+
+    }
+
+    @Override
+    public void setCompanyPhone_Error() {
+        companyPhone.setError("empty field");
+    }
+
+    @Override
+    public void setCompanyCountry_Error() {
+        companyCountry.setError("empty field");
+    }
+
+    @Override
+    public void setCompanyAddress_Error() {
+        companyAddress.setError("empty field");
+    }
+
+    @Override
+    public void setCompanyTown_Error() {
+        companyTown.setError("empty field");
+    }
+
+
+
+    @Override
+    public void setCompanySite_Error() {
+
+        companySite.setError("empty field");
+    }
+
+    @Override
+    public void setCompany_invalidSite_Error() {
+        companySite.setError("invalid site");
+    }
+
+    @Override
+    public void setCompanyUsername_Error() {
+        companyUsername.setError("empty field");
+    }
+
+    @Override
+    public void setCompany_invalidUsername_Error() {
+        companyUsername.setError("invalid username");
+
+    }
+
+    @Override
+    public void setCompanyPassword_Error() {
+        companyPassword.setError("empty field");
+
+    }
+
+    @Override
+    public void setCompany_invalidPassword_Error() {
+        companyPassword.setError("invalid password");
+
+    }
+
+    @Override
+    public void setCompanyLat_Lng_Error() {
 
     }
 
@@ -554,7 +1034,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     @Override
     public void onNormalUserDataSuccess(NormalUserData normalUserData) {
-
+        Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -579,11 +1059,18 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 String n_lname = n_userLastName.getText().toString();
                 String n_email = n_userEmail.getText().toString();
                 String n_country = n_userCountry.getText().toString();
-                String n_password = n_userPassword.getText().toString();
                 String n_phone = n_userPhone.getText().toString();
-                String n_job = n_userJob.getText().toString();
-                String n_interests = n_userInterests.getText().toString();
-                presenter.NormalUserRegistration(userType1, n_fname, n_lname, n_email, n_country, n_password, n_phone, n_job, n_interests);
+                String n_username = n_user_userName.getText().toString();
+                String n_password = n_userPassword.getText().toString();
+
+                String n_userPhotoName ="";
+                String n_userPhoto="";
+                if (userImage_URI!=null&&imageName!=null&&userBitmap_image!=null)
+                {
+                    n_userPhotoName = imageName;
+                    n_userPhoto = decodeUserPhoto(userBitmap_image);
+                }
+                presenter.NormalUserRegistration(userType1,n_userPhotoName,n_userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password);
                 break;
 
             case R.id.pub_SignInBtn:
@@ -594,29 +1081,66 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 String pub_country = publisherCountry.getText().toString();
                 String pub_password = publisherPassword.getText().toString();
                 String pub_phone = publisherPhone.getText().toString();
-                String pub_expertise = publisherExpertise.getText().toString();
+                String pub_address = publisherAddress.getText().toString();
+                String pub_town = publisherTown.getText().toString();
+                String pub_username = publisherUsername.getText().toString();
                 String pub_weburl = publisher_webSite.getText().toString();
-                presenter.PublisherRegistration(userType2, pub_fname, pub_lname, pub_email, pub_country, pub_password, pub_phone, pub_expertise, pub_weburl);
+                //presenter.PublisherRegistration(userType2, pub_fname, pub_lname, pub_email, pub_country, pub_password, pub_phone, pub_expertise, pub_weburl);
                 break;
             case R.id.lib_SignInBtn:
-                String userType3 = spinner.getSelectedItem().toString();
+                String userType3 = spinner.getSelectedItem().toString().toLowerCase();
                 String lib_name = libraryName.getText().toString();
                 String lib_email = libraryEmail.getText().toString();
-                String lib_commission = libraryCommission.getText().toString();
+                String lib_phone = libraryPhone.getText().toString();
                 String lib_country = libraryCountry.getText().toString();
-                String lib_expertise = libraryExpertise.getText().toString();
+                String lib_address = libraryAddress.getText().toString();
+                String lib_userName = libraryUsername.getText().toString();
                 String lib_password = libraryPassword.getText().toString();
                 String lib_type = lib_spinner.getSelectedItem().toString();
                 String lib_otherType = "";
                 if (lib_type.equals("Other")) {
-                    lib_otherType = library_otherType.getText().toString();
+                    lib_type = library_otherType.getText().toString();
                 }
-                presenter.LibraryRegistration(userType3, lib_name, lib_email, lib_commission, lib_country, lib_expertise, lib_type, lib_otherType, lib_password, "", "");
+
+                Toast.makeText(mContext, userType3+"_"+lib_type, Toast.LENGTH_SHORT).show();
+                presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,"", "");
+                //presenter.LibraryRegistration(userType3, lib_name, lib_email, lib_commission, lib_country, lib_expertise, lib_type, lib_otherType, lib_password, "", "");
                 break;
+
+            case R.id.company_SignInBtn:
+                String userType4 = spinner.getSelectedItem().toString().toLowerCase();
+                String comp_name = companyName.getText().toString();
+                String comp_email = companyEmail.getText().toString();
+                String comp_phone = companyPhone.getText().toString();
+                String comp_country = companyCountry.getText().toString();
+                String comp_address =companyAddress .getText().toString();
+                String comp_town = companyTown.getText().toString();
+                String comp_site = companySite.getText().toString();
+                String comp_userName = companyPassword.getText().toString();
+                String comp_password = libraryPassword.getText().toString();
+
+                   break;
+
+
+            case R.id.university_SignInBtn:
+                String userType5 = spinner.getSelectedItem().toString().toLowerCase();
+                String uni_name = universityName.getText().toString();
+                String uni_email = universityEmail.getText().toString();
+                String uni_phone = universityPhone.getText().toString();
+                String uni_country = universityCountry.getText().toString();
+                String uni_address =universityAddress .getText().toString();
+                String uni_major = universityMajor.getText().toString();
+                String uni_site = universitySite.getText().toString();
+                String uni_userName = universityUsername.getText().toString();
+                String uni_password = universityPassword.getText().toString();
+
+                break;
+
 
             case R.id.userPhoto_container:
                 SelectUserPhoto();
                 break;
+
 
 
         }
@@ -644,7 +1168,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     userImage_URI = data.getData();
                     Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
                     if (cursor.moveToFirst()) {
-                        String imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
                         Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
 
                     }
@@ -661,19 +1185,22 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 if (data.hasExtra("lat") && data.hasExtra("lng")) {
                     double lat = data.getExtras().getDouble("lat");
                     double lng = data.getExtras().getDouble("lng");
-                    String userType = spinner.getSelectedItem().toString();
+                    String userType = spinner.getSelectedItem().toString().toLowerCase();
                     String lib_name = libraryName.getText().toString();
                     String lib_email = libraryEmail.getText().toString();
-                    String lib_commission = libraryCommission.getText().toString();
+                    String lib_phone = libraryPhone.getText().toString();
                     String lib_country = libraryCountry.getText().toString();
-                    String lib_expertise = libraryExpertise.getText().toString();
+                    String lib_address = libraryAddress.getText().toString();
+                    String lib_userName = libraryUsername.getText().toString();
                     String lib_password = libraryPassword.getText().toString();
                     String lib_type = lib_spinner.getSelectedItem().toString();
                     String lib_otherType = "";
                     if (lib_type.equals("Other")) {
-                        lib_otherType = library_otherType.getText().toString();
+                        lib_type = library_otherType.getText().toString();
                     }
-                    presenter.LibraryRegistration(userType, lib_name, lib_email, lib_commission, lib_country, lib_expertise, lib_type, lib_otherType, lib_password, String.valueOf(lat), String.valueOf(lng));
+                    Toast.makeText(mContext, userType+"_"+lib_type, Toast.LENGTH_SHORT).show();
+                    presenter.LibraryRegistration(userType,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,String.valueOf(lat), String.valueOf(lng));
+
                 }
 
             }
@@ -725,20 +1252,23 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     {
                         double lat = location.getLatitude();
                         double lng = location.getLongitude();
-                        String userType = spinner.getSelectedItem().toString();
+                        String userType3 = spinner.getSelectedItem().toString().toLowerCase();
                         String lib_name = libraryName.getText().toString();
                         String lib_email = libraryEmail.getText().toString();
-                        String lib_commission = libraryCommission.getText().toString();
+                        String lib_phone = libraryPhone.getText().toString();
                         String lib_country = libraryCountry.getText().toString();
-                        String lib_expertise = libraryExpertise.getText().toString();
+                        String lib_address = libraryAddress.getText().toString();
+                        String lib_userName = libraryUsername.getText().toString();
                         String lib_password = libraryPassword.getText().toString();
-                        String lib_type = lib_spinner.getSelectedItem().toString();
+                        String lib_type = lib_spinner.getSelectedItem().toString().toLowerCase();
                         String lib_otherType = "";
-                        Toast.makeText(mContext, "lat "+lat+"\n"+"lng"+lng, Toast.LENGTH_SHORT).show();
                         if (lib_type.equals("Other")) {
-                            lib_otherType = library_otherType.getText().toString();
+                            lib_type = library_otherType.getText().toString();
                         }
-                        presenter.LibraryRegistration(userType, lib_name, lib_email, lib_commission, lib_country, lib_expertise, lib_type, lib_otherType, lib_password, String.valueOf(lat), String.valueOf(lng));
+                        Toast.makeText(mContext, userType3+"_"+lib_type, Toast.LENGTH_SHORT).show();
+
+                        presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,String.valueOf(lat), String.valueOf(lng));
+                        Toast.makeText(mContext, "locSuccess", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -773,6 +1303,17 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         });
         dialog.create();
         dialog.show();
+    }
+
+    private String decodeUserPhoto(Bitmap bitmap)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+
+        byte [] bytes = outputStream.toByteArray();
+
+        String encodeImage = Base64.encodeToString(bytes,Base64.DEFAULT);
+        return encodeImage;
     }
 
 }
