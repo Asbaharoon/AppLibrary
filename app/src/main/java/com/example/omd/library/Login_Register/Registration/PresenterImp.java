@@ -1,10 +1,13 @@
 package com.example.omd.library.Login_Register.Registration;
 
 import android.content.Context;
+import android.widget.Toast;
 
+import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 
 /**
  * Created by Delta on 24/12/2017.
@@ -249,6 +252,14 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
         if (viewData!=null)
         {
             viewData.setPublisher_invalidPassword_Error();
+        }
+    }
+
+    @Override
+    public void setPublisherLat_LngError() {
+        if (viewData!=null)
+        {
+            viewData.setPublisherLat_LngError();
         }
     }
 
@@ -640,6 +651,7 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
         if (viewData!=null)
         {
             viewData.onPublisherDataSuccess(publisherModel);
+            Toast.makeText(mContext, "pub2 success", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -648,6 +660,22 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
         if (viewData!=null)
         {
             viewData.onLibraryDataSuccess(libraryModel);
+        }
+    }
+
+    @Override
+    public void onUniversityDataSuccess(UniversityModel universityModel) {
+        if (viewData!=null)
+        {
+            viewData.onUniversityDataSuccess( universityModel);
+        }
+    }
+
+    @Override
+    public void onCompanyDataSuccess(CompanyModel companyModel) {
+        if (viewData!=null)
+        {
+            viewData.onCompanyDataSuccess(companyModel);
         }
     }
 

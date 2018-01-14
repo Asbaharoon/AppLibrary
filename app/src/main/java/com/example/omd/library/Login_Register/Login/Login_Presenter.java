@@ -5,5 +5,5 @@ package com.example.omd.library.Login_Register.Login;
  */
 
 public interface Login_Presenter {
-    void Validate_Credential(String email,String password);
+    void Validate_Credential(String username,String password);
 }

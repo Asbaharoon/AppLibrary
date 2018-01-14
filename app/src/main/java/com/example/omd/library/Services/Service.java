@@ -1,8 +1,10 @@
 package com.example.omd.library.Services;
 
+import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.Models.User;
 
 import java.util.Map;
@@ -36,5 +38,13 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/registration")
     Call<LibraryModel>LibraryRegistration(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/registration")
+    Call<UniversityModel>UniversityRegistration(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/registration")
+    Call<CompanyModel>CompanyRegistration(@FieldMap Map<String,String> map);
 
 }

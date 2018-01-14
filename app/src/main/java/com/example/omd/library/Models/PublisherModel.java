@@ -1,5 +1,7 @@
 package com.example.omd.library.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,37 +9,27 @@ import java.io.Serializable;
  */
 
 public class PublisherModel implements Serializable {
-    private String pub_id;
+    @SerializedName("user_type")
     private String user_type;
-    private String pub_firstName;
-    private String pub_lastName;
+    @SerializedName("publisher_name")
+    private String pub_name;
+    @SerializedName("publisher_email")
     private String pub_email;
+    @SerializedName("publisher_phone")
     private String pub_phone;
+    @SerializedName("publisher_country")
     private String pub_country;
-    private String pub_expertise;
+    @SerializedName("publisher_address")
+    private String pub_address;
+    private String pub_town;
     private String pub_website;
+    @SerializedName("user_username")
+    private String pub_username;
     private String pub_password;
 
     public PublisherModel() {
     }
 
-    public PublisherModel(String pub_firstName, String pub_lastName, String pub_email, String pub_phone, String pub_country, String pub_expertise, String pub_website, String pub_password) {
-        this.pub_firstName = pub_firstName;
-        this.pub_lastName = pub_lastName;
-        this.pub_email = pub_email;
-        this.pub_phone = pub_phone;
-        this.pub_country = pub_country;
-        this.pub_expertise = pub_expertise;
-        this.pub_website = pub_website;
-        this.pub_password = pub_password;
-    }
-    public String getPub_id() {
-        return pub_id;
-    }
-
-    public void setPub_id(String pub_id) {
-        this.pub_id = pub_id;
-    }
     public String getUser_type() {
         return user_type;
     }
@@ -46,20 +38,12 @@ public class PublisherModel implements Serializable {
         this.user_type = user_type;
     }
 
-    public String getPub_firstName() {
-        return pub_firstName;
+    public String getPub_name() {
+        return pub_name;
     }
 
-    public void setPub_firstName(String pub_firstName) {
-        this.pub_firstName = pub_firstName;
-    }
-
-    public String getPub_lastName() {
-        return pub_lastName;
-    }
-
-    public void setPub_lastName(String pub_lastName) {
-        this.pub_lastName = pub_lastName;
+    public void setPub_name(String pub_name) {
+        this.pub_name = pub_name;
     }
 
     public String getPub_email() {
@@ -86,12 +70,20 @@ public class PublisherModel implements Serializable {
         this.pub_country = pub_country;
     }
 
-    public String getPub_expertise() {
-        return pub_expertise;
+    public String getPub_address() {
+        return pub_address;
     }
 
-    public void setPub_expertise(String pub_expertise) {
-        this.pub_expertise = pub_expertise;
+    public void setPub_address(String pub_address) {
+        this.pub_address = pub_address;
+    }
+
+    public String getPub_town() {
+        return pub_town;
+    }
+
+    public void setPub_town(String pub_town) {
+        this.pub_town = pub_town;
     }
 
     public String getPub_website() {
@@ -100,6 +92,14 @@ public class PublisherModel implements Serializable {
 
     public void setPub_website(String pub_website) {
         this.pub_website = pub_website;
+    }
+
+    public String getPub_username() {
+        return pub_username;
+    }
+
+    public void setPub_username(String pub_username) {
+        this.pub_username = pub_username;
     }
 
     public String getPub_password() {

@@ -37,9 +37,11 @@ import android.widget.Toast;
 import com.example.omd.library.Activities.MapsActivity;
 import com.example.omd.library.Login_Register.Registration.PresenterImp;
 import com.example.omd.library.Login_Register.Registration.ViewData;
+import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
 import com.example.omd.library.Services.Tags;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
@@ -318,8 +320,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             n_userLastName = (MaterialEditText) userView.findViewById(R.id.user_lastName);
             n_userLastName.setAutoValidate(true);
-            n_userLastName.setShowClearButton(true);
             n_userLastName.addValidator(new RegexpValidator("invalid last name", Tags.name_Regex));
+            n_userLastName.setShowClearButton(true);
 
 
             n_userEmail = (MaterialEditText) userView.findViewById(R.id.user_email);
@@ -329,6 +331,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             n_userPhone = (MaterialEditText) userView.findViewById(R.id.user_phone);
             n_userPhone.setAutoValidate(true);
+            n_userPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
             n_userPhone.setShowClearButton(true);
 
             n_userCountry = (MaterialEditText) userView.findViewById(R.id.user_country);
@@ -384,6 +387,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             publisherPhone = (MaterialEditText) publisherView.findViewById(R.id.publisher_phone);
             publisherPhone.setAutoValidate(true);
+            publisherPhone.addValidator(new RegexpValidator("invalid country", Tags.phone_Regex));
             publisherPhone.setShowClearButton(true);
 
             publisherAddress = (MaterialEditText) publisherView.findViewById(R.id.publisher_address);
@@ -438,6 +442,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             libraryPhone = (MaterialEditText) libraryView.findViewById(R.id.library_phone);
             libraryPhone.setAutoValidate(true);
+            libraryPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
             libraryPhone.setShowClearButton(true);
 
 
@@ -497,6 +502,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             universityPhone = (MaterialEditText) universityView.findViewById(R.id.university_phone);
             universityPhone.setAutoValidate(true);
+            universityPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
             universityPhone.setShowClearButton(true);
 
             universityCountry = (MaterialEditText) universityView.findViewById(R.id.university_country);
@@ -558,6 +564,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             companyPhone = (MaterialEditText) companyView.findViewById(R.id.company_phone);
             companyPhone.setAutoValidate(true);
+            companyPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
             companyPhone.setShowClearButton(true);
 
             companyCountry = (MaterialEditText) companyView.findViewById(R.id.company_country);
@@ -759,10 +766,21 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         publisherPassword.setError("empty field");
 
     }
-
     @Override
     public void setPublisher_invalidPassword_Error() {
         publisherPassword.setError("invalid password");
+    }
+
+    @Override
+    public void setPublisherLat_LngError() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CreateDialogForLocation();
+
+            }
+        },1000);
+
     }
 
     @Override
@@ -837,7 +855,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                CreateDialog();
+                CreateDialogForLocation();
 
             }
         },1000);
@@ -904,26 +922,35 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
-    public void setUniversity_invalidUsername_Error() {
+    public void setUniversity_invalidUsername_Error()
+    {
         universityUsername.setError("invalid username");
     }
 
     @Override
-    public void setUniversityPassword_Error() {
+    public void setUniversityPassword_Error()
+    {
         universityPassword.setError("empty field");
 
     }
 
-
     @Override
-    public void setUniversity_invalidPassword_Error() {
+    public void setUniversity_invalidPassword_Error()
+    {
         universityPassword.setError("invalid password");
 
     }
 
     @Override
-    public void setUniversityLat_Lng_Error() {
+    public void setUniversityLat_Lng_Error()
+    {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CreateDialogForLocation();
 
+            }
+        },1000);
     }
 
     @Override
@@ -1049,92 +1076,41 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     }
 
+    @Override
+    public void onUniversityDataSuccess(UniversityModel universityModel) {
+        Toast.makeText(mContext, "uni success", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onCompanyDataSuccess(CompanyModel companyModel) {
+        Toast.makeText(mContext, "comp success", Toast.LENGTH_SHORT).show();
+
+    }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.n_SignInBtn:
-                String userType1 = spinner.getSelectedItem().toString();
-                String n_fname = n_userFirstName.getText().toString();
-                String n_lname = n_userLastName.getText().toString();
-                String n_email = n_userEmail.getText().toString();
-                String n_country = n_userCountry.getText().toString();
-                String n_phone = n_userPhone.getText().toString();
-                String n_username = n_user_userName.getText().toString();
-                String n_password = n_userPassword.getText().toString();
-
-                String n_userPhotoName ="";
-                String n_userPhoto="";
-                if (userImage_URI!=null&&imageName!=null&&userBitmap_image!=null)
-                {
-                    n_userPhotoName = imageName;
-                    n_userPhoto = decodeUserPhoto(userBitmap_image);
-                }
-                presenter.NormalUserRegistration(userType1,n_userPhotoName,n_userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password);
+                initNormalUserData("");
                 break;
 
             case R.id.pub_SignInBtn:
-                String userType2 = spinner.getSelectedItem().toString();
-                String pub_fname = publisher_firstName.getText().toString();
-                String pub_lname = publisher_lastName.getText().toString();
-                String pub_email = publisherEmail.getText().toString();
-                String pub_country = publisherCountry.getText().toString();
-                String pub_password = publisherPassword.getText().toString();
-                String pub_phone = publisherPhone.getText().toString();
-                String pub_address = publisherAddress.getText().toString();
-                String pub_town = publisherTown.getText().toString();
-                String pub_username = publisherUsername.getText().toString();
-                String pub_weburl = publisher_webSite.getText().toString();
-                //presenter.PublisherRegistration(userType2, pub_fname, pub_lname, pub_email, pub_country, pub_password, pub_phone, pub_expertise, pub_weburl);
+                initPublisherData("","");
                 break;
             case R.id.lib_SignInBtn:
-                String userType3 = spinner.getSelectedItem().toString().toLowerCase();
-                String lib_name = libraryName.getText().toString();
-                String lib_email = libraryEmail.getText().toString();
-                String lib_phone = libraryPhone.getText().toString();
-                String lib_country = libraryCountry.getText().toString();
-                String lib_address = libraryAddress.getText().toString();
-                String lib_userName = libraryUsername.getText().toString();
-                String lib_password = libraryPassword.getText().toString();
-                String lib_type = lib_spinner.getSelectedItem().toString();
-                String lib_otherType = "";
-                if (lib_type.equals("Other")) {
-                    lib_type = library_otherType.getText().toString();
-                }
-
-                Toast.makeText(mContext, userType3+"_"+lib_type, Toast.LENGTH_SHORT).show();
-                presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,"", "");
-                //presenter.LibraryRegistration(userType3, lib_name, lib_email, lib_commission, lib_country, lib_expertise, lib_type, lib_otherType, lib_password, "", "");
+                initLibraryData("","");
                 break;
 
             case R.id.company_SignInBtn:
-                String userType4 = spinner.getSelectedItem().toString().toLowerCase();
-                String comp_name = companyName.getText().toString();
-                String comp_email = companyEmail.getText().toString();
-                String comp_phone = companyPhone.getText().toString();
-                String comp_country = companyCountry.getText().toString();
-                String comp_address =companyAddress .getText().toString();
-                String comp_town = companyTown.getText().toString();
-                String comp_site = companySite.getText().toString();
-                String comp_userName = companyPassword.getText().toString();
-                String comp_password = libraryPassword.getText().toString();
-
-                   break;
+                initCompanyData();
+                break;
 
 
             case R.id.university_SignInBtn:
-                String userType5 = spinner.getSelectedItem().toString().toLowerCase();
-                String uni_name = universityName.getText().toString();
-                String uni_email = universityEmail.getText().toString();
-                String uni_phone = universityPhone.getText().toString();
-                String uni_country = universityCountry.getText().toString();
-                String uni_address =universityAddress .getText().toString();
-                String uni_major = universityMajor.getText().toString();
-                String uni_site = universitySite.getText().toString();
-                String uni_userName = universityUsername.getText().toString();
-                String uni_password = universityPassword.getText().toString();
-
-                break;
+                initUniversityData("","");
+                  break;
 
 
             case R.id.userPhoto_container:
@@ -1147,6 +1123,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     }
 
+
     private void SelectUserPhoto() {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -1157,7 +1134,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
 
         if (requestCode == IMAGE_REQUEST) {
 
@@ -1175,6 +1153,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
                     n_circleImageView.setImageBitmap(userBitmap_image);
                     addPhoto_tv.setVisibility(View.GONE);
+                    String userPhoto = decodeUserPhoto(userBitmap_image);
+                    initNormalUserData(userPhoto);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1186,20 +1166,17 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     double lat = data.getExtras().getDouble("lat");
                     double lng = data.getExtras().getDouble("lng");
                     String userType = spinner.getSelectedItem().toString().toLowerCase();
-                    String lib_name = libraryName.getText().toString();
-                    String lib_email = libraryEmail.getText().toString();
-                    String lib_phone = libraryPhone.getText().toString();
-                    String lib_country = libraryCountry.getText().toString();
-                    String lib_address = libraryAddress.getText().toString();
-                    String lib_userName = libraryUsername.getText().toString();
-                    String lib_password = libraryPassword.getText().toString();
-                    String lib_type = lib_spinner.getSelectedItem().toString();
-                    String lib_otherType = "";
-                    if (lib_type.equals("Other")) {
-                        lib_type = library_otherType.getText().toString();
+                    if (userType.equals("Publisher"))
+                    {
+                        initPublisherData(String.valueOf(lat),String.valueOf(lng));
+                    }else if (userType.equals("Library"))
+                    {
+                        initLibraryData(String.valueOf(lat),String.valueOf(lng));
                     }
-                    Toast.makeText(mContext, userType+"_"+lib_type, Toast.LENGTH_SHORT).show();
-                    presenter.LibraryRegistration(userType,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,String.valueOf(lat), String.valueOf(lng));
+                    else if (userType.equals("University"))
+                    {
+                        initUniversityData(String.valueOf(lat),String.valueOf(lng));
+                    }
 
                 }
 
@@ -1207,7 +1184,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         }
     }
 
-    private void CreateDialog() {
+    private void CreateDialogForLocation()
+    {
         LovelyStandardDialog dialog = new LovelyStandardDialog(getActivity())
                 .setTitle("Select Library Location...")
                 .setMessage("Your current location is the library location ?")
@@ -1234,48 +1212,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         dialog.create();
         dialog.show();
     }
-
-    private void getDeviceLocation() {
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Task<Location> locationTask = mFusedLocationProviderClient.getLastLocation();
-        locationTask.addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-
-                if (task.isSuccessful())
-                {
-                    Location location = task.getResult();
-                    if (location!=null)
-                    {
-                        double lat = location.getLatitude();
-                        double lng = location.getLongitude();
-                        String userType3 = spinner.getSelectedItem().toString().toLowerCase();
-                        String lib_name = libraryName.getText().toString();
-                        String lib_email = libraryEmail.getText().toString();
-                        String lib_phone = libraryPhone.getText().toString();
-                        String lib_country = libraryCountry.getText().toString();
-                        String lib_address = libraryAddress.getText().toString();
-                        String lib_userName = libraryUsername.getText().toString();
-                        String lib_password = libraryPassword.getText().toString();
-                        String lib_type = lib_spinner.getSelectedItem().toString().toLowerCase();
-                        String lib_otherType = "";
-                        if (lib_type.equals("Other")) {
-                            lib_type = library_otherType.getText().toString();
-                        }
-                        Toast.makeText(mContext, userType3+"_"+lib_type, Toast.LENGTH_SHORT).show();
-
-                        presenter.LibraryRegistration(userType3,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,String.valueOf(lat), String.valueOf(lng));
-                        Toast.makeText(mContext, "locSuccess", Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-            }
-        });
-    }
-
     private void CreateProgressDialog()
     {
         progressDialog  = new ProgressDialog(getActivity());
@@ -1304,7 +1240,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         dialog.create();
         dialog.show();
     }
-
     private String decodeUserPhoto(Bitmap bitmap)
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -1315,5 +1250,130 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String encodeImage = Base64.encodeToString(bytes,Base64.DEFAULT);
         return encodeImage;
     }
+    private void getDeviceLocation()
+    {
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> locationTask = mFusedLocationProviderClient.getLastLocation();
+        locationTask.addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
 
+                if (task.isSuccessful())
+                {
+                    Location location = task.getResult();
+                    if (location!=null)
+                    {
+
+                        double lat = location.getLatitude();
+                        double lng = location.getLongitude();
+                        String userType = spinner.getSelectedItem().toString();
+                        if (userType.equals("Publisher"))
+                        {
+                            initPublisherData(String.valueOf(lat),String.valueOf(lng));
+                        }else if (userType.equals("Library"))
+                        {
+                            initLibraryData(String.valueOf(lat),String.valueOf(lng));
+                        }
+                        else if (userType.equals("University"))
+                        {
+                            initUniversityData(String.valueOf(lat),String.valueOf(lng));
+                        }
+
+                    }
+                }
+            }
+        });
+    }
+    private void initNormalUserData(String userPhoto)
+    {
+        String userType = spinner.getSelectedItem().toString();
+        String n_fname = n_userFirstName.getText().toString();
+        String n_lname = n_userLastName.getText().toString();
+        String n_email = n_userEmail.getText().toString();
+        String n_country = n_userCountry.getText().toString();
+        String n_phone = n_userPhone.getText().toString();
+        String n_username = n_user_userName.getText().toString();
+        String n_password = n_userPassword.getText().toString();
+
+        String n_userPhotoName ="";
+        /*if (userImage_URI!=null&&imageName!=null&&userBitmap_image!=null)
+        {
+            n_userPhotoName = imageName;
+            n_userPhoto = decodeUserPhoto(userBitmap_image);
+        }*/
+        presenter.NormalUserRegistration(userType,n_userPhotoName,userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password);
+
+    }
+    private void initPublisherData(String lat,String lng)
+    {
+        String userType2 = spinner.getSelectedItem().toString().toLowerCase();
+        String pub_fname = publisher_firstName.getText().toString();
+        String pub_lname = publisher_lastName.getText().toString();
+        String pub_email = publisherEmail.getText().toString();
+        String pub_country = publisherCountry.getText().toString();
+        String pub_password = publisherPassword.getText().toString();
+        String pub_phone = publisherPhone.getText().toString();
+        String pub_address = publisherAddress.getText().toString();
+        String pub_town = publisherTown.getText().toString();
+        String pub_username = publisherUsername.getText().toString();
+        String pub_site = publisher_webSite.getText().toString();
+        presenter.PublisherRegistration(userType2,pub_fname,pub_lname,pub_email,pub_country,pub_password,pub_phone,pub_username,pub_address,pub_town,pub_site,lat,lng);
+
+    }
+    private void initLibraryData(String lat,String lng)
+    {
+        String userType = spinner.getSelectedItem().toString().toLowerCase();
+        String lib_name = libraryName.getText().toString();
+        String lib_email = libraryEmail.getText().toString();
+        String lib_phone = libraryPhone.getText().toString();
+        String lib_country = libraryCountry.getText().toString();
+        String lib_address = libraryAddress.getText().toString();
+        String lib_userName = libraryUsername.getText().toString();
+        String lib_password = libraryPassword.getText().toString();
+        String lib_type = lib_spinner.getSelectedItem().toString();
+        String lib_otherType = "";
+        if (lib_type.equals("Other")) {
+            lib_type = library_otherType.getText().toString();
+        }
+
+        Toast.makeText(mContext, userType+"_"+lib_type, Toast.LENGTH_SHORT).show();
+        presenter.LibraryRegistration(userType,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,lat,lng);
+
+    }
+    private void initUniversityData(String lat, String lng)
+    {
+        String userType = spinner.getSelectedItem().toString().toLowerCase();
+        String uni_name = universityName.getText().toString();
+        String uni_email = universityEmail.getText().toString();
+        String uni_phone = universityPhone.getText().toString();
+        String uni_country = universityCountry.getText().toString();
+        String uni_address =universityAddress .getText().toString();
+        String uni_major = universityMajor.getText().toString();
+        String uni_site = universitySite.getText().toString();
+        String uni_userName = universityUsername.getText().toString();
+        String uni_password = universityPassword.getText().toString();
+        Toast.makeText(mContext, userType, Toast.LENGTH_SHORT).show();
+        presenter.UniversityRegistration(userType,uni_name,uni_email,uni_country,uni_phone,uni_userName,uni_password,uni_major,uni_address,uni_site,lat,lng);
+
+    }
+    private void initCompanyData()
+    {
+        String userType = spinner.getSelectedItem().toString().toLowerCase();
+        String comp_name = companyName.getText().toString();
+        String comp_email = companyEmail.getText().toString();
+        String comp_phone = companyPhone.getText().toString();
+        String comp_country = companyCountry.getText().toString();
+        String comp_address =companyAddress .getText().toString();
+        String comp_town = companyTown.getText().toString();
+        String comp_site = companySite.getText().toString();
+        String comp_userName = companyUsername.getText().toString();
+        String comp_password = companyPassword.getText().toString();
+
+        presenter.CompanyRegistration(userType,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site);
+
+    }
 }
+

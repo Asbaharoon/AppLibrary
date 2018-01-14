@@ -13,13 +13,15 @@ import com.example.omd.library.Models.PublisherModel;
 public interface Login_ModelInteractor {
     interface onCompleteListener
     {
-        void setEmailError(String error);
-        void setPasswordError(String error);
+        void setUserNameError();
+        void setUserName_invalidError();
+        void setPasswordError();
+        void setPassword_invalidError();
         void onSuccess_NormalUserData(NormalUserData normalUserModel);
         void onSuccess_LibraryData(LibraryModel libraryModel);
         void onSuccess_PublisherData(PublisherModel publisherModel);
         void onFailed(String error);
     }
 
-   void Login(String email, String password, Login_ModelInteractor.onCompleteListener listener, Context context);
+   void Login(String username, String password, Login_ModelInteractor.onCompleteListener listener, Context context);
 }

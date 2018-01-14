@@ -15,18 +15,22 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
 
     private boolean isConnected =false;
     @Override
-    public void Login(String email, String password, final onCompleteListener listener, Context context) {
-        if (TextUtils.isEmpty(email))
+    public void Login(String username, String password, final onCompleteListener listener, Context context) {
+        if (TextUtils.isEmpty(username))
         {
-            listener.setEmailError("empty field");
+            listener.setUserNameError();
         }
-        else if (!email.matches(Tags.email_Regex))
+        else if (!username.matches(Tags.username_Regex))
         {
-            listener.setEmailError("invalid email");
+            listener.setUserName_invalidError();
         }
         else if (TextUtils.isEmpty(password))
         {
-            listener.setPasswordError("empty password");
+            listener.setPasswordError();
+        }
+        else if (!password.matches(Tags.pass_Regex))
+        {
+            listener.setPassword_invalidError();
         }
         else
             {

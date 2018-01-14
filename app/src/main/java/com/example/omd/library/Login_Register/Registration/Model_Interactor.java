@@ -2,9 +2,11 @@ package com.example.omd.library.Login_Register.Registration;
 
 import android.content.Context;
 
+import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 
 /**
  * Created by Delta on 24/12/2017.
@@ -42,6 +44,7 @@ public interface Model_Interactor {
         void setPublisher_invalidUsername_Error();
         void setPublisherPassword_Error();
         void setPublisher_invalidPassword_Error();
+        void setPublisherLat_LngError();
 
 
         void setLibraryName_Error();
@@ -96,6 +99,8 @@ public interface Model_Interactor {
         void onNormalUserDataSuccess(NormalUserData normalUserData);
         void onPublisherDataSuccess(PublisherModel publisherModel);
         void onLibraryDataSuccess(LibraryModel libraryModel);
+        void onUniversityDataSuccess(UniversityModel universityModel);
+        void onCompanyDataSuccess(CompanyModel companyModel);
         void onFailed(String error);
     }
     //

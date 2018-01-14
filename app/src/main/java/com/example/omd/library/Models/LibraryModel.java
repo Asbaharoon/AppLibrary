@@ -1,5 +1,7 @@
 package com.example.omd.library.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,37 +9,43 @@ import java.io.Serializable;
  */
 
 public class LibraryModel implements Serializable {
-    private String lib_id;
+    @SerializedName("user_type")
     private String user_type;
+    @SerializedName("library_name")
     private String lib_name;
+    @SerializedName("library_email")
     private String lib_email;
-    private String lib_commission;
+    @SerializedName("library_country")
     private String lib_country;
-    private String lib_expertise;
+    @SerializedName("library_address")
+    private String lib_address;
+    @SerializedName("library_phone")
+    private String lib_phone;
+    @SerializedName("library_type")
     private String lib_type;
+    @SerializedName("user_username")
+    private String lib_username;
     private String lib_password;
+    @SerializedName("library_google_lat")
     private String lat;
+    @SerializedName("library_google_lng")
     private String lng;
 
+    public LibraryModel() {
+    }
 
-
-
-    public LibraryModel(String lib_name, String lib_email, String lib_commission, String lib_country, String lib_expertise, String lib_type, String lib_password) {
+    public LibraryModel(String user_type, String lib_name, String lib_email, String lib_country, String lib_address, String lib_phone, String lib_type, String lib_username, String lib_password, String lat, String lng) {
+        this.user_type = user_type;
         this.lib_name = lib_name;
         this.lib_email = lib_email;
-        this.lib_commission = lib_commission;
         this.lib_country = lib_country;
-        this.lib_expertise = lib_expertise;
+        this.lib_address = lib_address;
+        this.lib_phone = lib_phone;
         this.lib_type = lib_type;
+        this.lib_username = lib_username;
         this.lib_password = lib_password;
-    }
-
-    public String getLib_id() {
-        return lib_id;
-    }
-
-    public void setLib_id(String lib_id) {
-        this.lib_id = lib_id;
+        this.lat = lat;
+        this.lng = lng;
     }
 
     public String getUser_type() {
@@ -64,14 +72,6 @@ public class LibraryModel implements Serializable {
         this.lib_email = lib_email;
     }
 
-    public String getLib_commission() {
-        return lib_commission;
-    }
-
-    public void setLib_commission(String lib_commission) {
-        this.lib_commission = lib_commission;
-    }
-
     public String getLib_country() {
         return lib_country;
     }
@@ -80,12 +80,20 @@ public class LibraryModel implements Serializable {
         this.lib_country = lib_country;
     }
 
-    public String getLib_expertise() {
-        return lib_expertise;
+    public String getLib_address() {
+        return lib_address;
     }
 
-    public void setLib_expertise(String lib_expertise) {
-        this.lib_expertise = lib_expertise;
+    public void setLib_address(String lib_address) {
+        this.lib_address = lib_address;
+    }
+
+    public String getLib_phone() {
+        return lib_phone;
+    }
+
+    public void setLib_phone(String lib_phone) {
+        this.lib_phone = lib_phone;
     }
 
     public String getLib_type() {
@@ -94,6 +102,14 @@ public class LibraryModel implements Serializable {
 
     public void setLib_type(String lib_type) {
         this.lib_type = lib_type;
+    }
+
+    public String getLib_username() {
+        return lib_username;
+    }
+
+    public void setLib_username(String lib_username) {
+        this.lib_username = lib_username;
     }
 
     public String getLib_password() {
@@ -119,8 +135,4 @@ public class LibraryModel implements Serializable {
     public void setLng(String lng) {
         this.lng = lng;
     }
-
-    public LibraryModel() {
-    }
-
 }

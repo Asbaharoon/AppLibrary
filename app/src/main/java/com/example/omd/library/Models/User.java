@@ -17,6 +17,7 @@ public class User implements Serializable {
     private String userEmail;
     @SerializedName("photo_link")
     private String userPhotoUrl;
+    @SerializedName("user_type")
     private String userType;
 
 

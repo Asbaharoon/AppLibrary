@@ -9,8 +9,10 @@ import com.example.omd.library.Models.PublisherModel;
  */
 
 public interface Login_ViewData {
-    void setEmailError(String error);
-    void setPasswordError(String error);
+    void setUserNameError();
+    void setUserName_invalidError();
+    void setPasswordError();
+    void setPassword_invalidError();
     void showProgressDialog();
     void hideProgressDialog();
     void onSuccess_NormalUserData(NormalUserData normalUserModel);

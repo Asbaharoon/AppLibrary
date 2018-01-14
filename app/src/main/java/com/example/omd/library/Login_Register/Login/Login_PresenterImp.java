@@ -27,22 +27,39 @@ public class Login_PresenterImp implements Login_Presenter,Login_ModelInteractor
         interactor.Login(email,password,this,context);
     }
 
+
     @Override
-    public void setEmailError(String error) {
+    public void setUserNameError() {
         if (viewData!=null)
         {
-            viewData.setEmailError(error);
+            viewData.setUserNameError();
         }
     }
 
     @Override
-    public void setPasswordError(String error) {
+    public void setUserName_invalidError() {
+
         if (viewData!=null)
         {
-            viewData.setPasswordError(error);
+           viewData.setUserName_invalidError();
         }
     }
 
+    @Override
+    public void setPasswordError() {
+        if (viewData!=null)
+        {
+            viewData.setPasswordError();
+        }
+    }
+
+    @Override
+    public void setPassword_invalidError() {
+        if (viewData!=null)
+        {
+            viewData.setPassword_invalidError();
+        }
+    }
 
     @Override
     public void onSuccess_NormalUserData(NormalUserData normalUserModel) {

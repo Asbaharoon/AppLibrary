@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
     private ShimmerTextView shimmerTextView;
     private ExpandableRelativeLayout login_expandlayout;
     private FragmentTransactionExtended fragmentTransactionExtended;
-    private EditText email,password;
+    private EditText userName,password;
     private RippleView rippleView,ripple_et_forget_password,signinBtn_ripple;
     Context mContext;
     Handler handler;
@@ -70,9 +70,9 @@ public class LoginFragment extends Fragment implements Login_ViewData{
         signinBtn_ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
             public void onComplete(RippleView rippleView) {
-                String Email = email.getText().toString().trim();
+                String user_Name = userName.getText().toString().trim();
                 String Password = password.getText().toString().trim();
-                presenterImp.Validate_Credential(Email,Password);
+                presenterImp.Validate_Credential(user_Name,Password);
             }
         });
         setUpShimmer();
@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
         rippleView = (RippleView) view.findViewById(R.id.ripple_et);
         ripple_et_forget_password = (RippleView) view.findViewById(R.id.ripple_et_forget_password);
         signinBtn_ripple = (RippleView) view.findViewById(R.id.signinBtn_ripple);
-        email = (EditText) view.findViewById(R.id.email);
+        userName = (EditText) view.findViewById(R.id.userName);
         password = (EditText) view.findViewById(R.id.password);
 
 
@@ -148,14 +148,26 @@ public class LoginFragment extends Fragment implements Login_ViewData{
         },1100);
     }
 
+
     @Override
-    public void setEmailError(String error) {
-        email.setError(error);
+    public void setUserNameError() {
+        userName.setError("empty field");
     }
 
     @Override
-    public void setPasswordError(String error) {
-        password.setError(error);
+    public void setUserName_invalidError() {
+        userName.setError("invalid username");
+    }
+
+    @Override
+    public void setPasswordError() {
+        password.setError("empty field");
+
+    }
+
+    @Override
+    public void setPassword_invalidError() {
+        password.setError("invalid password");
     }
 
     @Override
@@ -170,7 +182,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
 
     @Override
     public void onSuccess_NormalUserData(NormalUserData normalUserModel) {
-        email.setText(null);
+        userName.setText(null);
         password.setText(null);
     }
 
