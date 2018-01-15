@@ -5,7 +5,7 @@ import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
-import com.example.omd.library.Models.User;
+import com.google.gson.JsonObject;
 
 import java.util.Map;
 
@@ -21,15 +21,23 @@ import retrofit2.http.POST;
 public interface Service {
     @FormUrlEncoded
     @POST("api/facebooklogin")
-    Call<User> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
+    Call<JsonObject> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
+
+
 
     @FormUrlEncoded
     @POST("api/gmaillogin")
-    Call<User> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
+    Call<JsonObject> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
+
+
+
 
     @FormUrlEncoded
     @POST("api/registration")
     Call<NormalUserData>NormalUserRegistration(@FieldMap Map<String,String> map);
+
+
+
 
     @FormUrlEncoded
     @POST("api/registration")

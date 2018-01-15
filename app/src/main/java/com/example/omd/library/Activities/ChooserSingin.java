@@ -17,6 +17,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.andexert.library.RippleView;
+import com.example.omd.library.Models.CompanyModel;
+import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.Models.User;
 import com.example.omd.library.R;
 import com.example.omd.library.Services.NetworkConnection;
@@ -40,6 +45,8 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
@@ -215,8 +222,14 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     }
     private void NavigateTOActivity_Login()
     {
-        Intent intent = new Intent(ChooserSingin.this,LoginActivity.class);
-        startActivity(intent);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ChooserSingin.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        },2000);
+
     }
     @Override
     public void onSuccess(LoginResult loginResult)
@@ -239,7 +252,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
             String userID = profile.getId();
             String userName = profile.getName();
             String userPhoto = "https://graph.facebook.com/" + userID+"/picture?type=large";
-            User userData = new User(userName,"",userPhoto);
+            final User userData = new User(userName,"",userPhoto);
             userData.setUserId(userID);
 
             Retrofit retrofit = setUpRetrofit(getString(R.string.facebook_url));
@@ -250,33 +263,95 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 map.put("user_username",userData.getUserId());
                 map.put("user_name",userData.getUserName());
                 map.put("photo_link",userData.getUserPhotoUrl());
-                Call<User> UserData = client.UploadUserDataWithFacebook(map);
-                UserData.enqueue(new Callback<User>() {
+                Call<JsonObject> call = client.UploadUserDataWithFacebook(map);
+                call.enqueue(new Callback<JsonObject>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                         if (response.isSuccessful())
                         {
-                            final User UserData = response.body();
-                            if (UserData!=null)
-                            {
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-                                        intent.putExtra("userData",UserData);
-                                        startActivity(intent);
-                                    }
-                                },2000);
-                            }
+                            Gson gson = new Gson();
+                            User user = gson.fromJson(response.body(),User.class);
 
+                            if (user !=null) {
+                                if (user.getUserType().equals("user")) {
+                                    Gson n_gson = new Gson();
+                                    final NormalUserData normalUserData = n_gson.fromJson(response.body(),NormalUserData.class);
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                            intent.putExtra("userData",normalUserData);
+                                            startActivity(intent);
+                                        }
+                                    },2000);
+
+                                } else if (user.getUserType().equals("publisher")) {
+                                    Gson p_gson = new Gson();
+                                    final PublisherModel publisherModel = p_gson.fromJson(response.body(),PublisherModel.class);
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                            intent.putExtra("userData",publisherModel);
+                                            startActivity(intent);
+                                        }
+                                    },2000);
+
+                                }
+                                else if (user.getUserType().equals("library")) {
+                                    Gson l_gson = new Gson();
+                                    final LibraryModel libraryModel = l_gson.fromJson(response.body(),LibraryModel.class);
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                            intent.putExtra("libraryData",libraryModel);
+                                            startActivity(intent);
+                                        }
+                                    },2000);
+
+                                }
+                                else if (user.getUserType().equals("university")) {
+                                    Gson uni_gson = new Gson();
+                                    final UniversityModel universityModel = uni_gson.fromJson(response.body(),UniversityModel.class);
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                            intent.putExtra("universityData",universityModel);
+                                            startActivity(intent);
+                                        }
+                                    },2000);
+
+                                }
+                                else if (user.getUserType().equals("company")) {
+                                    Gson comp_gson = new Gson();
+                                    final CompanyModel companyModel = comp_gson.fromJson(response.body(),CompanyModel.class);
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                            intent.putExtra("libraryData",companyModel);
+                                            startActivity(intent);
+                                        }
+                                    },2000);
+
+                                }
+
+
+
+
+                            }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(ChooserSingin.this, "Error ", Toast.LENGTH_SHORT).show();
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+
                     }
                 });
+
             }
 
 
@@ -345,36 +420,98 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                     map.put("user_name",userData.getUserName());
                     map.put("photo_link",userData.getUserPhotoUrl());
                     map.put("user_email",userData.getUserEmail());
-                    Call<User> UserData = client.UploadUserDataWithGoogle(map);
-                    UserData.enqueue(new Callback<User>() {
+                    Call<JsonObject> UserData = client.UploadUserDataWithGoogle(map);
+                    UserData.enqueue(new Callback<JsonObject>() {
                         @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-
-                            final User UserData = response.body();
-                            if (UserData!=null)
+                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                            if (response.isSuccessful())
                             {
-
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-                                        intent.putExtra("userData",UserData);
-                                        startActivity(intent);
+                                Gson gson= new Gson();
+                                final User user = gson.fromJson(response.body(),User.class);
+                                if (user!=null)
+                                {
+                                    if (user.getUserType().equals("user"))
+                                    {
+                                        Gson u_gson= new Gson();
+                                        final NormalUserData normalUserData = u_gson.fromJson(response.body(),NormalUserData.class);
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                                intent.putExtra("userData",normalUserData);
+                                                startActivity(intent);
+                                            }
+                                        },2000);
                                     }
-                                },2000);
-                            }
-                            else
-                            {
-                                Auth.GoogleSignInApi.signOut(apiClient);
-                                apiClient.disconnect();
-                                dialog.dismiss();
-                                Toast.makeText(ChooserSingin.this, "no data", Toast.LENGTH_SHORT).show();
+                                    else if (user.getUserType().equals("publisher"))
+                                    {
+                                        Gson p_gson= new Gson();
+                                        final PublisherModel publisherModel = p_gson.fromJson(response.body(),PublisherModel.class);
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                                intent.putExtra("publisherData",publisherModel);
+                                                startActivity(intent);
+                                            }
+                                        },2000);
+                                    }
+                                    else if (user.getUserType().equals("library")) {
+                                        Gson l_gson = new Gson();
+                                        final LibraryModel libraryModel = l_gson.fromJson(response.body(),LibraryModel.class);
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                                intent.putExtra("libraryData",libraryModel);
+                                                startActivity(intent);
+                                            }
+                                        },2000);
+
+                                    }
+                                    else if (user.getUserType().equals("university")) {
+                                        Gson uni_gson = new Gson();
+                                        final UniversityModel universityModel = uni_gson.fromJson(response.body(),UniversityModel.class);
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                                intent.putExtra("universityData",universityModel);
+                                                startActivity(intent);
+                                            }
+                                        },2000);
+
+                                    }
+                                    else if (user.getUserType().equals("company")) {
+                                        Gson comp_gson = new Gson();
+                                        final CompanyModel companyModel = comp_gson.fromJson(response.body(),CompanyModel.class);
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
+                                                intent.putExtra("libraryData",companyModel);
+                                                startActivity(intent);
+                                            }
+                                        },2000);
+
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    Auth.GoogleSignInApi.signOut(apiClient);
+                                    apiClient.disconnect();
+                                    dialog.dismiss();
+                                    Toast.makeText(ChooserSingin.this, "no data", Toast.LENGTH_SHORT).show();
+                                }
+
                             }
 
                         }
 
                         @Override
-                        public void onFailure(Call<User> call, Throwable t) {
+                        public void onFailure(Call<JsonObject> call, Throwable t) {
 
                         }
                     });
@@ -448,4 +585,5 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

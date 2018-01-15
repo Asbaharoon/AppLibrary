@@ -18,6 +18,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +29,11 @@ import android.widget.Toast;
 import com.example.omd.library.Fragments.Home_Fragment;
 import com.example.omd.library.Fragments.News_Fragment;
 import com.example.omd.library.Fragments.Settings_Fragment;
-import com.example.omd.library.Models.User;
+import com.example.omd.library.Models.CompanyModel;
+import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.NormalUserData;
+import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
@@ -55,7 +60,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginManager manager;
-    private static User user_Data;
+    private static NormalUserData user_Data;
+    private static PublisherModel publisher_Model;
+    private static LibraryModel library_Model;
+    private static UniversityModel university_Model;
+    private static CompanyModel company_Model;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,24 +149,108 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         if (intent.hasExtra("userData"))
         {
-            User UserData = (User) intent.getSerializableExtra("userData");
+            final NormalUserData UserData = (NormalUserData) intent.getSerializableExtra("userData");
 
             if (UserData!=null)
             {
-                HomeActivity.user_Data= UserData;
+                user_Data = UserData;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Picasso.with(HomeActivity.this).load(Uri.parse(user_Data.getUserPhotoUrl())).fit().into(im_userImage);
-                        tv_userName.setText(user_Data.getUserName().toString().isEmpty()?"":user_Data.getUserName().toString());
-                        tv_userEmail.setText(user_Data.getUserEmail()==null?"":user_Data.getUserEmail().toString());
-
+                       UpdateUI(UserData.getUserPhoto(),UserData.getUserName(),UserData.getUserEmail());
                     }
                 },500);
             }
         }
+        else if (intent.hasExtra("publisherData"))
+        {
+
+            final PublisherModel publisherModel = (PublisherModel) intent.getSerializableExtra("publisherData");
+            if (publisherModel!=null)
+            {
+                publisher_Model = publisherModel;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UpdateUI("",publisherModel.getPub_name(),publisherModel.getPub_email());
+                    }
+                },500);
+            }
+
+
+        }
+        else if (intent.hasExtra("libraryData"))
+        {
+            final LibraryModel libraryModel = (LibraryModel) intent.getSerializableExtra("libraryData");
+
+            if (libraryModel!=null)
+            {
+                library_Model = libraryModel;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UpdateUI("",libraryModel.getLib_name(),libraryModel.getLib_email());
+                    }
+                },500);
+
+            }
+
+
+        }
+        else if (intent.hasExtra("universityData"))
+        {
+            final UniversityModel universityModel = (UniversityModel) intent.getSerializableExtra("universityData");
+            if (universityModel!=null)
+            {
+                university_Model = universityModel;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UpdateUI("",universityModel.getUni_name(),universityModel.getUni_email());
+                    }
+                },500);
+            }
+
+
+        }
+        else if (intent.hasExtra("companyData"))
+        {
+            final CompanyModel companyModel = (CompanyModel) intent.getSerializableExtra("companyData");
+
+            if (companyModel!=null)
+            {
+                company_Model = companyModel;
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        UpdateUI("",companyModel.getComp_name(),companyModel.getComp_email());
+                    }
+                },500);
+            }
+
+
+        }
     }
+
+    private void UpdateUI(String imageUrl,String name,String email) {
+        if (TextUtils.isEmpty(imageUrl)||imageUrl==null)
+        {
+            Picasso.with(HomeActivity.this).load(R.drawable.user_profile).fit().into(im_userImage);
+        }else
+            {
+                Picasso.with(HomeActivity.this).load(Uri.parse(imageUrl)).fit().into(im_userImage);
+
+            }
+        tv_userName.setText(TextUtils.isEmpty(name)||name==null?"":name.toString());
+        tv_userEmail.setText(email==null|| TextUtils.isEmpty(email)?"":email);
+
+    }
+
 
     private void setUpProgressDialog()
     {
