@@ -92,10 +92,12 @@ public class Model_InteractorImp implements Model_Interactor {
             isConnected = new NetworkConnection(context).CheckConnection();
             if (isConnected)
             {
+                listener.showProgress_Dialog();
                 Registration_NormalUser(userType,photoName,photo,first_name,last_name, email,country,phone,username,password, listener);
 
             }else
             {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         }
@@ -176,9 +178,11 @@ public class Model_InteractorImp implements Model_Interactor {
         {
             isConnected = new NetworkConnection(context).CheckConnection();
             if (isConnected) {
+                listener.showProgress_Dialog();
                 Registration_PublisherData(userType,first_name,last_name,email,country,password,phone,username,address,town,website_url,lat,lng, listener);
             }else
             {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         }
@@ -248,10 +252,12 @@ public class Model_InteractorImp implements Model_Interactor {
                 isConnected = new NetworkConnection(context).CheckConnection();
                 if (isConnected)
                 {
+                    listener.hideProgress_Dialog();
                     listener.setLibraryLat_lng_Error();
 
                 }else
                 {
+                    listener.hideProgress_Dialog();
                     listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
                 }
             }
@@ -261,9 +267,11 @@ public class Model_InteractorImp implements Model_Interactor {
                 isConnected = new NetworkConnection(context).CheckConnection();
                 if (isConnected)
                 {
+                    listener.showProgress_Dialog();
                     Registration_LibraryData(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libOtherType,libUsername,libPassword,lat,lng,listener);
                 }else
                 {
+                    listener.hideProgress_Dialog();
                     listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
                 }
             }
@@ -287,10 +295,12 @@ public class Model_InteractorImp implements Model_Interactor {
             isConnected = new NetworkConnection(context).CheckConnection();
             if (isConnected)
             {
+                listener.hideProgress_Dialog();
                 listener.setLibraryLat_lng_Error();
 
             }else
             {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         }
@@ -299,10 +309,12 @@ public class Model_InteractorImp implements Model_Interactor {
             isConnected = new NetworkConnection(context).CheckConnection();
             if (isConnected)
             {
+                listener.showProgress_Dialog();
                 Registration_LibraryData(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libOtherType,libUsername,libPassword,lat,lng,listener);
 
             }else
             {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         }
@@ -375,9 +387,11 @@ public class Model_InteractorImp implements Model_Interactor {
                 isConnected = new NetworkConnection(context).CheckConnection();
                 if (isConnected)
                 {
+                    listener.showProgress_Dialog();
                     Registration_UniversityData(userType,name,email,country,phone,username,password,major,address,site,lat,lng,listener);
                 }else
                 {
+                    listener.hideProgress_Dialog();
                     listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
                 }
             }
@@ -448,9 +462,11 @@ public class Model_InteractorImp implements Model_Interactor {
             isConnected = new NetworkConnection(context).CheckConnection();
             if (isConnected)
             {
+                listener.showProgress_Dialog();
                 Registration_CompanyData(userType,name,email,country,phone,username,password,address,town,site,listener);
             }else
             {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         }
@@ -476,13 +492,22 @@ public class Model_InteractorImp implements Model_Interactor {
         Call<NormalUserData> userDataCall = service.NormalUserRegistration(userMap);
         userDataCall.enqueue(new Callback<NormalUserData>() {
             @Override
-            public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
+            public void onResponse(Call<NormalUserData> call, final Response<NormalUserData> response) {
                 if (response.isSuccessful())
                 {
-                    listener.onNormalUserDataSuccess(response.body());
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.hideProgress_Dialog();
+
+                            listener.onNormalUserDataSuccess(response.body());
+
+                        }
+                    },500);
 
                 }
                 else {
+                    listener.hideProgress_Dialog();
                     Converter<ResponseBody,ErrorUtils> converter = retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
                     try {
                         ErrorUtils errorUtils = converter.convert(response.errorBody());
@@ -497,10 +522,10 @@ public class Model_InteractorImp implements Model_Interactor {
 
             @Override
             public void onFailure(Call<NormalUserData> call, Throwable t) {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         });
-        listener.onNormalUserDataSuccess(new NormalUserData());
     }
     private void Registration_PublisherData(String userType, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng, final onCompleteListener listener)
     {
@@ -530,12 +555,21 @@ public class Model_InteractorImp implements Model_Interactor {
         Call<PublisherModel> publisherModelCall = service.PublisherRegistration(pubMap);
         publisherModelCall.enqueue(new Callback<PublisherModel>() {
             @Override
-            public void onResponse(Call<PublisherModel> call, Response<PublisherModel> response) {
+            public void onResponse(Call<PublisherModel> call, final Response<PublisherModel> response) {
                 if (response.isSuccessful())
                 {
-                    listener.onPublisherDataSuccess(response.body());
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.hideProgress_Dialog();
+
+                            listener.onPublisherDataSuccess(response.body());
+
+                        }
+                    },500);
                 }else {
 
+                    listener.hideProgress_Dialog();
                     Converter<ResponseBody,ErrorUtils> converter = retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
                     try {
                         ErrorUtils errorUtils = converter.convert(response.errorBody());
@@ -551,6 +585,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
             @Override
             public void onFailure(Call<PublisherModel> call, Throwable t) {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         });
@@ -582,11 +617,20 @@ public class Model_InteractorImp implements Model_Interactor {
         Call<LibraryModel> libraryModelCall = service.LibraryRegistration(libMap);
         libraryModelCall.enqueue(new Callback<LibraryModel>() {
             @Override
-            public void onResponse(Call<LibraryModel> call, Response<LibraryModel> response) {
+            public void onResponse(Call<LibraryModel> call, final Response<LibraryModel> response) {
                 if (response.isSuccessful())
                 {
-                    listener.onLibraryDataSuccess(response.body());
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.hideProgress_Dialog();
+
+                            listener.onLibraryDataSuccess(response.body());
+
+                        }
+                    },500);
                 }else {
+                    listener.hideProgress_Dialog();
                     Converter<ResponseBody,ErrorUtils> converter = retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
                     try {
                         ErrorUtils errorUtils = converter.convert(response.errorBody());
@@ -602,6 +646,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
             @Override
             public void onFailure(Call<LibraryModel> call, Throwable t) {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         });
@@ -633,17 +678,27 @@ public class Model_InteractorImp implements Model_Interactor {
         Call<UniversityModel> universityModelCall = service.UniversityRegistration(uniMap);
         universityModelCall.enqueue(new Callback<UniversityModel>() {
             @Override
-            public void onResponse(Call<UniversityModel> call, Response<UniversityModel> response) {
+            public void onResponse(Call<UniversityModel> call, final Response<UniversityModel> response) {
                 if (response.isSuccessful())
                 {
-                    listener.onUniversityDataSuccess(response.body());
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.hideProgress_Dialog();
+
+                            listener.onUniversityDataSuccess(response.body());
+
+                        }
+                    },500);
 
                 }
                 else {
+                    listener.hideProgress_Dialog();
                     Converter<ResponseBody,ErrorUtils> converter = retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
                     try {
                         ErrorUtils errorUtils = converter.convert(response.errorBody());
                         listener.onFailed(errorUtils.getErrorMessage());
+
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -654,6 +709,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
             @Override
             public void onFailure(Call<UniversityModel> call, Throwable t) {
+                listener.hideProgress_Dialog();
                 listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         });
@@ -684,11 +740,20 @@ public class Model_InteractorImp implements Model_Interactor {
        Call<CompanyModel> companyModelCall = service.CompanyRegistration(compMap);
        companyModelCall.enqueue(new Callback<CompanyModel>() {
            @Override
-           public void onResponse(Call<CompanyModel> call, Response<CompanyModel> response) {
+           public void onResponse(Call<CompanyModel> call, final Response<CompanyModel> response) {
                if (response.isSuccessful())
                {
-                   listener.onCompanyDataSuccess(response.body());
+
+                   new android.os.Handler().postDelayed(new Runnable() {
+                       @Override
+                       public void run() {
+
+                           listener.hideProgress_Dialog();
+                           listener.onCompanyDataSuccess(response.body());
+                       }
+                   },500);
                }else {
+                   listener.hideProgress_Dialog();
                    Converter<ResponseBody,ErrorUtils> converter = retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
                    try {
                        ErrorUtils errorUtils = converter.convert(response.errorBody());
@@ -703,6 +768,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
            @Override
            public void onFailure(Call<CompanyModel> call, Throwable t) {
+               listener.hideProgress_Dialog();
                listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
            }
        });
@@ -724,4 +790,5 @@ public class Model_InteractorImp implements Model_Interactor {
 
         return retrofit;
     }
+
 }

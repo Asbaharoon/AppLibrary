@@ -34,6 +34,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.omd.library.Activities.HomeActivity;
 import com.example.omd.library.Activities.MapsActivity;
 import com.example.omd.library.Login_Register.Registration.PresenterImp;
 import com.example.omd.library.Login_Register.Registration.ViewData;
@@ -101,6 +102,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         init_universityView(view);
         init_companyView(view);
         initView(view);
+        CreateProgressDialog();
 
         presenter = new PresenterImp(mContext,this);
         return view;
@@ -1039,12 +1041,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     @Override
     public void showProgressDialog() {
-
+        progressDialog.show();
     }
 
     @Override
     public void hideProgressDialog() {
-
+        progressDialog.dismiss();
     }
 
 
@@ -1060,31 +1062,77 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
 
     @Override
-    public void onNormalUserDataSuccess(NormalUserData normalUserData) {
-        Toast.makeText(mContext, "success", Toast.LENGTH_SHORT).show();
+    public void onNormalUserDataSuccess(final NormalUserData normalUserData) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("userData",normalUserData);
+                startActivity(intent);
+            }
+        },500);
     }
 
     @Override
-    public void onPublisherDataSuccess(PublisherModel publisherModel) {
-        Toast.makeText(mContext, "pub success", Toast.LENGTH_SHORT).show();
+    public void onPublisherDataSuccess(final PublisherModel publisherModel) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("publisherData",publisherModel);
+                startActivity(intent);
+            }
+        },500);
+
+        Toast.makeText(mContext, "pub success"+publisherModel.getPub_name()+"\n"+publisherModel.getPub_email()+"\n"+publisherModel.getUser_type(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onLibraryDataSuccess(LibraryModel libraryModel) {
-        Toast.makeText(mContext, "lib success", Toast.LENGTH_SHORT).show();
+    public void onLibraryDataSuccess(final LibraryModel libraryModel) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("libraryData",libraryModel);
+                startActivity(intent);
+            }
+        },500);
+
+        Toast.makeText(mContext, "lib success"+libraryModel.getLib_name()+"\n"+libraryModel.getLat()+"\n"+libraryModel.getUser_type(), Toast.LENGTH_SHORT).show();
+
 
 
     }
 
     @Override
-    public void onUniversityDataSuccess(UniversityModel universityModel) {
-        Toast.makeText(mContext, "uni success", Toast.LENGTH_SHORT).show();
+    public void onUniversityDataSuccess(final UniversityModel universityModel) {
+        Toast.makeText(mContext, "uni success"+universityModel.getUni_name()+"\n"+universityModel.getUni_lat()+"\n"+universityModel.getUser_type(), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("universityData",universityModel);
+                startActivity(intent);
+            }
+        },500);
 
     }
 
     @Override
-    public void onCompanyDataSuccess(CompanyModel companyModel) {
-        Toast.makeText(mContext, "comp success", Toast.LENGTH_SHORT).show();
+    public void onCompanyDataSuccess(final CompanyModel companyModel) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("libraryData",companyModel);
+                startActivity(intent);
+            }
+        },500);
+        Toast.makeText(mContext, "comp success"+companyModel.getComp_name()+"\n"+companyModel.getUser_type(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -1166,16 +1214,21 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     double lat = data.getExtras().getDouble("lat");
                     double lng = data.getExtras().getDouble("lng");
                     String userType = spinner.getSelectedItem().toString().toLowerCase();
-                    if (userType.equals("Publisher"))
+                    if (userType.equals("publisher"))
                     {
                         initPublisherData(String.valueOf(lat),String.valueOf(lng));
-                    }else if (userType.equals("Library"))
+                        Toast.makeText(mContext, "lat"+lat+"\n"+"lng"+lng, Toast.LENGTH_SHORT).show();
+                    }else if (userType.equals("library"))
                     {
                         initLibraryData(String.valueOf(lat),String.valueOf(lng));
+                        Toast.makeText(mContext, "lat"+lat+"\n"+"lng"+lng, Toast.LENGTH_SHORT).show();
+
                     }
-                    else if (userType.equals("University"))
+                    else if (userType.equals("university"))
                     {
                         initUniversityData(String.valueOf(lat),String.valueOf(lng));
+                        Toast.makeText(mContext, "lat"+lat+"\n"+"lng"+lng, Toast.LENGTH_SHORT).show();
+
                     }
 
                 }
@@ -1221,6 +1274,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         Drawable drawable =progressBar.getIndeterminateDrawable().mutate();
         drawable.setColorFilter(ActivityCompat.getColor(getActivity(),R.color.centercolor), PorterDuff.Mode.SRC_IN);
         progressDialog.setIndeterminateDrawable(drawable);
+
+
 
     }
     private void CreateAlertDialog(String msg)
@@ -1289,14 +1344,14 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
     private void initNormalUserData(String userPhoto)
     {
-        String userType = spinner.getSelectedItem().toString();
-        String n_fname = n_userFirstName.getText().toString();
-        String n_lname = n_userLastName.getText().toString();
-        String n_email = n_userEmail.getText().toString();
-        String n_country = n_userCountry.getText().toString();
-        String n_phone = n_userPhone.getText().toString();
-        String n_username = n_user_userName.getText().toString();
-        String n_password = n_userPassword.getText().toString();
+        String userType   = spinner.getSelectedItem().toString();
+        String n_fname    = n_userFirstName .getText().toString();
+        String n_lname    = n_userLastName  .getText().toString();
+        String n_email    = n_userEmail     .getText().toString();
+        String n_country  = n_userCountry   .getText().toString();
+        String n_phone    = n_userPhone     .getText().toString();
+        String n_username = n_user_userName .getText().toString();
+        String n_password = n_userPassword  .getText().toString();
 
         String n_userPhotoName ="";
         /*if (userImage_URI!=null&&imageName!=null&&userBitmap_image!=null)
@@ -1309,31 +1364,31 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
     private void initPublisherData(String lat,String lng)
     {
-        String userType2 = spinner.getSelectedItem().toString().toLowerCase();
-        String pub_fname = publisher_firstName.getText().toString();
-        String pub_lname = publisher_lastName.getText().toString();
-        String pub_email = publisherEmail.getText().toString();
-        String pub_country = publisherCountry.getText().toString();
-        String pub_password = publisherPassword.getText().toString();
-        String pub_phone = publisherPhone.getText().toString();
-        String pub_address = publisherAddress.getText().toString();
-        String pub_town = publisherTown.getText().toString();
-        String pub_username = publisherUsername.getText().toString();
-        String pub_site = publisher_webSite.getText().toString();
+        String userType2    = spinner.getSelectedItem().toString().toLowerCase();
+        String pub_fname    = publisher_firstName.getText().toString();
+        String pub_lname    = publisher_lastName .getText().toString();
+        String pub_email    = publisherEmail     .getText().toString();
+        String pub_country  = publisherCountry   .getText().toString();
+        String pub_password = publisherPassword  .getText().toString();
+        String pub_phone    = publisherPhone     .getText().toString();
+        String pub_address  = publisherAddress   .getText().toString();
+        String pub_town     = publisherTown      .getText().toString();
+        String pub_username = publisherUsername  .getText().toString();
+        String pub_site     = publisher_webSite  .getText().toString();
         presenter.PublisherRegistration(userType2,pub_fname,pub_lname,pub_email,pub_country,pub_password,pub_phone,pub_username,pub_address,pub_town,pub_site,lat,lng);
 
     }
     private void initLibraryData(String lat,String lng)
     {
         String userType = spinner.getSelectedItem().toString().toLowerCase();
-        String lib_name = libraryName.getText().toString();
-        String lib_email = libraryEmail.getText().toString();
-        String lib_phone = libraryPhone.getText().toString();
-        String lib_country = libraryCountry.getText().toString();
-        String lib_address = libraryAddress.getText().toString();
-        String lib_userName = libraryUsername.getText().toString();
-        String lib_password = libraryPassword.getText().toString();
-        String lib_type = lib_spinner.getSelectedItem().toString();
+        String lib_name     = libraryName     .getText().toString();
+        String lib_email    = libraryEmail    .getText().toString();
+        String lib_phone    = libraryPhone    .getText().toString();
+        String lib_country  = libraryCountry  .getText().toString();
+        String lib_address  = libraryAddress  .getText().toString();
+        String lib_userName = libraryUsername .getText().toString();
+        String lib_password = libraryPassword .getText().toString();
+        String lib_type     = lib_spinner     .getSelectedItem().toString();
         String lib_otherType = "";
         if (lib_type.equals("Other")) {
             lib_type = library_otherType.getText().toString();
@@ -1346,15 +1401,15 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     private void initUniversityData(String lat, String lng)
     {
         String userType = spinner.getSelectedItem().toString().toLowerCase();
-        String uni_name = universityName.getText().toString();
-        String uni_email = universityEmail.getText().toString();
-        String uni_phone = universityPhone.getText().toString();
-        String uni_country = universityCountry.getText().toString();
-        String uni_address =universityAddress .getText().toString();
-        String uni_major = universityMajor.getText().toString();
-        String uni_site = universitySite.getText().toString();
-        String uni_userName = universityUsername.getText().toString();
-        String uni_password = universityPassword.getText().toString();
+        String uni_name      = universityName     .getText().toString();
+        String uni_email     = universityEmail    .getText().toString();
+        String uni_phone     = universityPhone    .getText().toString();
+        String uni_country   = universityCountry  .getText().toString();
+        String uni_address   = universityAddress  .getText().toString();
+        String uni_major     = universityMajor    .getText().toString();
+        String uni_site      = universitySite     .getText().toString();
+        String uni_userName  = universityUsername .getText().toString();
+        String uni_password  = universityPassword .getText().toString();
         Toast.makeText(mContext, userType, Toast.LENGTH_SHORT).show();
         presenter.UniversityRegistration(userType,uni_name,uni_email,uni_country,uni_phone,uni_userName,uni_password,uni_major,uni_address,uni_site,lat,lng);
 
@@ -1362,15 +1417,15 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     private void initCompanyData()
     {
         String userType = spinner.getSelectedItem().toString().toLowerCase();
-        String comp_name = companyName.getText().toString();
-        String comp_email = companyEmail.getText().toString();
-        String comp_phone = companyPhone.getText().toString();
-        String comp_country = companyCountry.getText().toString();
-        String comp_address =companyAddress .getText().toString();
-        String comp_town = companyTown.getText().toString();
-        String comp_site = companySite.getText().toString();
-        String comp_userName = companyUsername.getText().toString();
-        String comp_password = companyPassword.getText().toString();
+        String comp_name     = companyName     .getText().toString();
+        String comp_email    = companyEmail    .getText().toString();
+        String comp_phone    = companyPhone    .getText().toString();
+        String comp_country  = companyCountry  .getText().toString();
+        String comp_address  = companyAddress  .getText().toString();
+        String comp_town     = companyTown     .getText().toString();
+        String comp_site     = companySite     .getText().toString();
+        String comp_userName = companyUsername .getText().toString();
+        String comp_password = companyPassword .getText().toString();
 
         presenter.CompanyRegistration(userType,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site);
 

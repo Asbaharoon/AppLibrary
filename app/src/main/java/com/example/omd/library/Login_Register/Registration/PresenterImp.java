@@ -1,7 +1,6 @@
 package com.example.omd.library.Login_Register.Registration;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
@@ -651,7 +650,6 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
         if (viewData!=null)
         {
             viewData.onPublisherDataSuccess(publisherModel);
-            Toast.makeText(mContext, "pub2 success", Toast.LENGTH_SHORT).show();
         }
     }
 

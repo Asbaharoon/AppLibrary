@@ -21,7 +21,9 @@ public class CompanyModel implements Serializable {
     private String comp_country;
     @SerializedName("company_address")
     private String comp_address;
+    @SerializedName("company_town")
     private String comp_town;
+    @SerializedName("company_site")
     private String comp_site;
     @SerializedName("user_username")
     private String comp_username;

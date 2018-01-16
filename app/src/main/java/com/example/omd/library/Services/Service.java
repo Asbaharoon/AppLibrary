@@ -23,21 +23,15 @@ public interface Service {
     @POST("api/facebooklogin")
     Call<JsonObject> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
 
-
-
     @FormUrlEncoded
     @POST("api/gmaillogin")
     Call<JsonObject> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
 
-
-
+    /////////////////////---------Registration-----////////////////////////
 
     @FormUrlEncoded
     @POST("api/registration")
     Call<NormalUserData>NormalUserRegistration(@FieldMap Map<String,String> map);
-
-
-
 
     @FormUrlEncoded
     @POST("api/registration")
@@ -55,4 +49,8 @@ public interface Service {
     @POST("api/registration")
     Call<CompanyModel>CompanyRegistration(@FieldMap Map<String,String> map);
 
+    /////////////////////---------Login-----////////////////////////
+    @FormUrlEncoded
+    @POST("")
+    Call<JsonObject> login(@FieldMap Map<String,String> map);
 }

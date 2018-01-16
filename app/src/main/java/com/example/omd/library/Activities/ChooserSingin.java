@@ -162,6 +162,12 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         OptionalPendingResult<GoogleSignInResult> result = Auth.GoogleSignInApi.silentSignIn(apiClient);
         if (result.isDone())
         {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dialog.show();
+                }
+            },3000);
             GoogleSignInAccount account = result.get().getSignInAccount();
             if (account!=null)
             {
@@ -402,7 +408,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     private void getUserDataFromGoogle(GoogleSignInAccount account)
     {
-        dialog.show();
+
         this.account=account;
 
             if (account!=null)
@@ -411,7 +417,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 userData.setUserId(account.getId());
                 if (userData!=null)
                 {
-
+                    dialog.dismiss();
 
                     Retrofit retrofit = setUpRetrofit(getString(R.string.gmail_url));
                     Service client = retrofit.create(Service.class);
@@ -432,29 +438,39 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                 {
                                     if (user.getUserType().equals("user"))
                                     {
+
                                         Gson u_gson= new Gson();
                                         final NormalUserData normalUserData = u_gson.fromJson(response.body(),NormalUserData.class);
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
+                                                dialog.show();
                                                 Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
                                                 intent.putExtra("userData",normalUserData);
                                                 startActivity(intent);
+
                                             }
-                                        },2000);
+                                        },3000);
+
+                                        dialog.dismiss();
                                     }
                                     else if (user.getUserType().equals("publisher"))
                                     {
+
                                         Gson p_gson= new Gson();
                                         final PublisherModel publisherModel = p_gson.fromJson(response.body(),PublisherModel.class);
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
+                                                dialog.show();
                                                 Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
                                                 intent.putExtra("publisherData",publisherModel);
                                                 startActivity(intent);
+
                                             }
-                                        },2000);
+                                        },3000);
+
+                                        dialog.dismiss();
                                     }
                                     else if (user.getUserType().equals("library")) {
                                         Gson l_gson = new Gson();
@@ -462,37 +478,51 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
+                                                dialog.show();
                                                 Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
                                                 intent.putExtra("libraryData",libraryModel);
                                                 startActivity(intent);
+
                                             }
                                         },2000);
 
+                                        dialog.dismiss();
+
                                     }
                                     else if (user.getUserType().equals("university")) {
+                                        dialog.show();
+
                                         Gson uni_gson = new Gson();
                                         final UniversityModel universityModel = uni_gson.fromJson(response.body(),UniversityModel.class);
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
+                                                dialog.show();
                                                 Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
                                                 intent.putExtra("universityData",universityModel);
                                                 startActivity(intent);
                                             }
                                         },2000);
 
+                                        dialog.dismiss();
+
                                     }
                                     else if (user.getUserType().equals("company")) {
                                         Gson comp_gson = new Gson();
                                         final CompanyModel companyModel = comp_gson.fromJson(response.body(),CompanyModel.class);
+
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
+                                                dialog.show();
                                                 Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
                                                 intent.putExtra("libraryData",companyModel);
                                                 startActivity(intent);
+
                                             }
                                         },2000);
+
+                                        dialog.dismiss();
 
                                     }
 

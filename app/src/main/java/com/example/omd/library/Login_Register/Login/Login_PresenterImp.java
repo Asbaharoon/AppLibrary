@@ -2,9 +2,11 @@ package com.example.omd.library.Login_Register.Login;
 
 import android.content.Context;
 
+import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 
 /**
  * Created by Delta on 10/01/2018.
@@ -65,27 +67,64 @@ public class Login_PresenterImp implements Login_Presenter,Login_ModelInteractor
     public void onSuccess_NormalUserData(NormalUserData normalUserModel) {
         if (viewData!=null)
         {
-            viewData.showProgressDialog();
             viewData.onSuccess_NormalUserData(normalUserModel);
         }
     }
 
     @Override
     public void onSuccess_LibraryData(LibraryModel libraryModel) {
-
+        if (viewData!=null)
+        {
+            viewData.onSuccess_LibraryData(libraryModel);
+        }
     }
 
     @Override
     public void onSuccess_PublisherData(PublisherModel publisherModel) {
+        if (viewData!=null)
+        {
+            viewData.onSuccess_PublisherData(publisherModel);
+        }
+    }
 
+    @Override
+    public void onSuccess_UniversityData(UniversityModel universityModel) {
+        if (viewData!=null)
+        {
+            viewData.onSuccess_UniversityData(universityModel);
+        }
+    }
+
+    @Override
+    public void onSuccess_CompanyData(CompanyModel companyModel) {
+        if (viewData!=null)
+        {
+            viewData.onSuccess_CompanyData(companyModel);
+        }
     }
 
     @Override
     public void onFailed(String error) {
         if (viewData!=null)
         {
-            viewData.hideProgressDialog();
             viewData.onFailed(error);
         }
+    }
+
+    @Override
+    public void showProgressDialog() {
+        if (viewData!=null)
+        {
+            viewData.showProgressDialog();
+        }
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        if (viewData!=null)
+        {
+            viewData.hideProgressDialog();
+        }
+
     }
 }

@@ -22,9 +22,11 @@ import com.andexert.library.RippleView;
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 import com.example.omd.library.Login_Register.Login.Login_PresenterImp;
 import com.example.omd.library.Login_Register.Login.Login_ViewData;
+import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.romainpiel.shimmer.Shimmer;
@@ -188,13 +190,28 @@ public class LoginFragment extends Fragment implements Login_ViewData{
 
     @Override
     public void onSuccess_LibraryData(LibraryModel libraryModel) {
-
+        userName.setText(null);
+        password.setText(null);
     }
 
     @Override
     public void onSuccess_PublisherData(PublisherModel publisherModel) {
-
+        userName.setText(null);
+        password.setText(null);
     }
+
+    @Override
+    public void onSuccess_UniversityData(UniversityModel universityModel) {
+        userName.setText(null);
+        password.setText(null);
+    }
+
+    @Override
+    public void onSuccess_CompanyData(CompanyModel companyModel) {
+        userName.setText(null);
+        password.setText(null);
+    }
+
 
     @Override
     public void onFailed(String error) {

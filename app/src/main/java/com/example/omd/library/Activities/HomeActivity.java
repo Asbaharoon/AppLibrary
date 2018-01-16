@@ -477,9 +477,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-    }
 }

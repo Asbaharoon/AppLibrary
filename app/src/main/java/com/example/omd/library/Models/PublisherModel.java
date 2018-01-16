@@ -21,13 +21,33 @@ public class PublisherModel implements Serializable {
     private String pub_country;
     @SerializedName("publisher_address")
     private String pub_address;
+    @SerializedName("publisher_town")
     private String pub_town;
+    @SerializedName("publisher_site")
     private String pub_website;
     @SerializedName("user_username")
     private String pub_username;
     private String pub_password;
+    @SerializedName("publisher_google_lat")
+    private String pub_lat;
+    @SerializedName("publisher_google_lng")
+    private String pub_lng;
 
     public PublisherModel() {
+    }
+
+    public PublisherModel(String user_type, String pub_name, String pub_email, String pub_phone, String pub_country, String pub_address, String pub_town, String pub_website, String pub_password, String pub_lat, String pub_lng) {
+        this.user_type = user_type;
+        this.pub_name = pub_name;
+        this.pub_email = pub_email;
+        this.pub_phone = pub_phone;
+        this.pub_country = pub_country;
+        this.pub_address = pub_address;
+        this.pub_town = pub_town;
+        this.pub_website = pub_website;
+        this.pub_password = pub_password;
+        this.pub_lat = pub_lat;
+        this.pub_lng = pub_lng;
     }
 
     public String getUser_type() {
@@ -108,5 +128,21 @@ public class PublisherModel implements Serializable {
 
     public void setPub_password(String pub_password) {
         this.pub_password = pub_password;
+    }
+
+    public String getPub_lat() {
+        return pub_lat;
+    }
+
+    public void setPub_lat(String pub_lat) {
+        this.pub_lat = pub_lat;
+    }
+
+    public String getPub_lng() {
+        return pub_lng;
+    }
+
+    public void setPub_lng(String pub_lng) {
+        this.pub_lng = pub_lng;
     }
 }
