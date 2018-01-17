@@ -60,11 +60,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginManager manager;
-    private static NormalUserData user_Data;
-    private static PublisherModel publisher_Model;
-    private static LibraryModel library_Model;
-    private static UniversityModel university_Model;
-    private static CompanyModel company_Model;
+    private static NormalUserData user_Data=null;
+    private static PublisherModel publisher_Model=null;
+    private static LibraryModel library_Model=null;
+    private static UniversityModel university_Model=null;
+    private static CompanyModel company_Model=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +145,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }*/
 
-    private void getDataFrom_Intent() {
+    private void getDataFrom_Intent()
+    {
         Intent intent = getIntent();
         if (intent.hasExtra("userData"))
         {
@@ -236,33 +237,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         }
     }
-
-    private void UpdateUI(String imageUrl,String name,String email) {
-        if (TextUtils.isEmpty(imageUrl)||imageUrl==null)
-        {
-            Picasso.with(HomeActivity.this).load(R.drawable.user_profile).fit().into(im_userImage);
-        }else
-            {
-                Picasso.with(HomeActivity.this).load(Uri.parse(imageUrl)).fit().into(im_userImage);
-
-            }
-        tv_userName.setText(TextUtils.isEmpty(name)||name==null?"":name.toString());
-        tv_userEmail.setText(email==null|| TextUtils.isEmpty(email)?"":email);
-
-    }
-
-
-    private void setUpProgressDialog()
-    {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Sign Out.....");
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(false);
-        ProgressBar progressBar = new ProgressBar(this);
-        Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.centercolor), PorterDuff.Mode.SRC_IN);
-        progressDialog.setIndeterminateDrawable(drawable);
-    }
     private void initView()
     {
         alerDialog = new AlertDialog.Builder(this);
@@ -270,19 +244,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         /////////////////////////////////////////////////////////////
-       /* presenterImp =new Login_PresenterImp(this,this);
-        presenterImp.getUserData();*/
-        /////////////////////////////////////////////////////////////
-       /* pager = (ViewPager) findViewById(R.id.pager);*/
-        /////////////////////////////////////////////////////////////
         arcNavigationView = (ArcNavigationView) findViewById(R.id.arcDrawer);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //////////////////////////////////////////////////////////////
-       // navBar = (AHBottomNavigation) findViewById(R.id.bottom_navBar);
-
-        //////////////////////////////////////////////////////////////
-
         View headerView =arcNavigationView.getHeaderView(0);
 
         im_userImage = (CircleImageView) headerView.findViewById(R.id.userPhoto);
@@ -291,13 +256,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+    private void UpdateUI(String imageUrl,String name,String email)
+    {
+        if (TextUtils.isEmpty(imageUrl)||imageUrl==null)
+        {
+            Picasso.with(HomeActivity.this).load(R.drawable.user_profile).fit().into(im_userImage);
+        }else
+        {
+            Picasso.with(HomeActivity.this).load(Uri.parse(imageUrl)).fit().into(im_userImage);
+
+        }
+        tv_userName.setText(TextUtils.isEmpty(name)||name==null?"":name.toString());
+        tv_userEmail.setText(email==null|| TextUtils.isEmpty(email)?"":email);
+
+    }
     private void setUpSigninWithGoogle()
     {
         apiClient = new GoogleApiClient.Builder(HomeActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
         apiClient.connect();
 
     }
-
     private void setUpDrawer()
     {
         mToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close);
@@ -346,7 +324,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         finish();
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
 
         if (mToggle.onOptionsItemSelected(item))
         {
@@ -356,10 +335,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
-
-
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    {
          if (item.getItemId()==R.id.home)
         {
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
@@ -394,17 +372,45 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         else if (item.getItemId()==R.id.nearby)
         {
-            Toast.makeText(this, "nearby", Toast.LENGTH_SHORT).show();
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
             {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
-                        startActivity(intent);
+                        if (user_Data!=null)
+                        {
+                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
+                            intent.putExtra("userData",user_Data);
+                            startActivity(intent);
+                        }
+                        else if (publisher_Model!=null)
+                        {
+                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
+                            intent.putExtra("publisherData",publisher_Model);
+                            startActivity(intent);
+                        }
+                        else if (university_Model!=null)
+                        {
+                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
+                            intent.putExtra("universityData",university_Model);
+                            startActivity(intent);
+                        }
+                        else if (library_Model!=null)
+                        {
+                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
+                            intent.putExtra("libraryData",library_Model);
+                            startActivity(intent);
+                        }
+                        else if (company_Model!=null)
+                        {
+                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
+                            intent.putExtra("companyData",company_Model);
+                            startActivity(intent);
+                        }
+
                     }
-                },1000);
+                },500);
 
                 return true;
             }
@@ -455,11 +461,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
-
-
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult)
+    {
 
+    }
+    private void setUpProgressDialog()
+    {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Sign Out.....");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        ProgressBar progressBar = new ProgressBar(this);
+        Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
+        drawable.setColorFilter(ContextCompat.getColor(this,R.color.centercolor), PorterDuff.Mode.SRC_IN);
+        progressDialog.setIndeterminateDrawable(drawable);
     }
     @Override
     public void onBackPressed()
@@ -485,6 +501,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
     }
+
 
 
 }
