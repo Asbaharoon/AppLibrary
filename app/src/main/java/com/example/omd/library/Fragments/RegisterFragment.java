@@ -1128,7 +1128,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             @Override
             public void run() {
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
-                intent.putExtra("libraryData",companyModel);
+                intent.putExtra("companyData",companyModel);
                 startActivity(intent);
             }
         },500);

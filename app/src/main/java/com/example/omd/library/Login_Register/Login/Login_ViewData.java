@@ -17,6 +17,7 @@ public interface Login_ViewData {
     void setPassword_invalidError();
     void showProgressDialog();
     void hideProgressDialog();
+    void showUserTypeDialog();
     void onSuccess_NormalUserData(NormalUserData normalUserModel);
     void onSuccess_LibraryData(LibraryModel libraryModel);
     void onSuccess_PublisherData(PublisherModel publisherModel);

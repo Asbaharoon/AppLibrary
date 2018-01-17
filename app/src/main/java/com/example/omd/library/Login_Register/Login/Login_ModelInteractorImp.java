@@ -39,7 +39,7 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
 
     private boolean isConnected =false;
     @Override
-    public void Login(String username, String password, final onCompleteListener listener, Context context) {
+    public void Login(String userType,String username, String password, final onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(username))
         {
             listener.setUserNameError();
@@ -55,6 +55,9 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
         else if (!password.matches(Tags.pass_Regex))
         {
             listener.setPassword_invalidError();
+        }else if (TextUtils.isEmpty(userType)||userType==null)
+        {
+            listener.showUserTypeDialog();
         }
         else
             {
@@ -62,7 +65,7 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                 if (isConnected)
                 {
                     listener.showProgressDialog();
-                    UsersLogin(username,password,listener);
+                    UsersLogin(userType,username,password,listener);
 
                 }else
                     {
@@ -73,13 +76,14 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
             }
     }
 
-    private void UsersLogin(String username, String password, final onCompleteListener listener)
+    private void UsersLogin(String userType,String username, String password, final onCompleteListener listener)
     {
         Map<String,String> loginMap= new HashMap<>();
-        loginMap.put("",username);
-        loginMap.put("",password);
+        loginMap.put("user_type",userType.toLowerCase());
+        loginMap.put("user_username",username);
+        loginMap.put("user_pass",password);
 
-        final Retrofit retrofit = SetUpRetrofit("");
+        final Retrofit retrofit = SetUpRetrofit("http://librarians.liboasis.com/");
         Service service = retrofit.create(Service.class);
         Call<JsonObject> call = service.login(loginMap);
         call.enqueue(new Callback<JsonObject>() {
@@ -158,6 +162,7 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                         try {
                             ErrorUtils errorUtils = converter.convert(response.errorBody());
                             listener.onFailed(errorUtils.getErrorMessage());
+                            listener.hideProgressDialog();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -166,7 +171,10 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
+                listener.hideProgressDialog();
+                listener.onFailed(t.getMessage());
+
+                //listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
             }
         });
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item android:id="@+id/library_menu_item"
+    android:icon="@drawable/library_fab"
+    android:title="Libraries"
+    app:showAsAction="never"
+    android:orderInCategory="300"/>
+
+    <item android:id="@+id/publisher_menu_item"
+        android:icon="@drawable/publisher_fab"
+        android:title="Publishers"
+        app:showAsAction="never"
+        android:orderInCategory="200"/>
+    <item android:id="@+id/university_menu_item"
+        android:icon="@drawable/university_fab"
+        android:title="Universities"
+        app:showAsAction="never"
+        android:orderInCategory="400"/>
+    <item android:id="@+id/company_menu_item"
+        android:icon="@drawable/company_fab"
+        android:title="Companies"
+        app:showAsAction="never"
+        android:orderInCategory="500"/>
+    <item android:id="@+id/user_menu_item"
+        android:icon="@drawable/user_fab"
+        android:title="Users"
+        app:showAsAction="never"
+        android:orderInCategory="100"/>
+
+</menu>

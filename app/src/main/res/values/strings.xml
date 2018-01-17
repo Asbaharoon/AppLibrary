@@ -34,4 +34,12 @@
     <string name="invalid_url">invalid url</string>
     <string name="facebook_url">http://librarians.liboasis.com/</string>
     <string name="gmail_url">http://librarians.liboasis.com/</string>
+
+    <integer-array name="fab_colors">
+        <item>@color/base</item>
+        <item>@color/centercolor</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/label</item>
+        <item>@color/base</item>
+    </integer-array>
 </resources>

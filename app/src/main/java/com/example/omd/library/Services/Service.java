@@ -51,6 +51,6 @@ public interface Service {
 
     /////////////////////---------Login-----////////////////////////
     @FormUrlEncoded
-    @POST("")
+    @POST("api/auth")
     Call<JsonObject> login(@FieldMap Map<String,String> map);
 }

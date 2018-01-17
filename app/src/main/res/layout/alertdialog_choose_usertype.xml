@@ -35,9 +35,9 @@
         android:id="@+id/rb_normaluser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Normal user"
-        app:buttonTint="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
+        android:text="User"
+        app:buttonTint="@color/centercolor"
+        android:textColor="@color/centercolor"
         android:checked="true"
         android:textSize="@dimen/_12sdp"
         />
@@ -46,8 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Library"
-        app:buttonTint="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
+        app:buttonTint="@color/centercolor"
+        android:textColor="@color/centercolor"
         android:textSize="@dimen/_12sdp"
 
         />
@@ -55,9 +55,27 @@
         android:id="@+id/rb_publisher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="publisher"
-        app:buttonTint="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
+        android:text="Publisher"
+        app:buttonTint="@color/centercolor"
+        android:textColor="@color/centercolor"
+        android:textSize="@dimen/_12sdp"
+        />
+    <RadioButton
+        android:id="@+id/rb_university"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="University"
+        app:buttonTint="@color/centercolor"
+        android:textColor="@color/centercolor"
+        android:textSize="@dimen/_12sdp"
+        />
+    <RadioButton
+        android:id="@+id/rb_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company"
+        app:buttonTint="@color/centercolor"
+        android:textColor="@color/centercolor"
         android:textSize="@dimen/_12sdp"
         />
 </RadioGroup>
@@ -76,7 +94,7 @@
             android:layout_height="wrap_content"
             android:text="Confirm"
             android:textAllCaps="false"
-            android:background="@color/colorPrimary"
+            android:background="@color/centercolor"
             android:textColor="@color/base"
             android:textSize="@dimen/_12sdp"
             />

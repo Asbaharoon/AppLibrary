@@ -330,6 +330,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 alertDialog.dismiss();
             }
         }).create();
+
     }
     private void SignOut()
     {
@@ -397,6 +398,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             if (drawerLayout.isDrawerOpen(GravityCompat.START))
             {
                 drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
+                        startActivity(intent);
+                    }
+                },1000);
+
                 return true;
             }
         }

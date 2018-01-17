@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.omd.library.Activities.NearbyActivity">
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nearby_map"
+        tools:context=".MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <io.github.yavski.fabspeeddial.FabSpeedDial
+        android:id="@+id/filtered_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabGravity="bottom_end"
+        android:layout_gravity="bottom|end"
+        app:miniFabBackgroundTint="@color/base"
+        app:miniFabTitleTextColor="#5E35B1"
+        app:miniFabTitleBackgroundTint="@color/base"
+        app:miniFabDrawableTint="#5E35B1"
+
+        app:fabBackgroundTint="#5E35B1"
+        app:fabDrawableTint="@color/base"
+        app:fabMenu="@menu/filterd_menu"
+
+
+        ></io.github.yavski.fabspeeddial.FabSpeedDial>
+
+
+</FrameLayout>

@@ -25,8 +25,8 @@ public class Login_PresenterImp implements Login_Presenter,Login_ModelInteractor
 
 
     @Override
-    public void Validate_Credential(String email, String password) {
-        interactor.Login(email,password,this,context);
+    public void Validate_Credential(String userType,String email, String password) {
+        interactor.Login(userType,email,password,this,context);
     }
 
 
@@ -126,5 +126,13 @@ public class Login_PresenterImp implements Login_Presenter,Login_ModelInteractor
             viewData.hideProgressDialog();
         }
 
+    }
+
+    @Override
+    public void showUserTypeDialog() {
+        if (viewData!=null)
+        {
+            viewData.showUserTypeDialog();
+        }
     }
 }

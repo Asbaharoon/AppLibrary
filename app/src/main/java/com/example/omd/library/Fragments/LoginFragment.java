@@ -14,9 +14,12 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.andexert.library.RippleView;
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
@@ -29,8 +32,11 @@ import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.github.siyamed.shapeimageview.BubbleImageView;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
+import com.squareup.picasso.Picasso;
+import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 /**
@@ -49,6 +55,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
     Handler handler;
     private Login_PresenterImp presenterImp;
     private ProgressDialog  progressDialog;
+    public static String userType=null;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
             public void onComplete(RippleView rippleView) {
                 String user_Name = userName.getText().toString().trim();
                 String Password = password.getText().toString().trim();
-                presenterImp.Validate_Credential(user_Name,Password);
+                presenterImp.Validate_Credential("",user_Name,Password);
             }
         });
         setUpShimmer();
@@ -183,31 +190,47 @@ public class LoginFragment extends Fragment implements Login_ViewData{
     }
 
     @Override
+    public void showUserTypeDialog() {
+        CreateSelectUserTypeDialog();
+
+
+    }
+
+    @Override
     public void onSuccess_NormalUserData(NormalUserData normalUserModel) {
+        Toast.makeText(mContext, "success "+normalUserModel.getUserType()+"\n"+normalUserModel.getUserEmail()+"\n"+normalUserModel.getUserName(), Toast.LENGTH_SHORT).show();
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
     public void onSuccess_LibraryData(LibraryModel libraryModel) {
+        Toast.makeText(mContext, "success "+libraryModel.getUser_type()+"\n"+libraryModel.getLib_name()+"\n"+libraryModel.getLng(), Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
     public void onSuccess_PublisherData(PublisherModel publisherModel) {
+        Toast.makeText(mContext, "success "+publisherModel.getUser_type()+"\n"+publisherModel.getPub_email()+"\n"+publisherModel.getPub_lat(), Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
     public void onSuccess_UniversityData(UniversityModel universityModel) {
+        Toast.makeText(mContext, "success "+universityModel.getUser_type()+"\n"+universityModel.getUni_name()+"\n"+universityModel.getUni_lat(), Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
     public void onSuccess_CompanyData(CompanyModel companyModel) {
+        Toast.makeText(mContext, "success "+companyModel.getUser_type()+"\n"+companyModel.getComp_name()+"\n"+companyModel.getComp_username(), Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
@@ -244,5 +267,85 @@ public class LoginFragment extends Fragment implements Login_ViewData{
          });
          dialog.create();
          dialog.show();
+    }
+    private void CreateSelectUserTypeDialog()
+    {
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_choose_usertype,null);
+        final BubbleImageView bubbleImageView = (BubbleImageView) view.findViewById(R.id.bubble_userImage);
+
+        Button confirm = (Button) view.findViewById(R.id.confirmBtn);
+        Picasso.with(getActivity()).load(R.drawable.user_profile).into(bubbleImageView);
+        final RadioButton rb_normaluser = (RadioButton) view.findViewById(R.id.rb_normaluser);
+        final RadioButton rb_library = (RadioButton) view.findViewById(R.id.rb_library);
+        final RadioButton rb_publisher = (RadioButton) view.findViewById(R.id.rb_publisher);
+        final RadioButton rb_university = (RadioButton) view.findViewById(R.id.rb_university);
+        final RadioButton rb_company = (RadioButton) view.findViewById(R.id.rb_company);
+
+        final LovelyCustomDialog customDialog = new LovelyCustomDialog(getActivity())
+                .setCancelable(true)
+                .setTopColor(ContextCompat.getColor(getActivity(), R.color.centercolor))
+                .setIcon(R.drawable.commession_icon)
+                .setIconTintColor(ContextCompat.getColor(getActivity(), R.color.base));
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (rb_normaluser.isChecked())
+                {
+                    userType = rb_normaluser.getText().toString();
+                    String user_Name = userName.getText().toString().trim();
+                    String Password = password.getText().toString().trim();
+                    presenterImp.Validate_Credential(userType.toLowerCase(),user_Name,Password);
+                    customDialog.dismiss();
+                    Toast.makeText(getActivity(), userType.toLowerCase(), Toast.LENGTH_SHORT).show();
+                }else if (rb_publisher.isChecked())
+                {
+                    userType = rb_publisher.getText().toString();
+                    String user_Name = userName.getText().toString().trim();
+                    String Password = password.getText().toString().trim();
+                    presenterImp.Validate_Credential(userType,user_Name,Password);
+                    Toast.makeText(getActivity(), userType.toLowerCase(), Toast.LENGTH_SHORT).show();
+
+                    customDialog.dismiss();
+                }
+                else if (rb_library.isChecked())
+                {
+                    userType = rb_library.getText().toString();
+                    String user_Name = userName.getText().toString().trim();
+                    String Password = password.getText().toString().trim();
+                    presenterImp.Validate_Credential(userType,user_Name,Password);
+                    Toast.makeText(getActivity(), userType.toLowerCase(), Toast.LENGTH_SHORT).show();
+
+                    customDialog.dismiss();
+                }else if (rb_university.isChecked())
+                {
+                    userType = rb_university.getText().toString();
+                    String user_Name = userName.getText().toString().trim();
+                    String Password = password.getText().toString().trim();
+                    presenterImp.Validate_Credential(userType.toLowerCase(),user_Name,Password);
+
+                    customDialog.dismiss();
+                }else if (rb_company.isChecked())
+                {
+                    userType = rb_company.getText().toString();
+                    String user_Name = userName.getText().toString().trim();
+                    String Password = password.getText().toString().trim();
+                    presenterImp.Validate_Credential(userType.toLowerCase(),user_Name,Password);
+                    customDialog.dismiss();
+                }
+            }
+        });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                customDialog.create();
+                customDialog.setView(view);
+                customDialog.show();
+            }
+        },500);
+
+
+
+
     }
 }

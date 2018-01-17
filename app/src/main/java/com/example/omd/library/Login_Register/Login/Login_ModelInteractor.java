@@ -27,7 +27,9 @@ public interface Login_ModelInteractor {
         void onFailed(String error);
         void showProgressDialog();
         void hideProgressDialog();
+        void showUserTypeDialog();
+
     }
 
-   void Login(String username, String password, Login_ModelInteractor.onCompleteListener listener, Context context);
+   void Login(String userType,String username, String password, Login_ModelInteractor.onCompleteListener listener, Context context);
 }
