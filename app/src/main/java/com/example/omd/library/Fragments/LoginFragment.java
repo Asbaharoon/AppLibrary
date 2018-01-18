@@ -57,7 +57,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
     Handler handler;
     private Login_PresenterImp presenterImp;
     private ProgressDialog  progressDialog;
-    public static String userType=null;
+    //public static String userType=null;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -208,6 +208,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
                 startActivity(intent);
             }
         },500);
+        Toast.makeText(mContext, "user", Toast.LENGTH_SHORT).show();
         userName.setText(null);
         password.setText(null);
     }
@@ -223,6 +224,8 @@ public class LoginFragment extends Fragment implements Login_ViewData{
                 Toast.makeText(mContext, ""+libraryModel.getUser_type()+"\n"+libraryModel.getLib_username(), Toast.LENGTH_SHORT).show();
             }
         },500);
+        Toast.makeText(mContext, "library", Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
@@ -237,6 +240,8 @@ public class LoginFragment extends Fragment implements Login_ViewData{
                 startActivity(intent);
             }
         },500);
+        Toast.makeText(mContext, "publisher", Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
@@ -251,6 +256,8 @@ public class LoginFragment extends Fragment implements Login_ViewData{
                 startActivity(intent);
             }
         },500);
+        Toast.makeText(mContext, "university", Toast.LENGTH_SHORT).show();
+
         userName.setText(null);
         password.setText(null);
     }
@@ -265,6 +272,7 @@ public class LoginFragment extends Fragment implements Login_ViewData{
                 startActivity(intent);
             }
         },500);
+        Toast.makeText(mContext, "company", Toast.LENGTH_SHORT).show();
 
         userName.setText(null);
         password.setText(null);
@@ -326,45 +334,45 @@ public class LoginFragment extends Fragment implements Login_ViewData{
             public void onClick(View view) {
                 if (rb_normaluser.isChecked())
                 {
-                    userType = rb_normaluser.getText().toString();
+                    String user = "user";
                     String user_Name = userName.getText().toString().trim();
                     String Password = password.getText().toString().trim();
-                    presenterImp.Validate_Credential(userType.toLowerCase(),user_Name,Password);
+                    presenterImp.Validate_Credential(user,user_Name,Password);
                     customDialog.dismiss();
-                    Toast.makeText(getActivity(), userType.toLowerCase(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), user, Toast.LENGTH_SHORT).show();
                 }else if (rb_publisher.isChecked())
                 {
-                    userType = rb_publisher.getText().toString();
+                    String publisher = "publisher";
                     String user_Name = userName.getText().toString().trim();
                     String Password = password.getText().toString().trim();
-                    presenterImp.Validate_Credential(userType,user_Name,Password);
-                    Toast.makeText(getActivity(), userType.toLowerCase(), Toast.LENGTH_SHORT).show();
+                    presenterImp.Validate_Credential(publisher,user_Name,Password);
+                    Toast.makeText(getActivity(), publisher, Toast.LENGTH_SHORT).show();
 
                     customDialog.dismiss();
                 }
                 else if (rb_library.isChecked())
                 {
-                    userType = rb_library.getText().toString();
+                    String library = "library";
                     String user_Name = userName.getText().toString().trim();
                     String Password = password.getText().toString().trim();
-                    presenterImp.Validate_Credential(userType,user_Name,Password);
-                    Toast.makeText(getActivity(), userType.toLowerCase(), Toast.LENGTH_SHORT).show();
+                    presenterImp.Validate_Credential(library,user_Name,Password);
+                    Toast.makeText(getActivity(), library.toLowerCase(), Toast.LENGTH_SHORT).show();
 
                     customDialog.dismiss();
                 }else if (rb_university.isChecked())
                 {
-                    userType = rb_university.getText().toString();
+                    String university = "university";
                     String user_Name = userName.getText().toString().trim();
                     String Password = password.getText().toString().trim();
-                    presenterImp.Validate_Credential(userType.toLowerCase(),user_Name,Password);
+                    presenterImp.Validate_Credential(university,user_Name,Password);
 
                     customDialog.dismiss();
                 }else if (rb_company.isChecked())
                 {
-                    userType = rb_company.getText().toString();
+                    String company = "company";
                     String user_Name = userName.getText().toString().trim();
                     String Password = password.getText().toString().trim();
-                    presenterImp.Validate_Credential(userType.toLowerCase(),user_Name,Password);
+                    presenterImp.Validate_Credential(company,user_Name,Password);
                     customDialog.dismiss();
                 }
             }

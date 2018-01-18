@@ -2,19 +2,17 @@ package com.example.omd.library.Login_RegisterMVP.Login;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
-import com.example.omd.library.Models.User;
 import com.example.omd.library.Services.ErrorUtils;
 import com.example.omd.library.Services.NetworkConnection;
 import com.example.omd.library.Services.Service;
 import com.example.omd.library.Services.Tags;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -64,8 +62,46 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                 isConnected = new NetworkConnection(context).CheckConnection();
                 if (isConnected)
                 {
-                    listener.showProgressDialog();
-                    UsersLogin(userType,username,password,listener);
+                    if (userType.equals("user"))
+                    {
+                        listener.showProgressDialog();
+
+                        UserLogin(username,password,listener);
+                        Log.e("u", "Login:user ");
+                    }
+                    else if (userType.equals("publisher"))
+                    {
+                        listener.showProgressDialog();
+
+                        PublisherLogin(username,password,listener);
+                        Log.e("p", "Login:pub ");
+
+                    }
+                    else if (userType.equals("library"))
+                    {
+                        listener.showProgressDialog();
+
+                        LibraryLogin(username,password,listener);
+                        Log.e("l", "Login:lib ");
+
+                    }
+                    else if (userType.equals("university"))
+                    {
+                        listener.showProgressDialog();
+
+                        UniversityLogin(username,password,listener);
+                        Log.e("un", "Login:uni ");
+
+                    }
+                    else if (userType.toLowerCase().equals("company"))
+                    {
+                        listener.showProgressDialog();
+
+                        CompanyLogin(username,password,listener);
+                        Log.e("c", "Login:comp ");
+
+                    }
+
 
                 }else
                     {
@@ -76,22 +112,44 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
             }
     }
 
-    private void UsersLogin(String userType,String username, String password, final onCompleteListener listener)
+    private void UserLogin(String username, String password, final onCompleteListener listener)
     {
         Map<String,String> loginMap= new HashMap<>();
-        loginMap.put("user_type",userType.toLowerCase());
+        loginMap.put("user_type","user");
         loginMap.put("user_username",username);
         loginMap.put("user_pass",password);
 
         final Retrofit retrofit = SetUpRetrofit("http://librarians.liboasis.com/");
         Service service = retrofit.create(Service.class);
-        Call<JsonObject> call = service.login(loginMap);
-        call.enqueue(new Callback<JsonObject>() {
+        Call<NormalUserData> call = service.loginUser(loginMap);
+        call.enqueue(new Callback<NormalUserData>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
                 if (response.isSuccessful())
                 {
-                    Gson gson = new Gson();
+                    NormalUserData userData = response.body();
+                    if (userData!=null)
+                    {
+                        if (userData.getUserType().equals("user"))
+                        {
+                            listener.onSuccess_NormalUserData(userData);
+                            listener.hideProgressDialog();
+
+                        }else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type");
+                        }
+
+                    }else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
+                        }
+                     Log.e("u2", "Login:user ");
+
+                   /* Gson gson = new Gson();
                     User user = gson.fromJson(response.body(), User.class);
 
                     if (user!=null)
@@ -157,8 +215,10 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                     }else
                         {
                             listener.hideProgressDialog();
-                        }
-                }else
+                        }*/
+                }
+
+                else
                     {
                         listener.hideProgressDialog();
                         Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
@@ -173,7 +233,7 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<NormalUserData> call, Throwable t) {
                 listener.hideProgressDialog();
                 listener.onFailed(t.getMessage());
 
@@ -182,6 +242,273 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
         });
 
     }
+    private void PublisherLogin(String username, String password, final onCompleteListener listener)
+    {
+        Map<String,String> loginMap= new HashMap<>();
+        loginMap.put("user_type","publisher");
+        loginMap.put("user_username",username);
+        loginMap.put("user_pass",password);
+
+        final Retrofit retrofit = SetUpRetrofit("http://librarians.liboasis.com/");
+        Service service = retrofit.create(Service.class);
+        Call<PublisherModel> call = service.loginPublisher(loginMap);
+        call.enqueue(new Callback<PublisherModel>() {
+            @Override
+            public void onResponse(Call<PublisherModel> call, Response<PublisherModel> response) {
+                if (response.isSuccessful())
+                {
+                    PublisherModel publisherData = response.body();
+
+                    if (publisherData!=null)
+                    {
+                        if (publisherData.getUser_type().equals("publisher"))
+                        {
+                            listener.onSuccess_PublisherData(publisherData);
+                            listener.hideProgressDialog();
+                        }
+                        else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type");
+                        }
+
+                    }else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
+                        }
+
+                    Log.e("p2", "Login:pub ");
+
+
+                }
+
+                else
+                {
+                    listener.hideProgressDialog();
+                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
+                    try {
+                        ErrorUtils errorUtils = converter.convert(response.errorBody());
+                        listener.onFailed(errorUtils.getErrorMessage());
+                        listener.hideProgressDialog();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PublisherModel> call, Throwable t) {
+                listener.hideProgressDialog();
+                listener.onFailed(t.getMessage());
+
+                //listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
+            }
+        });
+
+    }
+    private void LibraryLogin(String username, String password, final onCompleteListener listener)
+    {
+        Map<String,String> loginMap= new HashMap<>();
+        loginMap.put("user_type","library");
+        loginMap.put("user_username",username);
+        loginMap.put("user_pass",password);
+
+
+        final Retrofit retrofit = SetUpRetrofit("http://librarians.liboasis.com/");
+        Service service = retrofit.create(Service.class);
+        Call<LibraryModel> call = service.loginLibrary(loginMap);
+        call.enqueue(new Callback<LibraryModel>() {
+            @Override
+            public void onResponse(Call<LibraryModel> call, Response<LibraryModel> response) {
+                if (response.isSuccessful())
+                {
+                    LibraryModel libraryData = response.body();
+                    if (libraryData!=null)
+                    {
+                        if (libraryData.getUser_type().equals("library"))
+                        {
+                            listener.onSuccess_LibraryData(libraryData);
+                            listener.hideProgressDialog();
+                        }
+                        else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type");
+                        }
+
+                    }else
+                    {
+                        listener.hideProgressDialog();
+                        listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
+                    }
+
+                    Log.e("l2", "Login:lib ");
+
+
+                }
+
+                else
+                {
+                    listener.hideProgressDialog();
+                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
+                    try {
+                        ErrorUtils errorUtils = converter.convert(response.errorBody());
+                        listener.onFailed(errorUtils.getErrorMessage());
+                        listener.hideProgressDialog();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LibraryModel> call, Throwable t) {
+                listener.hideProgressDialog();
+                listener.onFailed(t.getMessage());
+
+                //listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
+            }
+        });
+
+    }
+    private void UniversityLogin(String username, String password, final onCompleteListener listener)
+    {
+        Map<String,String> loginMap= new HashMap<>();
+        loginMap.put("user_type","university");
+        loginMap.put("user_username",username);
+        loginMap.put("user_pass",password);
+
+        final Retrofit retrofit = SetUpRetrofit("http://librarians.liboasis.com/");
+        Service service = retrofit.create(Service.class);
+        Call<UniversityModel> call = service.loginUniversity(loginMap);
+        call.enqueue(new Callback<UniversityModel>() {
+            @Override
+            public void onResponse(Call<UniversityModel> call, Response<UniversityModel> response) {
+                if (response.isSuccessful())
+                {
+                    UniversityModel universityData = response.body();
+                    if (universityData!=null)
+                    {
+                         if (universityData.getUser_type().equals("university"))
+                         {
+                            listener.onSuccess_UniversityData(universityData);
+                            listener.hideProgressDialog();
+                         }
+                        else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type");
+                        }
+
+                    }
+                    else
+                    {
+                        listener.hideProgressDialog();
+                        listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
+                    }
+                    Log.e("uni_usertype",universityData.getUser_type());
+
+                    //Log.e("un2", "Login:uni ");
+
+
+                }
+
+                else
+                {
+                    listener.hideProgressDialog();
+                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
+                    try {
+                        ErrorUtils errorUtils = converter.convert(response.errorBody());
+                        listener.onFailed(errorUtils.getErrorMessage());
+                        listener.hideProgressDialog();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UniversityModel> call, Throwable t) {
+                listener.hideProgressDialog();
+                listener.onFailed(t.getMessage());
+
+                //listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
+            }
+        });
+
+
+    }
+    private void CompanyLogin(String username, String password, final onCompleteListener listener)
+    {
+        Map<String,String> loginMap= new HashMap<>();
+        loginMap.put("user_type","company");
+        loginMap.put("user_username",username);
+        loginMap.put("user_pass",password);
+
+        final Retrofit retrofit = SetUpRetrofit("http://librarians.liboasis.com/");
+        Service service = retrofit.create(Service.class);
+        Call<CompanyModel> call = service.loginCompany(loginMap);
+        call.enqueue(new Callback<CompanyModel>() {
+            @Override
+            public void onResponse(Call<CompanyModel> call, Response<CompanyModel> response) {
+                if (response.isSuccessful())
+                {
+                    CompanyModel CompanyData = response.body();
+                    if (CompanyData!=null)
+                    {
+                        if (CompanyData.getUser_type().equals("company"))
+                        {
+                            listener.onSuccess_CompanyData(CompanyData);
+                            listener.hideProgressDialog();
+                        }
+                        else
+                        {
+                            listener.hideProgressDialog();
+                            listener.onFailed("No data founded please check user type");
+                        }
+                    }
+                    else
+                    {
+                        listener.hideProgressDialog();
+                        listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
+                    }
+
+
+                    Log.e("c2", "Login:comp ");
+
+
+                }
+
+                else
+                {
+                    listener.hideProgressDialog();
+                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
+                    try {
+                        ErrorUtils errorUtils = converter.convert(response.errorBody());
+                        listener.onFailed(errorUtils.getErrorMessage());
+                        listener.hideProgressDialog();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CompanyModel> call, Throwable t) {
+                listener.hideProgressDialog();
+                listener.onFailed(t.getMessage());
+
+                //listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
+            }
+        });
+
+    }
+
     private Retrofit SetUpRetrofit(String baseUrl)
     {
         OkHttpClient client = new OkHttpClient.Builder()

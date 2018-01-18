@@ -54,7 +54,20 @@ public interface Service {
     /////////////////////---------Login-----////////////////////////
     @FormUrlEncoded
     @POST("api/auth")
-    Call<JsonObject> login(@FieldMap Map<String,String> map);
+    Call<NormalUserData> loginUser(@FieldMap Map<String,String> map);
+    @FormUrlEncoded
+    @POST("api/auth")
+    Call<PublisherModel> loginPublisher(@FieldMap Map<String,String> map);
+    @FormUrlEncoded
+    @POST("api/auth")
+    Call<LibraryModel> loginLibrary(@FieldMap Map<String,String> map);
+    @FormUrlEncoded
+    @POST("api/auth")
+    Call<UniversityModel> loginUniversity(@FieldMap Map<String,String> map);
+    @FormUrlEncoded
+    @POST("api/auth")
+    Call<CompanyModel> loginCompany(@FieldMap Map<String,String> map);
+
     /////////////////////---------nearby-----////////////////////////
 
     @FormUrlEncoded
