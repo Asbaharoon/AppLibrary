@@ -15,7 +15,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -36,8 +35,8 @@ import android.widget.Toast;
 
 import com.example.omd.library.Activities.HomeActivity;
 import com.example.omd.library.Activities.MapsActivity;
-import com.example.omd.library.Login_Register.Registration.PresenterImp;
-import com.example.omd.library.Login_Register.Registration.ViewData;
+import com.example.omd.library.Login_RegisterMVP.Registration.PresenterImp;
+import com.example.omd.library.Login_RegisterMVP.Registration.ViewData;
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
@@ -1141,7 +1140,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.n_SignInBtn:
-                initNormalUserData("");
+                initNormalUserData();
                 break;
 
             case R.id.pub_SignInBtn:
@@ -1193,16 +1192,16 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 try {
                     userImage_URI = data.getData();
                     Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
-                    if (cursor.moveToFirst()) {
-                        imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                        Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+                    /*if (cursor.moveToFirst()) {
+                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
 
-                    }
+                    }*/
                     userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
                     n_circleImageView.setImageBitmap(userBitmap_image);
                     addPhoto_tv.setVisibility(View.GONE);
-                    String userPhoto = decodeUserPhoto(userBitmap_image);
-                    initNormalUserData(userPhoto);
+                   // String userPhoto = decodeUserPhoto(userBitmap_image);
+                    //initNormalUserData(userPhoto);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1295,11 +1294,10 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         dialog.create();
         dialog.show();
     }
-    private String decodeUserPhoto(Bitmap bitmap)
+    private String encodeUserPhoto(Bitmap bitmap)
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
-
         byte [] bytes = outputStream.toByteArray();
 
         String encodeImage = Base64.encodeToString(bytes,Base64.DEFAULT);
@@ -1342,9 +1340,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             }
         });
     }
-    private void initNormalUserData(String userPhoto)
+    private void initNormalUserData()
     {
-        String userType   = spinner.getSelectedItem().toString();
+        String userType   = "user";
         String n_fname    = n_userFirstName .getText().toString();
         String n_lname    = n_userLastName  .getText().toString();
         String n_email    = n_userEmail     .getText().toString();
@@ -1354,12 +1352,14 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String n_password = n_userPassword  .getText().toString();
 
         String n_userPhotoName ="";
-        /*if (userImage_URI!=null&&imageName!=null&&userBitmap_image!=null)
+        String n_userPhoto="";
+        if (userImage_URI!=null&&userBitmap_image!=null)
         {
             n_userPhotoName = imageName;
-            n_userPhoto = decodeUserPhoto(userBitmap_image);
-        }*/
-        presenter.NormalUserRegistration(userType,n_userPhotoName,userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password);
+            n_userPhoto = encodeUserPhoto(userBitmap_image);
+        }
+        Toast.makeText(mContext, n_userPhoto, Toast.LENGTH_SHORT).show();
+        presenter.NormalUserRegistration(userType,n_userPhotoName,n_userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password);
 
     }
     private void initPublisherData(String lat,String lng)

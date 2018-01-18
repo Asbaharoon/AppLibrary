@@ -1,4 +1,4 @@
-package com.example.omd.library.Login_Register.Registration;
+package com.example.omd.library.Login_RegisterMVP.Registration;
 
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;

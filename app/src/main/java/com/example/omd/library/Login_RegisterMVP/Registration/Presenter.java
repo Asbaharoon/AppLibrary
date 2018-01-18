@@ -1,4 +1,4 @@
-package com.example.omd.library.Login_Register.Registration;
+package com.example.omd.library.Login_RegisterMVP.Registration;
 
 /**
  * Created by Delta on 24/12/2017.

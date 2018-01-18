@@ -7,9 +7,11 @@ import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
 import com.google.gson.JsonObject;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -53,4 +55,27 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/auth")
     Call<JsonObject> login(@FieldMap Map<String,String> map);
+    /////////////////////---------nearby-----////////////////////////
+
+    @FormUrlEncoded
+    @POST("api/nearby")
+    Call<List<NormalUserData>>NearbyUsers(@Field("user_type") String userType);
+
+    @FormUrlEncoded
+    @POST("api/nearby")
+    Call<List<PublisherModel>>NearbyPublishers(@Field("user_type") String userType);
+
+    @FormUrlEncoded
+    @POST("api/nearby")
+    Call<List<LibraryModel>>NearbyLibraries(@Field("user_type") String userType);
+
+    @FormUrlEncoded
+    @POST("api/nearby")
+    Call<List<UniversityModel>>NearbyUniversities(@Field("user_type") String userType);
+
+    @FormUrlEncoded
+    @POST("api/nearby")
+    Call<List<CompanyModel>>NearbyCompanies(@Field("user_type") String userType);
+
+
 }

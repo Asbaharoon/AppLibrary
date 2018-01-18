@@ -1,4 +1,4 @@
-package com.example.omd.library.Login_Register.Login;
+package com.example.omd.library.Login_RegisterMVP.Login;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -154,7 +154,10 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                         }
 
 
-                    }
+                    }else
+                        {
+                            listener.hideProgressDialog();
+                        }
                 }else
                     {
                         listener.hideProgressDialog();

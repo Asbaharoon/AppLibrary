@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,8 +24,9 @@ import android.widget.Toast;
 
 import com.andexert.library.RippleView;
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
-import com.example.omd.library.Login_Register.Login.Login_PresenterImp;
-import com.example.omd.library.Login_Register.Login.Login_ViewData;
+import com.example.omd.library.Activities.HomeActivity;
+import com.example.omd.library.Login_RegisterMVP.Login.Login_PresenterImp;
+import com.example.omd.library.Login_RegisterMVP.Login.Login_ViewData;
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
@@ -197,39 +199,72 @@ public class LoginFragment extends Fragment implements Login_ViewData{
     }
 
     @Override
-    public void onSuccess_NormalUserData(NormalUserData normalUserModel) {
-        Toast.makeText(mContext, "success "+normalUserModel.getUserType()+"\n"+normalUserModel.getUserEmail()+"\n"+normalUserModel.getUserName(), Toast.LENGTH_SHORT).show();
+    public void onSuccess_NormalUserData(final NormalUserData normalUserModel) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("userData",normalUserModel);
+                startActivity(intent);
+            }
+        },500);
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
-    public void onSuccess_LibraryData(LibraryModel libraryModel) {
-        Toast.makeText(mContext, "success "+libraryModel.getUser_type()+"\n"+libraryModel.getLib_name()+"\n"+libraryModel.getLng(), Toast.LENGTH_SHORT).show();
-
+    public void onSuccess_LibraryData(final LibraryModel libraryModel) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("libraryData",libraryModel);
+                startActivity(intent);
+                Toast.makeText(mContext, ""+libraryModel.getUser_type()+"\n"+libraryModel.getLib_username(), Toast.LENGTH_SHORT).show();
+            }
+        },500);
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
-    public void onSuccess_PublisherData(PublisherModel publisherModel) {
-        Toast.makeText(mContext, "success "+publisherModel.getUser_type()+"\n"+publisherModel.getPub_email()+"\n"+publisherModel.getPub_lat(), Toast.LENGTH_SHORT).show();
-
+    public void onSuccess_PublisherData(final PublisherModel publisherModel) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("publisherData",publisherModel);
+                startActivity(intent);
+            }
+        },500);
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
-    public void onSuccess_UniversityData(UniversityModel universityModel) {
-        Toast.makeText(mContext, "success "+universityModel.getUser_type()+"\n"+universityModel.getUni_name()+"\n"+universityModel.getUni_lat(), Toast.LENGTH_SHORT).show();
-
+    public void onSuccess_UniversityData(final UniversityModel universityModel) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("universityData",universityModel);
+                startActivity(intent);
+            }
+        },500);
         userName.setText(null);
         password.setText(null);
     }
 
     @Override
-    public void onSuccess_CompanyData(CompanyModel companyModel) {
-        Toast.makeText(mContext, "success "+companyModel.getUser_type()+"\n"+companyModel.getComp_name()+"\n"+companyModel.getComp_username(), Toast.LENGTH_SHORT).show();
+    public void onSuccess_CompanyData(final CompanyModel companyModel) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                intent.putExtra("companyData",companyModel);
+                startActivity(intent);
+            }
+        },500);
 
         userName.setText(null);
         password.setText(null);

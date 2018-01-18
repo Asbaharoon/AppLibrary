@@ -1,4 +1,4 @@
-package com.example.omd.library.Login_Register.Registration;
+package com.example.omd.library.Login_RegisterMVP.Registration;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -478,6 +478,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
         Map<String,String> userMap = new HashMap<>();
 
+        userMap.put("user_photo",photo);
         userMap.put("user_type",userType);
         userMap.put("user_name",first_name+" "+last_name);
         userMap.put("user_email",email);
