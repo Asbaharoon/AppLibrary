@@ -27,7 +27,7 @@ public class PresenterImp implements Presenter,Interactor.onCompleteListener {
         interactor = new InteractorImp();
     }
 
-    @Override
+   /* @Override
     public void getNearbyUsers(String userType, LatLng latLng) {
         interactor.getNearbyUsers(userType,latLng,this);
     }
@@ -50,7 +50,7 @@ public class PresenterImp implements Presenter,Interactor.onCompleteListener {
     @Override
     public void getNearbyCompanies(String userType, LatLng latLng) {
         interactor.getNearbyCompanies(userType,latLng,this);
-    }
+    }*/
 
     @Override
     public void onUsersDataSuccess(List<NormalUserData> normalUserDataList) {
@@ -100,5 +100,10 @@ public class PresenterImp implements Presenter,Interactor.onCompleteListener {
         {
             viewData.onFailed(error);
         }
+    }
+
+    @Override
+    public void getNearbyUsers(String currUserType, String filteredUserType, LatLng currLatLng) {
+        interactor.getNearbyUsers(currUserType,filteredUserType,currLatLng,this);
     }
 }

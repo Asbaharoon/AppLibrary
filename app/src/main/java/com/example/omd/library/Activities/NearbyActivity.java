@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -25,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.MarkerModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
@@ -84,7 +84,13 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
     private UniversityModel universityModel=null;
     private CompanyModel companyModel=null;
     private int position;
+    private List<NormalUserData> normalUserData_List;
+    private List<PublisherModel> publisherModel_List;
     private List<LibraryModel> library_ModelList;
+    private List<UniversityModel> universityModel_List;
+    private List<CompanyModel> companyModel_List;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,28 +115,116 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
                 switch (menuItem.getItemId())
                 {
                     case R.id.user_menu_item:
-                        /////////////////////////////////////////
-                        getCurrentUserLocation("user");
-                        Toast.makeText(NearbyActivity.this, "user", Toast.LENGTH_SHORT).show();
+                        if (user_Data!=null)
+                        {
+                            getNearbyUsers("user","user");
+                        }else if (publisher_Model!=null)
+                        {
+                            getNearbyUsers("publisher","user");
+                        }
+                        else if (library_Model!=null)
+                        {
+                            getNearbyUsers("library","user");
+                        }
+                        else if (university_Model!=null)
+                        {
+                            getNearbyUsers("university","user");
+                        }
+                        else if (company_Model!=null)
+                        {
+                            getNearbyUsers("company","user");
+                        }
+                        //getCurrentUserLocation("user");
                         break;
                     case R.id.publisher_menu_item:
-                        Toast.makeText(NearbyActivity.this, "publisher", Toast.LENGTH_SHORT).show();
-                        getCurrentUserLocation("publisher");
+                        if (user_Data!=null)
+                        {
+                            getNearbyUsers("user","publisher");
+                        }else if (publisher_Model!=null)
+                        {
+                            getNearbyUsers("publisher","publisher");
+                        }
+                        else if (library_Model!=null)
+                        {
+                            getNearbyUsers("library","publisher");
+                        }
+                        else if (university_Model!=null)
+                        {
+                            getNearbyUsers("university","publisher");
+                        }
+                        else if (company_Model!=null)
+                        {
+                            getNearbyUsers("company","publisher");
+                        }
+                        //getCurrentUserLocation("publisher");
                         break;
                     case R.id.library_menu_item:
-                        getCurrentUserLocation("library");
-
-                        Toast.makeText(NearbyActivity.this, "library", Toast.LENGTH_SHORT).show();
+                        if (user_Data!=null)
+                        {
+                            getNearbyUsers("user","library");
+                        }else if (publisher_Model!=null)
+                        {
+                            getNearbyUsers("publisher","library");
+                        }
+                        else if (library_Model!=null)
+                        {
+                            getNearbyUsers("library","library");
+                        }
+                        else if (university_Model!=null)
+                        {
+                            getNearbyUsers("university","library");
+                        }
+                        else if (company_Model!=null)
+                        {
+                            getNearbyUsers("company","library");
+                        }
+                        //getCurrentUserLocation("library");
                         break;
                     case R.id.university_menu_item:
-                        getCurrentUserLocation("university");
+                        if (user_Data!=null)
+                        {
+                            getNearbyUsers("user","university");
+                        }else if (publisher_Model!=null)
+                        {
+                            getNearbyUsers("publisher","university");
+                        }
+                        else if (library_Model!=null)
+                        {
+                            getNearbyUsers("library","university");
+                        }
+                        else if (university_Model!=null)
+                        {
+                            getNearbyUsers("university","university");
+                        }
+                        else if (company_Model!=null)
+                        {
+                            getNearbyUsers("company","university");
+                        }
+                        //getCurrentUserLocation("university");
 
-                        Toast.makeText(NearbyActivity.this, "university", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.company_menu_item:
-                        getCurrentUserLocation("company");
+                        if (user_Data!=null)
+                        {
+                            getNearbyUsers("user","company");
+                        }else if (publisher_Model!=null)
+                        {
+                            getNearbyUsers("publisher","company");
+                        }
+                        else if (library_Model!=null)
+                        {
+                            getNearbyUsers("library","company");
+                        }
+                        else if (university_Model!=null)
+                        {
+                            getNearbyUsers("university","company");
+                        }
+                        else if (company_Model!=null)
+                        {
+                            getNearbyUsers("company","company");
+                        }
+                        //getCurrentUserLocation("company");
 
-                        Toast.makeText(NearbyActivity.this, "Company", Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -467,35 +561,21 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onUsersDataSuccess(List<NormalUserData> normalUserDataList) {
-        mMap.clear();
-        if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
+        if (normalUserDataList.size()>0)
         {
-            target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    deviceLocation(drawCustomMarker(customMarkerView,bitmap));
-
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            Picasso.with(this).load(Uri.parse(user_Data.getUserPhoto())).noFade().into(target);
-            for (NormalUserData normalUserData :normalUserDataList)
+            normalUserData_List=normalUserDataList;
+            mMap.clear();
+            if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
             {
-                /*if (!normalUserData.getUserName().equals(user_Data.getUserName()))
+                position=0;
+                for (final NormalUserData normalUser_Data :normalUserDataList)
                 {
+
                     target = new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            // AddMarker(new LatLng(10.333333,30.222222),bitmap);
+                            AddMarker(new MarkerModel(normalUser_Data.getUserType(),position),new LatLng(Double.parseDouble(normalUser_Data.getUser_google_lat()),Double.parseDouble(normalUser_Data.getUser_google_lng())),drawCustomMarker(customMarkerView,bitmap));
+                            position++;
                         }
 
                         @Override
@@ -508,11 +588,16 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
                         }
                     };
-                    Picasso.with(this).load(Uri.parse(normalUserData.getUserPhoto())).noFade().into(target);
-                }*/
+                    Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
+                }
 
-            }
+            }else
+                {
+                    mMap.clear();
+                }
         }
+
+
 
 
 
@@ -522,37 +607,20 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onPublisherDataSuccess(List<PublisherModel> publisherModelList) {
-        mMap.clear();
-
-        if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
+        if (publisherModelList.size()>0)
         {
-            target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    deviceLocation(drawCustomMarker(customMarkerView,bitmap));
-
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
-            position=0;
-            for (final PublisherModel publisherModel :publisherModelList)
+            publisherModel_List=publisherModelList;
+            mMap.clear();
+            if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
             {
-                /*if (!publisherModel.getPub_username().equals(publisher_Model.getPub_username()))
+                position=0;
+                for (final PublisherModel publisher_Data :publisherModelList)
                 {
+
                     target = new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                           AddMarker(position,new LatLng(Double.parseDouble(publisherModel.getPub_lat()),Double.parseDouble(publisherModel.getPub_lng())),drawCustomMarker(customMarkerView,bitmap));
+                            AddMarker(new MarkerModel(publisher_Data.getUser_type(),position),new LatLng(Double.parseDouble(publisher_Data.getPub_lat()),Double.parseDouble(publisher_Data.getPub_lng())),drawCustomMarker(customMarkerView,bitmap));
                             position++;
 
                         }
@@ -567,11 +635,16 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
                         }
                     };
-                }*/
-                //Picasso.with(this).load(Uri.parse(user_Data.getUserPhoto())).noFade().into(target);
+                }
+                Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
 
             }
-        }
+        }else
+            {
+                mMap.clear();
+            }
+
+
 
 
 
@@ -582,64 +655,29 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onLibraryDataSuccess(List<LibraryModel> libraryModelList) {
-        //library_ModelList = libraryModelList;
-        mMap.clear();
-
-        if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
+        if (libraryModelList.size()>0)
         {
-            target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    deviceLocation(drawCustomMarker(customMarkerView,bitmap));
+            library_ModelList = libraryModelList;
+            mMap.clear();
 
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
-
-            position =0;
-            for (final LibraryModel libraryModel :libraryModelList)
+            if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
             {
 
-                target = new Target() {
-                    @Override
-                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                AddMarker(position,new LatLng(Double.parseDouble(libraryModel.getLat()),Double.parseDouble(libraryModel.getLng())),drawCustomMarker(customMarkerView,bitmap));
-                                position++;
-
-                            }
-                        },1000);
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-
-                };
-               /* if (!libraryModel.getLib_username().equals(library_Model.getLib_username()))
+                position =0;
+                for (final LibraryModel libraryModel :libraryModelList)
                 {
+
                     target = new Target() {
                         @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            AddMarker(new LatLng(Double.parseDouble(libraryModel.getLat()),Double.parseDouble(libraryModel.getLng())),drawCustomMarker(customMarkerView,bitmap));
+                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AddMarker(new MarkerModel(libraryModel.getUser_type(),position),new LatLng(Double.parseDouble(libraryModel.getLat()),Double.parseDouble(libraryModel.getLng())),drawCustomMarker(customMarkerView,bitmap));
+                                    position++;
+
+                                }
+                            },1000);
                         }
 
                         @Override
@@ -651,12 +689,21 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
                         public void onPrepareLoad(Drawable placeHolderDrawable) {
 
                         }
-                    };
-                }*/
 
-               Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
+                    };
+
+
+
+
+                    Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
+                }
             }
-        }
+
+        }else
+            {
+                mMap.clear();
+            }
+
 
 
 
@@ -665,38 +712,23 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onUniversityDataSuccess(List<UniversityModel> universityModelList) {
-        mMap.clear();
 
-        if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
+        if (universityModelList.size()>0)
         {
-            target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    deviceLocation(drawCustomMarker(customMarkerView,bitmap));
+            universityModel_List = universityModelList;
+            mMap.clear();
 
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
-            position=0;
-            for (final UniversityModel universityModel :universityModelList)
+            if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
             {
-
-                /*if (!universityModel.getUni_username().equals(university_Model.getUni_username()))
+                position=0;
+                for (final UniversityModel universityModel :universityModelList)
                 {
+
+
                     target = new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            AddMarker(position,new LatLng(Double.parseDouble(universityModel.getUni_lat()),Double.parseDouble(universityModel.getUni_lng())),drawCustomMarker(customMarkerView,bitmap));
+                            AddMarker(new MarkerModel(universityModel.getUser_type(),position),new LatLng(Double.parseDouble(universityModel.getUni_lat()),Double.parseDouble(universityModel.getUni_lng())),drawCustomMarker(customMarkerView,bitmap));
                             position++;
 
                         }
@@ -712,10 +744,16 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
                         }
                     };
                 }
-                Picasso.with(this).load(Uri.parse(user_Data.getUserPhoto())).noFade().into(target);
-*/
+                Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
+
             }
         }
+        else
+            {
+                mMap.clear();
+            }
+
+
 
 
 
@@ -724,37 +762,20 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onCompanyDataSuccess(List<CompanyModel> companyModelList) {
-
-       mMap.clear();
-
-        if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
+        if (companyModelList.size()>0)
         {
-            target = new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    deviceLocation(drawCustomMarker(customMarkerView,bitmap));
+            companyModel_List =companyModelList;
+            mMap.clear();
 
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                }
-            };
-            Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
-            for (final CompanyModel companyModel :companyModelList)
+            if (user_Data!=null||publisher_Model!=null||library_Model!=null||university_Model!=null||company_Model!=null)
             {
-               /* if (!companyModel.getComp_username().equals(company_Model.getComp_username()))
+                position=0;
+                for (final CompanyModel companyModel :companyModelList)
                 {
                     target = new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            AddMarker(new LatLng(Double.parseDouble(""),Double.parseDouble("")),drawCustomMarker(customMarkerView,bitmap));
+                            AddMarker(new MarkerModel(companyModel.getUser_type(),position),new LatLng(Double.parseDouble(companyModel.getComp_lat()),Double.parseDouble(companyModel.getComp_lng())),drawCustomMarker(customMarkerView,bitmap));
                         }
 
                         @Override
@@ -767,13 +788,19 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
                         }
                     };
-                }*/
+                }
                 //Toast.makeText(this, companyModel.getComp_name()+"\n"+companyModel.getUser_type(), Toast.LENGTH_SHORT).show();
 
-                //Picasso.with(this).load(Uri.parse(user_Data.getUserPhoto())).noFade().into(target);
+                Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
 
             }
-        }
+        }else
+            {
+                mMap.clear();
+            }
+
+
+
 
 
 
@@ -784,7 +811,7 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onFailed(String error) {
 
     }
-    private void AddMarker(final int position, LatLng latLng, Bitmap bitmap)
+    private void AddMarker(MarkerModel markerModel, LatLng latLng, Bitmap bitmap)
     {
         Geocoder geocoder = new Geocoder(NearbyActivity.this);
         try {
@@ -794,38 +821,40 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
             {
                Marker marker= mMap.addMarker(new MarkerOptions().position(latLng).title(addresses.get(0).getLocality())
                         .icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-                marker.setTag(position);
+                marker.setTag(markerModel);
                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        if (user_Data!=null)
+                        MarkerModel markerTag = (MarkerModel) marker.getTag();
+                        switch (markerTag.getUser_type())
                         {
+                            case "user":
+                                int u_pos = markerTag.getPosition();
+                                NormalUserData u_data=normalUserData_List.get(u_pos);
+                                Toast.makeText(NearbyActivity.this, "userData: "+u_data.getUserName()+"\n"+u_data.getUserType()+"\n"+u_data.getUser_google_lat(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case  "publisher":
+                                int pub_pos = markerTag.getPosition();
+                                PublisherModel pub_data=publisherModel_List.get(pub_pos);
+                                Toast.makeText(NearbyActivity.this, "pubData"+pub_data.getPub_username()+"\n"+pub_data.getPub_lat()+"\n"+pub_data.getUser_type(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case "library":
+                                int lib_pos = markerTag.getPosition();
+                                LibraryModel lib_data = library_ModelList.get(lib_pos);
+                                Toast.makeText(NearbyActivity.this, "libData"+lib_data.getLib_username()+"\n"+lib_data.getUser_type()+"\n"+lib_data.getLat(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case "university":
+                                int uni_pos = markerTag.getPosition();
+                                UniversityModel uni_data = universityModel_List.get(uni_pos);
+                                Toast.makeText(NearbyActivity.this, "uniData"+uni_data.getUni_username()+"\n"+uni_data.getUser_type()+"\n"+uni_data.getUni_lat(), Toast.LENGTH_SHORT).show();
+                                break;
+                            case "company":
+                                int comp_pos = markerTag.getPosition();
+                                CompanyModel comp_data = companyModel_List.get(comp_pos);
+                                Toast.makeText(NearbyActivity.this, "compData"+comp_data.getUser_type()+"\n"+comp_data.getComp_username()+"\n"+comp_data.getComp_lat(), Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(NearbyActivity.this, ""+marker.getTag()+user_Data.getUserName(), Toast.LENGTH_SHORT).show();
-
-                        }else if(publisher_Model!=null)
-                        {
-                            Toast.makeText(NearbyActivity.this, ""+marker.getTag()+publisher_Model.getPub_username(), Toast.LENGTH_SHORT).show();
-
+                                break;
                         }
-                        else if(library_Model!=null)
-                        {
-                            int markerpos= (int) marker.getTag();
-                            LibraryModel libraryData = library_ModelList.get(markerpos);
-                            Toast.makeText(NearbyActivity.this, ""+libraryData.getLib_name(), Toast.LENGTH_SHORT).show();
-
-                        }
-                        else if(university_Model!=null)
-                        {
-                            Toast.makeText(NearbyActivity.this, ""+marker.getTag()+university_Model.getUni_username(), Toast.LENGTH_SHORT).show();
-
-                        }
-                        else if(company_Model!=null)
-                        {
-                            Toast.makeText(NearbyActivity.this, ""+marker.getTag()+company_Model.getComp_username(), Toast.LENGTH_SHORT).show();
-
-                        }
-
                         return false;
                     }
                 });
@@ -850,7 +879,7 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
     }
-    private void getCurrentUserLocation(final String userType)
+   /* private void getCurrentUserLocation(final String userType)
     {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NearbyActivity.this);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -888,12 +917,60 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
                 }
             }
         });
+    }*/
+
+    private void getNearbyUsers(String currUserType,String filteredUserType)
+    {
+        switch (currUserType)
+        {
+            case "user":
+                getDeviceLocation(filteredUserType);
+                break;
+            case "publisher":
+                presenter.getNearbyUsers("publisher",filteredUserType,new LatLng(Double.parseDouble(publisher_Model.getPub_lat()),Double.parseDouble(publisher_Model.getPub_lng())));
+                break;
+            case "library":
+                presenter.getNearbyUsers("library",filteredUserType,new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng())));
+
+                break;
+            case "university":
+                presenter.getNearbyUsers("university",filteredUserType,new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng())));
+
+                break;
+            case "company":
+                presenter.getNearbyUsers("company",filteredUserType,new LatLng(Double.parseDouble(company_Model.getComp_lat()),Double.parseDouble(company_Model.getComp_lng())));
+
+                break;
+        }
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Picasso.with(this).cancelRequest(target);
 
+    }
+    private void getDeviceLocation(final String filteredUserType)
+    {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(NearbyActivity.this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        Task<Location> lastLocation = fusedLocationProviderClient.getLastLocation();
+        lastLocation.addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                if (task.isSuccessful()) {
+                    Location location = task.getResult();
+                    if (location != null) {
+
+                        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        presenter.getNearbyUsers("user",filteredUserType,latLng);
+
+                    }
+                }
+            }
+        });
     }
 
 
