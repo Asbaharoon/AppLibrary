@@ -38,7 +38,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
 
     @Override
-    public void NormalUserRegistration(String userType, String photoName, String photo, String first_name, String last_name, String email, String country, String phone, String username, String password, onCompleteListener listener, Context context) {
+    public void NormalUserRegistration(String userType, String photoName, String photo, String first_name, String last_name, String email, String country, String phone, String username, String password,String lat,String lng, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(first_name))
         {
             listener.setNormalUserFirstName_Error();
@@ -93,7 +93,7 @@ public class Model_InteractorImp implements Model_Interactor {
             if (isConnected)
             {
                 listener.showProgress_Dialog();
-                Registration_NormalUser(userType,photoName,photo,first_name,last_name, email,country,phone,username,password, listener);
+                Registration_NormalUser(userType,photoName,photo,first_name,last_name, email,country,phone,username,password,lat,lng, listener);
 
             }else
             {
@@ -398,7 +398,7 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
     @Override
-    public void CompanyRegistration(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site, onCompleteListener listener, Context context) {
+    public void CompanyRegistration(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(name))
         {
             listener.setCompanyName_Error();
@@ -455,6 +455,9 @@ public class Model_InteractorImp implements Model_Interactor {
         else if (!password.matches(Tags.pass_Regex))
         {
             listener.setCompany_invalidPassword_Error();
+        }else if (TextUtils.isEmpty(lat)||TextUtils.isEmpty(lng))
+        {
+            listener.setCompanyLat_Lng_Error();
         }
 
         else
@@ -463,7 +466,7 @@ public class Model_InteractorImp implements Model_Interactor {
             if (isConnected)
             {
                 listener.showProgress_Dialog();
-                Registration_CompanyData(userType,name,email,country,phone,username,password,address,town,site,listener);
+                Registration_CompanyData(userType,name,email,country,phone,username,password,address,town,site,lat,lng,listener);
             }else
             {
                 listener.hideProgress_Dialog();
@@ -473,7 +476,7 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
 
-    private void Registration_NormalUser(String userType, String photoName, String photo, String first_name, String last_name, String email, String country , String phone, String username, String password, final onCompleteListener listener)
+    private void Registration_NormalUser(String userType, String photoName, String photo, String first_name, String last_name, String email, String country , String phone, String username, String password,String lat,String lng, final onCompleteListener listener)
     {
 
         Map<String,String> userMap = new HashMap<>();
@@ -487,6 +490,9 @@ public class Model_InteractorImp implements Model_Interactor {
         userMap.put("user_photo",photo);
         userMap.put("user_username",username);
         userMap.put("user_pass",password);
+        userMap.put("user_google_lat",lat);
+        userMap.put("user_google_lng",lng);
+
 
         final Retrofit retrofit = setUP_Retrofit("http://librarians.liboasis.com/");
         Service service = retrofit.create(Service.class);
@@ -539,6 +545,8 @@ public class Model_InteractorImp implements Model_Interactor {
         pubMap.put("user_phone",phone);
         pubMap.put("user_username",username);
         pubMap.put("user_pass",password);
+        pubMap.put("user_google_lat",lat);
+        pubMap.put("user_google_lng",lng);
 
         pubMap.put("publisher_name",first_name+" "+last_name);
         pubMap.put("publisher_country",country);
@@ -602,6 +610,8 @@ public class Model_InteractorImp implements Model_Interactor {
         libMap.put("user_phone",libPhone);
         libMap.put("user_username",libUsername);
         libMap.put("user_pass",libPassword);
+        libMap.put("user_google_lat",lat);
+        libMap.put("user_google_lng",lng);
 
         libMap.put("library_name",libName);
         libMap.put("library_address",libAddress);
@@ -664,6 +674,8 @@ public class Model_InteractorImp implements Model_Interactor {
        uniMap.put("user_phone",phone);
        uniMap.put("user_username",username);
        uniMap.put("user_pass",password);
+       uniMap.put("user_google_lat",lat);
+       uniMap.put("user_google_lng",lng);
 
        uniMap.put("university_name",name);
        uniMap.put("university_email",email);
@@ -716,7 +728,7 @@ public class Model_InteractorImp implements Model_Interactor {
         });
 
     }
-    private void Registration_CompanyData(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site, final onCompleteListener listener)
+    private void Registration_CompanyData(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng, final onCompleteListener listener)
     {
         Map<String,String> compMap = new HashMap<>();
 
@@ -727,6 +739,10 @@ public class Model_InteractorImp implements Model_Interactor {
        compMap.put("user_phone",phone);
        compMap.put("user_username",username);
        compMap.put("user_pass",password);
+       compMap.put("user_google_lat",lat);
+       compMap.put("user_google_lng",lng);
+
+
 
        compMap.put("company_name",name);
        compMap.put("company_address",address);
@@ -735,6 +751,8 @@ public class Model_InteractorImp implements Model_Interactor {
        compMap.put("company_site",site);
        compMap.put("company_phone",phone);
        compMap.put("company_country",country);
+       compMap.put("company_google_lat",lat);
+        compMap.put("company_google_lng",lng);
 
        final Retrofit retrofit = setUP_Retrofit("http://librarians.liboasis.com/");
        Service service = retrofit.create(Service.class);

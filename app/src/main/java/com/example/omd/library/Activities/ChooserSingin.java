@@ -92,6 +92,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         setUpShimmer();
         setUpProgressdialog();
         setUpUserProfile();
+
         CheckedUserLoginWithGoogle();
 
     }
@@ -299,7 +300,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                         @Override
                                         public void run() {
                                             Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-                                            intent.putExtra("userData",publisherModel);
+                                            intent.putExtra("publisherData",publisherModel);
                                             startActivity(intent);
                                         }
                                     },2000);
@@ -338,7 +339,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                         @Override
                                         public void run() {
                                             Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-                                            intent.putExtra("libraryData",companyModel);
+                                            intent.putExtra("companyData",companyModel);
                                             startActivity(intent);
                                         }
                                     },2000);

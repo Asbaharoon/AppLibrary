@@ -1034,6 +1034,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     @Override
     public void setCompanyLat_Lng_Error() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                CreateDialogForLocation();
+
+            }
+        },1000);
 
     }
 
@@ -1140,7 +1147,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.n_SignInBtn:
-                initNormalUserData();
+                getDeviceLocation();
                 break;
 
             case R.id.pub_SignInBtn:
@@ -1151,7 +1158,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 break;
 
             case R.id.company_SignInBtn:
-                initCompanyData();
+                initCompanyData("","");
                 break;
 
 
@@ -1228,6 +1235,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                         initUniversityData(String.valueOf(lat),String.valueOf(lng));
                         Toast.makeText(mContext, "lat"+lat+"\n"+"lng"+lng, Toast.LENGTH_SHORT).show();
 
+                    }else if (userType.equals("company"))
+                    {
+                        initCompanyData(String.valueOf(lat),String.valueOf(lng));
                     }
 
                 }
@@ -1323,7 +1333,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                         double lat = location.getLatitude();
                         double lng = location.getLongitude();
                         String userType = spinner.getSelectedItem().toString();
-                        if (userType.equals("Publisher"))
+                        if (userType.equals("Normal user"))
+                        {
+                            initNormalUserData(String.valueOf(lat),String.valueOf(lng));
+                        }
+                        else if (userType.equals("Publisher"))
                         {
                             initPublisherData(String.valueOf(lat),String.valueOf(lng));
                         }else if (userType.equals("Library"))
@@ -1334,13 +1348,18 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                         {
                             initUniversityData(String.valueOf(lat),String.valueOf(lng));
                         }
+                        else if (userType.equals("Company"))
+                        {
+                            initCompanyData(String.valueOf(lat),String.valueOf(lng));
+                        }
+
 
                     }
                 }
             }
         });
     }
-    private void initNormalUserData()
+    private void initNormalUserData(String lat,String lng)
     {
         String userType   = "user";
         String n_fname    = n_userFirstName .getText().toString();
@@ -1359,7 +1378,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             n_userPhoto = encodeUserPhoto(userBitmap_image);
         }
         Toast.makeText(mContext, n_userPhoto, Toast.LENGTH_SHORT).show();
-        presenter.NormalUserRegistration(userType,n_userPhotoName,n_userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password);
+        presenter.NormalUserRegistration(userType,n_userPhotoName,n_userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password,lat,lng);
 
     }
     private void initPublisherData(String lat,String lng)
@@ -1414,7 +1433,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         presenter.UniversityRegistration(userType,uni_name,uni_email,uni_country,uni_phone,uni_userName,uni_password,uni_major,uni_address,uni_site,lat,lng);
 
     }
-    private void initCompanyData()
+    private void initCompanyData(String lat,String lng)
     {
         String userType = spinner.getSelectedItem().toString().toLowerCase();
         String comp_name     = companyName     .getText().toString();
@@ -1427,7 +1446,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String comp_userName = companyUsername .getText().toString();
         String comp_password = companyPassword .getText().toString();
 
-        presenter.CompanyRegistration(userType,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site);
+        presenter.CompanyRegistration(userType,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site,lat,lng);
 
     }
 }

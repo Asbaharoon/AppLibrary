@@ -29,11 +29,15 @@ public class CompanyModel implements Serializable {
     private String comp_username;
     @SerializedName("user_pass")
     private String comp_password;
+    @SerializedName("company_google_lat")
+    private String comp_lat;
+    @SerializedName("company_google_lng")
+    private String comp_lng;
 
     public CompanyModel() {
     }
 
-    public CompanyModel(String user_type, String comp_name, String comp_email, String comp_phone, String comp_country, String comp_address, String comp_town, String comp_site, String comp_username, String comp_password) {
+    public CompanyModel(String user_type, String comp_name, String comp_email, String comp_phone, String comp_country, String comp_address, String comp_town, String comp_site, String comp_username, String comp_password, String comp_lat, String comp_lng) {
         this.user_type = user_type;
         this.comp_name = comp_name;
         this.comp_email = comp_email;
@@ -44,6 +48,8 @@ public class CompanyModel implements Serializable {
         this.comp_site = comp_site;
         this.comp_username = comp_username;
         this.comp_password = comp_password;
+        this.comp_lat = comp_lat;
+        this.comp_lng = comp_lng;
     }
 
     public String getUser_type() {
@@ -124,5 +130,21 @@ public class CompanyModel implements Serializable {
 
     public void setComp_password(String comp_password) {
         this.comp_password = comp_password;
+    }
+
+    public String getComp_lat() {
+        return comp_lat;
+    }
+
+    public void setComp_lat(String comp_lat) {
+        this.comp_lat = comp_lat;
+    }
+
+    public String getComp_lng() {
+        return comp_lng;
+    }
+
+    public void setComp_lng(String comp_lng) {
+        this.comp_lng = comp_lng;
     }
 }

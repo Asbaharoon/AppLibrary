@@ -279,7 +279,6 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
 
                         }
 
-                    Log.e("p2", "Login:pub ");
 
 
                 }
@@ -287,14 +286,8 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                 else
                 {
                     listener.hideProgressDialog();
-                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
-                    try {
-                        ErrorUtils errorUtils = converter.convert(response.errorBody());
-                        listener.onFailed(errorUtils.getErrorMessage());
-                        listener.hideProgressDialog();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
                 }
             }
 
@@ -410,7 +403,6 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                         listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
 
                     }
-                    Log.e("uni_usertype",universityData.getUser_type());
 
                     //Log.e("un2", "Login:uni ");
 
@@ -420,14 +412,8 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                 else
                 {
                     listener.hideProgressDialog();
-                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
-                    try {
-                        ErrorUtils errorUtils = converter.convert(response.errorBody());
-                        listener.onFailed(errorUtils.getErrorMessage());
-                        listener.hideProgressDialog();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
                 }
             }
 
@@ -479,7 +465,6 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                     }
 
 
-                    Log.e("c2", "Login:comp ");
 
 
                 }
@@ -487,14 +472,8 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                 else
                 {
                     listener.hideProgressDialog();
-                    Converter<ResponseBody,ErrorUtils> converter =retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
-                    try {
-                        ErrorUtils errorUtils = converter.convert(response.errorBody());
-                        listener.onFailed(errorUtils.getErrorMessage());
-                        listener.hideProgressDialog();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    listener.onFailed("No data founded please check user type.if you don’t have an account please create one ");
+
                 }
             }
 

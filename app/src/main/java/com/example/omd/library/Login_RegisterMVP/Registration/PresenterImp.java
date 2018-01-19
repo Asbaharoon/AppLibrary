@@ -689,9 +689,9 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
 
 
     @Override
-    public void NormalUserRegistration(String userType, String photoName, String photo, String first_name, String last_name, String email, String country, String phone, String user_username, String password) {
+    public void NormalUserRegistration(String userType, String photoName, String photo, String first_name, String last_name, String email, String country, String phone, String user_username, String password,String lat,String lng) {
         interactor = new Model_InteractorImp();
-        interactor.NormalUserRegistration(userType,photoName,photo,first_name,last_name,email,country,phone,user_username,password,this,mContext);
+        interactor.NormalUserRegistration(userType,photoName,photo,first_name,last_name,email,country,phone,user_username,password,lat,lng,this,mContext);
 
     }
 
@@ -717,9 +717,9 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
     }
 
     @Override
-    public void CompanyRegistration(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site) {
+    public void CompanyRegistration(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng) {
         interactor = new Model_InteractorImp();
-        interactor.CompanyRegistration(userType,name,email,country,phone,username,password,address,town,site,this,mContext);
+        interactor.CompanyRegistration(userType,name,email,country,phone,username,password,address,town,site,lat,lng,this,mContext);
     }
 
 

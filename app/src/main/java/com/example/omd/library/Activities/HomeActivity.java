@@ -47,24 +47,26 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,GoogleApiClient.OnConnectionFailedListener{
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,GoogleApiClient.OnConnectionFailedListener {
 
     private Toolbar toolbar;
     private ArcNavigationView arcNavigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
     private CircleImageView im_userImage;
-    private TextView tv_userName,tv_userEmail;
+    private TextView tv_userName, tv_userEmail;
     private GoogleApiClient apiClient;
+
     private AlertDialog.Builder alerDialog;
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginManager manager;
-    private static NormalUserData user_Data=null;
-    private static PublisherModel publisher_Model=null;
-    private static LibraryModel library_Model=null;
-    private static UniversityModel university_Model=null;
-    private static CompanyModel company_Model=null;
+    private NormalUserData user_Data = null;
+    private PublisherModel publisher_Model = null;
+    private LibraryModel library_Model = null;
+    private UniversityModel university_Model = null;
+    private CompanyModel company_Model = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +74,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         manager = LoginManager.getInstance();
         initView();
+
         setUpDrawer();
         setUpSigninWithGoogle();
         setUpAlertDialog();
         setUpProgressDialog();
-        getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
         getDataFrom_Intent();
-       // CheckuserType();
+        // CheckuserType();
     }
 
     /*private void CheckuserType() {
@@ -145,100 +148,85 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }*/
 
-    private void getDataFrom_Intent()
-    {
+    private void getDataFrom_Intent() {
         Intent intent = getIntent();
-        if (intent.hasExtra("userData"))
-        {
+        if (intent.hasExtra("userData")) {
             final NormalUserData UserData = (NormalUserData) intent.getSerializableExtra("userData");
 
-            if (UserData!=null)
-            {
+            if (UserData != null) {
                 user_Data = UserData;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                       UpdateUI(UserData.getUserPhoto(),UserData.getUserName(),UserData.getUserEmail());
+                        UpdateUI(UserData.getUserPhoto(), UserData.getUserName(), UserData.getUserEmail());
                     }
-                },500);
+                }, 500);
             }
-        }
-        else if (intent.hasExtra("publisherData"))
-        {
+        } else if (intent.hasExtra("publisherData")) {
 
             final PublisherModel publisherModel = (PublisherModel) intent.getSerializableExtra("publisherData");
-            if (publisherModel!=null)
-            {
+            if (publisherModel != null) {
                 publisher_Model = publisherModel;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        UpdateUI("",publisherModel.getPub_name(),publisherModel.getPub_email());
+                        UpdateUI("", publisherModel.getPub_name(), publisherModel.getPub_email());
                     }
-                },500);
+                }, 500);
             }
 
 
-        }
-        else if (intent.hasExtra("libraryData"))
-        {
+        } else if (intent.hasExtra("libraryData")) {
             final LibraryModel libraryModel = (LibraryModel) intent.getSerializableExtra("libraryData");
 
-            if (libraryModel!=null)
-            {
+            if (libraryModel != null) {
                 library_Model = libraryModel;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        UpdateUI("",libraryModel.getLib_name(),libraryModel.getLib_email());
+                        UpdateUI("", libraryModel.getLib_name(), libraryModel.getLib_email());
                     }
-                },500);
+                }, 500);
 
             }
 
 
-        }
-        else if (intent.hasExtra("universityData"))
-        {
+        } else if (intent.hasExtra("universityData")) {
             final UniversityModel universityModel = (UniversityModel) intent.getSerializableExtra("universityData");
-            if (universityModel!=null)
-            {
+            if (universityModel != null) {
                 university_Model = universityModel;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        UpdateUI("",universityModel.getUni_name(),universityModel.getUni_email());
+                        UpdateUI("", universityModel.getUni_name(), universityModel.getUni_email());
                     }
-                },500);
+                }, 500);
             }
 
 
-        }
-        else if (intent.hasExtra("companyData"))
-        {
+        } else if (intent.hasExtra("companyData")) {
             final CompanyModel companyModel = (CompanyModel) intent.getSerializableExtra("companyData");
 
-            if (companyModel!=null)
-            {
+            if (companyModel != null) {
                 company_Model = companyModel;
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        UpdateUI("",companyModel.getComp_name(),companyModel.getComp_email());
+                        UpdateUI("", companyModel.getComp_name(), companyModel.getComp_email());
                     }
-                },500);
+                }, 500);
             }
 
 
         }
     }
-    private void initView()
-    {
+
+    private void initView() {
         alerDialog = new AlertDialog.Builder(this);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -248,45 +236,43 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //////////////////////////////////////////////////////////////
-        View headerView =arcNavigationView.getHeaderView(0);
+        View headerView = arcNavigationView.getHeaderView(0);
 
         im_userImage = (CircleImageView) headerView.findViewById(R.id.userPhoto);
-        tv_userName  = (TextView) headerView.findViewById(R.id.userName);
+        tv_userName = (TextView) headerView.findViewById(R.id.userName);
         tv_userEmail = (TextView) headerView.findViewById(R.id.userEmail);
 
 
     }
-    private void UpdateUI(String imageUrl,String name,String email)
-    {
-        if (TextUtils.isEmpty(imageUrl)||imageUrl==null)
-        {
+
+    private void UpdateUI(String imageUrl, String name, String email) {
+        if (TextUtils.isEmpty(imageUrl) || imageUrl == null) {
             Picasso.with(HomeActivity.this).load(R.drawable.user_profile).fit().into(im_userImage);
-        }else
-        {
+        } else {
             Picasso.with(HomeActivity.this).load(Uri.parse(imageUrl)).fit().into(im_userImage);
 
         }
-        tv_userName.setText(TextUtils.isEmpty(name)||name==null?"":name.toString());
-        tv_userEmail.setText(email==null|| TextUtils.isEmpty(email)?"":email);
+        tv_userName.setText(TextUtils.isEmpty(name) || name == null ? "" : name.toString());
+        tv_userEmail.setText(email == null || TextUtils.isEmpty(email) ? "" : email);
 
     }
-    private void setUpSigninWithGoogle()
-    {
+
+    private void setUpSigninWithGoogle() {
         apiClient = new GoogleApiClient.Builder(HomeActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API).build();
         apiClient.connect();
 
     }
-    private void setUpDrawer()
-    {
-        mToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.drawer_open,R.string.drawer_close);
+
+    private void setUpDrawer() {
+        mToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         arcNavigationView.setNavigationItemSelectedListener(this);
 
 
     }
-    private void setUpAlertDialog()
-    {
+
+    private void setUpAlertDialog() {
         alerDialog.setTitle("Sign out ?").setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -298,7 +284,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         SignOut();
                         progressDialog.dismiss();
                     }
-                },4000);
+                }, 4000);
 
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -310,8 +296,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }).create();
 
     }
-    private void SignOut()
-    {
+
+    private void SignOut() {
         Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(new ResultCallback<Status>() {
             @Override
             public void onResult(@NonNull Status status) {
@@ -323,136 +309,109 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         manager.logOut();
         finish();
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
 
-        if (mToggle.onOptionsItemSelected(item))
-        {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
 
         return super.onOptionsItemSelected(item);
     }
+
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item)
-    {
-         if (item.getItemId()==R.id.home)
-        {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.home) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
                     }
-                },500);
+                }, 500);
                 return true;
             }
-        }
-        else if (item.getItemId()==R.id.chat)
-        {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            {
+        } else if (item.getItemId() == R.id.chat) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer,new Home_Fragment()).commit();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
                     }
-                },500);
+                }, 500);
 
                 return true;
             }
-        }
-        else if (item.getItemId()==R.id.nearby)
-        {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            {
+        } else if (item.getItemId() == R.id.nearby) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (user_Data!=null)
-                        {
-                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
-                            intent.putExtra("userData",user_Data);
+                        if (user_Data != null) {
+                            Intent intent = new Intent(HomeActivity.this, NearbyActivity.class);
+                            intent.putExtra("userData", user_Data);
                             startActivity(intent);
-                        }
-                        else if (publisher_Model!=null)
-                        {
-                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
-                            intent.putExtra("publisherData",publisher_Model);
+                        } else if (publisher_Model != null) {
+                            Intent intent = new Intent(HomeActivity.this, NearbyActivity.class);
+                            intent.putExtra("publisherData", publisher_Model);
                             startActivity(intent);
-                        }
-                        else if (university_Model!=null)
-                        {
-                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
-                            intent.putExtra("universityData",university_Model);
+                        } else if (university_Model != null) {
+                            Intent intent = new Intent(HomeActivity.this, NearbyActivity.class);
+                            intent.putExtra("universityData", university_Model);
                             startActivity(intent);
-                        }
-                        else if (library_Model!=null)
-                        {
-                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
-                            intent.putExtra("libraryData",library_Model);
+                        } else if (library_Model != null) {
+                            Intent intent = new Intent(HomeActivity.this, NearbyActivity.class);
+                            intent.putExtra("libraryData", library_Model);
                             startActivity(intent);
-                        }
-                        else if (company_Model!=null)
-                        {
-                            Intent intent = new Intent(HomeActivity.this,NearbyActivity.class);
-                            intent.putExtra("companyData",company_Model);
+                        } else if (company_Model != null) {
+                            Intent intent = new Intent(HomeActivity.this, NearbyActivity.class);
+                            intent.putExtra("companyData", company_Model);
                             startActivity(intent);
                         }
 
                     }
-                },500);
+                }, 500);
 
                 return true;
             }
-        }
-        else if (item.getItemId()==R.id.news)
-        {
+        } else if (item.getItemId() == R.id.news) {
             Toast.makeText(this, "news", Toast.LENGTH_SHORT).show();
-            if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer,new News_Fragment()).commit();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new News_Fragment()).commit();
                     }
-                },500);
+                }, 500);
 
                 return true;
             }
-        }
-        else if (item.getItemId()==R.id.settings)
-        {
+        } else if (item.getItemId() == R.id.settings) {
 
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
-            if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentTransaction transaction =getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer,new Settings_Fragment()).commit();
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new Settings_Fragment()).commit();
                     }
-                },500);
+                }, 500);
                 return true;
             }
-        }
-        else if (item.getItemId()==R.id.logout)
-        {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            {
+        } else if (item.getItemId() == R.id.logout) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
                 alerDialog.show();
 
@@ -461,32 +420,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
         return false;
     }
+
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult)
-    {
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-    private void setUpProgressDialog()
-    {
+
+    private void setUpProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Sign Out.....");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         ProgressBar progressBar = new ProgressBar(this);
         Drawable drawable = progressBar.getIndeterminateDrawable().mutate();
-        drawable.setColorFilter(ContextCompat.getColor(this,R.color.centercolor), PorterDuff.Mode.SRC_IN);
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.centercolor), PorterDuff.Mode.SRC_IN);
         progressDialog.setIndeterminateDrawable(drawable);
     }
+
     @Override
-    public void onBackPressed()
-    {
-        if (drawerLayout.isDrawerOpen(Gravity.START))
-        {
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
 
-        }
-        else
-        {
+        } else {
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -495,13 +451,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     intent.addCategory(Intent.CATEGORY_HOME);
                     startActivity(intent);
                 }
-            },500);
+            }, 500);
 
         }
 
 
     }
-
-
 
 }

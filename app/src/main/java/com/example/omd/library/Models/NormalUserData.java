@@ -23,18 +23,24 @@ public class NormalUserData implements Serializable {
     private String userPhoto;
     @SerializedName("user_type")
     private String userType;
+    @SerializedName("user_google_lat")
+    private String user_google_lat;
+    @SerializedName("user_google_lng")
+    private String user_google_lng;
 
 
     public NormalUserData() {
     }
 
-    public NormalUserData(String userName, String userEmail, String userCountry, String userPhone, String userPhoto) {
+    public NormalUserData(String userName, String userEmail, String userCountry, String userPhone, String userPhoto, String userType, String user_google_lat, String user_google_lng) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userCountry = userCountry;
         this.userPhone = userPhone;
-
         this.userPhoto = userPhoto;
+        this.userType = userType;
+        this.user_google_lat = user_google_lat;
+        this.user_google_lng = user_google_lng;
     }
 
     public String getUserId() {
@@ -43,14 +49,6 @@ public class NormalUserData implements Serializable {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
     }
 
     public String getUserName() {
@@ -85,12 +83,35 @@ public class NormalUserData implements Serializable {
         this.userPhone = userPhone;
     }
 
-
     public String getUserPhoto() {
         return userPhoto;
     }
 
     public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUser_google_lat() {
+        return user_google_lat;
+    }
+
+    public void setUser_google_lat(String user_google_lat) {
+        this.user_google_lat = user_google_lat;
+    }
+
+    public String getUser_google_lng() {
+        return user_google_lng;
+    }
+
+    public void setUser_google_lng(String user_google_lng) {
+        this.user_google_lng = user_google_lng;
     }
 }

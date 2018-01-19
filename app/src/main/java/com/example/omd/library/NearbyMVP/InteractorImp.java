@@ -27,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InteractorImp implements Interactor {
     @Override
-    public void getNearbyUsers(String userType, final LatLng latLng, final onCompleteListener listener) {
+    public void getNearbyUsers(final String userType, final LatLng latLng, final onCompleteListener listener) {
         Retrofit retrofit = setUpRetrofit();
         Service service = retrofit.create(Service.class);
         Call<List<NormalUserData>> call = service.NearbyUsers(userType);
@@ -46,19 +46,22 @@ public class InteractorImp implements Interactor {
                         {
                             nearbyUsersList.add(userData);
                         }
+                        Log.e("nearbyUsers", "onResponse: "+userData.getUserType()+"\n"+userData.getUserId()+"\n"+userData.getUserEmail());
+
                     }
                     if (nearbyUsersList.size()>0)
                     {
-                        listener.onUsersDataSuccess(nearbyUsersList);
+                       // listener.onUsersDataSuccess(nearbyUsersList);
                     }
 
+                    Log.e("nearbyUsers", "onResponse: ");
 
                 }
             }
 
             @Override
             public void onFailure(Call<List<NormalUserData>> call, Throwable t) {
-
+                Log.e("usererror", "onFailure: "+t.getMessage() );
             }
         });
     }
@@ -82,6 +85,7 @@ public class InteractorImp implements Interactor {
                         {
                             nearbyPublishersList.add(publisherModel);
                         }
+                        Log.e("nearpub", "onResponse: "+publisherModel.getUser_type()+"\n"+publisherModel.getPub_username()+"\n"+publisherModel.getPub_lng());
                     }
                     if (nearbyPublishersList.size()>0)
                     {
@@ -116,6 +120,8 @@ public class InteractorImp implements Interactor {
                         {
                             nearbyLibraryList.add(libraryModel);
                         }
+                        Log.e("nearlib", "onResponse: "+libraryModel.getLib_username()+"\n"+libraryModel.getUser_type()+"\n"+libraryModel.getLng());
+
                     }
                     if (nearbyLibraryList.size()>0)
                     {
@@ -153,6 +159,8 @@ public class InteractorImp implements Interactor {
                         {
                             nearbyUniversityList.add(universityModel);
                         }
+                        Log.e("nearuni", "onResponse: "+universityModel.getUser_type()+"\n"+universityModel.getUni_username()+"\n"+universityModel.getUni_lat());
+
                     }
                     if (nearbyUniversityList.size()>0)
                     {
@@ -187,6 +195,8 @@ public class InteractorImp implements Interactor {
                         {
                             nearbyCompanyList.add(companyModel);
                         }
+                        Log.e("nearcomp", "onResponse: "+companyModel.getUser_type()+"\n"+companyModel.getComp_username()+"\n"+companyModel.getComp_email());
+
                     }
                     if (nearbyCompanyList.size()>0)
                     {
