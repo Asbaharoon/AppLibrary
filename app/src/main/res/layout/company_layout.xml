@@ -28,7 +28,7 @@
             app:met_singleLineEllipsis="true"
             app:met_helperTextAlwaysShown="true"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_iconLeft="@drawable/expertise_icon"
+            app:met_iconLeft="@drawable/comp_icon"
             app:met_floatingLabelText="Company name"
             app:met_floatingLabelTextColor="@color/base"
             app:met_helperTextColor="@color/label"

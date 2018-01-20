@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
+
+    <FrameLayout
+        android:id="@+id/home_fragment_fragmentsContainers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/view"
-        ></android.support.v4.view.ViewPager>
+        >
+
+    </FrameLayout>
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

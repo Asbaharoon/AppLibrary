@@ -23,11 +23,6 @@ public interface Interactor {
         void onCompanyDataSuccess(List<CompanyModel> companyModelList);
         void onFailed(String error);
     }
-   /* void getNearbyUsers(String userType, LatLng latLng,Interactor.onCompleteListener listener);
-    void getNearbyPublishers(String userType,LatLng latLng,Interactor.onCompleteListener listener);
-    void getNearbyLibraries(String userType,LatLng latLng,Interactor.onCompleteListener listener);
-    void getNearbyUniversities(String userType,LatLng latLng,Interactor.onCompleteListener listener);
-    void getNearbyCompanies(String userType,LatLng latLng,Interactor.onCompleteListener listener);*/
 
     void getNearbyUsers(String currUserType,String filteredUserType, LatLng currLatLng,Interactor.onCompleteListener listener);
 

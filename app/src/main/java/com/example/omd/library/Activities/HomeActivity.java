@@ -26,7 +26,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.omd.library.Fragments.Ads_Fragment;
+import com.example.omd.library.Fragments.Company_Fragment;
 import com.example.omd.library.Fragments.Home_Fragment;
+import com.example.omd.library.Fragments.Jobs_Fragment;
 import com.example.omd.library.Fragments.News_Fragment;
 import com.example.omd.library.Fragments.Settings_Fragment;
 import com.example.omd.library.Models.CompanyModel;
@@ -284,7 +287,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         SignOut();
                         progressDialog.dismiss();
                     }
-                }, 4000);
+                }, 5000);
 
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -335,15 +338,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }, 500);
                 return true;
             }
-        } else if (item.getItemId() == R.id.chat) {
+        } else if (item.getItemId() == R.id.profile) {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
+
                     }
                 }, 500);
 
@@ -396,7 +398,61 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 return true;
             }
-        } else if (item.getItemId() == R.id.settings) {
+
+
+        }
+        else if (item.getItemId() == R.id.jobs) {
+            Toast.makeText(this, "jobs", Toast.LENGTH_SHORT).show();
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new Jobs_Fragment()).commit();
+                    }
+                }, 500);
+
+                return true;
+            }
+
+
+        }
+        else if (item.getItemId() == R.id.company) {
+            Toast.makeText(this, "company", Toast.LENGTH_SHORT).show();
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new Company_Fragment()).commit();
+                    }
+                }, 500);
+
+                return true;
+            }
+
+
+        }
+        else if (item.getItemId() == R.id.ads) {
+            Toast.makeText(this, "ads", Toast.LENGTH_SHORT).show();
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.home_fragmentsContainer, new Ads_Fragment()).commit();
+                    }
+                }, 500);
+
+                return true;
+            }
+
+
+        }
+        else if (item.getItemId() == R.id.settings) {
 
             Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

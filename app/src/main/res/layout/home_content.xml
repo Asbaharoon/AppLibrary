@@ -20,28 +20,7 @@
 
 
     </android.support.design.widget.AppBarLayout>
-    <!--<android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appbar"
-        android:layout_above="@+id/view"
-        ></android.support.v4.view.ViewPager>
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
-        android:background="@color/whit_gray"
-        android:layout_above="@+id/bottom_navBar"
-        />
-    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-        android:id="@+id/bottom_navBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-           >
 
-       </com.aurelhubert.ahbottomnavigation.AHBottomNavigation>-->
     <FrameLayout
         android:id="@+id/home_fragmentsContainer"
         android:layout_width="match_parent"
