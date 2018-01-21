@@ -65,7 +65,8 @@
         <activity
             android:name=".Activities.MapsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.NearbyActivity"></activity>
+        <activity android:name=".Activities.NearbyActivity" />
+        <activity android:name=".Activities.Activity_Search"></activity>
     </application>
 
 </manifest>

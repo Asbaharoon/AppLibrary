@@ -1,58 +1,20 @@
 package com.example.omd.library.Activities;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
+import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.omd.library.Fragments.Ads_Fragment;
-import com.example.omd.library.Fragments.Company_Fragment;
 import com.example.omd.library.Fragments.Home_Fragment;
-import com.example.omd.library.Fragments.Jobs_Fragment;
-import com.example.omd.library.Fragments.News_Fragment;
-import com.example.omd.library.Fragments.Settings_Fragment;
-import com.example.omd.library.Models.CompanyModel;
-import com.example.omd.library.Models.LibraryModel;
-import com.example.omd.library.Models.NormalUserData;
-import com.example.omd.library.Models.PublisherModel;
-import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
-import com.facebook.CallbackManager;
-import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.rom4ek.arcnavigationview.ArcNavigationView;
-import com.squareup.picasso.Picasso;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,GoogleApiClient.OnConnectionFailedListener {
+public class HomeActivity extends AppCompatActivity  {
 
-    private Toolbar toolbar;
+   /* private Toolbar toolbar;
     private ArcNavigationView arcNavigationView;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -69,11 +31,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private LibraryModel library_Model = null;
     private UniversityModel university_Model = null;
     private CompanyModel company_Model = null;
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        callbackManager = CallbackManager.Factory.create();
+        setContentView(R.layout.activity_home);
+
+        /*callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_home);
         manager = LoginManager.getInstance();
         initView();
@@ -82,10 +46,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setUpSigninWithGoogle();
         setUpAlertDialog();
         setUpProgressDialog();
-        getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
-        getDataFrom_Intent();
+        //getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_Fragments, new Home_Fragment()).commit();
+
+        getDataFrom_Intent();*/
         // CheckuserType();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_Fragments,new Home_Fragment(),"home_fragment").commitAllowingStateLoss();
     }
+
+
 
     /*private void CheckuserType() {
         final LovelyCustomDialog dialog = new LovelyCustomDialog(HomeActivity.this)
@@ -151,7 +120,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }*/
 
-    private void getDataFrom_Intent() {
+   /* private void getDataFrom_Intent() {
         Intent intent = getIntent();
         if (intent.hasExtra("userData")) {
             final NormalUserData UserData = (NormalUserData) intent.getSerializableExtra("userData");
@@ -311,9 +280,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         manager.unregisterCallback(callbackManager);
         manager.logOut();
         finish();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (mToggle.onOptionsItemSelected(item)) {
@@ -322,9 +291,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.home) {
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -475,14 +444,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         }
         return false;
-    }
+    }*/
 
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
 
-    private void setUpProgressDialog() {
+    /*private void setUpProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Sign Out.....");
         progressDialog.setIndeterminate(true);
@@ -492,26 +458,30 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.centercolor), PorterDuff.Mode.SRC_IN);
         progressDialog.setIndeterminateDrawable(drawable);
     }
-
+*/
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(Gravity.START)) {
-            drawerLayout.closeDrawer(Gravity.START);
-
-        } else {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    startActivity(intent);
-                }
-            }, 500);
-
-        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+            }
+        }, 500);
 
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (Fragment fragment :fragments)
+        {
+            fragment.onSaveInstanceState(outState);
+        }
+    }
 }
+
