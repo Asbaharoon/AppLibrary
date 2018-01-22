@@ -36,7 +36,7 @@ public class Publisher_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.publisher_fragment,container,false);
         initView(view);
-        getDataFromBundle();
+        //getDataFromBundle();
 
         return view;
     }
@@ -75,7 +75,6 @@ public class Publisher_Fragment extends Fragment {
             {
                 company_Model = (CompanyModel) bundle.getSerializable("companyData");
                 Toast.makeText(getActivity(), company_Model.getComp_name()+"\n"+company_Model.getUser_type(), Toast.LENGTH_SHORT).show();
-
             }
         }
     }
