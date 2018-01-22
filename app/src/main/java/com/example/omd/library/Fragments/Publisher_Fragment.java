@@ -1,9 +1,12 @@
 package com.example.omd.library.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,37 +16,55 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.omd.library.Activities.Activity_Search;
+import com.example.omd.library.Adapters.publisherAdapter;
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.PublishersModel;
 import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
+
+import com.example.omd.library.publisherMVP.Presenter;
+import com.example.omd.library.publisherMVP.PresenterImp;
+import com.example.omd.library.publisherMVP.ViewData;
+
+import java.util.List;
 
 /**
  * Created by Delta on 15/12/2017.
  */
 
-public class Publisher_Fragment extends Fragment {
+public class Publisher_Fragment extends Fragment implements ViewData {
 
     private NormalUserData user_Data;
     private PublisherModel publisher_Model;
     private UniversityModel university_Model;
     private LibraryModel libraryModel;
     private CompanyModel company_Model;
+    private PublishersModel publishers_Model;
+    private RecyclerView publisher_recView;
+    private RecyclerView.LayoutManager manager;
+    private RecyclerView.Adapter adapter;
+    private Context context ;
+    private Presenter presenter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.publisher_fragment,container,false);
         initView(view);
-        //getDataFromBundle();
+        presenter = new PresenterImp(this,context);
+        presenter.getpublisherData();
 
         return view;
     }
 
     private void initView(View view) {
 
-
+        context = view.getContext();
+        publisher_recView = (RecyclerView) view.findViewById(R.id.publisher_recyclerView);
+        manager = new LinearLayoutManager(context);
+        publisher_recView.setLayoutManager(manager);
     }
     private void getDataFromBundle() {
 
@@ -103,5 +124,16 @@ public class Publisher_Fragment extends Fragment {
     }
 
 
+    @Override
+    public void onpublisherDataSuccess(List<PublishersModel> publishersModelList) {
+        adapter = new publisherAdapter(publishersModelList,context);
+        adapter.notifyDataSetChanged();
+        publisher_recView.setAdapter(adapter);
+    }
 
+    @Override
+    public void onpublisherDataFailed(String error) {
+        Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
+
+    }
 }

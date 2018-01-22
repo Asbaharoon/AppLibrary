@@ -5,6 +5,7 @@ import com.example.omd.library.Models.JobsModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.PublishersModel;
 import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.Models.newsModel;
 import com.google.gson.JsonObject;
@@ -100,4 +101,8 @@ public interface Service {
     //////////////////////----------News-------////////////////////////////
     @GET("api/service/library_news")
     Call<List<newsModel>> getnewsData();
+
+    //////////////////////----------Publisher-------////////////////////////////
+    @GET("api/service/publishers")
+    Call<List<PublishersModel>> getPublisherData();
 }

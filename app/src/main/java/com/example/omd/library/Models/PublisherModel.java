@@ -36,6 +36,7 @@ public class PublisherModel implements Serializable {
     public PublisherModel() {
     }
 
+
     public PublisherModel(String user_type, String pub_name, String pub_email, String pub_phone, String pub_country, String pub_address, String pub_town, String pub_website, String pub_password, String pub_lat, String pub_lng) {
         this.user_type = user_type;
         this.pub_name = pub_name;
