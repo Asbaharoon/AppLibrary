@@ -62,6 +62,8 @@ dependencies {
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     compile 'io.github.yavski:fab-speed-dial:1.0.6'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    compile 'com.ramotion.foldingcell:folding-cell:1.2.1'
+
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

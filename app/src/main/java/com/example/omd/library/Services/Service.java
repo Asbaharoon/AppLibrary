@@ -1,6 +1,7 @@
 package com.example.omd.library.Services;
 
 import com.example.omd.library.Models.CompanyModel;
+import com.example.omd.library.Models.JobsModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
@@ -14,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -90,5 +92,7 @@ public interface Service {
     @POST("api/nearby")
     Call<List<CompanyModel>>NearbyCompanies(@Field("user_type") String userType);
 
-
+    //////////////////////----------Jobs-------////////////////////////////
+    @GET("api/service/jobs")
+    Call<List<JobsModel>> getJobsData();
 }

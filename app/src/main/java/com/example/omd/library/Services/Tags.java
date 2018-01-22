@@ -5,6 +5,7 @@ package com.example.omd.library.Services;
  */
 
 public class Tags {
+    public static final String image_path="http://librarians.liboasis.com/public/uploads/images/";
     public static final String email_Regex="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     public static final String url_Regex = "^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$";
     public static final String username_Regex="^[A-Za-z]([A-Za-z0-9]+(_|-|\\.)?[A-Za-z0-9]*)*[A-Za-z0-9]+$";
@@ -20,5 +21,8 @@ public class Tags {
     public static final String elec_library="7";
     public static final String migr_library="8";
     public static final String acad_library="9";
+    //http://librarians.liboasis.com/api/service/library_news
+    //http://librarians.liboasis.com/api/service/publishers
+    //http://librarians.liboasis.com/api/service/jobs
 
 }
