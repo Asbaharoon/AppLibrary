@@ -30,6 +30,7 @@ public class Library_Fragment extends Fragment {
     private UniversityModel university_Model;
     private LibraryModel libraryModel;
     private CompanyModel company_Model;
+    private Menu menu;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class Library_Fragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.library_search,menu);
+
     }
 
     @Override
@@ -104,4 +106,6 @@ public class Library_Fragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

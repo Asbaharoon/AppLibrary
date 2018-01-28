@@ -1,13 +1,13 @@
 package com.example.omd.library.Services;
 
 import com.example.omd.library.Models.CompanyModel;
+import com.example.omd.library.Models.CountriesModel;
 import com.example.omd.library.Models.JobsModel;
 import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.NewsModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
-import com.example.omd.library.Models.PublishersModel;
 import com.example.omd.library.Models.UniversityModel;
-import com.example.omd.library.Models.newsModel;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -94,15 +94,31 @@ public interface Service {
     @POST("api/nearby")
     Call<List<CompanyModel>>NearbyCompanies(@Field("user_type") String userType);
 
-    //////////////////////----------Jobs-------////////////////////////////
+    //////////////////////----------Jobs-------------///////////////////////////
     @GET("api/service/jobs")
     Call<List<JobsModel>> getJobsData();
 
-    //////////////////////----------News-------////////////////////////////
+    //////////////////////----------News-------------///////////////////////////
     @GET("api/service/library_news")
-    Call<List<newsModel>> getnewsData();
+    Call<List<NewsModel>> getNewsData();
 
     //////////////////////----------Publisher-------////////////////////////////
     @GET("api/service/publishers")
-    Call<List<PublishersModel>> getPublisherData();
+    Call<List<PublisherModel>> getPublisherData();
+
+    @FormUrlEncoded
+    @POST("api/publisher/")
+    Call<List<PublisherModel>> getPublisherSearch_Data(@FieldMap Map<String,String> map);
+
+    ////////////////////------------Countries-------///////////////////////////
+    @GET("api/service/countries")
+    Call<List<CountriesModel>> getCountryData();
+    ///////////////////-------------Companies-------///////////////////////////
+
+    @GET("api/service/companies")
+    Call<List<CompanyModel>> getCompanyData();
+
+    //////////////////-------------Universities-----///////////////////////////
+    @GET("api/service/universities")
+    Call<List<UniversityModel>> getUniversityData();
 }

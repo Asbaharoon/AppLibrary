@@ -8,10 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -49,8 +47,6 @@ import com.google.android.gms.common.api.Status;
 import com.rom4ek.arcnavigationview.ArcNavigationView;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,GoogleApiClient.OnConnectionFailedListener{
@@ -85,9 +81,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setUpSigninWithGoogle();
         setUpAlertDialog();
         setUpProgressDialog();
-        getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
-
+        getSupportFragmentManager().beginTransaction().add(R.id.home_fragmentsContainer, new Home_Fragment(),"home_fragment").addToBackStack("home_fragment").commit();
         getDataFrom_Intent();
+
+
         // CheckuserType();
     }
 
@@ -253,9 +250,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
-
-
         /////////////////////////////////////////////////////////////
 
 
@@ -337,6 +331,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -349,7 +344,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void run() {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer, new Home_Fragment()).commit();
+                        transaction.replace(R.id.home_fragmentsContainer, new Home_Fragment(),"home_fragment").addToBackStack("home_fragment").commit();
                     }
                 }, 500);
                 return true;
@@ -407,8 +402,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer, new News_Fragment()).commit();
+                        transaction.replace(R.id.home_fragmentsContainer, new News_Fragment(),"news_fragment").addToBackStack("news_fragment").commit();
                     }
                 }, 500);
 
@@ -425,7 +421,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void run() {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer, new Jobs_Fragment()).commit();
+                        transaction.replace(R.id.home_fragmentsContainer, new Jobs_Fragment(),"jobs_fragment").addToBackStack("jobs_fragment").commit();
                     }
                 }, 500);
 
@@ -442,7 +438,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void run() {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer, new Company_Fragment()).commit();
+                        transaction.replace(R.id.home_fragmentsContainer, new Company_Fragment(),"company_fragment").addToBackStack("company_fragment").commit();
                     }
                 }, 500);
 
@@ -459,7 +455,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     @Override
                     public void run() {
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.home_fragmentsContainer, new Ads_Fragment()).commit();
+                        transaction.replace(R.id.home_fragmentsContainer, new Ads_Fragment(),"ads_fragment").addToBackStack("ads_fragment").commit();
                     }
                 }, 500);
 
@@ -507,32 +503,48 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public void onBackPressed() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(Intent.ACTION_MAIN);
-                intent.addCategory(Intent.CATEGORY_HOME);
-                startActivity(intent);
-            }
-        }, 500);
 
 
-    }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        for (Fragment fragment :fragments)
+        if(drawerLayout.isDrawerOpen(GravityCompat.START))
         {
-            fragment.onSaveInstanceState(outState);
-        }
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else
+            {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent);
+                    }
+                }, 500);
+
+
+
+
+
+
+
+            }
+
     }
+
+
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+    }
+
+    public Toolbar getToolBar()
+    {
+        if (toolbar!=null){
+        return toolbar;
+
+        }
+        return null;
     }
 }
 

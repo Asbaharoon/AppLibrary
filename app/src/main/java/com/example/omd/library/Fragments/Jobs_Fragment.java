@@ -4,19 +4,23 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.omd.library.Adapters.JobsAdapter;
-import com.example.omd.library.JobsMVP.Presenter;
-import com.example.omd.library.JobsMVP.PresenterImp;
-import com.example.omd.library.JobsMVP.ViewData;
+import com.example.omd.library.MVP.JobsMVP.Presenter;
+import com.example.omd.library.MVP.JobsMVP.PresenterImp;
+import com.example.omd.library.MVP.JobsMVP.ViewData;
 import com.example.omd.library.Models.JobsModel;
 import com.example.omd.library.R;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.List;
 
@@ -30,6 +34,8 @@ public class Jobs_Fragment extends Fragment implements ViewData {
     private RecyclerView.Adapter adapter;
     private Context context ;
     private Presenter presenter;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -39,13 +45,24 @@ public class Jobs_Fragment extends Fragment implements ViewData {
         presenter = new PresenterImp(this,context);
         presenter.getJobsData();
 
+
         return view;
     }
 
 
-
     private void initView(View view) {
         context = view.getContext();
+        progressBar = (ProgressBar) view.findViewById(R.id.job_prgBar);
+        progressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.job_swipe_refresh);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.centercolor));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getJobsData();
+
+            }
+        });
         job_recView = (RecyclerView) view.findViewById(R.id.job_recyclerView);
         manager = new LinearLayoutManager(context);
         job_recView.setLayoutManager(manager);
@@ -58,12 +75,40 @@ public class Jobs_Fragment extends Fragment implements ViewData {
         adapter = new JobsAdapter(jobsModelList,context);
         adapter.notifyDataSetChanged();
         job_recView.setAdapter(adapter);
+        swipeRefreshLayout.setRefreshing(false);
+
+    }
+
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
+
     }
 
     @Override
     public void onJobDataFailed(String error) {
-        Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
+        CreateAlertDialog(error);
+        swipeRefreshLayout.setRefreshing(false);
+
     }
 
-
+    private void CreateAlertDialog(String msg)
+    {
+        final LovelyStandardDialog dialog = new LovelyStandardDialog(getActivity())
+                .setTopColor(ContextCompat.getColor(getActivity(),R.color.centercolor))
+                .setTopTitle("Error")
+                .setTopTitleColor(ContextCompat.getColor(getActivity(),R.color.base))
+                .setPositiveButtonColorRes(R.color.centercolor)
+                .setMessage(msg);
+        dialog.setPositiveButton("Cancel", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.create();
+        dialog.show();
+    }
 }

@@ -15,6 +15,8 @@ public class CompanyModel implements Serializable {
     private String comp_name;
     @SerializedName("user_email")
     private String comp_email;
+    @SerializedName("company_email")
+    private String comp2_email;
     @SerializedName("company_phone")
     private String comp_phone;
     @SerializedName("company_country")
@@ -74,6 +76,14 @@ public class CompanyModel implements Serializable {
 
     public void setComp_email(String comp_email) {
         this.comp_email = comp_email;
+    }
+
+    public String getComp2_email() {
+        return comp2_email;
+    }
+
+    public void setComp2_email(String comp2_email) {
+        this.comp2_email = comp2_email;
     }
 
     public String getComp_phone() {

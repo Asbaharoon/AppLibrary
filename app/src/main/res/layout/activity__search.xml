@@ -1,11 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/search_fragmentContainer"
     tools:context="com.example.omd.library.Activities.Activity_Search">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/msv_tb"
+        android:layout_margin="@dimen/_5sdp"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_5sdp"
+                >
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/search_toolBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="?actionBarSize"
+                    android:background="@android:color/transparent"
+
+
+                    >
+                </android.support.v7.widget.Toolbar>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?actionBarSize"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/search_type_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/_17sdp"
+                            android:textColor="@android:color/black"
+                            android:layout_marginLeft="@dimen/_55sdp"
+                            android:minHeight="?actionBarSize"
+                            android:gravity="center_vertical"
+
+                            />
+                        <com.miguelcatalan.materialsearchview.MaterialSearchView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/msv"
+                            android:elevation="@dimen/_5sdp"
+                            >
+                        </com.miguelcatalan.materialsearchview.MaterialSearchView>
+
+
+                    </FrameLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.7px"
+                        android:background="@color/whit_gray"/>
+                    <TextView
+                        android:id="@+id/country_search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="?actionBarSize"
+                        android:singleLine="true"
+                        android:text="Select country"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/_15sdp"
+                        android:drawableLeft="@drawable/places_icon"
+                        android:drawablePadding="@dimen/_22sdp"
+                        android:background="@drawable/item_search_bg"
+                        android:visibility="gone"
+                        android:clickable="true"
+                        android:paddingLeft="@dimen/_8sdp"
+
+
+
+                        />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/msv_tb"
+
+    >
+    <FrameLayout
+        android:id="@+id/search_fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/_5sdp"
+        >
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_noResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="No Resultes"
+        android:textSize="@dimen/_15sdp"
+        android:visibility="gone"
+        />
 </FrameLayout>
+
+</RelativeLayout>

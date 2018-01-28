@@ -35,8 +35,8 @@ import android.widget.Toast;
 
 import com.example.omd.library.Activities.HomeActivity;
 import com.example.omd.library.Activities.MapsActivity;
-import com.example.omd.library.Login_RegisterMVP.Registration.PresenterImp;
-import com.example.omd.library.Login_RegisterMVP.Registration.ViewData;
+import com.example.omd.library.MVP.Login_RegisterMVP.Registration.PresenterImp;
+import com.example.omd.library.MVP.Login_RegisterMVP.Registration.ViewData;
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;

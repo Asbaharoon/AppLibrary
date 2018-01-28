@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
+import com.example.omd.library.Activities.HomeActivity;
 import com.example.omd.library.R;
 
 /**
@@ -33,11 +35,7 @@ public class Home_Fragment extends Fragment  {
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+
 
     private void initView(View view) {
         mContext = view.getContext();
@@ -57,7 +55,7 @@ public class Home_Fragment extends Fragment  {
         navBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         if (navBar.getCurrentItem()==0)
         {
-            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,new Chat_Fragment(),"chat_fragment").commit();
+            getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,new Chat_Fragment(),"chat_fragment").addToBackStack(null).commit();
 
         }
         navBar.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
@@ -66,7 +64,7 @@ public class Home_Fragment extends Fragment  {
                 if (position==0)
                 {
 
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new Chat_Fragment(),"chat_fragment").commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new Chat_Fragment(),"chat_fragment").addToBackStack(null).commit();
 
                     navBar.setCurrentItem(position,false);
 
@@ -76,7 +74,7 @@ public class Home_Fragment extends Fragment  {
                 else if (position==1)
                 {
 
-                    getActivity(). getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new University_Fragment(),"uni_fragment").commit();
+                    getActivity(). getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new University_Fragment(),"uni_fragment").addToBackStack(null).commit();
                     navBar.setCurrentItem(position,false);
 
 
@@ -86,7 +84,7 @@ public class Home_Fragment extends Fragment  {
                 else if (position==2)
                 {
 
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new Library_Fragment(),"lib_fragment").commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new Library_Fragment(),"lib_fragment").addToBackStack(null).commit();
                     navBar.setCurrentItem(position,false);
 
 
@@ -96,7 +94,7 @@ public class Home_Fragment extends Fragment  {
                 else if (position==3)
                 {
 
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new Publisher_Fragment()).commit();
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,new Publisher_Fragment(),"pub_fragment").addToBackStack(null).commit();
                     navBar.setCurrentItem(position,false);
 
 
@@ -109,8 +107,10 @@ public class Home_Fragment extends Fragment  {
     }
 
 
-
-
-
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Toolbar toolbar = ((HomeActivity)getActivity()).getToolBar();
+        toolbar.getMenu().clear();
+    }
 }

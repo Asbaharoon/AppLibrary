@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,21 +15,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.example.omd.library.Activities.Activity_Search;
-import com.example.omd.library.Adapters.publisherAdapter;
+import com.example.omd.library.Adapters.PublisherAdapter;
+import com.example.omd.library.MVP.PublisherMVP.Presenter;
+import com.example.omd.library.MVP.PublisherMVP.PresenterImp;
+import com.example.omd.library.MVP.PublisherMVP.ViewData;
 import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
-import com.example.omd.library.Models.PublishersModel;
 import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
-
-import com.example.omd.library.publisherMVP.Presenter;
-import com.example.omd.library.publisherMVP.PresenterImp;
-import com.example.omd.library.publisherMVP.ViewData;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.List;
 
@@ -42,19 +43,20 @@ public class Publisher_Fragment extends Fragment implements ViewData {
     private UniversityModel university_Model;
     private LibraryModel libraryModel;
     private CompanyModel company_Model;
-    private PublishersModel publishers_Model;
+    private PublisherModel publishers_Model;
     private RecyclerView publisher_recView;
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
     private Context context ;
     private Presenter presenter;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.publisher_fragment,container,false);
         initView(view);
         presenter = new PresenterImp(this,context);
-        presenter.getpublisherData();
 
         return view;
     }
@@ -62,11 +64,23 @@ public class Publisher_Fragment extends Fragment implements ViewData {
     private void initView(View view) {
 
         context = view.getContext();
+        progressBar = (ProgressBar) view.findViewById(R.id.pub_prgBar);
+        progressBar.setVisibility(View.VISIBLE);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.pub_swipe_refresh);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.centercolor));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.getPublisherData();
+
+
+            }
+        });
         publisher_recView = (RecyclerView) view.findViewById(R.id.publisher_recyclerView);
         manager = new LinearLayoutManager(context);
         publisher_recView.setLayoutManager(manager);
     }
-    private void getDataFromBundle() {
+   /* private void getDataFromBundle() {
 
         Bundle bundle = getArguments();
         if (bundle!=null)
@@ -98,7 +112,7 @@ public class Publisher_Fragment extends Fragment implements ViewData {
                 Toast.makeText(getActivity(), company_Model.getComp_name()+"\n"+company_Model.getUser_type(), Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -123,17 +137,52 @@ public class Publisher_Fragment extends Fragment implements ViewData {
         return true;
     }
 
-
     @Override
-    public void onpublisherDataSuccess(List<PublishersModel> publishersModelList) {
-        adapter = new publisherAdapter(publishersModelList,context);
+    public void onPublisherDataSuccess(List<PublisherModel> publishersModelList) {
+        adapter = new PublisherAdapter(publishersModelList,context);
         adapter.notifyDataSetChanged();
         publisher_recView.setAdapter(adapter);
+        swipeRefreshLayout.setRefreshing(false);
+
+
     }
 
     @Override
-    public void onpublisherDataFailed(String error) {
-        Toast.makeText(context, ""+error, Toast.LENGTH_SHORT).show();
+    public void onPublisherDataFailed(String error) {
+        CreateAlertDialog(error);
+        swipeRefreshLayout.setRefreshing(false);
 
+
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+        swipeRefreshLayout.setRefreshing(false);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        presenter.getPublisherData();
+
+    }
+    private void CreateAlertDialog(String msg)
+    {
+        final LovelyStandardDialog dialog = new LovelyStandardDialog(getActivity())
+                .setTopColor(ContextCompat.getColor(getActivity(),R.color.centercolor))
+                .setTopTitle("Error")
+                .setTopTitleColor(ContextCompat.getColor(getActivity(),R.color.base))
+                .setPositiveButtonColorRes(R.color.centercolor)
+                .setMessage(msg);
+        dialog.setPositiveButton("Cancel", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.create();
+        dialog.show();
     }
 }

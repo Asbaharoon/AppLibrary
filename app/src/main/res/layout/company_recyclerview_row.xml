@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_165sdp"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:cardElevation="@dimen/_2sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_weight=".65"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    >
+                    <ImageView
+                        android:id="@+id/company_image"
+                        android:src="@drawable/header"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/_10sdp"
+                        android:paddingLeft="@dimen/_5sdp"
+                        android:paddingRight="@dimen/_5sdp"
+                        />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_weight="1.35"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="@dimen/_5sdp"
+                    >
+                    <TextView
+                        android:id="@+id/company_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="company name"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:gravity="center_vertical|left"
+                        android:textSize="@dimen/_15sdp"
+                        android:textColor="@android:color/black"
+                        android:paddingRight="@dimen/_2sdp"
+                        android:drawableRight="@drawable/arrow_icon"
+                        />
+
+                    <TextView
+                        android:id="@+id/company_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:ellipsize="end"
+                        android:gravity="left|center"
+                        android:maxLines="2"
+                        android:text="company country"
+                        android:textColor="#212121"
+                        android:textSize="@dimen/_14sdp"
+
+                        />
+                    <TextView
+                        android:id="@+id/company_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="company phone"
+                        android:textSize="@dimen/_13sdp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:gravity="left|center"
+                        android:layout_gravity="left|center"
+                        android:textColor="#757575"
+                        />
+                    <TextView
+                        android:id="@+id/company_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="company@gmail.com"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:textSize="@dimen/_13sdp"
+                        android:ellipsize="end"
+                        android:textColor="#757575"
+
+
+                        />
+
+
+                    <TextView
+                        android:id="@+id/company_site"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="company site"
+                        android:layout_marginRight="@dimen/_5sdp"
+                        android:textSize="@dimen/_13sdp"
+                        android:ellipsize="end"
+                        android:textColor="#757575"
+
+
+                        />
+
+
+
+                    <TextView
+                        android:id="@+id/more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="More"
+                        android:gravity="end"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="bold"
+                        android:textColor="@color/centercolor"
+                        android:layout_gravity="right|end"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
+

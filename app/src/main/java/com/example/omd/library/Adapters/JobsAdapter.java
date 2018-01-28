@@ -18,7 +18,9 @@ import com.ramotion.foldingcell.FoldingCell;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Delta on 22/01/2018.
@@ -133,10 +135,11 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
             String s_Date = dateFormat.format(new Date(sd));
             String e_Date = dateFormat.format(new Date(ed));*/
 
+            Long l_date = Long.parseLong(jobsModel.getJobStartDate().toString());
+            String date = new SimpleDateFormat("dd,MMM,yyyy", Locale.getDefault()).format(l_date);
 
             Title_jobTitle.setText(jobsModel.getJobTitle().toString());
-
-            Title_jobDate.setText("");
+            Title_jobDate.setText(date);
             Title_jobContent.setText(jobsModel.getJobRequirements());
             Title_jobCompanyName.setText(jobsModel.getJob_companyName());
 

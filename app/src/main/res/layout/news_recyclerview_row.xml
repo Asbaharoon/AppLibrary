@@ -10,45 +10,90 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1.3"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/item_news_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="@dimen/_16sdp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="News Title"
+                    android:textColor="@android:color/black"
+                    android:gravity="center_vertical|left"
+                    android:drawableRight="@drawable/arrow_icon"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_news_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:textSize="@dimen/_13sdp"
+                android:text="22,JUN,2018"
+                android:textColor="@android:color/black"
+                android:gravity="right"
+                android:layout_gravity="center|right"
+                android:padding="@dimen/_5sdp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                />
+        </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="280dp"
             android:id="@+id/item_news_image"
             android:src="@drawable/header"
             android:scaleType="fitXY"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <TextView
-                android:id="@+id/item_news_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/_10sdp"
-                android:text="Title"
-                android:textColor="#000" />
-            <TextView
-                android:id="@+id/item_news_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Date"
-                android:textColor="#000" />
-
-        </LinearLayout>
+            android:gravity="left"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="Details :"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:textColor="#424242"
+            />
         <TextView
             android:id="@+id/item_news_detail"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/_180sdp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="detail"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:textColor="#000" />
+            android:gravity="left"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:padding="@dimen/_2sdp"
+            />
+        <TextView
+            android:id="@+id/more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More"
+            android:gravity="end"
+            android:padding="@dimen/_5sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            android:layout_gravity="right|end"
+            android:textColor="@color/centercolor"
+            />
     </LinearLayout>
 
 </android.support.v7.widget.CardView>
