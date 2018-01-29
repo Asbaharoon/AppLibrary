@@ -21,6 +21,7 @@ android {
     repositories {
         mavenCentral()
         maven { url "https://jitpack.io" }
+        maven { url "https://dl.bintray.com/hani-momanii/maven"}
 
 
     }
@@ -65,6 +66,7 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.ramotion.foldingcell:folding-cell:1.2.1'
     compile 'com.mukesh:countrypicker:1.1.2'
+    compile 'hani.momanii.supernova_emoji_library:supernova-emoji-library:0.0.2'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

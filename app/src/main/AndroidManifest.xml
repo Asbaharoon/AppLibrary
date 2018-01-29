@@ -51,7 +51,7 @@
             android:name=".Activities.ChooserSingin"
             android:label="@string/title_activity_chooser_singin"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,15 +61,16 @@
         <activity
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Activities.MapsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.NearbyActivity" />
         <activity android:name=".Activities.Activity_Search" />
-        <activity android:name=".Activities.Activity_Countries"></activity>
+        <activity android:name=".Activities.Activity_Search_Results" />
+        <activity android:name=".Activities.Chat_Activity">
+
+        </activity>
     </application>
 
 </manifest>

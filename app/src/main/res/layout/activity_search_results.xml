@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.omd.library.Activities.Activity_Countries"
+    tools:context="com.example.omd.library.Activities.Activity_Search_Results"
     android:orientation="vertical"
     >
 
@@ -22,9 +22,9 @@
             app:titleTextColor="@android:color/black"
             ></android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recView_countries"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        ></android.support.v7.widget.RecyclerView>
+   <FrameLayout
+       android:id="@+id/searchContainer"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       ></FrameLayout>
 </LinearLayout>

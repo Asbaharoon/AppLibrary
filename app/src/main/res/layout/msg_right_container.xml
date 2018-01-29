@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@drawable/msg_right_bg"
+
+        >
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+            android:id="@+id/msg_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            emojicon:emojiconSize="18sp"
+            android:paddingRight="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:textColor="@color/base"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/msg_tv"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09:09PM"
+                android:textSize="@dimen/_11sdp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/base"
+                />
+            <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:src="@drawable/doneall_icon"
+                />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

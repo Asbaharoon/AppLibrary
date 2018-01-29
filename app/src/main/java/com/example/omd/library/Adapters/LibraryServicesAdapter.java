@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.omd.library.Activities.Activity_Search_Results;
-import com.example.omd.library.Models.CountriesModel;
+import com.example.omd.library.Models.LibraryServices_Model;
 import com.example.omd.library.R;
 
 import java.util.List;
@@ -19,37 +19,36 @@ import java.util.List;
  * Created by Delta on 22/01/2018.
  */
 
-public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHolder>  {
+public class LibraryServicesAdapter extends RecyclerView.Adapter<LibraryServicesAdapter.ViewHolder>  {
 
-    List<CountriesModel>countriesModels;
+    List<LibraryServices_Model>libraryServicesModelList;
     Context context;
     Activity_Search_Results activity_search_results;
 
-    public CountryAdapter(List<CountriesModel> countriesModels, Context context) {
-        this.countriesModels = countriesModels;
+    public LibraryServicesAdapter(List<LibraryServices_Model> libraryServicesModelList, Context context) {
+        this.libraryServicesModelList = libraryServicesModelList;
         this.context = context;
-
-            this.activity_search_results = (Activity_Search_Results) context;
+        this.activity_search_results = (Activity_Search_Results) context;
 
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.country_row,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.library_services_row,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder,  int position) {
-        CountriesModel countriesModel = countriesModels.get(position);
-        holder.BindData(countriesModel);
+        LibraryServices_Model libraryServicesModel = libraryServicesModelList.get(position);
+        holder.BindData(libraryServicesModel);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CountriesModel countriesModel = countriesModels.get(holder.getAdapterPosition());
+                LibraryServices_Model libraryServicesModel = libraryServicesModelList.get(holder.getAdapterPosition());
                 Intent intent = activity_search_results.getIntent();
-                intent.putExtra("country_data",countriesModel);
+                intent.putExtra("libServices_data",libraryServicesModel);
                 activity_search_results.setResult(Activity.RESULT_OK,intent);
                 activity_search_results.finish();
 
@@ -62,23 +61,23 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return countriesModels.size();
+        return libraryServicesModelList.size();
     }
 
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
-        TextView countryName;
+        TextView lib_service;
         public ViewHolder(View itemView) {
             super(itemView);
-            countryName = (TextView) itemView.findViewById(R.id.countryName);
+            lib_service = (TextView) itemView.findViewById(R.id.libService);
 
 
         }
 
-        public void BindData(CountriesModel countriesModel)
+        public void BindData(LibraryServices_Model libraryServices_model)
         {
-            countryName.setText(countriesModel.getCountry_title().toString());
+            lib_service.setText(libraryServices_model.getLib_service_title().toString());
         }
     }
 

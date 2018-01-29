@@ -5,39 +5,35 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.omd.library.Fragments.Fragment_Library_Search;
-import com.example.omd.library.Fragments.Fragment_Publisher_Search;
 import com.example.omd.library.Models.CountriesModel;
-import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.LibraryServices_Model;
+import com.example.omd.library.Models.LibraryType_Model;
 import com.example.omd.library.R;
-import com.example.omd.library.MVP.Search_Publisher_MPV.Presenter;
-import com.example.omd.library.MVP.Search_Publisher_MPV.PresenterImp;
-import com.example.omd.library.MVP.Search_Publisher_MPV.ViewData;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mukesh.countrypicker.fragments.CountryPicker;
-import com.mukesh.countrypicker.interfaces.CountryPickerListener;
 
-import java.io.Serializable;
-import java.util.List;
-
-public class Activity_Search extends AppCompatActivity implements View.OnClickListener,ViewData{
+public class Activity_Search extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar mToolbar;
     private MaterialSearchView msv;
-    private TextView search_type_tv,search_country,tv_noResults;
+    private TextView search_type_tv,search_country,libType_search,libService_search;
     CountryPicker countryPicker;
     private final String TAG="COUNTRY_PICKER";
-    private Bundle bundle;
     private String searchType;
-    private Presenter presenter;
     private String country_id;
-    private final int REQ_CODE =111;
+    private String libType_id="";
+    private String libService_id="";
+
+    private final int REQ_CODE_COUNTRY =111;
+    private final int REQ_CODE_LIB_TYPE =222;
+    private final int REQ_CODE_LIB_SERVICES =333;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +61,27 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             public boolean onQueryTextSubmit(String query) {
                 if (searchType.equals("library_search"))
                 {
-
+                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
+                    {
+                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                        intent.putExtra("searchType","library");
+                        intent.putExtra("libraryName",query);
+                        intent.putExtra("country_id",country_id);
+                        intent.putExtra("service_id",libService_id);
+                        startActivity(intent);
+                    }
                 }else if (searchType.equals("publisher_search"))
                 {
-                   presenter.getPublisherData(query,country_id);
+                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
+                    {
+                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                        intent.putExtra("searchType","publisher");
+                        intent.putExtra("pubName",query);
+                        intent.putExtra("country_id",country_id);
+                        startActivity(intent);
+                    }
+
+
                 }
                 return true;
             }
@@ -80,9 +93,10 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         });
 
         search_country.setOnClickListener(this);
-        tv_noResults = (TextView) findViewById(R.id.tv_noResults);
-        presenter = new PresenterImp(this,this);
-
+        libType_search = (TextView) findViewById(R.id.libType_search);
+        libService_search = (TextView) findViewById(R.id.libService_search);
+        libType_search.setOnClickListener(this);
+        libService_search.setOnClickListener(this);
 
     }
     private void getDataFromIntent()
@@ -95,15 +109,15 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Library Search");
             msv.setHint("choose library type");
-            search_type_tv.setText("choose library type");
-            Fragment_Library_Search fragment_library_search =new Fragment_Library_Search();
-            getSupportFragmentManager().beginTransaction().add(R.id.search_fragmentContainer,fragment_library_search,"lib_search").commit();
-        }else if (intent.hasExtra("publisher_search"))
+            search_type_tv.setText("library name");
+            libType_search.setVisibility(View.VISIBLE);
+            libService_search.setVisibility(View.VISIBLE);
+
+              }else if (intent.hasExtra("publisher_search"))
         {
             searchType ="publisher_search";
             msv.setHint("publisher name");
             search_type_tv.setText("publisher name");
-            search_country.setVisibility(View.VISIBLE);
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Publisher Search");
@@ -139,33 +153,30 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         return true;
     }
     @Override
-    public void onBackPressed()
-    {
-        Fragment_Library_Search fragment_library_search = (Fragment_Library_Search) getSupportFragmentManager().findFragmentByTag("lib_search");
-        if (fragment_library_search!=null)
-        {
-            finish();
-        }
-        else
-            {
-
-                finish();
-            }
-    }
-    @Override
     public void onClick(View view)
     {
         switch (view.getId())
         {
             case R.id.country_search:
                // showCountryPicker();
-                Intent intent = new Intent(this,Activity_Countries.class);
-                startActivityForResult(intent,REQ_CODE);
+                Intent intent_country = new Intent(this,Activity_Search_Results.class);
+                intent_country.putExtra("searchType","country");
+                startActivityForResult(intent_country,REQ_CODE_COUNTRY);
+                break;
+            case R.id.libType_search:
+                Intent intent_libType = new Intent(this,Activity_Search_Results.class);
+                intent_libType.putExtra("searchType","libType");
+                startActivityForResult(intent_libType,REQ_CODE_LIB_TYPE);
+                break;
+            case R.id.libService_search:
+                Intent intent_libServices = new Intent(this,Activity_Search_Results.class);
+                intent_libServices.putExtra("searchType","libServices");
+                startActivityForResult(intent_libServices,REQ_CODE_LIB_SERVICES);
                 break;
         }
     }
 
-    private void showCountryPicker()
+   /* private void showCountryPicker()
     {
         countryPicker = CountryPicker.newInstance("Select Country");
         countryPicker.show(getSupportFragmentManager(),TAG);
@@ -177,48 +188,31 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
 
             }
         });
-    }
+    }*/
 
-    @Override
-    public void onPublisherDataSuccess(List<PublisherModel> publishersModelList) {
-
-        bundle = new Bundle();
-        bundle.putSerializable("pub_data", (Serializable) publishersModelList);
-        Fragment_Publisher_Search fragment_publisher_search =new Fragment_Publisher_Search();
-        fragment_publisher_search.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.search_fragmentContainer,fragment_publisher_search,"pub_search").commit();
-
-    }
-
-    @Override
-    public void onPublisherDataFailed(String error) {
-        Toast.makeText(this, "Error "+error, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showNoResults() {
-        tv_noResults.setVisibility(View.VISIBLE);
-        Fragment_Publisher_Search fragment_publisher_search = (Fragment_Publisher_Search) getSupportFragmentManager().findFragmentByTag("pub_search");
-        if (fragment_publisher_search!=null)
-        {
-            getSupportFragmentManager().beginTransaction().remove(fragment_publisher_search).commit();
-        }
-
-    }
-
-    @Override
-    public void hideNoResults() {
-        tv_noResults.setVisibility(View.GONE);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==REQ_CODE&&resultCode==RESULT_OK&&data!=null)
+        if (requestCode==REQ_CODE_COUNTRY&&resultCode==RESULT_OK&&data!=null)
         {
            CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
-           search_country.setText(countriesModel.getCountry_title());
+           search_country.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
            country_id = countriesModel.getCountry_id();
         }
+        else if (requestCode==REQ_CODE_LIB_TYPE&&resultCode==RESULT_OK&&data!=null)
+        {
+            LibraryType_Model libraryType_model = (LibraryType_Model) data.getSerializableExtra("libType_data");
+            libType_search.setText(libraryType_model.getLib_type_title());
+            libType_id = libraryType_model.getLib_type_id();
+
+        }
+        else if (requestCode==REQ_CODE_LIB_SERVICES&&resultCode==RESULT_OK&&data!=null)
+        {
+            LibraryServices_Model libraryServicesModel = (LibraryServices_Model) data.getSerializableExtra("libServices_data");
+            libService_search.setText(libraryServicesModel.getLib_service_title());
+            libService_id = libraryServicesModel.getLib_service_id();
+        }
+
     }
 }

@@ -4,6 +4,8 @@ import com.example.omd.library.Models.CompanyModel;
 import com.example.omd.library.Models.CountriesModel;
 import com.example.omd.library.Models.JobsModel;
 import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.LibraryServices_Model;
+import com.example.omd.library.Models.LibraryType_Model;
 import com.example.omd.library.Models.NewsModel;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
@@ -121,4 +123,18 @@ public interface Service {
     //////////////////-------------Universities-----///////////////////////////
     @GET("api/service/universities")
     Call<List<UniversityModel>> getUniversityData();
+
+    /////////////////--------------LibraryTypes-----///////////////////////////
+    @GET("api/service/lib_types")
+    Call<List<LibraryType_Model>> getLibraryTypeData();
+
+    /////////////////--------------LibraryTypes-----///////////////////////////
+    @GET("api/service/lib_services")
+    Call<List<LibraryServices_Model>> getLibraryServicesData();
+
+    @FormUrlEncoded
+    @POST("")
+    Call<List<LibraryModel>> getLibrarySearch_Data(@FieldMap Map<String,String> map);
+
+
 }
