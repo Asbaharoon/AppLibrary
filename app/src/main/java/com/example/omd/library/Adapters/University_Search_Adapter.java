@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.omd.library.Models.PublisherModel;
+import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -21,27 +21,27 @@ import java.util.List;
  * Created by Delta on 22/01/2018.
  */
 
-public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Search_Adapter.ViewHolder>  {
+public class University_Search_Adapter extends RecyclerView.Adapter<University_Search_Adapter.ViewHolder>  {
 
-    List<PublisherModel> PublisherModelList;
+    List<UniversityModel> universityModelList;
     Context context;
 
-    public Publisher_Search_Adapter(List<PublisherModel> PublisherModelList, Context context) {
-        this.PublisherModelList = PublisherModelList;
+    public University_Search_Adapter(List<UniversityModel> universityModelList, Context context) {
+        this.universityModelList = universityModelList;
         this.context = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.publisher_search_recyclerview_row,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.university_search_recyclerview_row,parent,false);
 
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        PublisherModel PublishersModel = PublisherModelList.get(position);
-        holder.BindData(PublishersModel);
+        UniversityModel universityModel = universityModelList.get(position);
+        holder.BindData(universityModel);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,15 +52,15 @@ public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Sea
 
     @Override
     public int getItemCount() {
-        return PublisherModelList.size();
+        return universityModelList.size();
     }
 
 
     class ViewHolder extends RecyclerView.ViewHolder
     {
         Target target;
-        ImageView publisher_image;
-        TextView publisher_name,publisher_country;
+        ImageView uni_image;
+        TextView uni_name,uni_country;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -73,18 +73,18 @@ public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Sea
 
 
         private void initTitleView(View titleView) {
-            publisher_image       = (ImageView) titleView.findViewById(R.id.publisher_image);
-            publisher_name        = (TextView) titleView.findViewById(R.id.publisher_name);
-            publisher_country        = (TextView) titleView.findViewById(R.id.publisher_country);
+            uni_image       = (ImageView) titleView.findViewById(R.id.university_image);
+            uni_name        = (TextView) titleView.findViewById(R.id.university_name);
+            uni_country        = (TextView) titleView.findViewById(R.id.university_country);
 
 
        }
-        public void BindData(PublisherModel publisherModel)
+        public void BindData(UniversityModel universityModel)
         {
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    publisher_image.setImageBitmap(bitmap);
+                    uni_image.setImageBitmap(bitmap);
                 }
 
                 @Override
@@ -100,9 +100,8 @@ public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Sea
 
 
 
-            publisher_name.setText(publisherModel.getPub_name().toString());
-            publisher_country.setText(publisherModel.getPub_country().toString());
-
+            uni_name.setText(universityModel.getUni_name().toString());
+            uni_country.setText(universityModel.getUni_country().toString());
 
 
 

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     private String country_id;
     private String libType_id="";
     private String libService_id="";
+
 
     private final int REQ_CODE_COUNTRY =111;
     private final int REQ_CODE_LIB_TYPE =222;
@@ -61,14 +63,27 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             public boolean onQueryTextSubmit(String query) {
                 if (searchType.equals("library_search"))
                 {
-                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
+                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id)&&!TextUtils.isEmpty(libType_id)&&!TextUtils.isEmpty(libService_id))
                     {
                         Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
                         intent.putExtra("searchType","library");
                         intent.putExtra("libraryName",query);
                         intent.putExtra("country_id",country_id);
                         intent.putExtra("service_id",libService_id);
+                        intent.putExtra("lib_type",libType_id);
                         startActivity(intent);
+                        Log.e("Data",query+"\n"+country_id+"\n"+libService_id+"\n"+libType_id);
+                    }else if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id)&&!TextUtils.isEmpty(libType_id))
+                    {
+                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                        intent.putExtra("searchType","library");
+                        intent.putExtra("libraryName",query);
+                        intent.putExtra("country_id",country_id);
+                        intent.putExtra("service_id","");
+                        intent.putExtra("lib_type",libType_id);
+                        startActivity(intent);
+
+
                     }
                 }else if (searchType.equals("publisher_search"))
                 {
@@ -78,10 +93,21 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
                         intent.putExtra("searchType","publisher");
                         intent.putExtra("pubName",query);
                         intent.putExtra("country_id",country_id);
-                        startActivity(intent);
+                         startActivity(intent);
                     }
 
 
+                }
+                else if (searchType.equals("university_search"))
+                {
+                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
+                    {
+                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                        intent.putExtra("searchType","university");
+                        intent.putExtra("uniName",query);
+                        intent.putExtra("country_id",country_id);
+                        startActivity(intent);
+                    }
                 }
                 return true;
             }
@@ -113,7 +139,8 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             libType_search.setVisibility(View.VISIBLE);
             libService_search.setVisibility(View.VISIBLE);
 
-              }else if (intent.hasExtra("publisher_search"))
+        }
+        else if (intent.hasExtra("publisher_search"))
         {
             searchType ="publisher_search";
             msv.setHint("publisher name");
@@ -121,6 +148,15 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("Publisher Search");
+
+        }else if (intent.hasExtra("university_search"))
+        {
+            searchType ="university_search";
+            msv.setHint("university name");
+            search_type_tv.setText("university name");
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("University Search");
 
         }
 

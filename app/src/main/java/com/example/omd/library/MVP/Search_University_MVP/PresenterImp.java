@@ -1,8 +1,8 @@
-package com.example.omd.library.MVP.Search_Library_MVP;
+package com.example.omd.library.MVP.Search_University_MVP;
 
 import android.content.Context;
 
-import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.UniversityModel;
 
 import java.util.List;
 
@@ -21,31 +21,31 @@ public class PresenterImp implements Presenter, Interactor.onCompleteListener {
     }
 
     @Override
-    public void getLibraryData(String lib_name,String lib_type, String country_id, String service_id) {
-        interactor.getLibraryData(lib_name,lib_type,country_id,service_id,this);
+    public void getUniversityData(String uni_name, String country) {
+        interactor.getUniversityData(uni_name,country,this);
     }
 
     @Override
-    public void onLibraryDataSuccess(List<LibraryModel> libraryModelList) {
+    public void onUniversityDataSuccess(List<UniversityModel> universityModelList) {
         if (viewData!=null)
         {
-            viewData.onLibraryDataSuccess(libraryModelList);
+            viewData.onUniversityDataSuccess(universityModelList);
         }
     }
 
     @Override
-    public void onLibraryDataFailed(String error) {
+    public void onUniversityDataFailed(String error) {
         if (viewData!=null)
         {
-            viewData.onLibraryDataFailed(error);
+            viewData.onUniversityDataFailed(error);
         }
     }
 
     @Override
-    public void hideProgress() {
+    public void showNoResults() {
         if (viewData!=null)
         {
-            viewData.hideProgress();
+            viewData.showNoResults();
         }
     }
 }

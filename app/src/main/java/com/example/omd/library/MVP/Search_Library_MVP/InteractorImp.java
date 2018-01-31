@@ -21,13 +21,13 @@ public class InteractorImp implements Interactor {
 
 
     @Override
-    public void getLibraryData(String lib_name,String country_id,String service_id,final onCompleteListener listener) {
+    public void getLibraryData(String lib_name,String lib_type,String country_id,String service_id,final onCompleteListener listener) {
 
-        ////////eeeeeeeeeeeeeeeeee//////////////////
         Map<String,String> lib_Map = new HashMap<>();
         lib_Map.put("library_name",lib_name);
         lib_Map.put("library_country",country_id);
         lib_Map.put("library_service",service_id);
+        lib_Map.put("library_type",lib_type);
 
         Retrofit retrofit = setUpRetrofit();
         Service service = retrofit.create(Service.class);
@@ -44,18 +44,18 @@ public class InteractorImp implements Interactor {
                         listener.hideProgress();
                     }else
                         {
-                           listener.onLibraryDataFailed("Error something went haywire");
+                           listener.onLibraryDataFailed("empty data");
                         }
                 }else
                     {
-                        listener.onLibraryDataFailed("Error Something went haywire ");
+                        listener.onLibraryDataFailed("Error Something went haywire 1");
                         listener.hideProgress();
                     }
             }
 
             @Override
             public void onFailure(Call<List<LibraryModel>> call, Throwable t) {
-                listener.onLibraryDataFailed("Error Something went haywire ");
+                listener.onLibraryDataFailed("Error Something went haywire 2");
                 listener.hideProgress();
             }
         });

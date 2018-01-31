@@ -19,5 +19,5 @@ public interface Interactor {
 
 
     }
-    void getLibraryData(String lib_name, String country_id,String service_id, onCompleteListener listener);
+    void getLibraryData(String lib_name,String lib_type, String country_id,String service_id, onCompleteListener listener);
 }

@@ -13,6 +13,7 @@ import com.example.omd.library.Fragments.Fragment_LibType;
 import com.example.omd.library.Fragments.Fragment_Library_Search_Results;
 import com.example.omd.library.Fragments.Fragment_Library_Services;
 import com.example.omd.library.Fragments.Fragment_Publisher_Search_Results;
+import com.example.omd.library.Fragments.Fragment_University_Search_Results;
 import com.example.omd.library.R;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
@@ -72,15 +73,30 @@ public class Activity_Search_Results extends AppCompatActivity {
                     String libName = intent.getStringExtra("libraryName");
                     String lib_country_id = intent.getStringExtra("country_id");
                     String lib_service_id = intent.getStringExtra("service_id");
+                    String lib_type       = intent.getStringExtra("lib_type");
 
                     Fragment_Library_Search_Results fragment_library_search_results = new Fragment_Library_Search_Results();
                     Bundle lib_bundle = new Bundle();
                     lib_bundle.putString("libraryName",libName);
                     lib_bundle.putString("country_id",lib_country_id);
                     lib_bundle.putString("service_id",lib_service_id);
+                    lib_bundle.putString("libraryType",lib_type);
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_library_search_results).commit();
+                    break;
+                case "university":
+                    getSupportActionBar().setTitle("Universities");
+                    String uniName = intent.getStringExtra("uniName");
+                    String uni_country_id = intent.getStringExtra("country_id");
+                    Bundle uni_bundle = new Bundle();
+                    uni_bundle.putString("uniName",uniName);
+                    uni_bundle.putString("country_id",uni_country_id);
+                    Fragment_University_Search_Results fragment_university_search_results = new Fragment_University_Search_Results();
+                    fragment_university_search_results.setArguments(uni_bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_university_search_results).commit();
+
 
                     break;
+
             }
 
         }

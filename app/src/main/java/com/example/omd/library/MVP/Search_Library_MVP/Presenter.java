@@ -6,5 +6,5 @@ package com.example.omd.library.MVP.Search_Library_MVP;
 
 public interface Presenter {
 
-    void getLibraryData(String lib_name, String country_id,String service_id);
+    void getLibraryData(String lib_name,String lib_type, String country_id,String service_id);
 }

@@ -1,6 +1,7 @@
 package com.example.omd.library.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,10 +10,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.example.omd.library.Activities.Activity_Search;
 import com.example.omd.library.Adapters.UniversityAdapter;
 import com.example.omd.library.MVP.UniversityMVP.Presenter;
 import com.example.omd.library.MVP.UniversityMVP.PresenterImp;
@@ -35,6 +40,13 @@ public class University_Fragment extends Fragment implements ViewData{
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Presenter presenter;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -101,6 +113,23 @@ public class University_Fragment extends Fragment implements ViewData{
         });
         dialog.create();
         dialog.show();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.university_search,menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==R.id.university_searchIcon)
+        {
+            Intent intent = new Intent(getActivity(), Activity_Search.class);
+            intent.putExtra("university_search","university");
+            getActivity().startActivity(intent);
+        }
+        return true;
     }
 
     @Override

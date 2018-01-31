@@ -124,6 +124,11 @@ public interface Service {
     @GET("api/service/universities")
     Call<List<UniversityModel>> getUniversityData();
 
+    @FormUrlEncoded
+    @POST("api/universties")
+    Call<List<UniversityModel>> getUniversitySearch_Data(@FieldMap Map<String,String> map);
+
+
     /////////////////--------------LibraryTypes-----///////////////////////////
     @GET("api/service/lib_types")
     Call<List<LibraryType_Model>> getLibraryTypeData();
@@ -133,7 +138,7 @@ public interface Service {
     Call<List<LibraryServices_Model>> getLibraryServicesData();
 
     @FormUrlEncoded
-    @POST("")
+    @POST("api/searchlibrary")
     Call<List<LibraryModel>> getLibrarySearch_Data(@FieldMap Map<String,String> map);
 
 
