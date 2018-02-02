@@ -82,6 +82,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
                         intent.putExtra("service_id","");
                         intent.putExtra("lib_type",libType_id);
                         startActivity(intent);
+                        Log.e("lib",query+"\n"+country_id+"\n"+libService_id+"\n"+libType_id);
 
 
                     }
@@ -235,6 +236,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
            CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
            search_country.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
            country_id = countriesModel.getCountry_id();
+
         }
         else if (requestCode==REQ_CODE_LIB_TYPE&&resultCode==RESULT_OK&&data!=null)
         {

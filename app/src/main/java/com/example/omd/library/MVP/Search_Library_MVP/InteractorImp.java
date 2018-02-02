@@ -1,6 +1,8 @@
 package com.example.omd.library.MVP.Search_Library_MVP;
 
 
+import android.util.Log;
+
 import com.example.omd.library.Models.LibraryModel;
 import com.example.omd.library.Services.Service;
 
@@ -23,6 +25,7 @@ public class InteractorImp implements Interactor {
     @Override
     public void getLibraryData(String lib_name,String lib_type,String country_id,String service_id,final onCompleteListener listener) {
 
+        Log.e("dadadadad", "getLibraryData: "+lib_name+"\n"+lib_type+"\n"+country_id+"\n"+service_id);
         Map<String,String> lib_Map = new HashMap<>();
         lib_Map.put("library_name",lib_name);
         lib_Map.put("library_country",country_id);
@@ -37,17 +40,22 @@ public class InteractorImp implements Interactor {
             public void onResponse(Call<List<LibraryModel>> call, Response<List<LibraryModel>> response) {
                 if (response.isSuccessful())
                 {
+                    Log.e("success","success");
                     List<LibraryModel> libraryModelList = response.body();
                     if (libraryModelList.size()>0)
                     {
+                        Log.e("success","success >0");
                         listener.onLibraryDataSuccess(libraryModelList);
                         listener.hideProgress();
                     }else
                         {
+                            Log.e("success","success<0");
                            listener.onLibraryDataFailed("empty data");
+                           listener.hideProgress();
                         }
                 }else
                     {
+                        Log.e("not success","not success");
                         listener.onLibraryDataFailed("Error Something went haywire 1");
                         listener.hideProgress();
                     }
@@ -55,7 +63,9 @@ public class InteractorImp implements Interactor {
 
             @Override
             public void onFailure(Call<List<LibraryModel>> call, Throwable t) {
-                listener.onLibraryDataFailed("Error Something went haywire 2");
+                Log.e("failed","failed");
+
+                listener.onLibraryDataFailed(t.getMessage());
                 listener.hideProgress();
             }
         });

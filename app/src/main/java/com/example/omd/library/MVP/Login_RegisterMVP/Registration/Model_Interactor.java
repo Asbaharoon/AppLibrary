@@ -52,7 +52,7 @@ public interface Model_Interactor {
         void setLibraryEmail_Error();
         void setLibrary_invalidEmail_Error();
         void setLibraryPhone_Error();
-        void setLibraryOtherType_Error();
+        void setLibraryType_Error();
         void setLibraryCountry_Error();
         void setLibraryAddress_Error();
         void setLibraryUsername_Error();
@@ -106,7 +106,7 @@ public interface Model_Interactor {
     //
     void NormalUserRegistration(String userType,String photoName,String photo,String first_name, String last_name, String email, String country, String phone, String username, String password ,String lat,String lng,Model_Interactor.onCompleteListener listener, Context context);
     void PublisherRegistration(String userType,String first_name,String last_name,String email,String country,String password,String phone,String username,String address,String town,String website_url,String lat,String lng,Model_Interactor.onCompleteListener listener, Context context);
-    void LibraryRegistration (String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libOtherType, String libUsername, String libPassword, String lat, String lng,Model_Interactor.onCompleteListener listener,Context context);
+    void LibraryRegistration (String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng,Model_Interactor.onCompleteListener listener,Context context);
     void UniversityRegistration(String userType,String name,String email,String country,String phone,String username,String password ,String major,String address,String site,String lat,String lng,Model_Interactor.onCompleteListener listener, Context context);
     void CompanyRegistration(String userType,String name,String email,String country,String phone,String username,String password,String address,String town,String site,String lat,String lng,Model_Interactor.onCompleteListener listener, Context context);
 

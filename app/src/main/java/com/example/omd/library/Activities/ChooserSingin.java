@@ -24,6 +24,7 @@ import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
 import com.example.omd.library.Models.User;
 import com.example.omd.library.R;
+import com.example.omd.library.Services.LocalDataBase;
 import com.example.omd.library.Services.NetworkConnection;
 import com.example.omd.library.Services.Service;
 import com.facebook.AccessToken;
@@ -79,6 +80,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     private ProgressDialog dialog;
     private AccessTokenTracker tokenTracker;
     private ProfileTracker profileTracker;
+    private LocalDataBase dataBase;
+    private AccessToken token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     private void initView()
     {
+
 
         ///////////////////////////////////////////////////////////////
         shimmerTextView = (ShimmerTextView) findViewById(R.id.shimmer);
@@ -176,9 +180,14 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 getUserDataFromGoogle(account);
 
             }
-        }
+        }else 
+            {
+
+            }
 
     }
+
+
     private void setUpShimmer()
     {
         Shimmer shimmer = new Shimmer();
@@ -241,6 +250,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     @Override
     public void onSuccess(LoginResult loginResult)
     {
+        this.token = loginResult.getAccessToken();
        if (loginResult.getAccessToken()!=null)
        {
            Profile profile = Profile.getCurrentProfile();
@@ -293,6 +303,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                         }
                                     },2000);
 
+
+
                                 } else if (user.getUserType().equals("publisher")) {
                                     Gson p_gson = new Gson();
                                     final PublisherModel publisherModel = p_gson.fromJson(response.body(),PublisherModel.class);
@@ -304,6 +316,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                             startActivity(intent);
                                         }
                                     },2000);
+
 
                                 }
                                 else if (user.getUserType().equals("library")) {
@@ -318,10 +331,14 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                                         }
                                     },2000);
 
+
+
+
                                 }
                                 else if (user.getUserType().equals("university")) {
                                     Gson uni_gson = new Gson();
                                     final UniversityModel universityModel = uni_gson.fromJson(response.body(),UniversityModel.class);
+
                                     new Handler().postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -401,6 +418,12 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                     getUserDataFromGoogle(account);
 
                 }
+
+
+
+
+
+
 
             }
 
@@ -616,5 +639,6 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }

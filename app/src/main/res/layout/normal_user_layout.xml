@@ -35,7 +35,7 @@
 
                 />
             <TextView
-                android:id="@+id/addPhoto_tv"
+                android:id="@+id/addPhoto_tv_user"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_60sdp"
                 android:textColor="@color/base"
@@ -164,6 +164,9 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
+            android:focusable="false"
+            android:clickable="true"
+            android:gravity="left"
 
 
 
@@ -173,7 +176,6 @@
             android:id="@+id/user_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Country"
@@ -192,8 +194,10 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:maxLength="15"
-            app:met_maxCharacters="15"
+            android:focusable="false"
+            android:clickable="true"
+            android:gravity="left"
+
 
 
 

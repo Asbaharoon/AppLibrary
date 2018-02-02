@@ -6,6 +6,7 @@
     <string name="google_maps_key"> AIzaSyD2RMnqCmUxbmqfbyKYIN5zV5UChzMhTXo </string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
+    <string name="phone">Phone Number</string>
 
 
     <string-array name="spinnerArray">

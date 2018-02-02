@@ -48,7 +48,7 @@ public interface ViewData {
     void setLibraryEmail_Error();
     void setLibrary_invalidEmail_Error();
     void setLibraryPhone_Error();
-    void setLibraryOtherType_Error();
+    void setLibraryType_Error();
     void setLibraryCountry_Error();
     void setLibraryAddress_Error();
     void setLibraryUsername_Error();

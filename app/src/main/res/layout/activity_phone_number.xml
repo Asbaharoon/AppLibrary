@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ECEFF1"
+    tools:context="com.example.omd.library.Activities.Activity_PhoneNumber">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/phone_toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?actionBarSize"
+            android:background="@color/base"
+            ></android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <com.lamudi.phonefield.PhoneInputLayout
+        android:id="@+id/phone_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_below="@id/appBar"
+        ></com.lamudi.phonefield.PhoneInputLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_50sdp"
+        android:text="Submit"
+        android:background="@drawable/button_submit_bg"
+        android:textColor="@color/centercolor"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_gravity="right"
+        android:elevation="@dimen/_10sdp"
+        android:layout_alignParentBottom="true"
+        android:textSize="@dimen/_14sdp"
+
+
+        />
+
+</RelativeLayout>

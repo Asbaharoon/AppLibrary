@@ -1,6 +1,7 @@
 package com.example.omd.library.Fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -33,12 +34,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.omd.library.Activities.Activity_PhoneNumber;
+import com.example.omd.library.Activities.Activity_Search_Results;
 import com.example.omd.library.Activities.HomeActivity;
 import com.example.omd.library.Activities.MapsActivity;
 import com.example.omd.library.MVP.Login_RegisterMVP.Registration.PresenterImp;
 import com.example.omd.library.MVP.Login_RegisterMVP.Registration.ViewData;
 import com.example.omd.library.Models.CompanyModel;
+import com.example.omd.library.Models.CountriesModel;
 import com.example.omd.library.Models.LibraryModel;
+import com.example.omd.library.Models.LibraryType_Model;
 import com.example.omd.library.Models.NormalUserData;
 import com.example.omd.library.Models.PublisherModel;
 import com.example.omd.library.Models.UniversityModel;
@@ -64,13 +69,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegisterFragment extends Fragment implements ViewData, View.OnClickListener {
 
-    private ExpandableRelativeLayout layout_normal_user, layout_pub, layout_lib, library_spinner_expanded,layout_university,layout_company;
-    private AppCompatSpinner spinner, lib_spinner;
-    private FrameLayout n_userPhoto_container;
-    private CircleImageView n_circleImageView;
+    private ExpandableRelativeLayout layout_normal_user, layout_pub, layout_lib,layout_university,layout_company;
+    private AppCompatSpinner spinner;
+    private FrameLayout n_userPhoto_container,pubPhoto_container,libPhoto_container,uniPhoto_container,compPhoto_container;
+    private CircleImageView n_circleImageView,pub_circleImageView,lib_circleImageView,uni_circleImageView,comp_circleImageView;
     private MaterialEditText n_userFirstName, n_userLastName,n_user_userName, n_userEmail, n_userPhone, n_userCountry, n_userPassword;
     private MaterialEditText publisher_firstName, publisher_lastName, publisherEmail, publisherCountry, publisherPhone, publisherTown,publisherUsername,publisherAddress, publisher_webSite, publisherPassword;
-    private MaterialEditText libraryName, libraryEmail, libraryPhone, libraryCountry,libraryAddress, libraryUsername, libraryPassword, library_otherType;
+    private MaterialEditText libraryName, libraryEmail, libraryPhone, libraryCountry,libraryAddress, libraryUsername, libraryPassword, library_type;
     private MaterialEditText universityName, universityEmail, universityPhone, universityCountry,universityAddress, universityMajor,universityUsername, universityPassword,universitySite;
     private MaterialEditText companyName,companyUsername,companyEmail, companyPhone,companyCountry, companyPassword,companySite,companyTown,companyAddress;
 
@@ -81,9 +86,35 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     public Uri userImage_URI = null;
     public Bitmap userBitmap_image = null;
     public String imageName=null;
-    private static final int IMAGE_REQUEST = 200;
-    private static final int REQUEST_CODE = 300;
-    private TextView addPhoto_tv;
+    private final int IMAGE_REQUEST_USER    = 201;
+    private final int IMAGE_REQUEST_PUB     = 202;
+    private final int IMAGE_REQUEST_LIB     = 203;
+    private final int IMAGE_REQUEST_UNI     = 204;
+    private final int IMAGE_REQUEST_COMP    = 205;
+    private final int REQUEST_CODE          = 300;
+
+    private final int COUNTRY_REQUEST_USER  = 301;
+    private final int COUNTRY_REQUEST_PUB   = 302;
+    private final int COUNTRY_REQUEST_LIB   = 303;
+    private final int COUNTRY_REQUEST_UNI   = 304;
+    private final int COUNTRY_REQUEST_COMP  = 305;
+
+    private final int PHONE_REQUEST_USER    = 307;
+    private final int PHONE_REQUEST_PUB     = 308;
+    private final int PHONE_REQUEST_LIB     = 309;
+    private final int PHONE_REQUEST_UNI     = 310;
+    private final int PHONE_REQUEST_COMP    = 311;
+
+    private String n_country_id="";
+    private String p_country_id="";
+    private String l_country_id="";
+    private String u_country_id="";
+    private String c_country_id="";
+    private String libType ="";
+    private final int LIBRARY_TYPE_REQUEST  = 306;
+
+
+    private TextView addPhoto_tv_user,addPhoto_tv_pub,addPhoto_tv_lib,addPhoto_tv_uni,addPhoto_tv_comp;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private ProgressDialog  progressDialog;
 
@@ -117,16 +148,10 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         layout_lib = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_lib);
         layout_university = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_university);
         layout_company = (ExpandableRelativeLayout) view.findViewById(R.id.expandable_company);
-        library_spinner_expanded = (ExpandableRelativeLayout) view.findViewById(R.id.library_spinner_expanded);
-        library_spinner_expanded.collapse();
         layout_normal_user.collapse();
         layout_lib.collapse();
         spinner = (AppCompatSpinner) view.findViewById(R.id.spinner);
 
-        lib_spinner = (AppCompatSpinner) view.findViewById(R.id.lib_type);
-        lib_spinner.setSelection(0);
-        final ArrayAdapter<String> adapter_type = new ArrayAdapter<String>(mContext, R.layout.spinner_row, getResources().getStringArray(R.array.libType));
-        lib_spinner.setAdapter(adapter_type);
 
         spinner.setSelection(0);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.spinner_row, getResources().getStringArray(R.array.spinnerArray));
@@ -152,31 +177,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 }, 1000);
             }
         }
-        lib_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView) adapterView.getSelectedView()).setTextColor(ContextCompat.getColor(mContext, R.color.label));
-                ((TextView) adapterView.getSelectedView()).setGravity(Gravity.CENTER);
-                if (adapterView.getSelectedItem().toString().equals("Other")) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            library_spinner_expanded.expand();
-
-                        }
-                    }, 1000);
-
-                } else {
-                    library_spinner_expanded.collapse();
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -311,7 +311,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         if (userView != null) {
             n_userPhoto_container = (FrameLayout) userView.findViewById(R.id.userPhoto_container);
             n_userPhoto_container.setOnClickListener(this);
-            addPhoto_tv = (TextView) userView.findViewById(R.id.addPhoto_tv);
+            addPhoto_tv_user = (TextView) userView.findViewById(R.id.addPhoto_tv_user);
             n_circleImageView = (CircleImageView) userView.findViewById(R.id.user_photo);
 
             n_userFirstName = (MaterialEditText) userView.findViewById(R.id.user_firstName);
@@ -333,13 +333,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             n_userPhone = (MaterialEditText) userView.findViewById(R.id.user_phone);
             n_userPhone.setAutoValidate(true);
             n_userPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
-            n_userPhone.setShowClearButton(true);
+            n_userPhone.setOnClickListener(this);
+
 
             n_userCountry = (MaterialEditText) userView.findViewById(R.id.user_country);
             n_userCountry.setAutoValidate(true);
-            n_userCountry.setShowClearButton(true);
-            n_userCountry.addValidator(new RegexpValidator("invalid country name", ".+"));
-
+            n_userCountry.addValidator(new RegexpValidator("empty field",".+"));
+            n_userCountry.setOnClickListener(this);
 
             n_user_userName = (MaterialEditText) userView.findViewById(R.id.user_userName);
             n_user_userName.setAutoValidate(true);
@@ -363,6 +363,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     private void init_publisherView(View view) {
         View publisherView = view.findViewById(R.id.publisher_layout);
         if (publisherView != null) {
+            pubPhoto_container = (FrameLayout) publisherView.findViewById(R.id.publisherPhoto_container);
+            pub_circleImageView = (CircleImageView) publisherView.findViewById(R.id.publisher_photo);
+            pubPhoto_container.setOnClickListener(this);
+            addPhoto_tv_pub = (TextView) publisherView.findViewById(R.id.addPhoto_tv_pub);
+
             publisher_firstName = (MaterialEditText) publisherView.findViewById(R.id.publisher_firstName);
             publisher_firstName.setAutoValidate(true);
             publisher_firstName.setShowClearButton(true);
@@ -382,14 +387,14 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             publisherCountry = (MaterialEditText) publisherView.findViewById(R.id.publisher_country);
             publisherCountry.setAutoValidate(true);
-            publisherCountry.setShowClearButton(true);
-            publisherCountry.addValidator(new RegexpValidator("invalid country", ".+"));
+            publisherCountry.addValidator(new RegexpValidator("empty field",".+"));
 
+            publisherCountry.setOnClickListener(this);
 
             publisherPhone = (MaterialEditText) publisherView.findViewById(R.id.publisher_phone);
             publisherPhone.setAutoValidate(true);
             publisherPhone.addValidator(new RegexpValidator("invalid country", Tags.phone_Regex));
-            publisherPhone.setShowClearButton(true);
+            publisherPhone.setOnClickListener(this);
 
             publisherAddress = (MaterialEditText) publisherView.findViewById(R.id.publisher_address);
             publisherAddress.setAutoValidate(true);
@@ -431,6 +436,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         View libraryView = view.findViewById(R.id.library_layout);
         if (libraryView != null) {
 
+            libPhoto_container = (FrameLayout) libraryView.findViewById(R.id.libraryPhoto_container);
+            libPhoto_container.setOnClickListener(this);
+            lib_circleImageView = (CircleImageView) libraryView.findViewById(R.id.library_photo);
+            addPhoto_tv_lib = (TextView) libraryView.findViewById(R.id.addPhoto_tv_lib);
+
             libraryName = (MaterialEditText) libraryView.findViewById(R.id.library_Name);
             libraryName.setAutoValidate(true);
             libraryName.setShowClearButton(true);
@@ -444,13 +454,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             libraryPhone = (MaterialEditText) libraryView.findViewById(R.id.library_phone);
             libraryPhone.setAutoValidate(true);
             libraryPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
-            libraryPhone.setShowClearButton(true);
+            libraryPhone.setOnClickListener(this);
 
 
             libraryCountry = (MaterialEditText) libraryView.findViewById(R.id.library_country);
             libraryCountry.setAutoValidate(true);
-            libraryCountry.setShowClearButton(true);
-            libraryCountry.addValidator(new RegexpValidator("invalid country", ".+"));
+            libraryCountry.addValidator(new RegexpValidator("empty field",".+"));
+            libraryCountry.setOnClickListener(this);
 
             libraryAddress = (MaterialEditText) libraryView.findViewById(R.id.library_address);
             libraryAddress.setAutoValidate(true);
@@ -471,11 +481,10 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             libraryPassword.addValidator(new RegexpValidator("invalid password", Tags.pass_Regex));
 
 
-            library_otherType = (MaterialEditText) libraryView.findViewById(R.id.library_otherType);
-            library_otherType.setAutoValidate(true);
-            library_otherType.setShowClearButton(true);
-            library_otherType.addValidator(new RegexpValidator("invalid library type", ".+"));
-
+            library_type = (MaterialEditText) libraryView.findViewById(R.id.library_type);
+            library_type.setAutoValidate(true);
+            library_type.addValidator(new RegexpValidator("empty field",".+"));
+            library_type.setOnClickListener(this);
 
             lib_SignInBtn = (Button) libraryView.findViewById(R.id.lib_SignInBtn);
             lib_SignInBtn.setOnClickListener(this);
@@ -488,6 +497,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     {
         View universityView = view.findViewById(R.id.university_layout);
         if (universityView != null) {
+
+            uniPhoto_container = (FrameLayout) universityView.findViewById(R.id.universityPhoto_container);
+            uniPhoto_container.setOnClickListener(this);
+            uni_circleImageView = (CircleImageView) universityView.findViewById(R.id.university_photo);
+            addPhoto_tv_uni = (TextView) universityView.findViewById(R.id.addPhoto_tv_uni);
 
             universityName = (MaterialEditText) universityView.findViewById(R.id.university_Name);
             universityName.setAutoValidate(true);
@@ -504,12 +518,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             universityPhone = (MaterialEditText) universityView.findViewById(R.id.university_phone);
             universityPhone.setAutoValidate(true);
             universityPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
-            universityPhone.setShowClearButton(true);
+            universityPhone.setOnClickListener(this);
 
             universityCountry = (MaterialEditText) universityView.findViewById(R.id.university_country);
             universityCountry.setAutoValidate(true);
-            universityCountry.setShowClearButton(true);
-            universityCountry.addValidator(new RegexpValidator("invalid country name", ".+"));
+            universityCountry.addValidator(new RegexpValidator("empty field",".+"));
+            universityCountry.setOnClickListener(this);
 
             universityAddress = (MaterialEditText) universityView.findViewById(R.id.university_address);
             universityAddress.setAutoValidate(true);
@@ -551,6 +565,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         View companyView = view.findViewById(R.id.company_layout);
         if (companyView != null) {
 
+            compPhoto_container = (FrameLayout) companyView.findViewById(R.id.companyPhoto_container);
+            compPhoto_container.setOnClickListener(this);
+            comp_circleImageView = (CircleImageView) companyView.findViewById(R.id.company_photo);
+            addPhoto_tv_comp = (TextView) companyView.findViewById(R.id.addPhoto_tv_comp);
+
+
             companyName = (MaterialEditText) companyView.findViewById(R.id.company_Name);
             companyName.setAutoValidate(true);
             companyName.addValidator(new RegexpValidator("invalid name", Tags.name_Regex));
@@ -566,12 +586,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             companyPhone = (MaterialEditText) companyView.findViewById(R.id.company_phone);
             companyPhone.setAutoValidate(true);
             companyPhone.addValidator(new RegexpValidator("invalid phone number", Tags.phone_Regex));
-            companyPhone.setShowClearButton(true);
+            companyPhone.setOnClickListener(this);
 
             companyCountry = (MaterialEditText) companyView.findViewById(R.id.company_country);
             companyCountry.setAutoValidate(true);
-            companyCountry.setShowClearButton(true);
-            companyCountry.addValidator(new RegexpValidator("invalid country name", ".+"));
+            companyCountry.addValidator(new RegexpValidator("empty field",".+"));
+            companyCountry.setOnClickListener(this);
 
             companyAddress = (MaterialEditText) companyView.findViewById(R.id.company_address);
             companyAddress.setAutoValidate(true);
@@ -813,8 +833,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
 
     @Override
-    public void setLibraryOtherType_Error() {
-        library_otherType.setError("empty field");
+    public void setLibraryType_Error() {
+        library_type.setError("empty field");
 
 
     }
@@ -1149,7 +1169,22 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             case R.id.n_SignInBtn:
                 getDeviceLocation();
                 break;
+            case R.id.user_country:
+                getCountry(COUNTRY_REQUEST_USER);
+                break;
 
+            case R.id.publisher_country:
+                getCountry(COUNTRY_REQUEST_PUB);
+                break;
+            case R.id.library_country:
+                getCountry(COUNTRY_REQUEST_LIB);
+                break;
+            case R.id.university_country:
+                getCountry(COUNTRY_REQUEST_UNI);
+                break;
+            case R.id.company_country:
+                getCountry(COUNTRY_REQUEST_COMP);
+                break;
             case R.id.pub_SignInBtn:
                 initPublisherData("","");
                 break;
@@ -1168,21 +1203,75 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
 
             case R.id.userPhoto_container:
-                SelectUserPhoto();
+                SelectUserPhoto(IMAGE_REQUEST_USER);
+                break;
+            case R.id.publisherPhoto_container:
+                SelectUserPhoto(IMAGE_REQUEST_PUB);
                 break;
 
+            case R.id.libraryPhoto_container:
+                SelectUserPhoto(IMAGE_REQUEST_LIB);
+                break;
+            case R.id.universityPhoto_container:
+                SelectUserPhoto(IMAGE_REQUEST_UNI);
+                break;
+            case R.id.companyPhoto_container:
+                SelectUserPhoto(IMAGE_REQUEST_COMP);
+                break;
 
+            case R.id.library_type:
+                getLibraryType(LIBRARY_TYPE_REQUEST);
+                break;
+
+            case R.id.user_phone:
+                getPhoneNumber(PHONE_REQUEST_USER);
+                break;
+
+            case R.id.publisher_phone:
+                getPhoneNumber(PHONE_REQUEST_PUB);
+
+                break;
+            case R.id.library_phone:
+                getPhoneNumber(PHONE_REQUEST_LIB);
+
+                break;
+            case R.id.university_phone:
+                getPhoneNumber(PHONE_REQUEST_UNI);
+
+                break;
+            case R.id.company_phone:
+                getPhoneNumber(PHONE_REQUEST_COMP);
+
+                break;
 
         }
 
     }
 
+    private void getPhoneNumber(int phone_request_user) {
 
-    private void SelectUserPhoto() {
+        Intent intent = new Intent(getActivity(), Activity_PhoneNumber.class);
+        startActivityForResult(intent,phone_request_user);
+    }
+
+    private void getLibraryType(int library_type_request) {
+        Intent intent = new Intent(getActivity(),Activity_Search_Results.class);
+        intent.putExtra("searchType","libType");
+        getActivity().startActivityForResult(intent,library_type_request);
+    }
+
+    private void getCountry(int country_request_code) {
+        Intent intent = new Intent(getActivity(), Activity_Search_Results.class);
+        intent.putExtra("searchType","country");
+        getActivity().startActivityForResult(intent,country_request_code);
+    }
+
+
+    private void SelectUserPhoto(int REQ_CODE) {
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
-        getActivity().startActivityForResult(intent.createChooser(intent, "Choose your photo"), IMAGE_REQUEST);
+        getActivity().startActivityForResult(intent.createChooser(intent, "Choose your photo"), REQ_CODE);
 
 
     }
@@ -1191,7 +1280,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
 
-        if (requestCode == IMAGE_REQUEST) {
+        if (requestCode == IMAGE_REQUEST_USER) {
 
             if (data != null) {
 
@@ -1206,7 +1295,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     }*/
                     userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
                     n_circleImageView.setImageBitmap(userBitmap_image);
-                    addPhoto_tv.setVisibility(View.GONE);
+                    addPhoto_tv_user.setVisibility(View.GONE);
                    // String userPhoto = decodeUserPhoto(userBitmap_image);
                     //initNormalUserData(userPhoto);
                 } catch (FileNotFoundException e) {
@@ -1214,7 +1303,208 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
                 }
             }
-        } else if (REQUEST_CODE == requestCode && resultCode == getActivity().RESULT_OK) {
+        }else if (requestCode==IMAGE_REQUEST_PUB)
+        {
+            if (data != null) {
+
+
+                try {
+                    userImage_URI = data.getData();
+                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
+                    /*if (cursor.moveToFirst()) {
+                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+
+                    }*/
+                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
+                    pub_circleImageView.setImageBitmap(userBitmap_image);
+                    addPhoto_tv_pub.setVisibility(View.GONE);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+        else if (requestCode==IMAGE_REQUEST_LIB)
+        {
+            if (data != null) {
+
+
+                try {
+                    userImage_URI = data.getData();
+                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
+                    /*if (cursor.moveToFirst()) {
+                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+
+                    }*/
+                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
+                    lib_circleImageView.setImageBitmap(userBitmap_image);
+                    addPhoto_tv_lib.setVisibility(View.GONE);
+                    // String userPhoto = decodeUserPhoto(userBitmap_image);
+                    //initNormalUserData(userPhoto);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+        else if (requestCode==IMAGE_REQUEST_UNI)
+        {
+            if (data != null) {
+
+
+                try {
+                    userImage_URI = data.getData();
+                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
+                    /*if (cursor.moveToFirst()) {
+                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+
+                    }*/
+                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
+                    uni_circleImageView.setImageBitmap(userBitmap_image);
+                    addPhoto_tv_uni.setVisibility(View.GONE);
+                    // String userPhoto = decodeUserPhoto(userBitmap_image);
+                    //initNormalUserData(userPhoto);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+        else if (requestCode==IMAGE_REQUEST_COMP)
+        {
+            if (data != null) {
+
+
+                try {
+                    userImage_URI = data.getData();
+                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
+                    /*if (cursor.moveToFirst()) {
+                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+
+                    }*/
+                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
+                    comp_circleImageView.setImageBitmap(userBitmap_image);
+                    addPhoto_tv_comp.setVisibility(View.GONE);
+                    // String userPhoto = decodeUserPhoto(userBitmap_image);
+                    //initNormalUserData(userPhoto);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+        else if (requestCode==COUNTRY_REQUEST_USER)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
+                n_country_id = countriesModel.getCountry_id();
+                n_userCountry.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
+
+            }
+              }
+        else if (requestCode==COUNTRY_REQUEST_PUB)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
+                p_country_id = countriesModel.getCountry_id();
+                publisherCountry.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
+
+            }
+
+        }
+        else if (requestCode==COUNTRY_REQUEST_LIB)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
+                l_country_id = countriesModel.getCountry_id();
+                libraryCountry.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
+
+            }
+
+        }
+        else if (requestCode==COUNTRY_REQUEST_UNI)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
+                u_country_id = countriesModel.getCountry_id();
+                universityCountry.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
+
+            }
+
+        }
+        else if (requestCode==COUNTRY_REQUEST_COMP)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                CountriesModel countriesModel = (CountriesModel) data.getSerializableExtra("country_data");
+                c_country_id = countriesModel.getCountry_id();
+                companyCountry.setText(countriesModel.getCountry_title()+"-"+countriesModel.getCountry_flag());
+
+            }
+
+        }
+        else if (requestCode==LIBRARY_TYPE_REQUEST)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                LibraryType_Model libraryType_model = (LibraryType_Model) data.getSerializableExtra("libType_data");
+                library_type.setText(libraryType_model.getLib_type_title());
+                libType = libraryType_model.getLib_type_id();
+
+            }
+
+        }
+        else if (requestCode==PHONE_REQUEST_USER)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                String phoneNumber =data.getStringExtra("phone_number");
+                n_userPhone.setText(phoneNumber);
+            }
+
+        }
+        else if (requestCode==PHONE_REQUEST_PUB)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                String phoneNumber =data.getStringExtra("phone_number");
+                publisherPhone.setText(phoneNumber);
+            }
+
+        }
+        else if (requestCode==PHONE_REQUEST_LIB)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                String phoneNumber =data.getStringExtra("phone_number");
+                libraryPhone.setText(phoneNumber);
+            }
+
+        }
+        else if (requestCode==PHONE_REQUEST_UNI)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                String phoneNumber =data.getStringExtra("phone_number");
+                universityPhone.setText(phoneNumber);
+            }
+
+        }
+        else if (requestCode==PHONE_REQUEST_COMP)
+        {
+            if (data!=null && resultCode== Activity.RESULT_OK){}
+
+        }
+
+        else if (REQUEST_CODE == requestCode && resultCode == getActivity().RESULT_OK) {
             if (data != null) {
                 if (data.hasExtra("lat") && data.hasExtra("lng")) {
                     double lat = data.getExtras().getDouble("lat");
@@ -1239,6 +1529,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     {
                         initCompanyData(String.valueOf(lat),String.valueOf(lng));
                     }
+
 
                 }
 
@@ -1365,7 +1656,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String n_fname    = n_userFirstName .getText().toString();
         String n_lname    = n_userLastName  .getText().toString();
         String n_email    = n_userEmail     .getText().toString();
-        String n_country  = n_userCountry   .getText().toString();
+        String n_country  = n_country_id;
         String n_phone    = n_userPhone     .getText().toString();
         String n_username = n_user_userName .getText().toString();
         String n_password = n_userPassword  .getText().toString();
@@ -1387,7 +1678,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String pub_fname    = publisher_firstName.getText().toString();
         String pub_lname    = publisher_lastName .getText().toString();
         String pub_email    = publisherEmail     .getText().toString();
-        String pub_country  = publisherCountry   .getText().toString();
+        String pub_country  = p_country_id;
         String pub_password = publisherPassword  .getText().toString();
         String pub_phone    = publisherPhone     .getText().toString();
         String pub_address  = publisherAddress   .getText().toString();
@@ -1403,18 +1694,15 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String lib_name     = libraryName     .getText().toString();
         String lib_email    = libraryEmail    .getText().toString();
         String lib_phone    = libraryPhone    .getText().toString();
-        String lib_country  = libraryCountry  .getText().toString();
+        String lib_country  = l_country_id;
         String lib_address  = libraryAddress  .getText().toString();
         String lib_userName = libraryUsername .getText().toString();
         String lib_password = libraryPassword .getText().toString();
-        String lib_type     = lib_spinner     .getSelectedItem().toString();
-        String lib_otherType = "";
-        if (lib_type.equals("Other")) {
-            lib_type = library_otherType.getText().toString();
-        }
+        String lib_type     =  libType;
+
 
         Toast.makeText(mContext, userType+"_"+lib_type, Toast.LENGTH_SHORT).show();
-        presenter.LibraryRegistration(userType,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_otherType,lib_userName,lib_password,lat,lng);
+        presenter.LibraryRegistration(userType,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_userName,lib_password,lat,lng);
 
     }
     private void initUniversityData(String lat, String lng)
@@ -1423,7 +1711,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String uni_name      = universityName     .getText().toString();
         String uni_email     = universityEmail    .getText().toString();
         String uni_phone     = universityPhone    .getText().toString();
-        String uni_country   = universityCountry  .getText().toString();
+        String uni_country   = u_country_id;
         String uni_address   = universityAddress  .getText().toString();
         String uni_major     = universityMajor    .getText().toString();
         String uni_site      = universitySite     .getText().toString();
@@ -1439,7 +1727,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String comp_name     = companyName     .getText().toString();
         String comp_email    = companyEmail    .getText().toString();
         String comp_phone    = companyPhone    .getText().toString();
-        String comp_country  = companyCountry  .getText().toString();
+        String comp_country  = c_country_id;
         String comp_address  = companyAddress  .getText().toString();
         String comp_town     = companyTown     .getText().toString();
         String comp_site     = companySite     .getText().toString();

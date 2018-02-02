@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +38,8 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library_search_results,container,false);
         initView(view);
-        getDataFromBundle();
         presenter = new PresenterImp(this,getActivity());
+        getDataFromBundle();
         return view;
     }
 
@@ -54,6 +53,8 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
             country_id = bundle.getString("country_id");
             service_id = bundle.getString("service_id");
             Log.e("Data2",libName+"\n"+country_id+"\n"+service_id+"\n"+lib_type);
+            presenter.getLibraryData(libName,lib_type,country_id,service_id);
+
 
         }
     }
@@ -69,24 +70,13 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
 
 
     @Override
-    public void onStart() {
-        super.onStart();
-        if(TextUtils.isEmpty(service_id))
-        {
-            //presenter.getLibraryData(libName,lib_type,country_id,null);
-        }
-        else
-            {
-               // presenter.getLibraryData(libName,lib_type,country_id,service_id);
-            }
-
-    }
-
-    @Override
     public void onLibraryDataSuccess(List<LibraryModel> libraryModelList) {
+        Toast.makeText(getActivity(), "data"+libraryModelList.size()+"\n"+libraryModelList.get(0).getLib_name(), Toast.LENGTH_SHORT).show();
         adapter = new Library_Search_Adapter(libraryModelList,getActivity());
         adapter.notifyDataSetChanged();
         mRecView.setAdapter(adapter);
+        progressBar.setVisibility(View.GONE);
+
     }
 
     @Override

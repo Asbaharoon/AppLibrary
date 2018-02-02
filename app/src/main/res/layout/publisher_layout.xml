@@ -14,7 +14,42 @@
         android:orientation="vertical"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         >
+        <FrameLayout
+            android:id="@+id/publisherPhoto_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/add_photo_tv"
+            android:clickable="true"
+            android:descendantFocusability="blocksDescendants"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/publisher_photo"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                app:civ_border_width="@dimen/_1sdp"
+                app:civ_border_color="@color/base"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:longClickable="false"
 
+                />
+            <TextView
+                android:id="@+id/addPhoto_tv_pub"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:textColor="@color/base"
+                android:textSize="@dimen/_12sdp"
+                android:text="Add Photo"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:background="@drawable/add_photo_tv"
+                android:padding="@dimen/_3sdp"
+                android:clickable="false"
+                android:longClickable="false"
+                />
+        </FrameLayout>
         <com.rengwuxian.materialedittext.MaterialEditText
             android:id="@+id/publisher_firstName"
             android:layout_width="match_parent"
@@ -130,8 +165,9 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-
-
+            android:focusable="false"
+            android:clickable="true"
+            android:gravity="left"
 
             />
 
@@ -158,9 +194,9 @@
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
             android:textSize="@dimen/_14sdp"
-            android:inputType="text"
-            android:maxLength="15"
-            app:met_maxCharacters="15"
+            android:focusable="false"
+            android:clickable="true"
+            android:gravity="left"
 
 
 
@@ -240,7 +276,7 @@
             app:met_floatingLabel="highlight"
             app:met_floatingLabelText="Website"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="optional"
+            app:met_helperText="required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"

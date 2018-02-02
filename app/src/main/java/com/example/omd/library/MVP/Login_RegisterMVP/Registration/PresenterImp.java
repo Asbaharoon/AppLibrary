@@ -306,10 +306,10 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
 
 
     @Override
-    public void setLibraryOtherType_Error() {
+    public void setLibraryType_Error() {
         if (viewData!=null)
         {
-            viewData.setLibraryOtherType_Error();
+            viewData.setLibraryType_Error();
         }
     }
 
@@ -704,9 +704,9 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
 
 
     @Override
-    public void LibraryRegistration(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libOtherType, String libUsername, String libPassword, String lat, String lng) {
+    public void LibraryRegistration(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng) {
         interactor = new Model_InteractorImp();
-        interactor.LibraryRegistration(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libOtherType,libUsername,libPassword,lat,lng,this,mContext);
+        interactor.LibraryRegistration(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libUsername,libPassword,lat,lng,this,mContext);
 
     }
 

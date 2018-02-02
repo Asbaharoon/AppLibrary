@@ -61,16 +61,15 @@
         <activity
             android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Activities.MapsActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activities.NearbyActivity" />
         <activity android:name=".Activities.Activity_Search" />
         <activity android:name=".Activities.Activity_Search_Results" />
-        <activity android:name=".Activities.Chat_Activity">
-
-        </activity>
+        <activity android:name=".Activities.Chat_Activity"></activity>
+        <activity android:name=".Activities.Activity_PhoneNumber"></activity>
     </application>
 
 </manifest>

@@ -190,7 +190,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
 
     @Override
-    public void LibraryRegistration(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libOtherType, String libUsername, String libPassword, String lat, String lng, onCompleteListener listener, Context context) {
+    public void LibraryRegistration(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(libName))
         {
             listener.setLibraryName_Error();
@@ -198,6 +198,11 @@ public class Model_InteractorImp implements Model_Interactor {
         else if (!libName.matches(Tags.name_Regex))
         {
             listener.setLibrary_invalidName_Error();
+        }
+        else if (TextUtils.isEmpty(libType))
+        {
+            listener.setLibraryType_Error();
+
         }
         else if (TextUtils.isEmpty(libEmail))
         {
@@ -220,67 +225,7 @@ public class Model_InteractorImp implements Model_Interactor {
             listener.setLibraryAddress_Error();
         }
 
-        else if (libType.equals("Other"))
-        {
-            if (TextUtils.isEmpty(libOtherType))
-            {
-                listener.setLibraryOtherType_Error();
-            }
-            else if (TextUtils.isEmpty(libType))
-            {
-                listener.setLibraryOtherType_Error();
-            }
-            else if (TextUtils.isEmpty(libUsername))
-            {
-                listener.setLibraryUsername_Error();
 
-            }
-            else if (!libUsername.matches(Tags.username_Regex))
-            {
-                listener.setLibrary_invalidUsername_Error();
-            }
-            else if (TextUtils.isEmpty(libPassword))
-            {
-                listener.setLibraryPassword_Error();
-            }
-            else if (!libPassword.matches(Tags.pass_Regex))
-            {
-                listener.setLibrary_invalidPassword_Error();
-            }
-            else if (TextUtils.isEmpty(lat)||TextUtils.isEmpty(lng))
-            {
-                isConnected = new NetworkConnection(context).CheckConnection();
-                if (isConnected)
-                {
-                    listener.hideProgress_Dialog();
-                    listener.setLibraryLat_lng_Error();
-
-                }else
-                {
-                    listener.hideProgress_Dialog();
-                    listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
-                }
-            }
-
-            else
-            {
-                isConnected = new NetworkConnection(context).CheckConnection();
-                if (isConnected)
-                {
-                    listener.showProgress_Dialog();
-                    Registration_LibraryData(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libOtherType,libUsername,libPassword,lat,lng,listener);
-                }else
-                {
-                    listener.hideProgress_Dialog();
-                    listener.onFailed("Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data ");
-                }
-            }
-        }
-        else if (TextUtils.isEmpty(libType))
-        {
-            listener.setLibraryOtherType_Error();
-
-        }
         else if (TextUtils.isEmpty(libUsername))
         {
             listener.setLibraryUsername_Error();
@@ -310,7 +255,7 @@ public class Model_InteractorImp implements Model_Interactor {
             if (isConnected)
             {
                 listener.showProgress_Dialog();
-                Registration_LibraryData(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libOtherType,libUsername,libPassword,lat,lng,listener);
+                Registration_LibraryData(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libUsername,libPassword,lat,lng,listener);
 
             }else
             {
@@ -599,7 +544,7 @@ public class Model_InteractorImp implements Model_Interactor {
             }
         });
     }
-    private void Registration_LibraryData(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libOtherType, String libUsername, String libPassword, String lat, String lng, final onCompleteListener listener)
+    private void Registration_LibraryData(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng, final onCompleteListener listener)
     {
         Map<String,String> libMap = new HashMap<>();
 
