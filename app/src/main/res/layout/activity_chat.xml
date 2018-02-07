@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.omd.library.Activities.Chat_Activity">
+    tools:context="com.semicolon.librarians.library.Activities.Chat_Activity">
 <android.support.design.widget.AppBarLayout
     android:id="@+id/chatAppBar"
     android:layout_width="match_parent"

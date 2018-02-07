@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.omd.library.Activities.Activity_Search">
+    tools:context="com.semicolon.librarians.library.Activities.Activity_Search">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -89,6 +89,8 @@
                         android:background="@drawable/item_search_bg"
                         android:clickable="true"
                         android:paddingLeft="@dimen/_8sdp"
+                        android:textColorHint="#9e9e9e"
+                        android:textColor="@color/black"
 
 
 

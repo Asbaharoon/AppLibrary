@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "659514777297",
-    "project_id": "library-189100"
+    "project_number": "628077404757",
+    "project_id": "applibrary-191521"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:659514777297:android:431141e91201c5fb",
+        "mobilesdk_app_id": "1:628077404757:android:9ebfc2fe33496d90",
         "android_client_info": {
-          "package_name": "com.example.omd.library"
+          "package_name": "com.semicolon.librarians.library"
         }
       },
       "oauth_client": [
         {
-          "client_id": "659514777297-6a1ji2nmnvuuku9m3388l2cok5pr0mpk.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "659514777297-ch29gi5nhi51nn9kgl2i4hob0hkm0sdm.apps.googleusercontent.com",
+          "client_id": "628077404757-4teojeprv4vhaa21aeofr2o79075c32r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.omd.library",
+            "package_name": "com.semicolon.librarians.library",
             "certificate_hash": "6616577a7e310a6aae058246a826c73910eff6d4"
           }
+        },
+        {
+          "client_id": "628077404757-8fuh4ul512vmujro01992ai07q9e2s1h.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAw1pqXYq1-1uPzoUVd3hp_8E_WnvHrcbg"
+          "current_key": "AIzaSyDhUyRqR8zibEYuVLmcvpGQnDByNqZV1Q8"
         }
       ],
       "services": {

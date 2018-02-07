@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="left"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:orientation="horizontal"
+
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/_26sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:src="@drawable/user_profile"
+            android:layout_marginRight="@dimen/_5sdp"
+            />
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+            android:id="@+id/msg_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            emojicon:emojiconSize="18sp"
+            android:paddingRight="@dimen/_8sdp"
+            android:paddingLeft="@dimen/_8sdp"
+            android:textColor="@color/black"
+            android:background="@drawable/msg_left_bg"
+            android:layout_gravity="center_vertical"
+            android:gravity="left|center_vertical"
+            android:maxWidth="@dimen/_220sdp"
+
+
+
+
+            />
+
+
+    </LinearLayout>
+
+</FrameLayout>

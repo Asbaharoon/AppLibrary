@@ -11,7 +11,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.omd.library.Activities.LoginActivity" />
+        tools:context="com.semicolon.librarians.library.Activities.LoginActivity" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -44,7 +44,7 @@
         android:id="@+id/tv_ok"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/_10sdp"
         android:text="OK"
         android:padding="@dimen/_10sdp"

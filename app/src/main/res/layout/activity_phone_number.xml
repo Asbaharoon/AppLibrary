@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#ECEFF1"
-    tools:context="com.example.omd.library.Activities.Activity_PhoneNumber">
+    tools:context="com.semicolon.librarians.library.Activities.Activity_PhoneNumber">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+
+        <com.intrusoft.squint.DiagonalView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_250sdp"
+            app:angle="15"
+            app:diagonalDirection="left_to_right"
+            android:src="@drawable/barney"
+            app:gravity="left"
+            app:tint="#aa182036"
+
+            />
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:background="@android:color/transparent"
+
+            >
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:minHeight="?actionBarSize"
+                >
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+        <LinearLayout
+            android:id="@+id/ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_160sdp"
+            android:layout_centerHorizontal="true"
+
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_companyImage"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:src="@drawable/songwriter"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:civ_border_color="#0288D1"
+                app:civ_border_width="@dimen/_2sdp"
+                />
+            <TextView
+                android:id="@+id/profile_companyName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="عماد مجدي محمد سلام المغربي"
+                android:textSize="@dimen/_16sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+                />
+            <TextView
+                android:id="@+id/profile_companyCountry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="المملكه العربيه السعوديه"
+                android:textSize="@dimen/_13sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/ll"
+            android:padding="@dimen/_10sdp"
+            >
+            <TextView
+                android:id="@+id/profile_companyEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="emadmagdy.developer@gmail.com"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"
+                android:drawableLeft="@drawable/email_icon_black"
+                android:gravity="center_vertical|left"
+                android:drawablePadding="@dimen/_5sdp"
+                android:layout_gravity="left"
+
+
+                />
+
+            <TextView
+                android:id="@+id/profile_companyPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+201017357658"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"
+                android:drawableLeft="@drawable/phone_icon_black"
+                android:gravity="center_vertical|left"
+                android:drawablePadding="@dimen/_5sdp"
+                android:layout_gravity="left"
+
+
+                />
+            <TextView
+                android:id="@+id/profile_companyAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="الرياض"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"
+                android:drawableLeft="@drawable/loc_icon_black"
+                android:gravity="center_vertical|left"
+                android:drawablePadding="@dimen/_5sdp"
+                android:layout_gravity="left"
+
+
+                />
+            <TextView
+                android:id="@+id/profile_companyTown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="جده"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"
+                android:drawableLeft="@drawable/loc_icon_black"
+                android:gravity="center_vertical|left"
+                android:drawablePadding="@dimen/_5sdp"
+                android:layout_gravity="left"
+
+
+                />
+            <TextView
+                android:id="@+id/profile_companyWebsite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="https://www.google.com"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/black"
+                android:drawableLeft="@drawable/link_icon_black"
+                android:gravity="center_vertical|left"
+                android:drawablePadding="@dimen/_5sdp"
+                android:layout_gravity="left"
+
+
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:gravity="center_horizontal"
+
+                >
+                <Button
+
+                    android:id="@+id/profile_comp_updBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
+                    android:text="update profile"
+                    android:paddingLeft="@dimen/_25sdp"
+                    android:paddingRight="@dimen/_25sdp"
+                    android:textColor="#0288D1"
+                    android:background="@drawable/message_button"
+                    android:visibility="gone"
+                    android:layout_margin="@dimen/_2sdp"
+
+
+                    />
+                <Button
+                    android:id="@+id/profile_comp_msgBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="send message"
+                    android:textSize="@dimen/_12sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:textColor="#0288D1"
+                    android:background="@drawable/message_button"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="gone"
+                    />
+                <Button
+                    android:id="@+id/profile_comp_locBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="view location"
+                    android:textSize="@dimen/_12sdp"
+
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:paddingRight="@dimen/_5sdp"
+                    android:textColor="#0288D1"
+                    android:background="@drawable/message_button"
+                    android:layout_margin="@dimen/_2sdp"
+                    android:visibility="gone"
+
+
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hi there, I'm here using Library App"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#0288D1"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/_10sdp"
+
+                />
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+
+</ScrollView>
+

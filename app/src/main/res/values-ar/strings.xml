@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <integer-array name="fab_colors">
+        <item>@color/base</item>
+        <item>@color/centercolor</item>
+        <item>@color/colorPrimary</item>
+        <item>@color/label</item>
+        <item>@color/base</item>
+    </integer-array>
+</resources>

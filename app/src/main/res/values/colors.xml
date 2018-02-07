@@ -33,6 +33,7 @@
     <color name="home_toolbar_start">#0D47A1</color>
     <color name="home_toolbar_center">#1E88E5</color>
     <color name="centercolor_toolbar_chooser">#14588e</color>
+    <color name="online_color">#00E676</color>
     <!--<color name="colorPrimary">#01579B</color>
     <color name="colorPrimaryDark">#01579B</color>
     <color name="colorAccent">#01579B</color>

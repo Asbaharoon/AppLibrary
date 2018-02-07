@@ -25,6 +25,7 @@
         android:maxLines="1"
         android:scrollHorizontally="true"
         tools:ignore="MissingPrefix"
+        android:gravity="left|center_vertical"
 
 
         />

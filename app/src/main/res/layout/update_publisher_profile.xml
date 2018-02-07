@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:fillViewport="true"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/screengradint"
+            android:paddingLeft="@dimen/_5sdp"
+            android:paddingRight="@dimen/_5sdp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textSize="@dimen/_25sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/base"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="@dimen/_110sdp"
+                android:layout_height="@dimen/_110sdp"
+                android:src="@drawable/user_profile"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_5sdp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="عماد مجدي محمد سلام المغربي"
+                android:textSize="@dimen/_16sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/base"
+                android:gravity="center_horizontal"
+                android:drawableRight="@drawable/ic_edit"
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="المملكه العربيه السعوديه"
+                android:textSize="@dimen/_13sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/base"
+                android:gravity="center_horizontal"
+                android:drawableRight="@drawable/ic_edit"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="emadmagdy.developer@gmail.com"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/base"
+                android:drawableLeft="@drawable/email_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableRight="@drawable/ic_edit"
+                android:gravity="center_vertical|left"
+
+
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="+201017357658"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/base"
+                android:drawableLeft="@drawable/phone_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableRight="@drawable/ic_edit"
+                android:gravity="center_vertical|left"
+
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="المنوفيه"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/base"
+                android:drawableLeft="@drawable/location_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableRight="@drawable/ic_edit"
+                android:gravity="center_vertical|left"
+
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="شبين الكوم"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/base"
+                android:drawableLeft="@drawable/location_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableRight="@drawable/ic_edit"
+                android:gravity="center_vertical|left"
+
+
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="https://www.google.com"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@color/base"
+                android:drawableLeft="@drawable/website_icon"
+                android:drawablePadding="@dimen/_10sdp"
+                android:drawableRight="@drawable/ic_edit"
+                android:gravity="center_vertical|left"
+
+
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_gravity="center_horizontal"
+                android:text="update profile"
+                android:paddingLeft="@dimen/_25sdp"
+                android:paddingRight="@dimen/_25sdp"
+                android:textColor="#90CAF9"
+                android:background="@drawable/message_button"
+                android:layout_marginTop="@dimen/_15sdp"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hi there, I'm here using Library App"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#90CAF9"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+
+                />
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

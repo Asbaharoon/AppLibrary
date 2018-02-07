@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.omd.library.Activities.ChooserSingin"
+    tools:context="com.semicolon.librarians.library.Activities.ChooserSingin"
     android:background="@drawable/screengradint"
 
     >
@@ -67,7 +67,7 @@
         >
         <com.andexert.library.RippleView
             android:id="@+id/ripple_signinBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:rv_centered="true"
             app:rv_type="rectangle"
@@ -93,7 +93,7 @@
             />
         </com.andexert.library.RippleView>
         <com.andexert.library.RippleView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:rv_centered="true"
             app:rv_type="rectangle"
@@ -118,7 +118,7 @@
                 />
         </com.andexert.library.RippleView>
         <com.andexert.library.RippleView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:rv_centered="true"
             app:rv_type="rectangle"

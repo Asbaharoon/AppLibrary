@@ -10,27 +10,33 @@
         android:orientation="vertical"
         >
         <TextView
+            android:id="@+id/user_chat_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textSize="@dimen/_15sdp"
             android:text="User Name"
             android:textColor="@color/base"
+            android:gravity="left|center_vertical"
 
 
             />
         <TextView
+            android:id="@+id/user_chat_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
-            android:textSize="@dimen/_11sdp"
+            android:textSize="@dimen/_12sdp"
             android:text="just now"
             android:textColor="@color/base"
+            android:gravity="left|center_vertical"
+
 
 
             />
     </LinearLayout>
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_chat_image"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:src="@drawable/user_profile"

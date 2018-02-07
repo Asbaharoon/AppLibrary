@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.omd.library.Activities.NearbyActivity">
+    tools:context="com.semicolon.librarians.library.Activities.NearbyActivity">
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fabGravity="bottom_end"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|right"
         app:miniFabBackgroundTint="@color/base"
         app:miniFabTitleTextColor="#5E35B1"
         app:miniFabTitleBackgroundTint="@color/base"
