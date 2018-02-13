@@ -4,123 +4,111 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_145sdp"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            app:cardElevation="@dimen/_2sdp"
-            app:cardCornerRadius="@dimen/_5sdp"
 
-            >
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
+                android:padding="@dimen/_5sdp"
+                android:background="@color/base"
                 >
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight=".65"
+                <ImageView
+                    android:id="@+id/publisher_image"
+                    android:src="@drawable/user_profile"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:scaleType="centerCrop"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/publisher_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    >
-                    <ImageView
-                        android:id="@+id/publisher_image"
-                        android:src="@drawable/header"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:layout_centerVertical="true"
-                        android:paddingTop="@dimen/_10sdp"
-                        android:paddingBottom="@dimen/_10sdp"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:paddingRight="@dimen/_5sdp"
-                        />
-
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:layout_weight="1.35"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="@dimen/_5sdp"
-                    >
-                    <TextView
-                        android:id="@+id/publisher_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="publisher name"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:gravity="center_vertical|left"
-                        android:textSize="@dimen/_14sdp"
-                        android:textColor="@android:color/black"
-                        android:paddingRight="@dimen/_2sdp"
-                        android:layout_gravity="left"
-                        />
-
-                    <TextView
-                        android:id="@+id/publisher_country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="publisher country"
-                        android:textSize="@dimen/_13sdp"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:gravity="left|center"
-                        android:layout_gravity="left|center"
-                        android:textColor="#424242"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        />
-
-                    <TextView
-                        android:id="@+id/publisher_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="publisher email@gmail.com"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:textSize="@dimen/_11sdp"
-                        android:ellipsize="end"
-                        android:textColor="#757575"
+                    android:text="publisher name"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@android:color/black"
+                    android:paddingRight="@dimen/_2sdp"
+                    android:layout_toRightOf="@+id/publisher_image"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    />
+                <TextView
+                    android:id="@+id/publisher_country"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="publisher country"
+                    android:textSize="@dimen/_13sdp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="#424242"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_below="@+id/publisher_name"
+                    android:layout_toRightOf="@+id/publisher_image"
+                    android:layout_marginLeft="@dimen/_5sdp"
 
 
-                        />
 
 
-                    <TextView
-                        android:id="@+id/publisher_site"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="publisher site"
-                        android:layout_marginRight="@dimen/_5sdp"
-                        android:textSize="@dimen/_11sdp"
-                        android:ellipsize="end"
-                        android:textColor="#757575"
+                    />
+                <TextView
+                    android:id="@+id/publisher_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="publisher email@gmail.com"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:textSize="@dimen/_11sdp"
+                    android:ellipsize="end"
+                    android:textColor="#757575"
+
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_below="@+id/publisher_country"
+                    android:layout_toRightOf="@+id/publisher_image"
+                    android:layout_marginLeft="@dimen/_5sdp"
+
+                    />
+                <TextView
+                    android:id="@+id/publisher_site"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="publisher site"
+                    android:layout_marginRight="@dimen/_5sdp"
+                    android:textSize="@dimen/_11sdp"
+                    android:ellipsize="end"
+                    android:textColor="#757575"
+
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_below="@+id/publisher_email"
+                    android:layout_toRightOf="@+id/publisher_image"
+                    android:layout_marginLeft="@dimen/_5sdp"
+
+                    />
+                <TextView
+                    android:id="@+id/more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="More"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/centercolor"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/publisher_site"
 
 
-                        />
-                    <TextView
-                        android:id="@+id/more"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="More"
-                        android:gravity="end"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="bold"
-                        android:textColor="@color/centercolor"
-                        android:layout_gravity="left"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        />
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5px"
+                    android:background="@color/whit_gray"
+                    android:layout_below="@+id/more"
+                    android:layout_toRightOf="@+id/publisher_image"
+                    android:layout_marginLeft="@dimen/_5sdp"
 
-                </LinearLayout>
 
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                    />
+            </RelativeLayout>
 
     </FrameLayout>
 

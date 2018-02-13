@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import com.andexert.library.RippleView;
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.romainpiel.shimmer.Shimmer;
+import com.romainpiel.shimmer.ShimmerTextView;
 import com.semicolon.librarians.library.Activities.HomeActivity;
 import com.semicolon.librarians.library.MVP.Login_RegisterMVP.Login.Login_PresenterImp;
 import com.semicolon.librarians.library.MVP.Login_RegisterMVP.Login.Login_ViewData;
@@ -33,12 +36,8 @@ import com.semicolon.librarians.library.Models.NormalUserData;
 import com.semicolon.librarians.library.Models.PublisherModel;
 import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
-import com.github.siyamed.shapeimageview.BubbleImageView;
-import com.romainpiel.shimmer.Shimmer;
-import com.romainpiel.shimmer.ShimmerTextView;
+import com.semicolon.librarians.library.Services.Preferences;
 import com.semicolon.librarians.library.Services.Tags;
-import com.squareup.picasso.Picasso;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
@@ -218,6 +217,10 @@ public class LoginFragment extends Fragment implements Login_ViewData{
             public void run() {
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("userData",normalUserModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
+
                 startActivity(intent);
             }
         },500);
@@ -233,6 +236,9 @@ public class LoginFragment extends Fragment implements Login_ViewData{
             public void run() {
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("libraryData",libraryModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
                 Toast.makeText(mContext, ""+libraryModel.getUser_type()+"\n"+libraryModel.getLib_username(), Toast.LENGTH_SHORT).show();
             }
@@ -250,6 +256,9 @@ public class LoginFragment extends Fragment implements Login_ViewData{
             public void run() {
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("publisherData",publisherModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -264,8 +273,11 @@ public class LoginFragment extends Fragment implements Login_ViewData{
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getActivity(),HomeActivity.class);
+                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("universityData",universityModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -280,8 +292,12 @@ public class LoginFragment extends Fragment implements Login_ViewData{
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("companyData",companyModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -327,10 +343,8 @@ public class LoginFragment extends Fragment implements Login_ViewData{
     private void CreateSelectUserTypeDialog()
     {
         final View view = getActivity().getLayoutInflater().inflate(R.layout.alertdialog_choose_usertype,null);
-        final BubbleImageView bubbleImageView = (BubbleImageView) view.findViewById(R.id.bubble_userImage);
 
         Button confirm = (Button) view.findViewById(R.id.confirmBtn);
-        Picasso.with(getActivity()).load(R.drawable.user_profile).into(bubbleImageView);
         final RadioButton rb_normaluser = (RadioButton) view.findViewById(R.id.rb_normaluser);
         final RadioButton rb_library = (RadioButton) view.findViewById(R.id.rb_library);
         final RadioButton rb_publisher = (RadioButton) view.findViewById(R.id.rb_publisher);
@@ -404,4 +418,5 @@ public class LoginFragment extends Fragment implements Login_ViewData{
 
 
     }
+
 }

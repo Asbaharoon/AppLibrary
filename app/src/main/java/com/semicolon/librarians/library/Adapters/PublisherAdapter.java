@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,53 +72,14 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
                 open_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (homeActivity.user_Data!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("userData",homeActivity.user_Data);
-                            context.startActivity(intent);
-                            dialog.dismiss();
 
-                        }else if (homeActivity.publisher_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("publisherData",homeActivity.publisher_Model);
-                            context.startActivity(intent);
+                        Intent intent = new Intent(homeActivity,Activity_Profile.class);
+                        intent.putExtra("who_visit_myProfile","visitor");
+                        intent.putExtra("publisherData",publisherModel);
+                        context.startActivity(intent);
 
-                            dialog.dismiss();
+                        dialog.dismiss();
 
-
-                        }else if (homeActivity.library_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("libraryData",homeActivity.library_Model);
-                            context.startActivity(intent);
-
-                            dialog.dismiss();
-
-                        }else if (homeActivity.university_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("universityData",homeActivity.university_Model);
-                            context.startActivity(intent);
-
-                            dialog.dismiss();
-
-                        }
-                        else if (homeActivity.company_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("companyData",homeActivity.company_Model);
-                            context.startActivity(intent);
-
-                            dialog.dismiss();
-
-                        }
                     }
                 });
                 send_msg.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +87,7 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
                     public void onClick(View view) {
                         if (homeActivity.user_Data!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.user_Data.getUserId(),publisherModel.getPub_username());
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","user");
                             intent.putExtra("chat_userType","publisher");
@@ -134,6 +97,8 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
                             dialog.dismiss();
                         }else if (homeActivity.publisher_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.publisher_Model.getPub_username(),publisherModel.getPub_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","publisher");
                             intent.putExtra("chat_userType","publisher");
@@ -145,6 +110,8 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
                         }
                         else if (homeActivity.library_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.library_Model.getLib_username(),publisherModel.getPub_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","library");
                             intent.putExtra("chat_userType","publisher");
@@ -156,6 +123,8 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
                         }
                         else if (homeActivity.university_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.university_Model.getUni_username(),publisherModel.getPub_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","university");
                             intent.putExtra("chat_userType","publisher");
@@ -167,6 +136,8 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
                         }
                         else if (homeActivity.company_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.company_Model.getComp_username(),publisherModel.getPub_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","company");
                             intent.putExtra("chat_userType","publisher");
@@ -249,6 +220,15 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
 
                 }
             };
+            if (!publisherModel.getUser_photo().equals("0"))
+            {
+                Picasso.with(context).load(Tags.image_path+publisherModel.getUser_photo()).placeholder(R.drawable.user_profile).into(target);
+
+            }else
+                {
+                    Picasso.with(context).load(R.drawable.user_profile).into(target);
+
+                }
 
            /* Long sd = Long.getLong(PublisherModel.getPublishertartDate());
             Long ed = Long.getLong(PublisherModel.getJobEndDate());
@@ -261,6 +241,7 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
             publisher_country.setText(publisherModel.getPub_country().toString());
             publisher_email.setText(publisherModel.getPub_email());
             publisher_site.setText(publisherModel.getPub_website());
+            Log.e("pubusername",""+publisherModel.getPub_username());
 
 
 

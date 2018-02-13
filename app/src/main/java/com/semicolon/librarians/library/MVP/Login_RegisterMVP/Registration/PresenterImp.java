@@ -689,37 +689,37 @@ public class PresenterImp implements Presenter,Model_Interactor.onCompleteListen
 
 
     @Override
-    public void NormalUserRegistration(String userType, String photoName, String photo, String first_name, String last_name, String email, String country, String phone, String user_username, String password,String lat,String lng) {
+    public void NormalUserRegistration(String userType, String photo, String first_name, String last_name, String email, String country, String phone, String user_username, String password,String lat,String lng,String token) {
         interactor = new Model_InteractorImp();
-        interactor.NormalUserRegistration(userType,photoName,photo,first_name,last_name,email,country,phone,user_username,password,lat,lng,this,mContext);
+        interactor.NormalUserRegistration(userType,photo,first_name,last_name,email,country,phone,user_username,password,lat,lng,token,this,mContext);
 
     }
 
     @Override
-    public void PublisherRegistration(String userType, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng) {
+    public void PublisherRegistration(String userType,String photo, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng,String token) {
         interactor = new Model_InteractorImp();
-        interactor.PublisherRegistration(userType,first_name,last_name,email,country,password,phone,username,address,town,website_url,lat,lng,this,mContext);
+        interactor.PublisherRegistration(userType,photo,first_name,last_name,email,country,password,phone,username,address,town,website_url,lat,lng,token,this,mContext);
 
     }
 
 
     @Override
-    public void LibraryRegistration(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng) {
+    public void LibraryRegistration(String userType,String photo, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng,String token) {
         interactor = new Model_InteractorImp();
-        interactor.LibraryRegistration(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libUsername,libPassword,lat,lng,this,mContext);
+        interactor.LibraryRegistration(userType,photo,libName,libEmail,libPhone,libCountry,libAddress,libType,libUsername,libPassword,lat,lng,token,this,mContext);
 
     }
 
     @Override
-    public void UniversityRegistration(String userType, String name, String email, String country, String phone, String username, String password, String major, String address, String site, String lat, String lng) {
+    public void UniversityRegistration(String userType,String photo, String name, String email, String country, String phone, String username, String password, String major, String address, String site, String lat, String lng,String token) {
         interactor = new Model_InteractorImp();
-        interactor.UniversityRegistration(userType,name,email,country,phone,username,password,major,address,site,lat,lng,this,mContext);
+        interactor.UniversityRegistration(userType,photo,name,email,country,phone,username,password,major,address,site,lat,lng,token,this,mContext);
     }
 
     @Override
-    public void CompanyRegistration(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng) {
+    public void CompanyRegistration(String userType,String photo, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng,String token) {
         interactor = new Model_InteractorImp();
-        interactor.CompanyRegistration(userType,name,email,country,phone,username,password,address,town,site,lat,lng,this,mContext);
+        interactor.CompanyRegistration(userType,photo,name,email,country,phone,username,password,address,town,site,lat,lng,token,this,mContext);
     }
 
 

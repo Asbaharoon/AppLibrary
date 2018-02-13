@@ -15,11 +15,20 @@ import android.widget.TextView;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mukesh.countrypicker.fragments.CountryPicker;
+import com.semicolon.librarians.library.Models.CompanyModel;
 import com.semicolon.librarians.library.Models.CountriesModel;
+import com.semicolon.librarians.library.Models.LibraryModel;
 import com.semicolon.librarians.library.Models.LibraryServices_Model;
 import com.semicolon.librarians.library.Models.LibraryType_Model;
+import com.semicolon.librarians.library.Models.NormalUserData;
+import com.semicolon.librarians.library.Models.PublisherModel;
+import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
 import com.semicolon.librarians.library.Services.Tags;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
@@ -34,6 +43,12 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     private String country_id;
     private String libType_id="";
     private String libService_id="";
+    public NormalUserData userData=null;
+    public PublisherModel publisherModel=null;
+    public LibraryModel libraryModel=null;
+    public UniversityModel universityModel =null;
+    public CompanyModel companyModel;
+
 
 
     private final int REQ_CODE_COUNTRY =111;
@@ -46,6 +61,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity__search);
         Calligrapher calligrapher = new Calligrapher(getApplicationContext());
         calligrapher.setFont(this, Tags.font,true);
+        EventBus.getDefault().register(this);
 
         initView();
         getDataFromIntent();
@@ -96,11 +112,52 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
                 {
                     if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
                     {
-                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                        intent.putExtra("searchType","publisher");
-                        intent.putExtra("pubName",query);
-                        intent.putExtra("country_id",country_id);
-                         startActivity(intent);
+                        if (userData!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","publisher");
+                            intent.putExtra("pubName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("userData",userData);
+                            startActivity(intent);
+                        }else if (publisherModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","publisher");
+                            intent.putExtra("pubName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("pubData",publisherModel);
+                            intent.putExtra("pubData",publisherModel);
+
+                            startActivity(intent);
+                        }else if (libraryModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","publisher");
+                            intent.putExtra("pubName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("libData",libraryModel);
+                            startActivity(intent);
+                        }
+                        else if (universityModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","publisher");
+                            intent.putExtra("pubName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("uniData",universityModel);
+                            startActivity(intent);
+                        }
+                        else if (companyModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","publisher");
+                            intent.putExtra("pubName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("compData",companyModel);
+                            startActivity(intent);
+                        }
+
                     }
 
 
@@ -109,11 +166,51 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
                 {
                     if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
                     {
-                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                        intent.putExtra("searchType","university");
-                        intent.putExtra("uniName",query);
-                        intent.putExtra("country_id",country_id);
-                        startActivity(intent);
+                        if (userData!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","university");
+                            intent.putExtra("uniName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("userData",userData);
+
+                            startActivity(intent);
+                        }else if (publisherModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","university");
+                            intent.putExtra("uniName",query);
+                            intent.putExtra("country_id",country_id);
+                            startActivity(intent);
+                        }else if (libraryModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","university");
+                            intent.putExtra("uniName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("libData",libraryModel);
+
+                            startActivity(intent);
+                        }else if (universityModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","university");
+                            intent.putExtra("uniName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("uniData",universityModel);
+
+                            startActivity(intent);
+                        }else if (companyModel!=null)
+                        {
+                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                            intent.putExtra("searchType","university");
+                            intent.putExtra("uniName",query);
+                            intent.putExtra("country_id",country_id);
+                            intent.putExtra("compData",companyModel);
+
+                            startActivity(intent);
+                        }
+
                     }
                 }
                 return true;
@@ -222,23 +319,9 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-   /* private void showCountryPicker()
-    {
-        countryPicker = CountryPicker.newInstance("Select Country");
-        countryPicker.show(getSupportFragmentManager(),TAG);
-        countryPicker.setListener(new CountryPickerListener() {
-            @Override
-            public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
-                search_country.setText(name+"-"+code);
-                countryPicker.dismiss();
-
-            }
-        });
-    }*/
-
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQ_CODE_COUNTRY&&resultCode==RESULT_OK&&data!=null)
         {
@@ -265,4 +348,46 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         }
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getUserData(NormalUserData normalUserData)
+    {
+        this.userData  = normalUserData;
+        Log.e("user",""+userData.getUserName());
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getPublisherData(PublisherModel publisherModel)
+    {
+        this.publisherModel  = publisherModel;
+        Log.e("pub",""+publisherModel.getPub_name());
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getLibraryData(LibraryModel libraryModel)
+    {
+        this.libraryModel  = libraryModel;
+        Log.e("uni",""+libraryModel.getLib_name());
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getUniversityData(UniversityModel universityModel)
+    {
+        this.universityModel  = universityModel;
+        Log.e("uni",""+universityModel.getUni_name());
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getCompanyData(CompanyModel companyModel)
+    {
+        this.companyModel  = companyModel;
+        Log.e("comp",""+companyModel.getComp_name());
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

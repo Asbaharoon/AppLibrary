@@ -1,5 +1,6 @@
 package com.semicolon.librarians.library.MVP.NearbyMVP;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.semicolon.librarians.library.Models.CompanyModel;
@@ -29,28 +30,28 @@ public class InteractorImp implements Interactor {
 
 
     @Override
-    public void getNearbyUsers(String currUserType, String filteredUserType, LatLng currLatLng, onCompleteListener listener) {
+    public void getNearbyUsers(String currUserType,String currUserId, String filteredUserType, LatLng currLatLng, onCompleteListener listener) {
         switch (filteredUserType)
         {
             case "user":
-                getNearbyUsersDate(currUserType, filteredUserType, currLatLng, listener);
+                getNearbyUsersDate(currUserType,currUserId, "user", currLatLng, listener);
                 break;
             case "publisher":
-                getNearbyPublishersDate(currUserType, filteredUserType, currLatLng, listener);
+                getNearbyPublishersDate(currUserType,currUserId, "publisher", currLatLng, listener);
                 break;
             case "library":
-                getNearbyLibrariesDate(currUserType, filteredUserType, currLatLng, listener);
+                getNearbyLibrariesDate(currUserType,currUserId, "library", currLatLng, listener);
                 break;
             case "university":
-                getNearbyUniversitiesDate(currUserType, filteredUserType, currLatLng, listener);
+                getNearbyUniversitiesDate(currUserType,currUserId, "university", currLatLng, listener);
                 break;
             case "company":
-                getNearbyCompaniesDate(currUserType, filteredUserType, currLatLng, listener);
+                getNearbyCompaniesDate(currUserType,currUserId, "company", currLatLng, listener);
                 break;
         }
     }
 
-    private void getNearbyUsersDate(final String currUserType, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
+    private void getNearbyUsersDate(final String currUserType, final String currUserId, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
     {
         Log.e("user","1");
         Retrofit retrofit = setUpRetrofit();
@@ -69,13 +70,18 @@ public class InteractorImp implements Interactor {
                         case "user":
                             for (NormalUserData user_Data:normalUserDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat().toString()),Double.parseDouble(user_Data.getUser_google_lng().toString()))<25
-                                        &&distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat().toString()),Double.parseDouble(user_Data.getUser_google_lng().toString()))!=0.0)
+                                if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng()))
                                 {
-                                    NearbyUserDataList.add(user_Data);
-                                    Log.e("user data ",user_Data.getUserName());
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat().toString()),Double.parseDouble(user_Data.getUser_google_lng().toString()))<25
+                                            &&!user_Data.getUserId().equals(currUserId))
+                                    {
+                                        NearbyUserDataList.add(user_Data);
+                                        Log.e("user data ",user_Data.getUserName());
 
+                                    }
                                 }
+
+
                             }
                             if (NearbyUserDataList.size()>0)
                             {
@@ -90,11 +96,18 @@ public class InteractorImp implements Interactor {
                         case "publisher":
                             for (NormalUserData user_Data:normalUserDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
+                                Log.e("userlat","username"+user_Data.getUserName()+""+user_Data.getUser_google_lat());
+
+                                if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng()))
                                 {
-                                    NearbyUserDataList.add(user_Data);
-                                    Log.e("user data ",user_Data.getUserName());
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
+                                    {
+                                        NearbyUserDataList.add(user_Data);
+                                        Log.e("user data ",user_Data.getUserName());
+                                    }
                                 }
+
+
                             }
                             if (NearbyUserDataList.size()>0)
                             {
@@ -106,15 +119,18 @@ public class InteractorImp implements Interactor {
                             }
                             break;
                         case "library":
+
                             for (NormalUserData user_Data:normalUserDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
-                                {
-                                    NearbyUserDataList.add(user_Data);
-                                    Log.e("user data ",user_Data.getUserName());
+                                if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng())) {
 
+
+                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(user_Data.getUser_google_lat()), Double.parseDouble(user_Data.getUser_google_lng())) < 25) {
+                                        NearbyUserDataList.add(user_Data);
+                                        Log.e("user data ", user_Data.getUserName());
+
+                                    }
                                 }
-
                             }
                             if (NearbyUserDataList.size()>0)
                             {
@@ -128,6 +144,7 @@ public class InteractorImp implements Interactor {
                         case "university":
                             for (NormalUserData user_Data:normalUserDataList)
                             {
+                                if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng())){
                                 if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
                                 {
                                     NearbyUserDataList.add(user_Data);
@@ -135,6 +152,8 @@ public class InteractorImp implements Interactor {
 
                                 }
 
+
+                                }
                             }
                             if (NearbyUserDataList.size()>0)
                             {
@@ -179,7 +198,7 @@ public class InteractorImp implements Interactor {
             }
         });
     }
-    private void getNearbyPublishersDate(final String currUserType, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
+    private void getNearbyPublishersDate(final String currUserType, final String currUserId, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
     {
         Log.e("pub","1");
 
@@ -198,13 +217,14 @@ public class InteractorImp implements Interactor {
                         case "user":
                             for (PublisherModel pub_Data:PublisherDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25)
-                                {
-                                    NearbyPublisherDataList.add(pub_Data);
-                                    Log.e("user data ",pub_Data.getPub_username());
+                                if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
+                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(pub_Data.getPub_lat()), Double.parseDouble(pub_Data.getPub_lng())) < 25) {
+                                        NearbyPublisherDataList.add(pub_Data);
+                                        Log.e("user data ", pub_Data.getPub_username());
+
+                                    }
 
                                 }
-
                             }
                             if (NearbyPublisherDataList.size()>0)
                             {
@@ -218,12 +238,14 @@ public class InteractorImp implements Interactor {
                         case "publisher":
                             for (PublisherModel pub_Data:PublisherDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25
-                                        &&distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))!=0.0)
-                                {
-                                    NearbyPublisherDataList.add(pub_Data);
-                                    Log.e("user data ",pub_Data.getPub_username());
+                                if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
+                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(pub_Data.getPub_lat()), Double.parseDouble(pub_Data.getPub_lng())) < 25
+                                            && !pub_Data.getPub_username().equals(currUserId)) {
+                                        NearbyPublisherDataList.add(pub_Data);
+                                        Log.e("user data ", pub_Data.getPub_username());
+
+                                    }
                                 }
 
                             }
@@ -239,11 +261,13 @@ public class InteractorImp implements Interactor {
                         case "library":
                             for (PublisherModel pub_Data:PublisherDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25)
-                                {
-                                    NearbyPublisherDataList.add(pub_Data);
-                                    Log.e("user data ",pub_Data.getPub_username());
+                                if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25) {
+                                        NearbyPublisherDataList.add(pub_Data);
+                                        Log.e("user data ", pub_Data.getPub_username());
+
+                                    }
                                 }
 
                             }
@@ -259,11 +283,13 @@ public class InteractorImp implements Interactor {
                         case "university":
                             for (PublisherModel pub_Data:PublisherDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25)
-                                {
-                                    NearbyPublisherDataList.add(pub_Data);
-                                    Log.e("user data ",pub_Data.getPub_username());
+                                if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25) {
+                                        NearbyPublisherDataList.add(pub_Data);
+                                        Log.e("user data ", pub_Data.getPub_username());
+
+                                    }
                                 }
 
                             }
@@ -279,11 +305,13 @@ public class InteractorImp implements Interactor {
                         case "company":
                             for (PublisherModel pub_Data:PublisherDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25)
-                                {
-                                    NearbyPublisherDataList.add(pub_Data);
-                                    Log.e("user data ",pub_Data.getPub_username());
+                                if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25) {
+                                        NearbyPublisherDataList.add(pub_Data);
+                                        Log.e("user data ", pub_Data.getPub_username());
+
+                                    }
                                 }
 
                             }
@@ -314,7 +342,7 @@ public class InteractorImp implements Interactor {
         });
 
     }
-    private void getNearbyLibrariesDate(final String currUserType, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
+    private void getNearbyLibrariesDate(final String currUserType, final String currUserId, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
     {
         Log.e("lib","1");
 
@@ -334,11 +362,13 @@ public class InteractorImp implements Interactor {
                         case "user":
                             for (LibraryModel lib_Data:LibraryDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25)
-                                {
-                                    NearbyLibraryDataList.add(lib_Data);
-                                    Log.e("user data ",lib_Data.getLib_username());
+                                if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                        NearbyLibraryDataList.add(lib_Data);
+                                        Log.e("user data ", lib_Data.getLib_username());
+
+                                    }
                                 }
 
                             }
@@ -354,11 +384,13 @@ public class InteractorImp implements Interactor {
                         case "publisher":
                             for (LibraryModel lib_Data:LibraryDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25)
-                                {
-                                    NearbyLibraryDataList.add(lib_Data);
-                                    Log.e("user data ",lib_Data.getLib_username());
+                                if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                        NearbyLibraryDataList.add(lib_Data);
+                                        Log.e("user data ", lib_Data.getLib_username());
+
+                                    }
                                 }
 
                             }
@@ -374,12 +406,14 @@ public class InteractorImp implements Interactor {
                         case "library":
                             for (LibraryModel lib_Data:LibraryDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25
-                                        &&distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))!=0.0)
-                                {
-                                    NearbyLibraryDataList.add(lib_Data);
-                                    Log.e("user data ",lib_Data.getLib_username());
+                                if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25
+                                        &&!lib_Data.getLib_username().equals(currUserId)) {
+                                        NearbyLibraryDataList.add(lib_Data);
+                                        Log.e("user data ", lib_Data.getLib_username());
+
+                                    }
                                 }
 
                             }
@@ -395,11 +429,13 @@ public class InteractorImp implements Interactor {
                         case "university":
                             for (LibraryModel lib_Data:LibraryDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25)
-                                {
-                                    NearbyLibraryDataList.add(lib_Data);
-                                    Log.e("user data ",lib_Data.getLib_username());
+                                if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                        NearbyLibraryDataList.add(lib_Data);
+                                        Log.e("user data ", lib_Data.getLib_username());
+
+                                    }
                                 }
 
                             }
@@ -415,11 +451,13 @@ public class InteractorImp implements Interactor {
                         case "company":
                             for (LibraryModel lib_Data:LibraryDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25)
-                                {
-                                    NearbyLibraryDataList.add(lib_Data);
-                                    Log.e("user data ",lib_Data.getLib_username());
+                                if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                        NearbyLibraryDataList.add(lib_Data);
+                                        Log.e("user data ", lib_Data.getLib_username());
+
+                                    }
                                 }
 
                             }
@@ -452,7 +490,7 @@ public class InteractorImp implements Interactor {
             }
         });
     }
-    private void getNearbyUniversitiesDate(final String currUserType, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
+    private void getNearbyUniversitiesDate(final String currUserType, final String currUserId, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
     {
         Log.e("uni","1");
 
@@ -471,11 +509,13 @@ public class InteractorImp implements Interactor {
                         case "user":
                             for (UniversityModel uni_Data:UniversityDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25)
-                                {
-                                    NearbyUniversityDataList.add(uni_Data);
-                                    Log.e("user data ",uni_Data.getUni_username());
+                                if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                        NearbyUniversityDataList.add(uni_Data);
+                                        Log.e("user data ", uni_Data.getUni_username());
+
+                                    }
                                 }
 
                             }
@@ -491,11 +531,13 @@ public class InteractorImp implements Interactor {
                         case "publisher":
                             for (UniversityModel uni_Data:UniversityDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25)
-                                {
-                                    NearbyUniversityDataList.add(uni_Data);
-                                    Log.e("user data ",uni_Data.getUni_username());
+                                if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                        NearbyUniversityDataList.add(uni_Data);
+                                        Log.e("user data ", uni_Data.getUni_username());
+
+                                    }
                                 }
 
                             }
@@ -511,11 +553,13 @@ public class InteractorImp implements Interactor {
                         case "library":
                             for (UniversityModel uni_Data:UniversityDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25)
-                                {
-                                    NearbyUniversityDataList.add(uni_Data);
-                                    Log.e("user data ",uni_Data.getUni_username());
+                                if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                        NearbyUniversityDataList.add(uni_Data);
+                                        Log.e("user data ", uni_Data.getUni_username());
+
+                                    }
                                 }
 
                             }
@@ -531,12 +575,14 @@ public class InteractorImp implements Interactor {
                         case "university":
                             for (UniversityModel uni_Data:UniversityDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25
-                                        &&distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))!=0.0)
-                                {
-                                    NearbyUniversityDataList.add(uni_Data);
-                                    Log.e("user data ",uni_Data.getUni_username());
+                                if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25
+                                        &&!uni_Data.getUni_username().equals(currUserId)) {
+                                        NearbyUniversityDataList.add(uni_Data);
+                                        Log.e("user data ", uni_Data.getUni_username());
+
+                                    }
                                 }
                             }
                             if (NearbyUniversityDataList.size()>0)
@@ -551,11 +597,13 @@ public class InteractorImp implements Interactor {
                         case "company":
                             for (UniversityModel uni_Data:UniversityDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25)
-                                {
-                                    NearbyUniversityDataList.add(uni_Data);
-                                    Log.e("user data ",uni_Data.getUni_username());
+                                if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                        NearbyUniversityDataList.add(uni_Data);
+                                        Log.e("user data ", uni_Data.getUni_username());
+
+                                    }
                                 }
                             }
                             if (NearbyUniversityDataList.size()>0)
@@ -585,7 +633,7 @@ public class InteractorImp implements Interactor {
             }
         });
     }
-    private void getNearbyCompaniesDate(final String currUserType, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
+    private void getNearbyCompaniesDate(final String currUserType, final String currUserId, String filteredUserType, final LatLng currLatLng, final onCompleteListener listener)
     {
         Log.e("comp","1");
 
@@ -605,11 +653,13 @@ public class InteractorImp implements Interactor {
                         case "user":
                             for (CompanyModel comp_Data:CompanyDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25)
-                                {
-                                    NearbyCompanyDataList.add(comp_Data);
-                                    Log.e("user data ",comp_Data.getComp_username());
+                                if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                        NearbyCompanyDataList.add(comp_Data);
+                                        Log.e("user data ", comp_Data.getComp_username());
+
+                                    }
                                 }
                             }
                             if (NearbyCompanyDataList.size()>0)
@@ -624,11 +674,13 @@ public class InteractorImp implements Interactor {
                         case "publisher":
                             for (CompanyModel comp_Data:CompanyDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25)
-                                {
-                                    NearbyCompanyDataList.add(comp_Data);
-                                    Log.e("user data ",comp_Data.getComp_username());
+                                if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                        NearbyCompanyDataList.add(comp_Data);
+                                        Log.e("user data ", comp_Data.getComp_username());
+
+                                    }
                                 }
                             }
                             if (NearbyCompanyDataList.size()>0)
@@ -643,11 +695,13 @@ public class InteractorImp implements Interactor {
                         case "library":
                             for (CompanyModel comp_Data:CompanyDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25)
-                                {
-                                    NearbyCompanyDataList.add(comp_Data);
-                                    Log.e("user data ",comp_Data.getComp_username());
+                                if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                        NearbyCompanyDataList.add(comp_Data);
+                                        Log.e("user data ", comp_Data.getComp_username());
+
+                                    }
                                 }
                             }
                             if (NearbyCompanyDataList.size()>0)
@@ -662,11 +716,13 @@ public class InteractorImp implements Interactor {
                         case "university":
                             for (CompanyModel comp_Data:CompanyDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25)
-                                {
-                                    NearbyCompanyDataList.add(comp_Data);
-                                    Log.e("user data ",comp_Data.getComp_username());
+                                if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                        NearbyCompanyDataList.add(comp_Data);
+                                        Log.e("user data ", comp_Data.getComp_username());
+
+                                    }
                                 }
                             }
                             if (NearbyCompanyDataList.size()>0)
@@ -681,12 +737,14 @@ public class InteractorImp implements Interactor {
                         case "company":
                             for (CompanyModel comp_Data:CompanyDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25
-                                        &&distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))!=0.0)
-                                {
-                                    NearbyCompanyDataList.add(comp_Data);
-                                    Log.e("user data ",comp_Data.getComp_username());
+                                if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25
+                                        &&!comp_Data.getComp_username().equals(currUserId)) {
+                                        NearbyCompanyDataList.add(comp_Data);
+                                        Log.e("user data ", comp_Data.getComp_username());
+
+                                    }
                                 }
                             }
                             if (NearbyCompanyDataList.size()>0)

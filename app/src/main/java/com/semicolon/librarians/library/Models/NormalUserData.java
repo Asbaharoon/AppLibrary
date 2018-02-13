@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class NormalUserData implements Serializable {
     @SerializedName("user_username")
     private String userId;
+    @SerializedName("user_photo")
+    private String user_photo;
     @SerializedName("user_name")
     private String userName;
     @SerializedName("user_email")
@@ -32,8 +34,18 @@ public class NormalUserData implements Serializable {
     public NormalUserData() {
     }
 
-    public NormalUserData(String userName, String userEmail, String userCountry, String userPhone, String userPhoto, String userType, String user_google_lat, String user_google_lng) {
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
+
+    public NormalUserData(String userName, String user_photo, String userEmail, String userCountry, String userPhone, String userPhoto, String userType, String user_google_lat, String user_google_lng) {
         this.userName = userName;
+        this.user_photo = user_photo;
+
         this.userEmail = userEmail;
         this.userCountry = userCountry;
         this.userPhone = userPhone;

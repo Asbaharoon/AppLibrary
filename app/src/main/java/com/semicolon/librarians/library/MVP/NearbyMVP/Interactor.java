@@ -24,6 +24,6 @@ public interface Interactor {
         void onFailed(String error);
     }
 
-    void getNearbyUsers(String currUserType,String filteredUserType, LatLng currLatLng,Interactor.onCompleteListener listener);
+    void getNearbyUsers(String currUserType,String currUserId,String filteredUserType, LatLng currLatLng,Interactor.onCompleteListener listener);
 
 }

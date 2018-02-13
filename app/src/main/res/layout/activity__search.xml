@@ -66,6 +66,8 @@
                             android:id="@+id/msv"
                             android:elevation="@dimen/_5sdp"
                             android:textColorHint="#9e9e9e"
+                            android:layout_gravity="left|center_vertical"
+
                             >
                         </com.miguelcatalan.materialsearchview.MaterialSearchView>
 
@@ -81,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="?actionBarSize"
                         android:singleLine="true"
-                        android:text="Select country"
+                        android:hint="Select country"
                         android:gravity="center_vertical|left"
                         android:textSize="@dimen/_15sdp"
                         android:drawableLeft="@drawable/places_icon"

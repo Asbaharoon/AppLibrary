@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class CompanyModel implements Serializable {
     @SerializedName("user_type")
     private String user_type;
+    @SerializedName("company_photo")
+    private String user_photo;
     @SerializedName("company_name")
     private String comp_name;
     @SerializedName("user_email")
@@ -39,8 +41,11 @@ public class CompanyModel implements Serializable {
     public CompanyModel() {
     }
 
-    public CompanyModel(String user_type, String comp_name, String comp_email, String comp_phone, String comp_country, String comp_address, String comp_town, String comp_site, String comp_username, String comp_password, String comp_lat, String comp_lng) {
+
+    public CompanyModel(String user_type, String user_photo, String comp_name, String comp_email, String comp_phone, String comp_country, String comp_address, String comp_town, String comp_site, String comp_username, String comp_password, String comp_lat, String comp_lng) {
         this.user_type = user_type;
+        this.user_photo = user_photo;
+
         this.comp_name = comp_name;
         this.comp_email = comp_email;
         this.comp_phone = comp_phone;
@@ -52,6 +57,14 @@ public class CompanyModel implements Serializable {
         this.comp_password = comp_password;
         this.comp_lat = comp_lat;
         this.comp_lng = comp_lng;
+    }
+
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
     }
 
     public String getUser_type() {

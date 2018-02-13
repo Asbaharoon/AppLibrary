@@ -7,76 +7,85 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="@dimen/_5sdp"
         >
-<com.github.siyamed.shapeimageview.BubbleImageView
-    android:id="@+id/bubble_userImage"
-    android:layout_width="@dimen/_60sdp"
-    android:layout_height="@dimen/_60sdp"
-    app:siArrowPosition="right"
-    android:src="@drawable/user_profile"
-    />
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Who are you ?"
-            android:textSize="@dimen/_14sdp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="who are you ?"
+            android:textSize="@dimen/_18sdp"
             android:textColor="@color/black"
             android:padding="@dimen/_5sdp"
             />
+
     </LinearLayout>
 <RadioGroup
     android:id="@+id/rb_group"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:gravity="left"
+    android:padding="@dimen/_3sdp"
+    >
     <RadioButton
         android:id="@+id/rb_normaluser"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="User"
         app:buttonTint="@color/centercolor"
         android:textColor="@color/centercolor"
         android:checked="true"
         android:textSize="@dimen/_12sdp"
+        android:layout_gravity="center_horizontal"
+
         />
     <RadioButton
         android:id="@+id/rb_library"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Library"
         app:buttonTint="@color/centercolor"
         android:textColor="@color/centercolor"
         android:textSize="@dimen/_12sdp"
+        android:layout_gravity="center_horizontal"
+
 
         />
     <RadioButton
         android:id="@+id/rb_publisher"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Publisher"
         app:buttonTint="@color/centercolor"
         android:textColor="@color/centercolor"
         android:textSize="@dimen/_12sdp"
+        android:layout_gravity="center_horizontal"
+
         />
     <RadioButton
         android:id="@+id/rb_university"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="University"
         app:buttonTint="@color/centercolor"
         android:textColor="@color/centercolor"
         android:textSize="@dimen/_12sdp"
+        android:layout_gravity="center_horizontal"
+
         />
     <RadioButton
         android:id="@+id/rb_company"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Company"
         app:buttonTint="@color/centercolor"
         android:textColor="@color/centercolor"
         android:textSize="@dimen/_12sdp"
+        android:layout_gravity="center_horizontal"
+
         />
 </RadioGroup>
     <LinearLayout
@@ -97,6 +106,7 @@
             android:background="@color/centercolor"
             android:textColor="@color/base"
             android:textSize="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_8sdp"
             />
     </LinearLayout>
 </LinearLayout>

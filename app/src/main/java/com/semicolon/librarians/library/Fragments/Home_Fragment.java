@@ -54,7 +54,65 @@ public class Home_Fragment extends Fragment  {
 
         setUpnavBar();
         getDataFromBundle();
+
+        CheckCurrentUser_LoggedIn();
         return view;
+    }
+
+    private void CheckCurrentUser_LoggedIn() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (user_Data!=null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("user_data",user_Data);
+                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    chat_fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+                    navBar.setCurrentItem(0,false);
+
+                }else if (publisher_Model!=null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("publisherData",publisher_Model);
+                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    chat_fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+                    navBar.setCurrentItem(0,false);
+                }
+                else if (library_Model!=null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("libraryData",library_Model);
+                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    chat_fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+                    navBar.setCurrentItem(0,false);
+
+                }
+                else if (university_Model!=null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("universityData",university_Model);
+                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    chat_fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+                    navBar.setCurrentItem(0,false);
+
+                }
+                else if (company_Model!=null)
+                {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("companyData",company_Model);
+                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    chat_fragment.setArguments(bundle);
+                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+                    navBar.setCurrentItem(0,false);
+
+                }
+            }
+        },200);
     }
 
     private void getDataFromBundle() {
@@ -99,66 +157,9 @@ public class Home_Fragment extends Fragment  {
         navBar.setInactiveColor(ContextCompat.getColor(getActivity(),R.color.dark_gray));
         navBar.setAccentColor(ContextCompat.getColor(getActivity(), R.color.centercolor));
         adapter.setupWithBottomNavigation(navBar);
-        //navBar.setCurrentItem(0);
+        navBar.setCurrentItem(0);
         navBar.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
-        if (navBar.getCurrentItem()==0)
-        {
 
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (user_Data!=null)
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("user_data",user_Data);
-                        Chat_Fragment chat_fragment = new Chat_Fragment();
-                        chat_fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commit();
-                        navBar.setCurrentItem(0,false);
-
-                    }else if (publisher_Model!=null)
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("publisherData",publisher_Model);
-                        Chat_Fragment chat_fragment = new Chat_Fragment();
-                        chat_fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commit();
-                        navBar.setCurrentItem(0,false);
-                    }
-                    else if (library_Model!=null)
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("libraryData",library_Model);
-                        Chat_Fragment chat_fragment = new Chat_Fragment();
-                        chat_fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commit();
-                        navBar.setCurrentItem(0,false);
-
-                    }
-                    else if (university_Model!=null)
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("universityData",university_Model);
-                        Chat_Fragment chat_fragment = new Chat_Fragment();
-                        chat_fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commit();
-                        navBar.setCurrentItem(0,false);
-
-                    }
-                    else if (company_Model!=null)
-                    {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("companyData",company_Model);
-                        Chat_Fragment chat_fragment = new Chat_Fragment();
-                        chat_fragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commit();
-                        navBar.setCurrentItem(0,false);
-
-                    }
-                }
-            },200);
-
-        }
         navBar.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {

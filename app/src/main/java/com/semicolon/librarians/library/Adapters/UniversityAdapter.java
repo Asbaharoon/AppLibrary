@@ -2,6 +2,8 @@ package com.semicolon.librarians.library.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +18,9 @@ import com.semicolon.librarians.library.Activities.Chat_Activity;
 import com.semicolon.librarians.library.Activities.HomeActivity;
 import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
+import com.semicolon.librarians.library.Services.Tags;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
 import java.util.List;
@@ -30,6 +34,7 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
     List<UniversityModel> universityModelList;
     Context context;
     HomeActivity homeActivity;
+    Target target;
 
     public UniversityAdapter(List<UniversityModel> universityModelList, Context context) {
         this.universityModelList = universityModelList;
@@ -53,6 +58,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
             public void onClick(View view) {
 
                 final UniversityModel universityModel2 = universityModelList.get(holder.getAdapterPosition());
+
+
                 View custom_view = LayoutInflater.from(context).inflate(R.layout.custom_alert_msg_profile,null);
                 TextView open_profile = (TextView) custom_view.findViewById(R.id.open_profile_tv);
                 TextView send_msg = (TextView) custom_view.findViewById(R.id.send_msg_tv);
@@ -67,53 +74,13 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                 open_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (homeActivity.user_Data!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("userData",homeActivity.user_Data);
-                            context.startActivity(intent);
-                            dialog.dismiss();
+                        Intent intent = new Intent(context,Activity_Profile.class);
+                        intent.putExtra("who_visit_myProfile","visitor");
+                        intent.putExtra("universityData",universityModel2);
+                        context.startActivity(intent);
 
-                        }else if (homeActivity.publisher_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("publisherData",homeActivity.publisher_Model);
-                            context.startActivity(intent);
+                        dialog.dismiss();
 
-                            dialog.dismiss();
-
-
-                        }else if (homeActivity.library_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("libraryData",homeActivity.library_Model);
-                            context.startActivity(intent);
-
-                            dialog.dismiss();
-
-                        }else if (homeActivity.university_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("universityData",homeActivity.university_Model);
-                            context.startActivity(intent);
-
-                            dialog.dismiss();
-
-                        }
-                        else if (homeActivity.company_Model!=null)
-                        {
-                            Intent intent = new Intent(homeActivity,Activity_Profile.class);
-                            intent.putExtra("who_visit_myProfile","visitor");
-                            intent.putExtra("companyData",homeActivity.company_Model);
-                            context.startActivity(intent);
-
-                            dialog.dismiss();
-
-                        }
                     }
                 });
                 send_msg.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +88,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                     public void onClick(View view) {
                         if (homeActivity.user_Data!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.user_Data.getUserId(),universityModel2.getUni_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","user");
                             intent.putExtra("chat_userType","university");
@@ -130,6 +99,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                             dialog.dismiss();
                         }else if (homeActivity.publisher_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.publisher_Model.getPub_username(),universityModel2.getUni_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","publisher");
                             intent.putExtra("chat_userType","university");
@@ -141,6 +112,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                         }
                         else if (homeActivity.library_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.library_Model.getLib_username(),universityModel2.getUni_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","library");
                             intent.putExtra("chat_userType","university");
@@ -152,6 +125,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                         }
                         else if (homeActivity.university_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.university_Model.getUni_username(),universityModel2.getUni_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","university");
                             intent.putExtra("chat_userType","university");
@@ -163,6 +138,8 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
                         }
                         else if (homeActivity.company_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.company_Model.getComp_username(),universityModel2.getUni_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","company");
                             intent.putExtra("chat_userType","university");
@@ -213,7 +190,33 @@ public class UniversityAdapter extends RecyclerView.Adapter<UniversityAdapter.Vi
 
         public void BindData(UniversityModel universityModel)
         {
-            Picasso.with(context).load(R.drawable.header).into(uni_image);
+            target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    uni_image.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            if (!universityModel.getUser_photo().equals("0"))
+            {
+                Picasso.with(context).load(Tags.image_path+universityModel.getUser_photo()).placeholder(R.drawable.user_profile).into(target);
+
+            }else
+            {
+                Picasso.with(context).load(R.drawable.user_profile).into(target);
+
+            }
+
+
             uni_name.setText(universityModel.getUni_name().toString());
 
         }

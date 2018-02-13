@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -14,25 +15,39 @@ import com.semicolon.librarians.library.Fragments.Fragment_Library_Search_Result
 import com.semicolon.librarians.library.Fragments.Fragment_Library_Services;
 import com.semicolon.librarians.library.Fragments.Fragment_Publisher_Search_Results;
 import com.semicolon.librarians.library.Fragments.Fragment_University_Search_Results;
+import com.semicolon.librarians.library.MVP.Create_ChatRoom_MVP.Presenter;
+import com.semicolon.librarians.library.MVP.Create_ChatRoom_MVP.PresenterImp;
+import com.semicolon.librarians.library.MVP.Create_ChatRoom_MVP.ViewData;
+import com.semicolon.librarians.library.Models.CompanyModel;
+import com.semicolon.librarians.library.Models.LibraryModel;
+import com.semicolon.librarians.library.Models.NormalUserData;
+import com.semicolon.librarians.library.Models.PublisherModel;
+import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
 import com.semicolon.librarians.library.Services.Tags;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class Activity_Search_Results extends AppCompatActivity {
+public class Activity_Search_Results extends AppCompatActivity implements ViewData {
 
     private Toolbar toolbar ;
     private String searchType;
+    public NormalUserData userData=null;
+    public PublisherModel publisherModel=null;
+    public LibraryModel libraryModel=null;
+    public UniversityModel universityModel =null;
+    public CompanyModel companyModel;
+    public Presenter presenter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
+        presenter = new PresenterImp(this,this);
         Calligrapher calligrapher = new Calligrapher(getApplicationContext());
         calligrapher.setFont(this, Tags.font,true);
-
         initView();
         getDataFromIntent();
     }
@@ -64,6 +79,22 @@ public class Activity_Search_Results extends AppCompatActivity {
                     break;
 
                 case "publisher":
+                    if (intent.hasExtra("userData"))
+                    {
+                        userData = (NormalUserData) intent.getSerializableExtra("userData");
+                    }else if (intent.hasExtra("pubData"))
+                    {
+                        publisherModel = (PublisherModel) intent.getSerializableExtra("pubData");
+                    }else if (intent.hasExtra("libData"))
+                    {
+                        libraryModel = (LibraryModel) intent.getSerializableExtra("libData");
+                    }else if (intent.hasExtra("uniData"))
+                    {
+                        universityModel = (UniversityModel) intent.getSerializableExtra("uniData");
+                    }else if (intent.hasExtra("compData"))
+                    {
+                        companyModel = (CompanyModel) intent.getSerializableExtra("compData");
+                    }
                     getSupportActionBar().setTitle("Publishers");
                     String pubName =intent.getStringExtra("pubName");
                     String pub_country_id = intent.getStringExtra("country_id");
@@ -71,6 +102,7 @@ public class Activity_Search_Results extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("pubName",pubName);
                     bundle.putString("country_id",pub_country_id);
+
                     fragment_publisher_search_results.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_publisher_search_results).commit();
                     break;
@@ -90,6 +122,22 @@ public class Activity_Search_Results extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_library_search_results).commit();
                     break;
                 case "university":
+                    if (intent.hasExtra("userData"))
+                    {
+                        userData = (NormalUserData) intent.getSerializableExtra("userData");
+                    }else if (intent.hasExtra("pubData"))
+                    {
+                        publisherModel = (PublisherModel) intent.getSerializableExtra("pubData");
+                    }else if (intent.hasExtra("libData"))
+                    {
+                        libraryModel = (LibraryModel) intent.getSerializableExtra("libData");
+                    }else if (intent.hasExtra("uniData"))
+                    {
+                        universityModel = (UniversityModel) intent.getSerializableExtra("uniData");
+                    }else if (intent.hasExtra("compData"))
+                    {
+                        companyModel = (CompanyModel) intent.getSerializableExtra("compData");
+                    }
                     getSupportActionBar().setTitle("Universities");
                     String uniName = intent.getStringExtra("uniName");
                     String uni_country_id = intent.getStringExtra("country_id");
@@ -151,5 +199,16 @@ public class Activity_Search_Results extends AppCompatActivity {
         });
         dialog.create();
         dialog.show();
+    }
+
+    @Override
+    public void onChatRoom_CreatedSuccessfully(String response) {
+        Log.e("chatroom created",response);
+    }
+
+    @Override
+    public void onFailed(String error) {
+        Log.e("chatroom created",error);
+
     }
 }

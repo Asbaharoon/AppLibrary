@@ -103,7 +103,7 @@ public class PresenterImp implements Presenter,Interactor.onCompleteListener {
     }
 
     @Override
-    public void getNearbyUsers(String currUserType, String filteredUserType, LatLng currLatLng) {
-        interactor.getNearbyUsers(currUserType,filteredUserType,currLatLng,this);
+    public void getNearbyUsers(String currUserType,String currUserId, String filteredUserType, LatLng currLatLng) {
+        interactor.getNearbyUsers(currUserType,filteredUserType,currUserId,currLatLng,this);
     }
 }

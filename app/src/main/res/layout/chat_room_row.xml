@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:emojicon="http://schemas.android.com/tools"
+    android:paddingLeft="@dimen/_5sdp"
+    android:paddingRight="@dimen/_5sdp"
+    android:layout_marginBottom="@dimen/_7sdp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:background="@color/base"
+
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/chat_userImage"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
+                android:src="@drawable/user_profile"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+
+                />
+            <TextView
+                android:id="@+id/chat_userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/chat_userImage"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                android:gravity="left"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/_8sdp"
+                android:paddingRight="@dimen/_50sdp"
+                android:layout_centerVertical="true"
+
+
+
+
+
+                />
+            <TextView
+                android:id="@+id/chat_msg_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="07:28 AM"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:gravity="left"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/_5sdp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:visibility="invisible"
+
+
+                />
+            <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+                android:id="@+id/chat_msg_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="H"
+                android:textSize="14sp"
+                android:gravity="left"
+                android:maxLines="1"
+                android:paddingLeft="@dimen/_8sdp"
+                android:layout_toRightOf="@+id/chat_userImage"
+                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_5sdp"
+                android:layout_below="@+id/chat_userName"
+                android:textColor="@color/black"
+                emojicon:emojiconSize="20sp"
+                android:visibility="gone"
+
+
+
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5px"
+                android:background="@color/whit_gray"
+                android:layout_below="@+id/chat_userImage"
+                android:layout_toRightOf="@+id/chat_userImage"
+                android:layout_marginTop="@dimen/_15sdp"
+
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

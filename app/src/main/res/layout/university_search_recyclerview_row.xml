@@ -11,24 +11,60 @@
         app:cardCornerRadius="@dimen/_5sdp"
         >
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            >
+            <ImageView
+                android:id="@+id/university_image"
+                android:src="@drawable/user_profile"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                />
+            <TextView
+                android:id="@+id/university_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textSize="@dimen/_16sdp"
+                android:textColor="@android:color/black"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_toRightOf="@+id/university_image"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                />
+            <TextView
+                android:id="@+id/university_country"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/_5sdp"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="#757575"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_toRightOf="@+id/university_image"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_below="@+id/university_name"
+                android:layout_marginLeft="@dimen/_5sdp"
 
-        <LinearLayout
+
+
+                />
+        </RelativeLayout>
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/_5sdp"
             android:weightSum="2"
             >
-            <ImageView
-                android:id="@+id/university_image"
-                android:src="@drawable/user_profile"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:layout_height="@dimen/_70sdp"
-                android:scaleType="fitXY"
-                android:layout_centerVertical="true"
-                android:layout_gravity="left"
-                />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1.5"
@@ -37,35 +73,11 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:layout_gravity="right"
                 >
-                <TextView
-                    android:id="@+id/university_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:textSize="@dimen/_16sdp"
-                    android:textColor="@android:color/black"
-                    android:maxLines="2"
-                    android:ellipsize="end"
-                    android:gravity="left"
-                    />
-                <TextView
-                    android:id="@+id/university_country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="@dimen/_5sdp"
-                    android:textSize="@dimen/_13sdp"
-                    android:textColor="#757575"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:gravity="left"
-                    />
+
 
             </LinearLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
     </android.support.v7.widget.CardView>
     </FrameLayout>
 

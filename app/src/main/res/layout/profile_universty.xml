@@ -14,11 +14,13 @@
         >
 
         <com.intrusoft.squint.DiagonalView
+            android:id="@+id/secondImage"
+
             android:layout_width="match_parent"
             android:layout_height="@dimen/_250sdp"
             app:angle="15"
             app:diagonalDirection="left_to_right"
-            android:src="@drawable/barney"
+            android:src="@drawable/user_profile"
             app:gravity="left"
             app:tint="#aa182036"
 
@@ -52,11 +54,12 @@
                 android:id="@+id/profile_universityImage"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
-                android:src="@drawable/songwriter"
+                android:src="@drawable/user_profile"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/_5sdp"
                 app:civ_border_color="#0288D1"
                 app:civ_border_width="@dimen/_2sdp"
+                android:scaleType="centerCrop"
 
 
                 />
@@ -64,7 +67,6 @@
                 android:id="@+id/profile_universityName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="عماد مجدي محمد سلام المغربي"
                 android:textSize="@dimen/_16sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textStyle="bold"
@@ -75,7 +77,6 @@
                 android:id="@+id/profile_universityCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="المملكه العربيه السعوديه"
                 android:textSize="@dimen/_13sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textStyle="bold"
@@ -96,7 +97,6 @@
                 android:id="@+id/profile_universityEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="emadmagdy.developer@gmail.com"
                 android:textSize="@dimen/_14sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/black"
@@ -112,7 +112,6 @@
                 android:id="@+id/profile_universityPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+201017357658"
                 android:textSize="@dimen/_14sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/black"
@@ -127,7 +126,6 @@
                 android:id="@+id/profile_universityMajor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="عامه"
                 android:textSize="@dimen/_14sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/black"
@@ -142,7 +140,6 @@
                 android:id="@+id/profile_universityAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="جده"
                 android:textSize="@dimen/_14sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/black"
@@ -157,7 +154,6 @@
                 android:id="@+id/profile_universityWebsite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="https://www.google.com"
                 android:textSize="@dimen/_14sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/black"

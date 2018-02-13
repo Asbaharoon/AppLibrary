@@ -7,7 +7,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
@@ -39,6 +38,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
 import com.semicolon.librarians.library.Activities.Activity_PhoneNumber;
@@ -55,6 +55,7 @@ import com.semicolon.librarians.library.Models.NormalUserData;
 import com.semicolon.librarians.library.Models.PublisherModel;
 import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
+import com.semicolon.librarians.library.Services.Preferences;
 import com.semicolon.librarians.library.Services.Tags;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
@@ -84,9 +85,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     Context mContext;
     Handler handler;
     PresenterImp presenter;
-    public Uri userImage_URI = null;
-    public Bitmap userBitmap_image = null;
-    public String imageName=null;
+    public Uri userImage_URI,pubImage_URI,libImage_URI,uniImage_URI,compImage_URI = null;
+    public Bitmap userBitmap_image,pubBitmap_image,libBitmap_image,uniBitmap_image,compBitmap_image = null;
+    public String user_image,pub_image,lib_image,uni_image,comp_image="";
     private final int IMAGE_REQUEST_USER    = 201;
     private final int IMAGE_REQUEST_PUB     = 202;
     private final int IMAGE_REQUEST_LIB     = 203;
@@ -1138,8 +1139,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("userData",normalUserData);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -1151,8 +1156,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("publisherData",publisherModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -1166,8 +1175,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("libraryData",libraryModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -1185,8 +1198,14 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
+
+
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("universityData",universityModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -1199,8 +1218,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
                 Intent intent = new Intent(getActivity(),HomeActivity.class);
                 intent.putExtra("companyData",companyModel);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Preferences pref = new Preferences(getActivity());
+                pref.Session("loggedin");
                 startActivity(intent);
             }
         },500);
@@ -1333,17 +1356,10 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
                 try {
                     userImage_URI = data.getData();
-                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
-                    /*if (cursor.moveToFirst()) {
-                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
-
-                    }*/
                     userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
                     n_circleImageView.setImageBitmap(userBitmap_image);
                     addPhoto_tv_user.setVisibility(View.GONE);
-                   // String userPhoto = decodeUserPhoto(userBitmap_image);
-                    //initNormalUserData(userPhoto);
+                    user_image = encodeUserPhoto(userBitmap_image);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1355,16 +1371,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
 
                 try {
-                    userImage_URI = data.getData();
-                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
-                    /*if (cursor.moveToFirst()) {
-                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+                    pubImage_URI = data.getData();
 
-                    }*/
-                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
-                    pub_circleImageView.setImageBitmap(userBitmap_image);
+                    pubBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(pubImage_URI));
+                    pub_circleImageView.setImageBitmap(pubBitmap_image);
                     addPhoto_tv_pub.setVisibility(View.GONE);
+                    pub_image = encodeUserPhoto(pubBitmap_image);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1377,18 +1389,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
 
                 try {
-                    userImage_URI = data.getData();
-                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
-                    /*if (cursor.moveToFirst()) {
-                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+                    libImage_URI = data.getData();
 
-                    }*/
-                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
-                    lib_circleImageView.setImageBitmap(userBitmap_image);
+                    libBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(libImage_URI));
+                    lib_circleImageView.setImageBitmap(libBitmap_image);
                     addPhoto_tv_lib.setVisibility(View.GONE);
-                    // String userPhoto = decodeUserPhoto(userBitmap_image);
-                    //initNormalUserData(userPhoto);
+                    lib_image = encodeUserPhoto(libBitmap_image);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1401,18 +1407,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
 
                 try {
-                    userImage_URI = data.getData();
-                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
-                    /*if (cursor.moveToFirst()) {
-                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+                    uniImage_URI = data.getData();
 
-                    }*/
-                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
-                    uni_circleImageView.setImageBitmap(userBitmap_image);
+                    uniBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uniImage_URI));
+                    uni_circleImageView.setImageBitmap(uniBitmap_image);
                     addPhoto_tv_uni.setVisibility(View.GONE);
-                    // String userPhoto = decodeUserPhoto(userBitmap_image);
-                    //initNormalUserData(userPhoto);
+                    uni_image = encodeUserPhoto(uniBitmap_image);
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1425,18 +1426,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
 
                 try {
-                    userImage_URI = data.getData();
-                    Cursor cursor = getActivity().getContentResolver().query(userImage_URI, null, null, null, null);
-                    /*if (cursor.moveToFirst()) {
-                        //imageName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
-                        //Toast.makeText(mContext, "" + imageName, Toast.LENGTH_SHORT).show();
+                    compImage_URI = data.getData();
 
-                    }*/
-                    userBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(userImage_URI));
-                    comp_circleImageView.setImageBitmap(userBitmap_image);
+                    compBitmap_image = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(compImage_URI));
+                    comp_circleImageView.setImageBitmap(compBitmap_image);
                     addPhoto_tv_comp.setVisibility(View.GONE);
-                    // String userPhoto = decodeUserPhoto(userBitmap_image);
-                    //initNormalUserData(userPhoto);
+                    comp_image = encodeUserPhoto(compBitmap_image);
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
 
@@ -1546,7 +1542,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         }
         else if (requestCode==PHONE_REQUEST_COMP)
         {
-            if (data!=null && resultCode== Activity.RESULT_OK){}
+            if (data!=null && resultCode== Activity.RESULT_OK)
+            {
+                String phoneNumber =data.getStringExtra("phone_number");
+                companyPhone.setText(phoneNumber);
+            }
 
         }
 
@@ -1586,7 +1586,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     private void CreateDialogForLocation()
     {
         LovelyStandardDialog dialog = new LovelyStandardDialog(getActivity())
-                .setTitle("Select Library Location...")
+                .setTitle("Select Library Location_Model...")
                 .setMessage("Your current location is the library location ?")
                 .setTopColor(ActivityCompat.getColor(getActivity(), R.color.centercolor))
                 .setIcon(R.drawable.help_menu_icon)
@@ -1598,7 +1598,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                     }
                 })
                 .setPositiveButtonColor(ContextCompat.getColor(getActivity(), R.color.centercolor))
-                .setNegativeButton("Select Location", new View.OnClickListener() {
+                .setNegativeButton("Select Location_Model", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -1706,16 +1706,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String n_phone    = n_userPhone     .getText().toString();
         String n_username = n_user_userName .getText().toString();
         String n_password = n_userPassword  .getText().toString();
+        String token = FirebaseInstanceId.getInstance().getToken();
 
-        String n_userPhotoName ="";
-        String n_userPhoto="";
-        if (userImage_URI!=null&&userBitmap_image!=null)
-        {
-            n_userPhotoName = imageName;
-            n_userPhoto = encodeUserPhoto(userBitmap_image);
-        }
-        Toast.makeText(mContext, n_userPhoto, Toast.LENGTH_SHORT).show();
-        presenter.NormalUserRegistration(userType,n_userPhotoName,n_userPhoto,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password,lat,lng);
+        presenter.NormalUserRegistration(userType,user_image,n_fname,n_lname,n_email,n_country,n_phone,n_username,n_password,lat,lng,token);
 
     }
     private void initPublisherData(String lat,String lng)
@@ -1731,7 +1724,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String pub_town     = publisherTown      .getText().toString();
         String pub_username = publisherUsername  .getText().toString();
         String pub_site     = publisher_webSite  .getText().toString();
-        presenter.PublisherRegistration(userType2,pub_fname,pub_lname,pub_email,pub_country,pub_password,pub_phone,pub_username,pub_address,pub_town,pub_site,lat,lng);
+        String token = FirebaseInstanceId.getInstance().getToken();
+
+        presenter.PublisherRegistration(userType2,pub_image,pub_fname,pub_lname,pub_email,pub_country,pub_password,pub_phone,pub_username,pub_address,pub_town,pub_site,lat,lng,token);
 
     }
     private void initLibraryData(String lat,String lng)
@@ -1745,10 +1740,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String lib_userName = libraryUsername .getText().toString();
         String lib_password = libraryPassword .getText().toString();
         String lib_type     =  libType;
+        String token = FirebaseInstanceId.getInstance().getToken();
+
 
 
         Toast.makeText(mContext, userType+"_"+lib_type, Toast.LENGTH_SHORT).show();
-        presenter.LibraryRegistration(userType,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_userName,lib_password,lat,lng);
+        presenter.LibraryRegistration(userType,lib_image,lib_name,lib_email,lib_phone,lib_country,lib_address,lib_type,lib_userName,lib_password,lat,lng,token);
 
     }
     private void initUniversityData(String lat, String lng)
@@ -1763,8 +1760,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String uni_site      = universitySite     .getText().toString();
         String uni_userName  = universityUsername .getText().toString();
         String uni_password  = universityPassword .getText().toString();
+        String token = FirebaseInstanceId.getInstance().getToken();
+
         Toast.makeText(mContext, userType, Toast.LENGTH_SHORT).show();
-        presenter.UniversityRegistration(userType,uni_name,uni_email,uni_country,uni_phone,uni_userName,uni_password,uni_major,uni_address,uni_site,lat,lng);
+
+        presenter.UniversityRegistration(userType,uni_image,uni_name,uni_email,uni_country,uni_phone,uni_userName,uni_password,uni_major,uni_address,uni_site,lat,lng,token);
 
     }
     private void initCompanyData(String lat,String lng)
@@ -1779,8 +1779,9 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         String comp_site     = companySite     .getText().toString();
         String comp_userName = companyUsername .getText().toString();
         String comp_password = companyPassword .getText().toString();
+        String token = FirebaseInstanceId.getInstance().getToken();
 
-        presenter.CompanyRegistration(userType,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site,lat,lng);
+        presenter.CompanyRegistration(userType,comp_image,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site,lat,lng,token);
 
     }
 }

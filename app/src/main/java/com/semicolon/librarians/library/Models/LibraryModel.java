@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class LibraryModel implements Serializable {
     @SerializedName("user_type")
     private String user_type;
+    @SerializedName("library_photo")
+    private String user_photo;
     @SerializedName("library_name")
     private String lib_name;
     @SerializedName("library_email")
@@ -34,8 +36,18 @@ public class LibraryModel implements Serializable {
     public LibraryModel() {
     }
 
-    public LibraryModel(String user_type, String lib_name, String lib_email, String lib_country, String lib_address, String lib_phone, String lib_type, String lib_username, String lib_password, String lat, String lng) {
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
+
+    public LibraryModel(String user_type, String user_photo, String lib_name, String lib_email, String lib_country, String lib_address, String lib_phone, String lib_type, String lib_username, String lib_password, String lat, String lng) {
         this.user_type = user_type;
+        this.user_photo = user_photo;
+
         this.lib_name = lib_name;
         this.lib_email = lib_email;
         this.lib_country = lib_country;

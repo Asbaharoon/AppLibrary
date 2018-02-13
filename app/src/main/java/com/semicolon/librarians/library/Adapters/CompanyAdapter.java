@@ -2,6 +2,8 @@ package com.semicolon.librarians.library.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +18,9 @@ import com.semicolon.librarians.library.Activities.Chat_Activity;
 import com.semicolon.librarians.library.Activities.HomeActivity;
 import com.semicolon.librarians.library.Models.CompanyModel;
 import com.semicolon.librarians.library.R;
+import com.semicolon.librarians.library.Services.Tags;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.yarolegovich.lovelydialog.LovelyCustomDialog;
 
 import java.util.List;
@@ -29,6 +34,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     List<CompanyModel> companyModelList;
     Context context;
     HomeActivity homeActivity;
+    Target target;
 
     public CompanyAdapter(List<CompanyModel> companyModelList, Context context) {
         this.companyModelList = companyModelList;
@@ -65,7 +71,13 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                 open_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (homeActivity.user_Data!=null)
+                        Intent intent = new Intent(context,Activity_Profile.class);
+                        intent.putExtra("who_visit_myProfile","visitor");
+                        intent.putExtra("companyData",companyModel2);
+                        context.startActivity(intent);
+
+                        dialog.dismiss();
+                        /*if (homeActivity.user_Data!=null)
                         {
                             Intent intent = new Intent(homeActivity,Activity_Profile.class);
                             intent.putExtra("who_visit_myProfile","visitor");
@@ -111,7 +123,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
                             dialog.dismiss();
 
-                        }
+                        }*/
                     }
                 });
                 send_msg.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +131,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                     public void onClick(View view) {
                         if (homeActivity.user_Data!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.user_Data.getUserId(),companyModel2.getComp_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","user");
                             intent.putExtra("chat_userType","company");
@@ -128,6 +142,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                             dialog.dismiss();
                         }else if (homeActivity.publisher_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.publisher_Model.getPub_username(),companyModel2.getComp_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","publisher");
                             intent.putExtra("chat_userType","company");
@@ -139,6 +155,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                         }
                         else if (homeActivity.library_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.library_Model.getLib_username(),companyModel2.getComp_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","library");
                             intent.putExtra("chat_userType","company");
@@ -150,6 +168,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                         }
                         else if (homeActivity.university_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.university_Model.getUni_username(),companyModel2.getComp_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","university");
                             intent.putExtra("chat_userType","company");
@@ -161,6 +181,8 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
                         }
                         else if (homeActivity.company_Model!=null)
                         {
+                            homeActivity.chatRoomPresenter.Create_ChatRoom(homeActivity.company_Model.getComp_username(),companyModel2.getComp_username());
+
                             Intent intent = new Intent(context, Chat_Activity.class);
                             intent.putExtra("curr_userType","company");
                             intent.putExtra("chat_userType","company");
@@ -215,7 +237,33 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
         public void BindData(CompanyModel companyModel)
         {
-            comp_image.setImageResource(R.drawable.user_profile);
+            target = new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    comp_image.setImageBitmap(bitmap);
+                }
+
+                @Override
+                public void onBitmapFailed(Drawable errorDrawable) {
+
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                }
+            };
+            if (!companyModel.getUser_photo().equals("0"))
+            {
+                Picasso.with(context).load(Tags.image_path+companyModel.getUser_photo()).placeholder(R.drawable.user_profile).into(target);
+
+            }else
+            {
+                Picasso.with(context).load(R.drawable.user_profile).into(target);
+
+            }
+
+
             comp_name.setText(companyModel.getComp_name().toString());
             comp_phone.setText(companyModel.getComp_phone().toString());
             comp_country.setText(companyModel.getComp_country());

@@ -11,18 +11,21 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.semicolon.librarians.library.Models.CommonUsersData;
 import com.semicolon.librarians.library.Models.CompanyModel;
 import com.semicolon.librarians.library.Models.LibraryModel;
 import com.semicolon.librarians.library.Models.NormalUserData;
 import com.semicolon.librarians.library.Models.PublisherModel;
 import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
+import com.semicolon.librarians.library.Services.Tags;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -60,6 +63,8 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
     private LibraryModel chat_libraryModel;
     private UniversityModel chat_universityModel;
     private CompanyModel chat_companyModel;
+
+    private CommonUsersData data;
 
     private CircleImageView user_chat_image;
     private TextView user_chat_name,user_chat_status;
@@ -125,28 +130,63 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
                     chat_user_id =   chat_normalUserData.getUserId().toString();
                     chat_user_name = chat_normalUserData.getUserName().toString();
                     //chat_user_image= chat_normalUserData.getUserPhoto().toString();
-                    updateUi(chat_normalUserData.getUserPhoto(),chat_normalUserData.getUserName(),"online");
+                    if (chat_normalUserData.getUserPhoto()!=null)
+                    {
+                        updateUi(chat_normalUserData.getUserPhoto(),chat_normalUserData.getUserName(),"online");
+
+                    }else
+                        {
+                            if (!chat_normalUserData.getUser_photo().equals("0"))
+                            {
+                                updateUi(Tags.image_path+chat_normalUserData.getUser_photo(),chat_normalUserData.getUserName(),"online");
+
+                            }
+                        }
                     break;
                 case "publisher":
                     chat_publisherModel = (PublisherModel) intent.getSerializableExtra("chat_user");
-                   chat_user_id   = chat_publisherModel.getPub_username().toString();
-                   chat_user_name = chat_publisherModel.getPub_name();
+                    chat_user_id   = chat_publisherModel.getPub_username();
+                    chat_user_name = chat_publisherModel.getPub_name();
 
-                    updateUi("",chat_publisherModel.getPub_name(),"online");
+                    if (!chat_publisherModel.getUser_photo().equals("0"))
+                    {
+                        updateUi(Tags.image_path+chat_publisherModel.getUser_photo(),chat_publisherModel.getPub_name(),"online");
+
+                    }else
+                        {
+                            updateUi("",chat_publisherModel.getPub_name(),"online");
+
+                        }
                     break;
                 case "library":
                     chat_libraryModel = (LibraryModel) intent.getSerializableExtra("chat_user");
                     chat_user_id   = chat_libraryModel.getLib_username().toString();
                     chat_user_name = chat_libraryModel.getLib_name();
 
-                    updateUi("",chat_libraryModel.getLib_name(),"online");
+                    if (!chat_libraryModel.getUser_photo().equals("0"))
+                    {
+                        updateUi(Tags.image_path+chat_libraryModel.getUser_photo(),chat_libraryModel.getLib_name(),"online");
+
+                    }else
+                        {
+                            updateUi("",chat_libraryModel.getLib_name(),"online");
+
+                        }
                     break;
                 case "university":
                     chat_universityModel = (UniversityModel) intent.getSerializableExtra("chat_user");
                     chat_user_id   =chat_universityModel.getUni_username();
                     chat_user_name =chat_universityModel.getUni_name();
 
-                    updateUi("",chat_universityModel.getUni_name(),"online");
+                    if (!chat_universityModel.getUser_photo().equals("0"))
+                    {
+                        updateUi(Tags.image_path+chat_universityModel.getUser_photo(),chat_universityModel.getUni_name(),"online");
+
+                    }else
+                        {
+                            updateUi("",chat_universityModel.getUni_name(),"online");
+
+                        }
 
                     break;
                 case "company":
@@ -154,12 +194,64 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
                     chat_user_id   = chat_companyModel.getComp_username();
                     chat_user_name = chat_companyModel.getComp_name();
 
-                    updateUi("",chat_companyModel.getComp_name(),"online");
+                    if (!chat_companyModel.getUser_photo().equals("0"))
+                    {
+                        updateUi(Tags.image_path+chat_companyModel.getUser_photo(),chat_companyModel.getComp_name(),"online");
+
+                    }else
+                        {
+                            updateUi("",chat_companyModel.getComp_name(),"online");
+
+                        }
 
                     break;
 
             }
 
+        }else if (intent.hasExtra("chatRoomIntent"))
+        {
+            curr_user_type = intent.getStringExtra("curr_userType");
+            chat_user_type = intent.getStringExtra("chat_userType");
+            data = (CommonUsersData) intent.getSerializableExtra("chat_userData");
+            chat_user_id = data.getUser_username();
+
+            if (data.getUser_photo_link()==null)
+            {
+                if (!data.getUser_photo().equals("0"))
+                {
+                    updateUi(Tags.image_path+data.getUser_photo(),data.getUser_name(),"online");
+
+                }
+
+            }else
+                {
+                    updateUi(data.getUser_photo_link(),data.getUser_name(),"online");
+                }
+            switch (curr_user_type)
+            {
+                case "user":
+                    curr_normalUserData = (NormalUserData) intent.getSerializableExtra("curr_userData");
+                    curr_user_id = curr_normalUserData.getUserId();
+                    break;
+                case "publisher":
+                    curr_publisherModel = (PublisherModel) intent.getSerializableExtra("curr_userData");
+                    curr_user_id = curr_publisherModel.getPub_username();
+                    break;
+                case "library":
+                    curr_libraryModel = (LibraryModel) intent.getSerializableExtra("curr_userData");
+                    curr_user_id = curr_libraryModel.getLib_username();
+                    break;
+                case "university":
+                    curr_universityModel = (UniversityModel) intent.getSerializableExtra("curr_userData");
+                    curr_user_id = curr_universityModel.getUni_username();
+                    break;
+                case "company":
+                    curr_companyModel = (CompanyModel) intent.getSerializableExtra("curr_userData");
+                    curr_user_id = curr_companyModel.getComp_username();
+                    break;
+
+
+            }
         }
     }
 
@@ -260,5 +352,15 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
             }
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId()== android.R.id.home)
+        {
+            finish();
+        }
+        return true;
     }
 }

@@ -12,6 +12,6 @@ public interface Presenter {
     void getNearbyLibraries(String userType,LatLng latLng);
     void getNearbyUniversities(String userType,LatLng latLng);
     void getNearbyCompanies(String userType,LatLng latLng);*/
-    void getNearbyUsers(String currUserType,String filteredUserType, LatLng currLatLng);
+    void getNearbyUsers(String currUserType,String currUserId,String filteredUserType, LatLng currLatLng);
 
 }

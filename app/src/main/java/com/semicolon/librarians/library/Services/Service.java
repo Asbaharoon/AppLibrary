@@ -1,5 +1,6 @@
 package com.semicolon.librarians.library.Services;
 
+import com.semicolon.librarians.library.Models.CommonUsersData;
 import com.semicolon.librarians.library.Models.CompanyModel;
 import com.semicolon.librarians.library.Models.CountriesModel;
 import com.semicolon.librarians.library.Models.JobsModel;
@@ -10,11 +11,11 @@ import com.semicolon.librarians.library.Models.NewsModel;
 import com.semicolon.librarians.library.Models.NormalUserData;
 import com.semicolon.librarians.library.Models.PublisherModel;
 import com.semicolon.librarians.library.Models.UniversityModel;
-import com.google.gson.JsonObject;
 
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
@@ -29,11 +30,11 @@ import retrofit2.http.POST;
 public interface Service {
     @FormUrlEncoded
     @POST("api/facebooklogin")
-    Call<JsonObject> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
+    Call<NormalUserData> UploadUserDataWithFacebook(@FieldMap Map<String,String> map);
 
     @FormUrlEncoded
     @POST("api/gmaillogin")
-    Call<JsonObject> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
+    Call<NormalUserData> UploadUserDataWithGoogle(@FieldMap Map<String,String> map);
 
     /////////////////////---------Registration-----////////////////////////
 
@@ -140,6 +141,41 @@ public interface Service {
     @FormUrlEncoded
     @POST("api/searchlibrary")
     Call<List<LibraryModel>> getLibrarySearch_Data(@FieldMap Map<String,String> map);
+    ////////////////-----------DisplayAllUsersData----////////////////////////
+    @FormUrlEncoded
+    @POST("api/getuserbyid/")
+    Call<NormalUserData>DisplayUserById(@FieldMap Map<String,String> map);
 
+    @FormUrlEncoded
+    @POST("api/getuserbyid/")
+    Call<PublisherModel>DisplayPublisherById(@FieldMap Map<String,String> map);
 
+    @FormUrlEncoded
+    @POST("api/getuserbyid/")
+    Call<LibraryModel>DisplayLibraryById(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/getuserbyid/")
+    Call<UniversityModel>DisplayUniversityById(@FieldMap Map<String,String> map);
+
+    @FormUrlEncoded
+    @POST("api/getuserbyid/")
+    Call<CompanyModel>DisplayCompanyById(@FieldMap Map<String,String> map);
+
+    ////////////////---------updateFB_GM_userData------/////////////////////////
+    @FormUrlEncoded
+    @POST("/api/updateuser")
+    Call<NormalUserData>Update_FB_GM_UserData(@FieldMap Map<String ,String> map);
+
+    /////////////////////-------CreateChatRoom---------/////////////////////////
+
+    @FormUrlEncoded
+    @POST("/api/chatroom")
+    Call<ResponseBody>CreateChatRoom(@FieldMap Map<String,String> map);
+
+    ////////////////////--------DisplayAllRooms--------////////////////////////
+
+    @FormUrlEncoded
+    @POST("/api/getallchatrooms/")
+    Call<List<CommonUsersData>>DisplayAllRooms(@Field("friend_id_fk1") String currUserId);
 }

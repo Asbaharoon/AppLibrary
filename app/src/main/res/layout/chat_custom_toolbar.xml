@@ -2,12 +2,14 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_alignParentLeft="true"
         >
         <TextView
             android:id="@+id/user_chat_name"
@@ -17,6 +19,7 @@
             android:textSize="@dimen/_15sdp"
             android:text="User Name"
             android:textColor="@color/base"
+            android:layout_gravity="left|center_vertical"
             android:gravity="left|center_vertical"
 
 
@@ -30,6 +33,8 @@
             android:text="just now"
             android:textColor="@color/base"
             android:gravity="left|center_vertical"
+            android:layout_gravity="left|center_vertical"
+
 
 
 
@@ -43,5 +48,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginRight="@dimen/_5sdp"
+        android:scaleType="centerCrop"
         />
 </RelativeLayout>

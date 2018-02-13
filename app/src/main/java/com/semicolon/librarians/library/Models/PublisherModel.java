@@ -11,6 +11,8 @@ import java.io.Serializable;
 public class PublisherModel implements Serializable {
     @SerializedName("user_type")
     private String user_type;
+    @SerializedName("publisher_photo")
+    private String user_photo;
     @SerializedName("publisher_name")
     private String pub_name;
     @SerializedName("publisher_email")
@@ -37,9 +39,19 @@ public class PublisherModel implements Serializable {
     }
 
 
-    public PublisherModel(String user_type, String pub_name, String pub_email, String pub_phone, String pub_country, String pub_address, String pub_town, String pub_website, String pub_password, String pub_lat, String pub_lng) {
+    public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
+
+    public PublisherModel(String user_type, String user_photo, String pub_name, String pub_email, String pub_phone, String pub_country, String pub_address, String pub_town, String pub_website, String pub_password, String pub_lat, String pub_lng) {
         this.user_type = user_type;
         this.pub_name = pub_name;
+        this.user_photo = user_photo;
+
         this.pub_email = pub_email;
         this.pub_phone = pub_phone;
         this.pub_country = pub_country;

@@ -13,6 +13,7 @@
         android:layout_height="@dimen/_60sdp"
         android:scaleType="centerCrop"
         android:src="@drawable/user_profile"
+        android:layout_gravity="left"
         />
     <TextView
         android:id="@+id/userName"
@@ -26,6 +27,7 @@
         android:scrollHorizontally="true"
         tools:ignore="MissingPrefix"
         android:gravity="left|center_vertical"
+
 
 
         />

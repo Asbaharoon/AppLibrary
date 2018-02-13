@@ -38,7 +38,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
 
     @Override
-    public void NormalUserRegistration(String userType, String photoName, String photo, String first_name, String last_name, String email, String country, String phone, String username, String password,String lat,String lng, onCompleteListener listener, Context context) {
+    public void NormalUserRegistration(String userType,String photo, String first_name, String last_name, String email, String country, String phone, String username, String password,String lat,String lng,String token, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(first_name))
         {
             listener.setNormalUserFirstName_Error();
@@ -93,7 +93,7 @@ public class Model_InteractorImp implements Model_Interactor {
             if (isConnected)
             {
                 listener.showProgress_Dialog();
-                Registration_NormalUser(userType,photoName,photo,first_name,last_name, email,country,phone,username,password,lat,lng, listener);
+                Registration_NormalUser(userType,photo,first_name,last_name, email,country,phone,username,password,lat,lng, token, listener);
 
             }else
             {
@@ -104,7 +104,7 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
     @Override
-    public void PublisherRegistration(String userType, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng, onCompleteListener listener, Context context) {
+    public void PublisherRegistration(String userType,String photo, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng,String token, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(first_name))
         {
             listener.setPublisherFirstName_Error();
@@ -179,7 +179,7 @@ public class Model_InteractorImp implements Model_Interactor {
             isConnected = new NetworkConnection(context).CheckConnection();
             if (isConnected) {
                 listener.showProgress_Dialog();
-                Registration_PublisherData(userType,first_name,last_name,email,country,password,phone,username,address,town,website_url,lat,lng, listener);
+                Registration_PublisherData(userType,photo,first_name,last_name,email,country,password,phone,username,address,town,website_url,lat,lng,token, listener);
             }else
             {
                 listener.hideProgress_Dialog();
@@ -190,7 +190,7 @@ public class Model_InteractorImp implements Model_Interactor {
 
 
     @Override
-    public void LibraryRegistration(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng, onCompleteListener listener, Context context) {
+    public void LibraryRegistration(String userType,String photo, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng,String token, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(libName))
         {
             listener.setLibraryName_Error();
@@ -255,7 +255,7 @@ public class Model_InteractorImp implements Model_Interactor {
             if (isConnected)
             {
                 listener.showProgress_Dialog();
-                Registration_LibraryData(userType,libName,libEmail,libPhone,libCountry,libAddress,libType,libUsername,libPassword,lat,lng,listener);
+                Registration_LibraryData(userType,photo,libName,libEmail,libPhone,libCountry,libAddress,libType,libUsername,libPassword,lat,lng,token,listener);
 
             }else
             {
@@ -266,7 +266,7 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
     @Override
-    public void UniversityRegistration(String userType, String name, String email, String country, String phone, String username, String password, String major, String address, String site, String lat, String lng, onCompleteListener listener, Context context) {
+    public void UniversityRegistration(String userType, String photo,String name, String email, String country, String phone, String username, String password, String major, String address, String site, String lat, String lng,String token, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(name))
         {
             listener.setUniversityName_Error();
@@ -333,7 +333,7 @@ public class Model_InteractorImp implements Model_Interactor {
                 if (isConnected)
                 {
                     listener.showProgress_Dialog();
-                    Registration_UniversityData(userType,name,email,country,phone,username,password,major,address,site,lat,lng,listener);
+                    Registration_UniversityData(userType,photo,name,email,country,phone,username,password,major,address,site,lat,lng,token,listener);
                 }else
                 {
                     listener.hideProgress_Dialog();
@@ -343,7 +343,7 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
     @Override
-    public void CompanyRegistration(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng, onCompleteListener listener, Context context) {
+    public void CompanyRegistration(String userType, String photo,String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng,String token, onCompleteListener listener, Context context) {
         if (TextUtils.isEmpty(name))
         {
             listener.setCompanyName_Error();
@@ -411,7 +411,7 @@ public class Model_InteractorImp implements Model_Interactor {
             if (isConnected)
             {
                 listener.showProgress_Dialog();
-                Registration_CompanyData(userType,name,email,country,phone,username,password,address,town,site,lat,lng,listener);
+                Registration_CompanyData(userType,photo,name,email,country,phone,username,password,address,town,site,lat,lng,token,listener);
             }else
             {
                 listener.hideProgress_Dialog();
@@ -421,11 +421,12 @@ public class Model_InteractorImp implements Model_Interactor {
     }
 
 
-    private void Registration_NormalUser(String userType, String photoName, String photo, String first_name, String last_name, String email, String country , String phone, String username, String password,String lat,String lng, final onCompleteListener listener)
+    private void Registration_NormalUser(String userType, String photo, String first_name, String last_name, String email, String country , String phone, String username, String password,String lat,String lng,String token, final onCompleteListener listener)
     {
 
         Map<String,String> userMap = new HashMap<>();
 
+        userMap.put("user_token",token);
         userMap.put("user_photo",photo);
         userMap.put("user_type",userType);
         userMap.put("user_name",first_name+" "+last_name);
@@ -479,11 +480,13 @@ public class Model_InteractorImp implements Model_Interactor {
             }
         });
     }
-    private void Registration_PublisherData(String userType, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng, final onCompleteListener listener)
+    private void Registration_PublisherData(String userType,String photo, String first_name, String last_name, String email, String country, String password, String phone, String username, String address, String town, String website_url, String lat, String lng,String token, final onCompleteListener listener)
     {
         Map<String,String> pubMap = new HashMap<>();
 
+        pubMap.put("user_token",token);
         pubMap.put("user_type",userType);
+        pubMap.put("user_photo",photo);
         pubMap.put("user_name",first_name+" "+last_name);
         pubMap.put("user_email",email);
         pubMap.put("user_country",country);
@@ -544,11 +547,13 @@ public class Model_InteractorImp implements Model_Interactor {
             }
         });
     }
-    private void Registration_LibraryData(String userType, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng, final onCompleteListener listener)
+    private void Registration_LibraryData(String userType,String photo, String libName, String libEmail, String libPhone, String libCountry, String libAddress, String libType, String libUsername, String libPassword, String lat, String lng,String token, final onCompleteListener listener)
     {
         Map<String,String> libMap = new HashMap<>();
 
+        libMap.put("user_token",token);
         libMap.put("user_type",userType);
+        libMap.put("user_photo",photo);
         libMap.put("user_name",libName);
         libMap.put("user_email",libEmail);
         libMap.put("user_country",libCountry);
@@ -608,28 +613,30 @@ public class Model_InteractorImp implements Model_Interactor {
         });
 
     }
-    private void Registration_UniversityData(String userType, String name, String email, String country, String phone, String username, String password, String major, String address, String site, String lat, String lng, final onCompleteListener listener)
+    private void Registration_UniversityData(String userType,String photo, String name, String email, String country, String phone, String username, String password, String major, String address, String site, String lat, String lng,String token, final onCompleteListener listener)
     {
         Map<String,String> uniMap = new HashMap<>();
 
-       uniMap.put("user_type",userType);
-       uniMap.put("user_name",name);
-       uniMap.put("user_email",email);
-       uniMap.put("user_country",country);
-       uniMap.put("user_phone",phone);
-       uniMap.put("user_username",username);
-       uniMap.put("user_pass",password);
-       uniMap.put("user_google_lat",lat);
-       uniMap.put("user_google_lng",lng);
+        uniMap.put("user_token",token);
+        uniMap.put("user_type",userType);
+        uniMap.put("user_photo",photo);
+        uniMap.put("user_name",name);
+        uniMap.put("user_email",email);
+        uniMap.put("user_country",country);
+        uniMap.put("user_phone",phone);
+        uniMap.put("user_username",username);
+        uniMap.put("user_pass",password);
+        uniMap.put("user_google_lat",lat);
+        uniMap.put("user_google_lng",lng);
 
-       uniMap.put("university_name",name);
-       uniMap.put("university_email",email);
-       uniMap.put("university_phone",phone);
-       uniMap.put("university_site",site);
-       uniMap.put("university_major",major);
-       uniMap.put("university_address",address);
-       uniMap.put("university_google_lat",lat);
-       uniMap.put("university_google_lng",lng);
+        uniMap.put("university_name",name);
+        uniMap.put("university_email",email);
+        uniMap.put("university_phone",phone);
+        uniMap.put("university_site",site);
+        uniMap.put("university_major",major);
+        uniMap.put("university_address",address);
+        uniMap.put("university_google_lat",lat);
+        uniMap.put("university_google_lng",lng);
 
         final Retrofit retrofit =setUP_Retrofit("http://librarians.liboasis.com/");
         Service service = retrofit.create(Service.class);
@@ -673,19 +680,21 @@ public class Model_InteractorImp implements Model_Interactor {
         });
 
     }
-    private void Registration_CompanyData(String userType, String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng, final onCompleteListener listener)
+    private void Registration_CompanyData(String userType,String photo ,String name, String email, String country, String phone, String username, String password, String address, String town, String site,String lat,String lng,String token, final onCompleteListener listener)
     {
         Map<String,String> compMap = new HashMap<>();
 
-       compMap.put("user_type",userType);
-       compMap.put("user_name",name);
-       compMap.put("user_email",email);
-       compMap.put("user_country",country);
-       compMap.put("user_phone",phone);
-       compMap.put("user_username",username);
-       compMap.put("user_pass",password);
-       compMap.put("user_google_lat",lat);
-       compMap.put("user_google_lng",lng);
+        compMap.put("user_token",token);
+        compMap.put("user_type",userType);
+        compMap.put("user_photo",photo);
+        compMap.put("user_name",name);
+        compMap.put("user_email",email);
+        compMap.put("user_country",country);
+        compMap.put("user_phone",phone);
+        compMap.put("user_username",username);
+        compMap.put("user_pass",password);
+        compMap.put("user_google_lat",lat);
+        compMap.put("user_google_lng",lng);
 
 
 

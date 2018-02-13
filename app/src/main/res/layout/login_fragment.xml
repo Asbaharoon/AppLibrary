@@ -79,8 +79,9 @@
             <com.wrapp.floatlabelededittext.FloatLabeledEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@color/base"
+
                 >
                 <EditText
                     android:id="@+id/password"
@@ -98,18 +99,14 @@
                     />
             </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
                 >
+
                 <com.andexert.library.RippleView
-                    android:id="@+id/ripple_checkbox_rememberMe"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:id="@+id/ripple_et_forget_password"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:rv_centered="true"
                     app:rv_type="rectangle"
@@ -119,57 +116,48 @@
                     app:rv_zoomDuration="200"
                     app:rv_zoomScale="1.05"
                     app:rv_color="@color/colorPrimary"
-                    android:layout_gravity="center|right"
-                    android:gravity="center|left"
+                    android:layout_alignParentRight="true"
+                    >
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Forget password ?"
+                        android:singleLine="true"
+                        android:textColor="@color/base"
+                        android:textSize="@dimen/_12sdp"
+                        android:textStyle="normal"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="@dimen/_3sdp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        />
+                </com.andexert.library.RippleView>
+                <com.andexert.library.RippleView
+                    android:id="@+id/ripple_checkbox_rememberMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:rv_centered="true"
+                    app:rv_type="rectangle"
+                    app:rv_rippleDuration="800"
+                    app:rv_alpha="200"
+                    app:rv_zoom="true"
+                    app:rv_zoomDuration="200"
+                    app:rv_zoomScale="1.05"
+                    app:rv_color="@color/colorPrimary"
+                    android:layout_alignParentLeft="true"
                     >
                     <CheckBox
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Remember me"
                         android:textColor="@color/base"
                         app:backgroundTint="@color/colorPrimary"
                         app:buttonTint="@color/colorPrimary"
                         android:checked="false"
-                        android:gravity="center_vertical"
                         android:textSize="@dimen/_12sdp"
                         />
                 </com.andexert.library.RippleView>
-                <com.andexert.library.RippleView
-                    android:id="@+id/ripple_et_forget_password"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    app:rv_centered="true"
-                    app:rv_type="rectangle"
-                    app:rv_rippleDuration="800"
-                    app:rv_alpha="200"
-                    app:rv_zoom="true"
-                    app:rv_zoomDuration="200"
-                    app:rv_zoomScale="1.05"
-                    app:rv_color="@color/colorPrimary"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center_vertical"
-
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center|left"
-                        android:text="Forget password ?"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        android:scrollHorizontally="true"
-                        android:textColor="@color/base"
-                        android:textSize="@dimen/_12sdp"
-                        android:textStyle="normal"
-                        android:gravity="center_vertical"
-
-                        />
-                </com.andexert.library.RippleView>
-
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <com.andexert.library.RippleView
@@ -225,6 +213,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:orientation="horizontal"
+         android:layout_alignParentRight="true"
          >
          <TextView
              android:id="@+id/login_fragment_signuptv"

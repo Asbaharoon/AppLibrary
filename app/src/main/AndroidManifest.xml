@@ -3,21 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.semicolon.librarians.library">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission
+        android:name="android.permission.GET_TASKS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
+        android:name=".Services.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme">
+        <service android:name=".Services.Locationservices_Update" />
+        <service android:name=".Services.MyFirebaseInstanceIdServices">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Services.MyFirebaseMessgaesServices">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
-        >
         <activity
             android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait" />
@@ -53,19 +68,17 @@
             android:name=".Activities.ChooserSingin"
             android:label="@string/title_activity_chooser_singin"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-
-            >
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Activities.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme" />
         <activity
             android:name=".Activities.MapsActivity"
             android:screenOrientation="portrait" />
@@ -74,9 +87,9 @@
         <activity android:name=".Activities.Activity_Search_Results" />
         <activity android:name=".Activities.Chat_Activity" />
         <activity android:name=".Activities.Activity_PhoneNumber" />
-        <activity android:name=".Activities.Activity_Profile">
-
-        </activity>
+        <activity android:name=".Activities.Activity_Profile" />
+        <activity android:name=".Activities.FB_Gmail_UpdateProfile"></activity>
+        <activity android:name=".Activities.DisplayUserLocation_OnMap"></activity>
     </application>
 
 </manifest>
