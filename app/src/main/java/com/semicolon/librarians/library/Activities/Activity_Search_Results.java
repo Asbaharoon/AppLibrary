@@ -41,6 +41,7 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
     public Presenter presenter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -64,6 +64,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     boolean permission_granted=false,is_connected=false;
 
 
+
     private static LatLng latLng;
 
     @Override

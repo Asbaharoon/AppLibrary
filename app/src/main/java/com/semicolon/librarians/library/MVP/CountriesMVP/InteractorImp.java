@@ -28,7 +28,7 @@ public class InteractorImp implements Interactor {
                 if (response.isSuccessful())
                 {
                     List<CountriesModel> countriesModels = response.body();
-                    listener.onCountryDataSuccess(countriesModels);
+                     listener.onCountryDataSuccess(countriesModels);
                 }else
                     {
                         listener.onCountryDataFailed("Error something went haywire");

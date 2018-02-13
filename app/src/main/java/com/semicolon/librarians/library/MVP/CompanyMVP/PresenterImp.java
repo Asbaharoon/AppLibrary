@@ -31,7 +31,7 @@ public class PresenterImp implements Presenter, Interactor.onCompleteListener {
         if (viewData!=null)
         {
             viewData.onCompanyDataSuccess(companyModelList);
-        }
+         }
     }
 
     @Override

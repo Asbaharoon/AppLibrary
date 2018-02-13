@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity{
 
         getFragmentManager().beginTransaction().add(R.id.fragmentContainer,new LoginFragment()).commit();
         try {
+
             PackageInfo info = getPackageManager().getPackageInfo("com.example.omd.library", PackageManager.GET_SIGNATURES);
             for (Signature signature:info.signatures)
             {

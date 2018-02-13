@@ -95,6 +95,7 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
     private com.semicolon.librarians.library.MVP.Create_ChatRoom_MVP.Presenter chatRoomPresenter;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

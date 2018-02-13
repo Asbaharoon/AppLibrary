@@ -36,7 +36,7 @@ public class InteractorImp implements Interactor {
                 {
                     Log.e("fffff","response company");
 
-                    if (TextUtils.isEmpty(userName))
+                     if (TextUtils.isEmpty(userName))
                     {
                         List<CompanyModel> companyModelList = response.body();
                         if (companyModelList.size()>0)

@@ -67,6 +67,7 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
     private CircleImageView circleImageView;
     private Target target;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

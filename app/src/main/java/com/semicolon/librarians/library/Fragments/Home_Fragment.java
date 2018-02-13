@@ -64,7 +64,7 @@ public class Home_Fragment extends Fragment  {
             @Override
             public void run() {
                 if (user_Data!=null)
-                {
+                 {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("user_data",user_Data);
                     Chat_Fragment chat_fragment = new Chat_Fragment();

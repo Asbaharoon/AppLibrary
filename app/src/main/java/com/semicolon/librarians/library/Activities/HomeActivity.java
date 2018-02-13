@@ -540,6 +540,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Log.e("user","uni");
                 SharedPreferences sharedPreferences_uni = getSharedPreferences("uni_pref", MODE_PRIVATE);
 
+
                 String un_id         = sharedPreferences_uni.getString("id","");
                 String un_type       = sharedPreferences_uni.getString("type","");
                 String un_photo      = sharedPreferences_uni.getString("photo","");

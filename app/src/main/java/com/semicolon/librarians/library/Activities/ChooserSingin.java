@@ -201,6 +201,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     }
 
 
+
     private void setUpShimmer() {
         Shimmer shimmer = new Shimmer();
         shimmer.setDuration(3000).setDirection(Shimmer.ANIMATION_DIRECTION_RTL);

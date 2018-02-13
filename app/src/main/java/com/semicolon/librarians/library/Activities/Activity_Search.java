@@ -114,6 +114,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
                     {
                         if (userData!=null)
                         {
+
                             Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
                             intent.putExtra("searchType","publisher");
                             intent.putExtra("pubName",query);
