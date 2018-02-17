@@ -26,7 +26,6 @@
             app:itemTextColor="@color/toolbar_homepage"
             app:itemIconTint="@color/toolbar_homepage"
             app:menu="@menu/menu"
-            android:layout_marginTop="?actionBarSize"
             >
 
         </com.rom4ek.arcnavigationview.ArcNavigationView>

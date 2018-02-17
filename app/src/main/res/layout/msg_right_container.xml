@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:layout_gravity="right"
+    android:paddingRight="@dimen/_10sdp"
     >
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        emojicon:cardCornerRadius="@dimen/_10sdp"
+        emojicon:cardBackgroundColor="@color/centercolor"
+        android:layout_alignParentRight="true"
+
+        >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:background="@drawable/msg_right_bg"
+        android:layout_gravity="right|center_vertical"
         android:paddingLeft="@dimen/_5sdp"
         android:paddingRight="@dimen/_5sdp"
         android:orientation="vertical"
@@ -20,7 +29,7 @@
             android:id="@+id/msg_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             emojicon:emojiconSize="18sp"
             android:paddingRight="@dimen/_8sdp"
             android:paddingLeft="@dimen/_8sdp"
@@ -40,9 +49,9 @@
 
             >
             <TextView
+                android:id="@+id/msgDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="09:09PM"
                 android:textSize="@dimen/_11sdp"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/base"
@@ -51,9 +60,10 @@
                 android:layout_width="@dimen/_22sdp"
                 android:layout_height="@dimen/_22sdp"
                 android:src="@drawable/doneall_icon"
+                android:visibility="gone"
                 />
 
         </LinearLayout>
     </LinearLayout>
-
-</FrameLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

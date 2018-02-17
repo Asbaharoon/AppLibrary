@@ -21,7 +21,16 @@
             android:layout_height="wrap_content"
             android:minHeight="?actionBarSize"
             android:background="@color/base"
-            ></android.support.v7.widget.Toolbar>
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone number"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16sdp"
+                />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
     <com.lamudi.phonefield.PhoneInputLayout

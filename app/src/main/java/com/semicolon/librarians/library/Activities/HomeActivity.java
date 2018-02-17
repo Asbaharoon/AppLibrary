@@ -50,10 +50,10 @@ import com.semicolon.librarians.library.Models.LibraryModel;
 import com.semicolon.librarians.library.Models.Location_Model;
 import com.semicolon.librarians.library.Models.NormalUserData;
 import com.semicolon.librarians.library.Models.PublisherModel;
+import com.semicolon.librarians.library.Models.RefreshToken;
 import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
 import com.semicolon.librarians.library.Services.Locationservices_Update;
-import com.semicolon.librarians.library.Services.MyFirebaseInstanceIdServices;
 import com.semicolon.librarians.library.Services.NetworkConnection;
 import com.semicolon.librarians.library.Services.Preferences;
 import com.semicolon.librarians.library.Services.Tags;
@@ -75,7 +75,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mToggle;
     private CircleImageView im_userImage;
     private TextView tv_userName, tv_userEmail;
-
     private GoogleApiClient apiClient;
 
     private AlertDialog.Builder alertDialog;
@@ -94,6 +93,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public com.semicolon.librarians.library.MVP.Create_ChatRoom_MVP.Presenter chatRoomPresenter;
     private Target target;
     private Intent  intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +114,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setUpSigninWithGoogle();
         setUpAlertDialog();
         setUpProgressDialog();
-
 
         getDataFrom_Intent();
 
@@ -138,15 +137,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void initView()
     {
         alertDialog = new AlertDialog.Builder(this);
-
         View home_View = findViewById(R.id.HomeContent);
         toolbar = (Toolbar) home_View.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        arcNavigationView = (ArcNavigationView) findViewById(R.id.arcDrawer);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        arcNavigationView = (ArcNavigationView) findViewById(R.id.arcDrawer);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         //////////////////////////////////////////////////////////////
         View headerView = arcNavigationView.getHeaderView(0);
@@ -318,41 +316,54 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     if (connection.CheckConnection()==true)
                     {
                         SharedPreferences preferences = getSharedPreferences("userType",MODE_PRIVATE);
-
                         String uType = preferences.getString("userType","");
                         String u_id  = preferences.getString("id","");
 
-                        switch (uType)
+                        if (TextUtils.isEmpty(uType)||TextUtils.isEmpty(u_id))
                         {
-                            case "user":
-                                NetworkConnection connection2 = new NetworkConnection(this);
-                                if (connection2.CheckConnection()==true)
+                            SignOut();
+                        }else
+                            {
+                                switch (uType)
                                 {
-                                    intent = new Intent(this, Locationservices_Update.class);
-                                    startService(intent);
+                                    case "user":
+                                        NetworkConnection connection2 = new NetworkConnection(this);
+                                        if (connection2.CheckConnection()==true)
+                                        {
+                                            intent = new Intent(this, Locationservices_Update.class);
+                                            startService(intent);
+                                        }
+
+                                        presenter.getNormalUserData("user",u_id);
+                                        break;
+                                    case "publisher":
+                                        presenter.getPublisherData("publisher",u_id);
+                                        break;
+                                    case "library":
+                                        presenter.getLibraryData("library",u_id);
+                                        break;
+                                    case "university":
+                                        presenter.getUniversityData("university",u_id);
+                                        break;
+                                    case "company":
+                                        presenter.getCompanyData("company",u_id);
+                                        break;
+
                                 }
+                            }
 
-                                presenter.getNormalUserData("user",u_id);
-                                break;
-                            case "publisher":
-                                presenter.getPublisherData("publisher",u_id);
-                                break;
-                            case "library":
-                                presenter.getLibraryData("library",u_id);
-                                break;
-                            case "university":
-                                presenter.getUniversityData("university",u_id);
-                                break;
-                            case "company":
-                                presenter.getCompanyData("company",u_id);
-                                break;
-
-                        }
                     }else
                         {
                             SharedPreferences preferences = getSharedPreferences("userType",MODE_PRIVATE);
                             String uType = preferences.getString("userType","");
-                            Check_OfflineData(uType);
+                            if (TextUtils.isEmpty(uType))
+                            {
+                                SignOut();
+                            }else
+                                {
+                                    Check_OfflineData(uType);
+
+                                }
                         }
 
                     /*SharedPreferences pref = getSharedPreferences("logged_user",MODE_PRIVATE);
@@ -779,6 +790,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                     }else
                     {
+                        Preferences preference = new Preferences(HomeActivity.this);
+                        preference.Session("loggedout");
 
                         startActivity(new Intent(HomeActivity.this,ChooserSingin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 
@@ -851,6 +864,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         }else
             {
+                Preferences preference = new Preferences(HomeActivity.this);
+                preference.Session("loggedout");
 
                 startActivity(new Intent(HomeActivity.this,ChooserSingin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK));
                 finish();
@@ -1370,7 +1385,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
         apiClient.connect();
-        MyFirebaseInstanceIdServices services = new MyFirebaseInstanceIdServices(this);
         preferences = new Preferences(this);
         String session = preferences.getSession();
         if (session.equals("loggedout"))
@@ -1405,6 +1419,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void OnLocationUpdated(Location_Model location_model )
     {
         Toast.makeText(this, ""+location_model.getLocation().getLatitude(), Toast.LENGTH_SHORT).show();
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTokenRefresh(RefreshToken token)
+    {
+        updateToken(token);
+    }
+
+    private void updateToken(RefreshToken token) {
+
     }
 
     @Override

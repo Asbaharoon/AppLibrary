@@ -39,6 +39,8 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     private TextView search_type_tv,search_country,libType_search,libService_search;
     CountryPicker countryPicker;
     private final String TAG="COUNTRY_PICKER";
+    private TextView toolBar_tv;
+
     private String searchType;
     private String country_id;
     private String libType_id="";
@@ -80,6 +82,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
 
             }
         },500);
+
         msv.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -223,9 +226,14 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        msv.setCloseIcon(null);
+        msv.setBackIcon(null);
         mToolbar = (Toolbar) findViewById(R.id.search_toolBar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolBar_tv = (TextView) findViewById(R.id.toolBar_tv);
+
         search_country.setOnClickListener(this);
         libType_search = (TextView) findViewById(R.id.libType_search);
         libService_search = (TextView) findViewById(R.id.libService_search);
@@ -240,8 +248,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         {
             searchType ="library_search";
             getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Library Search");
+            toolBar_tv.setText("Library Search");
             msv.setHint("choose library type");
             search_type_tv.setText("library name");
             libType_search.setVisibility(View.VISIBLE);
@@ -253,18 +260,14 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             searchType ="publisher_search";
             msv.setHint("publisher name");
             search_type_tv.setText("publisher name");
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Publisher Search");
+            toolBar_tv.setText("Publisher Search");
 
         }else if (intent.hasExtra("university_search"))
         {
             searchType ="university_search";
             msv.setHint("university name");
             search_type_tv.setText("university name");
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("University Search");
+            toolBar_tv.setText("University Search");
 
         }
 
@@ -290,10 +293,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        if (item.getItemId()==android.R.id.home)
-        {
-            finish();
-        }
+
         return true;
     }
     @Override

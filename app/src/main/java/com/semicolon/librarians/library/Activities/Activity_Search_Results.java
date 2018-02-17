@@ -2,12 +2,10 @@ package com.semicolon.librarians.library.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.TextView;
 
 import com.semicolon.librarians.library.Fragments.Fragment_Countries;
 import com.semicolon.librarians.library.Fragments.Fragment_LibType;
@@ -25,13 +23,13 @@ import com.semicolon.librarians.library.Models.PublisherModel;
 import com.semicolon.librarians.library.Models.UniversityModel;
 import com.semicolon.librarians.library.R;
 import com.semicolon.librarians.library.Services.Tags;
-import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class Activity_Search_Results extends AppCompatActivity implements ViewData {
 
     private Toolbar toolbar ;
+    private TextView toolBar_tv;
     private String searchType;
     public NormalUserData userData=null;
     public PublisherModel publisherModel=null;
@@ -64,17 +62,18 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
             switch (searchType)
             {
                 case "country":
-                    getSupportActionBar().setTitle("Countries");
+                    toolBar_tv.setText("Countries");
                     Fragment_Countries fragment_countries =new Fragment_Countries();
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_countries).commit();
                     break;
                 case "libType":
-                    getSupportActionBar().setTitle("Libraries types");
+                    toolBar_tv.setText("Libraries types");
                     Fragment_LibType fragment_libType = new Fragment_LibType();
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_libType).commit();
                     break;
                 case "libServices":
-                    getSupportActionBar().setTitle("Libraries services");
+                    toolBar_tv.setText("Libraries services");
+
                     Fragment_Library_Services fragment_library_services = new Fragment_Library_Services();
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_library_services).commit();
                     break;
@@ -96,7 +95,9 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
                     {
                         companyModel = (CompanyModel) intent.getSerializableExtra("compData");
                     }
-                    getSupportActionBar().setTitle("Publishers");
+
+                    toolBar_tv.setText("Publishers");
+
                     String pubName =intent.getStringExtra("pubName");
                     String pub_country_id = intent.getStringExtra("country_id");
                     Fragment_Publisher_Search_Results fragment_publisher_search_results = new Fragment_Publisher_Search_Results();
@@ -108,7 +109,8 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
                     getSupportFragmentManager().beginTransaction().replace(R.id.searchContainer,fragment_publisher_search_results).commit();
                     break;
                 case "library":
-                    getSupportActionBar().setTitle("Libraries");
+                    toolBar_tv.setText("Libraries");
+
                     String libName = intent.getStringExtra("libraryName");
                     String lib_country_id = intent.getStringExtra("country_id");
                     String lib_service_id = intent.getStringExtra("service_id");
@@ -139,7 +141,8 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
                     {
                         companyModel = (CompanyModel) intent.getSerializableExtra("compData");
                     }
-                    getSupportActionBar().setTitle("Universities");
+                    toolBar_tv.setText("Universities");
+
                     String uniName = intent.getStringExtra("uniName");
                     String uni_country_id = intent.getStringExtra("country_id");
                     Bundle uni_bundle = new Bundle();
@@ -163,43 +166,14 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
         toolbar = (Toolbar) findViewById(R.id.country_toolBar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setTitle("Fragment_Countries");
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolBar_tv = (TextView) findViewById(R.id.toolBar_tv);
         /*mRecView = (RecyclerView) findViewById(R.id.recView_countries);
         manager = new LinearLayoutManager(this);
         mRecView.setLayoutManager(manager);
         mRecView.setHasFixedSize(true);*/
 
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId()==android.R.id.home)
-        {
-            finish();
-        }
-        return true;
-    }
-    private void CreateAlertDialog(String msg)
-    {
-        final LovelyStandardDialog dialog = new LovelyStandardDialog(this)
-                .setTopColor(ContextCompat.getColor(this,R.color.centercolor))
-                .setTopTitle("Error")
-                .setTopTitleColor(ContextCompat.getColor(this,R.color.base))
-                .setPositiveButtonColorRes(R.color.centercolor)
-                .setMessage(msg);
-        dialog.setPositiveButton("Cancel", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        dialog.create();
-        dialog.show();
     }
 
     @Override

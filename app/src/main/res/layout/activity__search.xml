@@ -34,6 +34,14 @@
 
 
                     >
+                    <TextView
+                        android:id="@+id/toolBar_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/_16sdp"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        />
                 </android.support.v7.widget.Toolbar>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
@@ -55,9 +63,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/_17sdp"
-                            android:layout_marginLeft="@dimen/_55sdp"
                             android:minHeight="?actionBarSize"
                             android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/_55sdp"
+                            android:layout_gravity="left|center_vertical"
 
                             />
                         <com.miguelcatalan.materialsearchview.MaterialSearchView
@@ -67,6 +76,7 @@
                             android:elevation="@dimen/_5sdp"
                             android:textColorHint="#9e9e9e"
                             android:layout_gravity="left|center_vertical"
+
 
                             >
                         </com.miguelcatalan.materialsearchview.MaterialSearchView>

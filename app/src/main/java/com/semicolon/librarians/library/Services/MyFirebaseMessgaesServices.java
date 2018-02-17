@@ -11,8 +11,9 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.semicolon.librarians.library.Activities.Chat_Activity;
-import com.semicolon.librarians.library.R;
+import com.semicolon.librarians.library.Activities.HomeActivity;
+
+import java.util.Map;
 
 /**
  * Created by Delta on 07/02/2018.
@@ -23,24 +24,24 @@ public class MyFirebaseMessgaesServices extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        CreateNotificationBuilder(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+        Map<String,String> map= remoteMessage.getData();
+        CreateNotificationBuilder(map.get("from_name").toString(),map.get("message").toString());
 
     }
     public void CreateNotificationBuilder(String title,String body)
     {
 
+
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         String currClass = am.getRunningTasks(1).get(0).topActivity.getClassName();
         Log.e("currclass",currClass);
-        Log.e("currclass","fffffffffffffff");
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setContentTitle(title);
         builder.setContentText(body);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
 
-        Intent intent = new Intent(this, Chat_Activity.class);
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
 

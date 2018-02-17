@@ -74,4 +74,5 @@ public class CommonUsersData implements Serializable {
     public void setUser_token(String user_token) {
         this.user_token = user_token;
     }
+
 }

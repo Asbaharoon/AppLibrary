@@ -109,15 +109,14 @@ public class Locationservices_Update extends android.app.Service implements Goog
     {
         request = new LocationRequest();
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        request.setInterval(1000*60*5);
-        request.setFastestInterval(2000);
+        request.setInterval(1000*60*15);
+        request.setFastestInterval(1000*60*15);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-            //LocationServices.FusedLocationApi.removeLocationUpdates(client,this);
+        //LocationServices.FusedLocationApi.removeLocationUpdates(client,this);
 
 
 

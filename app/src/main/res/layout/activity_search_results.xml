@@ -20,11 +20,22 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/base"
             app:titleTextColor="@android:color/black"
-            ></android.support.v7.widget.Toolbar>
+            >
+            <TextView
+                android:id="@+id/toolBar_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_16sdp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"
+                />
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
    <FrameLayout
        android:id="@+id/searchContainer"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       ></FrameLayout>
+       >
+
+   </FrameLayout>
 </LinearLayout>

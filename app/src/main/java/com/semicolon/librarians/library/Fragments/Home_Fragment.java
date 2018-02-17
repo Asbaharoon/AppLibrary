@@ -65,29 +65,51 @@ public class Home_Fragment extends Fragment  {
             public void run() {
                 if (user_Data!=null)
                  {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("user_data",user_Data);
-                    Chat_Fragment chat_fragment = new Chat_Fragment();
-                    chat_fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
-                    navBar.setCurrentItem(0,false);
+                     Bundle bundle = new Bundle();
+                     bundle.putSerializable("user_data",user_Data);
+                     final Chat_Fragment chat_fragment = new Chat_Fragment();
+                     chat_fragment.setArguments(bundle);
+
+                     new Handler().postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                         }
+                     },5000);
+                         navBar.setCurrentItem(0,false);
 
                 }else if (publisher_Model!=null)
                 {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("publisherData",publisher_Model);
-                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    final Chat_Fragment chat_fragment = new Chat_Fragment();
                     chat_fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                        }
+                    },5000);
+
                     navBar.setCurrentItem(0,false);
                 }
                 else if (library_Model!=null)
                 {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("libraryData",library_Model);
-                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    final Chat_Fragment chat_fragment = new Chat_Fragment();
                     chat_fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                        }
+                    },5000);
                     navBar.setCurrentItem(0,false);
 
                 }
@@ -95,9 +117,16 @@ public class Home_Fragment extends Fragment  {
                 {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("universityData",university_Model);
-                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    final Chat_Fragment chat_fragment = new Chat_Fragment();
                     chat_fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                        }
+                    },5000);
                     navBar.setCurrentItem(0,false);
 
                 }
@@ -105,9 +134,16 @@ public class Home_Fragment extends Fragment  {
                 {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("companyData",company_Model);
-                    Chat_Fragment chat_fragment = new Chat_Fragment();
+                    final Chat_Fragment chat_fragment = new Chat_Fragment();
                     chat_fragment.setArguments(bundle);
-                    getActivity().getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack(null).commitAllowingStateLoss();
+
+                        }
+                    },5000);
                     navBar.setCurrentItem(0,false);
 
                 }

@@ -1,10 +1,10 @@
 package com.semicolon.librarians.library.Services;
 
-import android.content.Context;
-
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.semicolon.librarians.library.Activities.HomeActivity;
+import com.semicolon.librarians.library.Models.RefreshToken;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Delta on 07/02/2018.
@@ -12,19 +12,11 @@ import com.semicolon.librarians.library.Activities.HomeActivity;
 
 public class MyFirebaseInstanceIdServices extends FirebaseInstanceIdService {
 
-    Context context;
-    HomeActivity homeActivity;
-    public MyFirebaseInstanceIdServices() {
-    }
-
-    public MyFirebaseInstanceIdServices(Context context) {
-        this.context = context;
-        homeActivity = (HomeActivity) context;
-    }
 
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
-        homeActivity.GetToken(FirebaseInstanceId.getInstance().getToken());
+        RefreshToken refreshToken = new RefreshToken(FirebaseInstanceId.getInstance().getToken());
+        EventBus.getDefault().post(refreshToken);
     }
 }

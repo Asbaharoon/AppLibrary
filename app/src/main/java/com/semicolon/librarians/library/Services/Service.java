@@ -7,6 +7,7 @@ import com.semicolon.librarians.library.Models.JobsModel;
 import com.semicolon.librarians.library.Models.LibraryModel;
 import com.semicolon.librarians.library.Models.LibraryServices_Model;
 import com.semicolon.librarians.library.Models.LibraryType_Model;
+import com.semicolon.librarians.library.Models.MessageModel;
 import com.semicolon.librarians.library.Models.NewsModel;
 import com.semicolon.librarians.library.Models.NormalUserData;
 import com.semicolon.librarians.library.Models.PublisherModel;
@@ -178,4 +179,19 @@ public interface Service {
     @FormUrlEncoded
     @POST("/api/getallchatrooms/")
     Call<List<CommonUsersData>>DisplayAllRooms(@Field("friend_id_fk1") String currUserId);
+
+    ///////////////////--------DisplayMessages----------///////////////////////
+    @FormUrlEncoded
+    @POST("/api/chathistory")
+    Call<List<MessageModel>> DisplayMessages(@FieldMap Map<String ,String> map);
+
+    //////////////////-------------SendMessage----------///////////////////////
+    @FormUrlEncoded
+    @POST("/api/chat")
+    Call<ResponseBody> SendMessages(@FieldMap Map<String ,String> map);
+
+    /////////////////---------UpdateTokenAndLocation----///////////////////////
+
+
+
 }

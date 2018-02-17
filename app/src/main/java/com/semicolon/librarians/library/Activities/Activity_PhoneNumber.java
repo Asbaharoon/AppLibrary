@@ -36,10 +36,7 @@ public class Activity_PhoneNumber extends AppCompatActivity implements View.OnCl
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.phone_toolBar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setTitle("Phone Number");
+
 
         submitBtn = (Button) findViewById(R.id.btn_submit);
         submitBtn.setOnClickListener(this);

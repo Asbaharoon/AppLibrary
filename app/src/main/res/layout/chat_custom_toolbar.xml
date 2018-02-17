@@ -9,7 +9,10 @@
         android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_alignParentLeft="true"
+        android:paddingLeft="@dimen/_10sdp"
+        android:layout_toRightOf="@+id/back_arrow"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/user_chat_image"
         >
         <TextView
             android:id="@+id/user_chat_name"
@@ -30,7 +33,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textSize="@dimen/_12sdp"
-            android:text="just now"
+            android:text="Active Now"
             android:textColor="@color/base"
             android:gravity="left|center_vertical"
             android:layout_gravity="left|center_vertical"
@@ -46,8 +49,18 @@
         android:layout_height="@dimen/_30sdp"
         android:src="@drawable/user_profile"
         android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/_5sdp"
         android:scaleType="centerCrop"
+        />
+    <ImageView
+        android:id="@+id/back_arrow"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="?actionBarSize"
+        android:src="@drawable/white_back_arrow"
+        android:layout_alignParentLeft="true"
+        android:padding="@dimen/_6sdp"
+        android:clickable="true"
+        android:background="@drawable/item_search_bg"
         />
 </RelativeLayout>

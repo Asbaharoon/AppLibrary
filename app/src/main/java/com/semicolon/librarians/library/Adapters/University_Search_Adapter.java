@@ -60,7 +60,7 @@ public class University_Search_Adapter extends RecyclerView.Adapter<University_S
 
                 if (activity_search_results.universityModel!=null)
                 {
-                    if (universityModel2.getUni_username().equals(activity_search_results.publisherModel.getPub_username()))
+                    if (universityModel2.getUni_username().equals(activity_search_results.universityModel.getUni_username()))
                     {
                         Intent intent = new Intent(context,Activity_Profile.class);
                         intent.putExtra("who_visit_myProfile","me");
