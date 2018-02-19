@@ -11,7 +11,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.semicolon.librarians.library.Activities.LoginActivity" />
+        tools:context="com.semicolon.librarians.libraryguide.Activities.LoginActivity" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:paddingTop="@dimen/_8sdp"
             android:paddingBottom="@dimen/_8sdp"
             android:drawableLeft="@drawable/places_ic_search"
-            android:hint="Enter library Address,City,Zipcode"
+            android:hint="@string/enter_library_address_city_zipcode"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:drawablePadding="@dimen/_5sdp"

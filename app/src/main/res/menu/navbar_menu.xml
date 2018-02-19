@@ -2,25 +2,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
-    android:title="Chats"
+    android:title="@string/chats"
     app:showAsAction="never"
     android:icon="@drawable/chat_icon"
     android:orderInCategory="100"
     />
     <item
-        android:title="Universities"
+        android:title="@string/universities"
         app:showAsAction="never"
         android:icon="@drawable/university_icon"
         android:orderInCategory="100"
         />
     <item
-        android:title="Libraries"
+        android:title="@string/libraries"
         app:showAsAction="never"
         android:icon="@drawable/library_icon"
         android:orderInCategory="100"
         />
     <item
-        android:title="Publishers"
+        android:title="@string/publishers"
         app:showAsAction="never"
         android:icon="@drawable/publisher_icon"
         android:orderInCategory="100"

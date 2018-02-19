@@ -14,13 +14,13 @@
         android:orientation="vertical"
         >
         <ImageView
-            android:layout_width="@dimen/_70sdp"
+            android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_70sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:scaleType="fitXY"
-            android:src="@android:drawable/star_big_on"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logohome"
 
             />
         <com.romainpiel.shimmer.ShimmerTextView
@@ -30,7 +30,7 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_14sdp"
-            android:text="Welcom to, Library"
+            android:text="@string/welcome_to_library_guide"
             app:reflectionColor="@color/home_toolbar_start"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_below="@+id/logo"
@@ -68,11 +68,13 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/username"
-                    android:hint="Username"
+                    android:hint="@string/user_name"
                     android:padding="@dimen/_3sdp"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_14sdp"
                     android:singleLine="true"
                     android:inputType="textEmailAddress"
+                    android:gravity="left|center_vertical"
+
 
                     />
             </com.wrapp.floatlabelededittext.FloatLabeledEditText>
@@ -89,11 +91,12 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/pass_icon"
-                    android:hint="Password"
-                    android:textSize="@dimen/_12sdp"
+                    android:hint="@string/pass"
+                    android:textSize="@dimen/_14sdp"
                     android:padding="@dimen/_3sdp"
                     android:singleLine="true"
                     android:inputType="textPassword"
+                    android:gravity="left|center_vertical"
                     android:maxLength="15"
 
                     />
@@ -122,10 +125,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Forget password ?"
+                        android:text="@string/forget_password"
                         android:singleLine="true"
                         android:textColor="@color/base"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         android:textStyle="normal"
                         android:layout_centerVertical="true"
                         android:paddingTop="@dimen/_3sdp"
@@ -147,14 +150,15 @@
                     android:layout_alignParentLeft="true"
                     >
                     <CheckBox
+                        android:id="@+id/remember_me"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Remember me"
+                        android:text="@string/remember_me"
                         android:textColor="@color/base"
                         app:backgroundTint="@color/colorPrimary"
                         app:buttonTint="@color/colorPrimary"
                         android:checked="false"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_14sdp"
                         />
                 </com.andexert.library.RippleView>
             </RelativeLayout>
@@ -177,11 +181,11 @@
                     android:id="@+id/signinBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sign in"
+                    android:text="@string/sign_up"
                     android:textColor="@color/base"
                     android:textAllCaps="false"
                     android:background="@drawable/button_bg"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_16sdp"
 
                     />
             </com.andexert.library.RippleView>
@@ -219,9 +223,9 @@
              android:id="@+id/login_fragment_signuptv"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="Don’t have an account yet? "
+             android:text="@string/don_t_have_an_account_yet"
              android:textColor="@color/centercolor"
-             android:textSize="@dimen/_11sdp"
+             android:textSize="@dimen/_12sdp"
              android:clickable="true"
              android:paddingTop="@dimen/_2sdp"
              android:paddingBottom="@dimen/_2sdp"
@@ -229,9 +233,9 @@
          <TextView
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="Signup Now."
+             android:text="@string/signup_now"
              android:textColor="@color/base"
-             android:textSize="@dimen/_11sdp"
+             android:textSize="@dimen/_12sdp"
              android:clickable="true"
              android:paddingTop="@dimen/_2sdp"
              android:paddingBottom="@dimen/_2sdp"

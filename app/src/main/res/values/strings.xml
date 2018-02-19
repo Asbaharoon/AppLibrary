@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Library</string>
-    <string name="title_activity_chooser_singin">Library</string>
+    <string name="app_name">Library guide</string>
+    <string name="title_activity_chooser_singin">Library guide</string>
     <string name="facebook_app_id">156588275066033</string>
     <string name="fb_login_protocol_scheme">fb156588275066033</string>
-    <string name="google_maps_key"> AIzaSyBoE0Mw_E_e375XVFACq-2vFzGzd86Tyr8 </string>
+    <string name="google_maps_key">  AIzaSyDFYFBvXcuJdcQnlsaEHKANimuB5F8MwDA  </string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="phone">Phone Number</string>
@@ -16,24 +16,137 @@
         <item>University</item>
         <item>Company</item>
     </string-array>
-    <string-array name="libType">
-        <item>Public library</item>
-        <item>National library</item>
-        <item>Specialized library</item>
-        <item>Academy library</item>
-        <item>School library</item>
-        <item>University library</item>
-        <item>Children library</item>
-        <item>Electronic library</item>
-        <item>Migratory library</item>
-        <item>Other</item>
-    </string-array>
+
     <string name="title_activity_home">HomeActivity</string>
     <string name="invalid_firstName">invalid First name</string>
     <string name="invalid_lastName">invalid Last name</string>
     <string name="invalidEmail">invalid email</string>
     <string name="invalid_url">invalid url</string>
-
+    <string name="select_country">Select country</string>
+    <string name="select_library_type">Select library type</string>
+    <string name="type_message">type message......</string>
+    <string name="welcome_to_library_guide">Welcome to, Library Guide</string>
+    <string name="sign_in_with_my_account">Sign in with my account</string>
+    <string name="facebook_signin">Sign in with Facebook</string>
+    <string name="id">id</string>
+    <string name="name">Name</string>
+    <string name="e_mail_address">E-mail address</string>
+    <string name="update_profile">update profile</string>
+    <string name="enter_library_address_city_zipcode">Enter library Address,City,Zipcode</string>
+    <string name="submit">Submit</string>
+    <string name="user">User</string>
+    <string name="library">Library</string>
+    <string name="publisher">Publisher</string>
+    <string name="university">University</string>
+    <string name="company">Company</string>
+    <string name="confirm">Confirm</string>
+    <string name="more">More</string>
+    <string name="open_profile">Open Profile</string>
+    <string name="send_message">Send Message</string>
+    <string name="cancel">Cancel</string>
+    <string name="address">ADDRESS :</string>
+    <string name="distance">DISTANCE :</string>
+    <string name="recover_account">Recover your account.We will send you a link to change your password.</string>
+    <string name="library_app">Library App</string>
+    <string name="date">Date</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="contacts">Contacts</string>
+    <string name="requirements">Requirements</string>
+    <string name="required">required</string>
+    <string name="lib_name">Library name</string>
+    <string name="lib_type">Library Type</string>
+    <string name="country">Country</string>
+    <string name="reg_address">Address</string>
+    <string name="user_name">Username</string>
+    <string name="pass">Password</string>
+    <string name="sign_up">sign up</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forget_password">Forget password ?</string>
+    <string name="don_t_have_an_account_yet">Don’t have an account yet?</string>
+    <string name="signup_now">Signup Now.</string>
+    <string name="details">Details :</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="f_name">First name</string>
+    <string name="l_name">Last name</string>
+    <string name="hi_there_i_m_here_using_library_app">Hi there, I\'m here using Library App</string>
+    <string name="town">Town</string>
+    <string name="site">Website</string>
+    <string name="uni_name">University name</string>
+    <string name="uni_major">University Major</string>
+    <string name="invalid_phone">invalid phone number</string>
+    <string name="network_connection">Error Contacting :Check network connection please contact Wi-Fi or contact Mobile-data</string>
+    <string name="error">Error</string>
+    <string name="something_haywire">Something went haywire</string>
+    <string name="lib_search">Library Search</string>
+    <string name="librart_name">library name</string>
+    <string name="pub_name">publisher name</string>
+    <string name="pub_search">Publisher Search</string>
+    <string name="university_name">university name</string>
+    <string name="uni_search">University Search</string>
+    <string name="lib_services">Libraries services</string>
+    <string name="publishers">Publishers</string>
+    <string name="libraries">Libraries</string>
+    <string name="universities">Universities</string>
+    <string name="help">help</string>
+    <string name="kilo_m">Km</string>
+    <string name="distance_">Distance</string>
+    <string name="phone_empty">phone number shouldn\'t be empty</string>
+    <string name="email_empty">email address shouldn\'t be empty</string>
+    <string name="country_empty">country shouldn\'t be empty</string>
+    <string name="wait_update_profile">Wait for updating profile</string>
+    <string name="signout">Sign out ?</string>
+    <string name="out">Sign out</string>
+    <string name="enter_lib_loc">Please enter library location</string>
+    <string name="invalid_address">invalid address</string>
+    <string name="ser_not_found">service not available</string>
+    <string name="ser_valid">service is available</string>
+    <string name="per_not_granted">permission not granted</string>
+    <string name="sel_opt">Select Options</string>
+    <string name="no_result">no results</string>
+    <string name="invalid_username">invalid username</string>
+    <string name="empty_field">empty field</string>
+    <string name="invalid_password">invalid password</string>
+    <string name="sin_in">SignIn....</string>
+    <string name="inv_fn">invalid first name</string>
+    <string name="inv_ln">invalid last name</string>
+    <string name="inv_pn">invalid phone number</string>
+    <string name="inv_country">invalid country</string>
+    <string name="inv_address">invalid address</string>
+    <string name="inv_town">invalid town</string>
+    <string name="inv_lib_name">invalid library name</string>
+    <string name="inv_name">invalid name</string>
+    <string name="inv_major">invalid major</string>
+    <string name="inv_site">invalid site url</string>
+    <string name="sel_lib_loc">Select Library Location...</string>
+    <string name="lib_loc">Your current location is the library location ?</string>
+    <string name="y">yes</string>
+    <string name="select_loc">Select Location</string>
+    <string name="sign_in">SignIn....</string>
+    <string name="active_now">Active now</string>
+    <string name="users">Users</string>
+    <string name="libs">Libraries</string>
+    <string name="companies">Companies</string>
+    <string name="search">search</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="nearby">Nearby</string>
+    <string name="news">News</string>
+    <string name="jobs">Jobs</string>
+    <string name="ads">Ads</string>
+    <string name="settings">Settings</string>
+    <string name="chats">Chats</string>
+    <string name="who_are_you">who are you ?</string>
+    <string name="normal_user">Normal user</string>
+    <string name="spn_pub">Publisher</string>
+    <string name="spin_lib">Library</string>
+    <string name="spin_uni">University</string>
+    <string name="spin_comp">Company</string>
+    <string name="comp_name">Company name</string>
+    <string name="view_location">view location</string>
+    <string name="ch_photo">choose profile photo</string>
+    <string name="no_data_found">No data founded please check user type</string>
+    <string name="nodata_2">No data founded please check user type.if you don’t have an account please create one</string>
 
     <integer-array name="fab_colors">
         <item>@color/base</item>

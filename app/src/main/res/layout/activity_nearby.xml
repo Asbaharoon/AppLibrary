@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.semicolon.librarians.library.Activities.NearbyActivity">
+    tools:context="com.semicolon.librarians.libraryguide.Activities.NearbyActivity">
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -30,7 +30,9 @@
         app:fabMenu="@menu/filterd_menu"
 
 
-        ></io.github.yavski.fabspeeddial.FabSpeedDial>
+        >
+
+    </io.github.yavski.fabspeeddial.FabSpeedDial>
 
 
 </FrameLayout>

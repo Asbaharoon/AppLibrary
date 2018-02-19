@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.semicolon.librarians.library.Activities.ChooserSingin"
+    tools:context="com.semicolon.librarians.libraryguide.Activities.ChooserSingin"
     android:background="@drawable/screengradint"
 
     >
@@ -34,13 +34,13 @@
         android:layout_below="@+id/AppBar"
         >
         <ImageView
-            android:layout_width="@dimen/_70sdp"
+            android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_70sdp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:scaleType="fitXY"
-            android:src="@android:drawable/star_big_on"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logohome"
 
             />
         <com.romainpiel.shimmer.ShimmerTextView
@@ -50,7 +50,7 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_14sdp"
-            android:text="Welcom to, Library"
+            android:text="@string/welcome_to_library_guide"
             app:reflectionColor="@color/home_toolbar_start"
             android:layout_marginBottom="@dimen/_20sdp"
             android:layout_below="@+id/logo"
@@ -83,11 +83,11 @@
             android:id="@+id/chooser_signinBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
-            android:text="Sign in with my account"
+            android:text="@string/sign_in_with_my_account"
             android:textColor="@android:color/white"
             android:background="@drawable/signin_btn_bg"
             android:textAllCaps="false"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_14sdp"
             android:drawableLeft="@drawable/mail"
             android:paddingLeft="@dimen/_11sdp"
 
@@ -113,7 +113,7 @@
                 android:paddingTop="@dimen/_25sdp"
                 android:paddingBottom="@dimen/_25sdp"
                 android:paddingLeft="@dimen/_12sdp"
-                facebook:com_facebook_login_text="Sign in with Facebook"
+                facebook:com_facebook_login_text="@string/facebook_signin"
                 facebook:com_facebook_confirm_logout="false"
 
                 />
@@ -153,6 +153,4 @@
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
-
-
 </RelativeLayout>

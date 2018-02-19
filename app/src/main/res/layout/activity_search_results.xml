@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.semicolon.librarians.library.Activities.Activity_Search_Results"
+    tools:context="com.semicolon.librarians.libraryguide.Activities.Activity_Search_Results"
     android:orientation="vertical"
     >
 

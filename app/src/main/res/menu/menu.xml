@@ -4,54 +4,54 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
+        android:title="@string/home"
         app:showAsAction="never"
         android:icon="@drawable/home_icon"
         />
     <item
         android:id="@+id/profile"
-        android:title="Profile"
+        android:title="@string/profile"
         app:showAsAction="never"
         android:icon="@drawable/username_icon"
         />
     <item
         android:id="@+id/nearby"
-        android:title="Nearby"
+        android:title="@string/nearby"
         app:showAsAction="never"
         android:icon="@drawable/nearby_icon"
         />
     <item
         android:id="@+id/news"
-        android:title="News"
+        android:title="@string/news"
         app:showAsAction="never"
         android:icon="@drawable/news_icon"
     />
     <item
         android:id="@+id/jobs"
-        android:title="Jobs"
+        android:title="@string/jobs"
         app:showAsAction="never"
         android:icon="@drawable/job_icon"
         />
     <item
         android:id="@+id/company"
-        android:title="Companies"
+        android:title="@string/companies"
         app:showAsAction="never"
         android:icon="@drawable/comp_icon"
         />
     <item
         android:id="@+id/ads"
-        android:title="Ads"
+        android:title="@string/ads"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/settings"
-        android:title="Settings"
+        android:title="@string/settings"
         app:showAsAction="never"
         android:icon="@drawable/sitting_icon"
         />
     <item
         android:id="@+id/logout"
-        android:title="Logout"
+        android:title="@string/out"
         app:showAsAction="never"
         android:icon="@drawable/logout_icon"
 

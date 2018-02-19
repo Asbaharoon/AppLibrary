@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="180dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/homepage_toolbar"
@@ -43,6 +43,7 @@
         android:maxLines="1"
         android:scrollHorizontally="true"
         tools:ignore="MissingPrefix"
+        android:layout_marginBottom="@dimen/_10sdp"
 
 
 

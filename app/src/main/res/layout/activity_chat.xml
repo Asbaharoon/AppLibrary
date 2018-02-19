@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:emojicon="http://schemas.android.com/apk/res-auto"
-    tools:context="com.semicolon.librarians.library.Activities.Chat_Activity">
+    tools:context="com.semicolon.librarians.libraryguide.Activities.Chat_Activity">
 <android.support.design.widget.AppBarLayout
     android:id="@+id/chatAppBar"
     android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_8sdp"
 
-                    android:hint="type message......"
+                    android:hint="@string/type_message"
                     emojicon:emojiconSize="20sp"
                     android:maxLines="3"
                     android:textColorHint="#9e9e9e"

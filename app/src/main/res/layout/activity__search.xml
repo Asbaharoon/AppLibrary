@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.semicolon.librarians.library.Activities.Activity_Search">
+    tools:context="com.semicolon.librarians.libraryguide.Activities.Activity_Search">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="?actionBarSize"
                         android:singleLine="true"
-                        android:hint="Select country"
+                        android:hint="@string/select_country"
                         android:gravity="center_vertical|left"
                         android:textSize="@dimen/_15sdp"
                         android:drawableLeft="@drawable/places_icon"
@@ -118,7 +118,7 @@
                         android:layout_height="wrap_content"
                         android:minHeight="?actionBarSize"
                         android:singleLine="true"
-                        android:text="Select library type"
+                        android:hint="@string/select_library_type"
                         android:gravity="center_vertical|left"
                         android:textSize="@dimen/_15sdp"
                         android:drawableLeft="@drawable/lib_type"
@@ -134,7 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1.7px"
                         android:background="@color/whit_gray"/>
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/libService_search"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
 
                         android:visibility="gone"
 
-                        />
+                        />-->
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

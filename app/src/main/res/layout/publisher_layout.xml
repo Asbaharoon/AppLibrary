@@ -7,6 +7,7 @@
     android:scrollbars="none"
     android:fillViewport="true"
     android:fitsSystemWindows="true"
+
     >
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +42,7 @@
                 android:layout_height="@dimen/_60sdp"
                 android:textColor="@color/base"
                 android:textSize="@dimen/_12sdp"
-                android:text="Add Photo"
+                android:text="@string/add_photo"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:background="@drawable/add_photo_tv"
@@ -56,8 +57,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="first name"
-            app:met_helperText="required"
+            app:met_floatingLabelText="@string/f_name"
+            app:met_helperText="@string/required"
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_singleLineEllipsis="true"
@@ -72,9 +73,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:maxLength="15"
-            app:met_maxCharacters="15"
 
 
 
@@ -87,9 +87,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Last name"
+            app:met_floatingLabelText="@string/l_name"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -102,9 +102,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:maxLength="15"
-            app:met_maxCharacters="15"
 
 
 
@@ -118,9 +117,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Email"
+            app:met_floatingLabelText="@string/e_mail_address"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -133,9 +132,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:maxLength="25"
-            app:met_maxCharacters="30"
 
 
 
@@ -149,9 +147,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Phone"
+            app:met_floatingLabelText="@string/phone"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -164,7 +162,7 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:focusable="false"
             android:clickable="true"
             android:gravity="left"
@@ -178,9 +176,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Country"
+            app:met_floatingLabelText="@string/country"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -193,7 +191,7 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:focusable="false"
             android:clickable="true"
             android:gravity="left"
@@ -209,9 +207,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Address"
+            app:met_floatingLabelText="@string/reg_address"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -224,10 +222,9 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:inputType="text"
             android:maxLength="15"
-            app:met_maxCharacters="15"
 
 
 
@@ -240,9 +237,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Town"
+            app:met_floatingLabelText="@string/town"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -255,10 +252,9 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:inputType="text"
             android:maxLength="15"
-            app:met_maxCharacters="15"
 
 
 
@@ -274,9 +270,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Website"
+            app:met_floatingLabelText="@string/site"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -290,9 +286,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:maxLength="100"
-            app:met_maxCharacters="100"
 
 
 
@@ -306,9 +301,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="UserName"
+            app:met_floatingLabelText="@string/user_name"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -321,9 +316,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:maxLength="20"
-            app:met_maxCharacters="20"
 
 
 
@@ -336,9 +330,9 @@
             app:met_autoValidate="true"
             app:met_floatingLabelAnimating="true"
             app:met_floatingLabel="highlight"
-            app:met_floatingLabelText="Password"
+            app:met_floatingLabelText="@string/pass"
             app:met_floatingLabelAlwaysShown="true"
-            app:met_helperText="required"
+            app:met_helperText="@string/required"
             app:met_helperTextAlwaysShown="true"
             app:met_checkCharactersCountAtBeginning="true"
             app:met_singleLineEllipsis="true"
@@ -352,9 +346,8 @@
             app:met_baseColor="@color/base"
             app:met_primaryColor="@color/base"
             app:met_textColorHint="@color/base"
-            android:textSize="@dimen/_14sdp"
+            android:textSize="@dimen/_16sdp"
             android:maxLength="15"
-            app:met_maxCharacters="15"
 
 
 
@@ -377,8 +370,8 @@
                 android:id="@+id/pub_SignInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="sign up"
-                android:textSize="@dimen/_12sdp"
+                android:text="@string/sign_up"
+                android:textSize="@dimen/_16sdp"
                 android:textColor="@color/base"
                 android:background="@drawable/button_bg"
 

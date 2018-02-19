@@ -13,10 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:padding="@dimen/_5sdp"
         >
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            folding-cell:cardCornerRadius="@dimen/_5sdp"
+            folding-cell:cardElevation="@dimen/_5sdp"
             xmlns:android="http://schemas.android.com/apk/res/android"
             >
             <LinearLayout
@@ -28,8 +31,9 @@
                 <ImageView
                     android:id="@+id/job_image_content"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/_140sdp"
                     android:scaleType="fitXY"
+                    android:src="@drawable/user_profile"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -41,19 +45,17 @@
                         android:id="@+id/job_title_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="JobTitle"
                         android:textSize="@dimen/_16sdp"
                         android:textColor="@android:color/black"
                         />
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/job_content_content"
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Content sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
                         android:layout_marginTop="@dimen/_15sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
-                        />
+                        />-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
@@ -67,34 +69,33 @@
                     android:padding="@dimen/_5sdp"
                     >
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:textSize="@dimen/_15sdp"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="@dimen/_10sdp"
                         />
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="From"
+                        android:text="@string/from"
                         android:textSize="@dimen/_11sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
                         />
                     <TextView
                         android:id="@+id/job_startDate_content"
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="22,Jun,2018"
                         android:layout_marginBottom="@dimen/_5sdp"
                         android:textColor="@android:color/black"
 
                         />
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="To"
+                        android:text="@string/to"
                         android:textSize="@dimen/_11sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
 
@@ -102,9 +103,8 @@
                     <TextView
                         android:id="@+id/job_endDate_content"
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="31,Jun,2018"
                         android:textColor="@android:color/black"
 
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -124,27 +124,25 @@
                     android:padding="@dimen/_5sdp"
                     >
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Contacts"
+                        android:text="@string/contacts"
                         android:textSize="@dimen/_15sdp"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="@dimen/_10sdp"
                         />
                     <TextView
                         android:id="@+id/job_companyName_content"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Company Name"
                         android:textSize="@dimen/_13sdp"
                         android:layout_marginBottom="@dimen/_5sdp"
                         />
                     <TextView
                         android:id="@+id/job_companyEmail_content"
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="awesome@gmail.com"
                         android:textSize="@dimen/_13sdp"
 
                         android:layout_marginBottom="@dimen/_5sdp"
@@ -153,12 +151,11 @@
                     <TextView
                         android:id="@+id/job_companyPhone_content"
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="+2 01017357658"
                         android:textSize="@dimen/_13sdp"
-
                         android:layout_marginBottom="@dimen/_5sdp"
+
 
                         />
                     <View
@@ -174,9 +171,9 @@
                     android:padding="@dimen/_5sdp"
                     >
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Requirements"
+                        android:text="@string/requirements"
                         android:textSize="@dimen/_15sdp"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="@dimen/_10sdp"
@@ -188,7 +185,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/_14sdp"
-                        android:text="fsdfdsfdsfdsfdfsdfdsfdfsdfdsfdsfdsfsdfdsfdsfdfsdfsd"
                         android:layout_marginBottom="@dimen/_5sdp"
 
                         />
@@ -200,12 +196,13 @@
             layout="@layout/job_foldingcell_content"
             android:id="@+id/foldCell_content"
             />-->
-
+//////////////////////////////////////////////////////////////////////
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
         <!--<include
             layout="@layout/job_foldingcell_title"
             android:id="@+id/foldCell_title"
@@ -213,7 +210,7 @@
             />-->
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_140sdp"
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cardElevation="@dimen/_2sdp"
@@ -241,7 +238,6 @@
                         android:id="@+id/job_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Job Title"
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textSize="@dimen/_15sdp"
@@ -263,7 +259,6 @@
                         android:ellipsize="end"
                         android:gravity="right|center_vertical"
                         android:singleLine="true"
-                        android:text="22,Jun,2018"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_11sdp"
                         android:layout_alignParentRight="true"
@@ -276,7 +271,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:maxLines="3"
-                        android:text="content"
                         android:ellipsize="end"
                         android:textSize="@dimen/_13sdp"
                         android:textColor="#757575"
@@ -293,7 +287,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
-                        android:text="company name"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:textSize="@dimen/_14sdp"
                         android:ellipsize="end"
@@ -309,7 +302,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="More"
+                        android:text="@string/more"
                         android:gravity="end"
                         android:paddingRight="@dimen/_5sdp"
                         android:textSize="@dimen/_12sdp"
@@ -318,7 +311,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/job_companyName"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
                         />
 
                 </RelativeLayout>

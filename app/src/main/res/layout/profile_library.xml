@@ -210,7 +210,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hi there, I'm here using Library App"
+                android:text="@string/hi_there_i_m_here_using_library_app"
                 android:textSize="@dimen/_14sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:textColor="#0288D1"

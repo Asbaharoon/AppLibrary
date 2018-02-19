@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">دليل المكتبات</string>
+    <string name="title_activity_chooser_singin">دليل المكتبات</string>
 
-
+    <string-array name="spinnerArray">
+        <item>مستخدم</item>
+        <item>ناشر</item>
+        <item>مكتبه</item>
+        <item>جامعه</item>
+        <item>شركه</item>
+    </string-array>
 
     <integer-array name="fab_colors">
         <item>@color/base</item>
@@ -10,4 +18,140 @@
         <item>@color/label</item>
         <item>@color/base</item>
     </integer-array>
+    <string name="phone">رقم المحمول</string>
+
+    <string name="title_activity_home">دليل المكتبات</string>
+    <string name="invalid_firstName">الاسم الاول غير صالح</string>
+    <string name="invalid_lastName">الاسم الاخير غير صالح</string>
+    <string name="invalidEmail">البريد الالكتروني غير صالح</string>
+    <string name="invalid_url">الرابط غير صالح</string>
+    <string name="select_country">اختار الدول</string>
+    <string name="select_library_type">اختار نوع المكتبه</string>
+    <string name="type_message">كتابه رساله......</string>
+    <string name="welcome_to_library_guide">مرحبا بكم في, دليل المكتبات</string>
+    <string name="sign_in_with_my_account">تسجيل الدخول</string>
+    <string name="facebook_signin">تسجيل الدخول</string>
+    <string name="id">id</string>
+    <string name="name">الاسم</string>
+    <string name="e_mail_address">البريد الالكتروني</string>
+    <string name="update_profile">تحديث الملف الشخصي</string>
+    <string name="enter_library_address_city_zipcode">ادخل المدينه او العنوان او الرمز البريدي</string>
+    <string name="submit">تأكيد</string>
+    <string name="user">مستخدم</string>
+    <string name="library">مكتبه</string>
+    <string name="publisher">ناشر</string>
+    <string name="university">جامعه</string>
+    <string name="company">شركه</string>
+    <string name="confirm">تأكيد</string>
+    <string name="more">المزيد</string>
+    <string name="open_profile">الملف الشخصي</string>
+    <string name="send_message">ارسال رساله</string>
+    <string name="cancel">اغلاق</string>
+    <string name="address">العنوان :</string>
+    <string name="distance">المسافه :</string>
+    <string name="recover_account">استرداد حسابك. سوف نرسل لك رابط لتغيير كلمة المرور الخاصة بك.</string>
+    <string name="library_app">دليل المكتبات</string>
+    <string name="date">التاريخ</string>
+    <string name="from">من</string>
+    <string name="to">الى</string>
+    <string name="contacts">التواصل</string>
+    <string name="requirements">متطلبات الوظيفه</string>
+    <string name="required">مطلوب</string>
+    <string name="lib_name">اسم المكتبه</string>
+    <string name="lib_type">نوع المكتبه</string>
+    <string name="country">الدوله</string>
+    <string name="reg_address">العنوان</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="pass">كلمه المرور</string>
+    <string name="sign_up">انشاء حساب</string>
+    <string name="remember_me">تزكرني</string>
+    <string name="forget_password">هل نسيت كلمه المرور ؟</string>
+    <string name="don_t_have_an_account_yet">لا امتلك حساب </string>
+    <string name="signup_now">انشاء حساب .</string>
+    <string name="details">التفاصيل :</string>
+    <string name="add_photo">اضافه صوره</string>
+    <string name="f_name">الاسم الاول</string>
+    <string name="l_name">الاسم الاخير</string>
+    <string name="hi_there_i_m_here_using_library_app">مرحبا بكم انا متاح استخدم تطبيق دليل المكتبات</string>
+    <string name="town">المدينه</string>
+    <string name="site">الموقع الالكتروني</string>
+    <string name="uni_name">اسم الجامعه</string>
+    <string name="uni_major">التخصص</string>
+    <string name="invalid_phone">رقم المحمول غير صالح</string>
+    <string name="network_connection">تحقق من الاتصال بالانترنت</string>
+    <string name="error">خطأ</string>
+    <string name="something_haywire">حدث خطأ</string>
+    <string name="lib_search">البحث عن المكتبه</string>
+    <string name="librart_name">اسم المكتبه</string>
+    <string name="pub_name">اسم الناشر</string>
+    <string name="pub_search">البحث عن الناشرين</string>
+    <string name="university_name">اسم الجامعه</string>
+    <string name="uni_search">البحث عن الجامعات</string>
+    <string name="lib_services">خدمات المكتبه</string>
+    <string name="publishers">الناشرين</string>
+    <string name="libraries">المكتبات</string>
+    <string name="universities">الجامعات</string>
+    <string name="help">المساعده</string>
+    <string name="kilo_m">كم</string>
+    <string name="distance_">المسافه</string>
+    <string name="phone_empty">رقم المحمول لاينبغي ان يكون فارغ</string>
+    <string name="email_empty">البريد الالكتروني لاينبغي ان يكون فارغ</string>
+    <string name="country_empty">اسم الدوله لاينبغي ان يكون فارغ</string>
+    <string name="wait_update_profile">انتظار تحديث الملف الشخصي</string>
+    <string name="signout">تسجيل خروج؟</string>
+    <string name="out">تسجيل خروج</string>
+    <string name="enter_lib_loc">ادخل الموقع</string>
+    <string name="invalid_address">العنوان غير صالح</string>
+    <string name="ser_not_found">الخدمه غير متوفره</string>
+    <string name="ser_valid">الخدمه متوفره</string>
+    <string name="per_not_granted">لم يتم منح الاذن</string>
+    <string name="sel_opt">اختر</string>
+    <string name="no_result">لاتوحد نتائج</string>
+    <string name="invalid_username">اسم المستخدم</string>
+    <string name="empty_field">حقل فارغ</string>
+    <string name="invalid_password">كلمه المرور غير صالحه</string>
+    <string name="sin_in">تسجيل دخول....</string>
+    <string name="inv_fn">الاسم الاول غير صالح</string>
+    <string name="inv_ln">الاسم الاخير غير صالح</string>
+    <string name="inv_pn">رقم المحمول غير صالح</string>
+    <string name="inv_country">اسم الدوله غير صالح</string>
+    <string name="inv_address">العنوان غير صالح</string>
+    <string name="inv_town">اسم المدينه غير صالح</string>
+    <string name="inv_lib_name">اسم المكتبه غير صالح</string>
+    <string name="inv_name">الاسم غير صالح</string>
+    <string name="inv_major">التخصص غير صالح</string>
+    <string name="inv_site">الموقع الالكتروني غي صالح</string>
+    <string name="sel_lib_loc">اختر موقع المكتبه...</string>
+    <string name="lib_loc">موقعك الحالي هو موقع المكتبة؟</string>
+    <string name="y">نعم</string>
+    <string name="select_loc">حدد الموقع</string>
+    <string name="sign_in">تسجيل دخول....</string>
+    <string name="active_now">نشط الان</string>
+    <string name="users">المستخدمين</string>
+    <string name="libs">المكتبات</string>
+    <string name="companies">الشركات</string>
+    <string name="search">البحث</string>
+    <string name="home">الرئيسيه</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="nearby">الاقرب</string>
+    <string name="news">الاخبار</string>
+    <string name="jobs">الوظائف</string>
+    <string name="ads">الاعلانات</string>
+    <string name="settings">الاعدادات</string>
+    <string name="chats">المحادثات</string>
+    <string name="who_are_you">من انت ؟</string>
+    <string name="comp_name">اسم الشركه</string>
+    <string name="normal_user">مستخدم</string>
+    <string name="spn_pub">ناشر</string>
+    <string name="spin_lib">مكتبه</string>
+    <string name="spin_uni">جامعه</string>
+    <string name="spin_comp">شركه</string>
+    <string name="view_location">عرض الموقع</string>
+    <string name="ch_photo">اختار صوره للملف الشخصي</string>
+    <string name="no_data_found">لاتوجد بيانات منفضلك تحقق من نوع المستخدم</string>
+    <string name="nodata_2">لا توجد بيانات تحقق من نوع المستخدم. او انشاء حساب جديد</string>
+
+
+
+
 </resources>
