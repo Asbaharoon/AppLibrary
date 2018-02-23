@@ -88,6 +88,7 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
     private TextView user_chat_name,user_chat_status;
     private Target target;
 
+
     private com.semicolon.librarians.libraryguide.MVP.Messages_MVP.Presenter presenter;
     private RecyclerView chatRecyclerView;
     private RecyclerView.LayoutManager manager;
