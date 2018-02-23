@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -285,33 +286,14 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
         if (googleMap != null) {
             mMap = googleMap;
             if (user_Data != null) {
-                final LatLng latLng = new LatLng(Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()));
+                if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lng()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng()))
+                {
+                    final LatLng latLng = new LatLng(Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()));
 
-                if (user_Data.getUserPhoto() != null) {
+                    if (user_Data.getUserPhoto() != null) {
 
-                    Log.e("userdata1", "userface_google");
+                        Log.e("userdata1", "userface_google");
 
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    };
-                    Picasso.with(this).load(user_Data.getUserPhoto()).placeholder(R.drawable.user_profile).into(target);
-                } else {
-
-                    if (!user_Data.getUser_photo().equals("0")) {
-                        Log.e("userdata2", "user");
                         target = new Target() {
                             @Override
                             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -328,210 +310,250 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
                             }
                         };
-                        Picasso.with(this).load(Tags.image_path + user_Data.getUser_photo()).placeholder(R.drawable.user_profile).into(target);
+                        Picasso.with(this).load(user_Data.getUserPhoto()).placeholder(R.drawable.user_profile).into(target);
+                    } else {
 
+                        if (!user_Data.getUser_photo().equals("0")) {
+                            Log.e("userdata2", "user");
+                            target = new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            };
+                            Picasso.with(this).load(Tags.image_path + user_Data.getUser_photo()).placeholder(R.drawable.user_profile).into(target);
+
+
+                        }
 
                     }
-
                 }
+
 
 
             } else if (publisher_Model != null) {
-                final LatLng latLng = new LatLng(Double.parseDouble(publisher_Model.getPub_lat()),Double.parseDouble(publisher_Model.getPub_lng()));
+                if (publisher_Model.getPub_lat()!=null||!TextUtils.isEmpty(publisher_Model.getPub_lat())&&publisher_Model.getPub_lng()!=null||!TextUtils.isEmpty(publisher_Model.getPub_lng()))
+                {
+                    final LatLng latLng = new LatLng(Double.parseDouble(publisher_Model.getPub_lat()),Double.parseDouble(publisher_Model.getPub_lng()));
 
-                if (publisher_Model.getUser_photo().equals("0")) {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    if (publisher_Model.getUser_photo().equals("0")) {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
-                        }
+                            }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(R.drawable.user_profile).into(target);
-
-
-                } else {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                            }
+                        };
+                        Picasso.with(this).load(R.drawable.user_profile).into(target);
 
 
-                            //deviceLocation(drawCustomMarker(customMarkerView,bitmap));
+                    } else {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
-                        }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                                //deviceLocation(drawCustomMarker(customMarkerView,bitmap));
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(Tags.image_path + publisher_Model.getUser_photo()).into(target);
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                            }
+                        };
+                        Picasso.with(this).load(Tags.image_path + publisher_Model.getUser_photo()).into(target);
+                    }
                 }
+
 
             } else if (library_Model != null) {
-                final LatLng latLng = new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng()));
+                if (library_Model.getLat()!=null||!TextUtils.isEmpty(library_Model.getLat())&&library_Model.getLng()!=null||!TextUtils.isEmpty(library_Model.getLng()))
+                {
+                    final LatLng latLng = new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng()));
 
-                if (!library_Model.getUser_photo().equals("0")) {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            //AddMarker(new MarkerModel(library_Model.getUser_type(),0),new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng())),drawCustomMarker(customMarkerView,bitmap));
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                    if (!library_Model.getUser_photo().equals("0")) {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                //AddMarker(new MarkerModel(library_Model.getUser_type(),0),new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng())),drawCustomMarker(customMarkerView,bitmap));
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
 
-                        }
+                            }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(Tags.image_path + library_Model.getUser_photo()).into(target);
+                            }
+                        };
+                        Picasso.with(this).load(Tags.image_path + library_Model.getUser_photo()).into(target);
 
-                } else {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            //AddMarker(new MarkerModel(library_Model.getUser_type(),0),new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng())),drawCustomMarker(customMarkerView,bitmap));
+                    } else {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                //AddMarker(new MarkerModel(library_Model.getUser_type(),0),new LatLng(Double.parseDouble(library_Model.getLat()),Double.parseDouble(library_Model.getLng())),drawCustomMarker(customMarkerView,bitmap));
 
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
-                        }
+                            }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(R.drawable.user_profile).into(target);
+                            }
+                        };
+                        Picasso.with(this).load(R.drawable.user_profile).into(target);
 
+                    }
                 }
+
 
             } else if (university_Model != null) {
-                final LatLng latLng = new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng()));
+                if (university_Model.getUni_lat()!=null||!TextUtils.isEmpty(university_Model.getUni_lat())&&university_Model.getUni_lat()!=null||!TextUtils.isEmpty(university_Model.getUni_lat()))
+                {
+                    final LatLng latLng = new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng()));
 
-                if (!university_Model.getUser_photo().equals("0")) {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            //AddMarker(new MarkerModel(university_Model.getUser_type(),0),new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng())),drawCustomMarker(customMarkerView,bitmap));
+                    if (!university_Model.getUser_photo().equals("0")) {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                //AddMarker(new MarkerModel(university_Model.getUser_type(),0),new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng())),drawCustomMarker(customMarkerView,bitmap));
 
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
-                        }
+                            }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(Tags.image_path + university_Model.getUser_photo()).into(target);
+                            }
+                        };
+                        Picasso.with(this).load(Tags.image_path + university_Model.getUser_photo()).into(target);
 
-                } else {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                            //AddMarker(new MarkerModel(university_Model.getUser_type(),0),new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng())),drawCustomMarker(customMarkerView,bitmap));
+                    } else {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                                //AddMarker(new MarkerModel(university_Model.getUser_type(),0),new LatLng(Double.parseDouble(university_Model.getUni_lat()),Double.parseDouble(university_Model.getUni_lng())),drawCustomMarker(customMarkerView,bitmap));
 
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
-                        }
+                            }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(R.drawable.user_profile).into(target);
+                            }
+                        };
+                        Picasso.with(this).load(R.drawable.user_profile).into(target);
 
+                    }
                 }
+
 
 
             } else if (company_Model != null) {
-                final LatLng latLng = new LatLng(Double.parseDouble(company_Model.getComp_lat()),Double.parseDouble(company_Model.getComp_lng()));
 
-                if (!company_Model.getUser_photo().equals("0")) {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                if (company_Model.getComp_lat()!=null||!TextUtils.isEmpty(company_Model.getComp_lat())&&company_Model.getComp_lng()!=null||!TextUtils.isEmpty(company_Model.getComp_lng()))
+                {
+                    final LatLng latLng = new LatLng(Double.parseDouble(company_Model.getComp_lat()),Double.parseDouble(company_Model.getComp_lng()));
 
-
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
-
-                        }
-
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    };
-                    Picasso.with(this).load(Tags.image_path + company_Model.getUser_photo()).noFade().into(target);
-
-                } else {
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    if (!company_Model.getUser_photo().equals("0")) {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
 
-                            UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
 
-                        }
+                            }
 
-                        @Override
-                        public void onBitmapFailed(Drawable errorDrawable) {
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
 
-                        }
-                    };
-                    Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
+                            }
+                        };
+                        Picasso.with(this).load(Tags.image_path + company_Model.getUser_photo()).noFade().into(target);
 
+                    } else {
+                        target = new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+
+                                UsersLocation(latLng,drawCustomMarker(customMarkerView, bitmap));
+
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable) {
+
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                            }
+                        };
+                        Picasso.with(this).load(R.drawable.user_profile).noFade().into(target);
+
+                    }
                 }
+
 
             }
 

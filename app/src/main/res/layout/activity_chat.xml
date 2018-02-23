@@ -23,17 +23,28 @@
 
     </android.support.v7.widget.Toolbar>
 </android.support.design.widget.AppBarLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/chatRecyclerView"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/chatAppBar"
         android:layout_above="@+id/msgContainer"
-        app:stackFromEnd="true"
         >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chatRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:stackFromEnd="true"
+            >
+        </android.support.v7.widget.RecyclerView>
+        <ProgressBar
+            android:id="@+id/chat_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
 
-    </android.support.v7.widget.RecyclerView>
+            />
+    </FrameLayout>
+
 
     <LinearLayout
         android:id="@+id/msgContainer"

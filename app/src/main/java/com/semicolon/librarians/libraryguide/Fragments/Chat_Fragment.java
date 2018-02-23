@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.semicolon.librarians.libraryguide.Activities.HomeActivity;
 import com.semicolon.librarians.libraryguide.Adapters.AllChatRoomsAdapter;
@@ -42,6 +42,7 @@ public class Chat_Fragment extends Fragment implements ViewData{
     private CompanyModel companyModel = null;
     private HomeActivity homeActivity;
     private String currUserId = "";
+    private LinearLayout no_friends_container,error_container;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -85,19 +86,39 @@ public class Chat_Fragment extends Fragment implements ViewData{
         manager = new LinearLayoutManager(getActivity());
         recRooms.setLayoutManager(manager);
         recRooms.setHasFixedSize(true);
+        no_friends_container = (LinearLayout) view.findViewById(R.id.no_friends_container);
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+
     }
 
 
     @Override
     public void onChatRoomUserSuccess(List<CommonUsersData> commonUsersData) {
-        adapter = new AllChatRoomsAdapter(commonUsersData,getActivity());
-        adapter.notifyDataSetChanged();
-        recRooms.setAdapter(adapter);
+        if (commonUsersData.size()>0)
+        {
+            adapter = new AllChatRoomsAdapter(commonUsersData,getActivity());
+            adapter.notifyDataSetChanged();
+            recRooms.setAdapter(adapter);
+            recRooms.setVisibility(View.VISIBLE);
+            no_friends_container.setVisibility(View.GONE);
+            error_container.setVisibility(View.GONE);
+
+
+        }else
+            {
+                recRooms.setVisibility(View.GONE);
+                no_friends_container.setVisibility(View.VISIBLE);
+                error_container.setVisibility(View.GONE);
+
+            }
+
     }
 
     @Override
     public void onFailed(String error) {
-        Toast.makeText(getActivity(), getString(R.string.error)+error, Toast.LENGTH_SHORT).show();
+        error_container.setVisibility(View.VISIBLE);
+        recRooms.setVisibility(View.GONE);
+        no_friends_container.setVisibility(View.GONE);
 
     }
 

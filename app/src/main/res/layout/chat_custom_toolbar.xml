@@ -59,6 +59,5 @@
         android:layout_alignParentLeft="true"
         android:padding="@dimen/_6sdp"
         android:clickable="true"
-        android:background="@drawable/item_search_bg"
         />
 </RelativeLayout>

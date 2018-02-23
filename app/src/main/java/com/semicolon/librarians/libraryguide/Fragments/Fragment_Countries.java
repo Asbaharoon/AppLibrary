@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class Fragment_Countries extends Fragment implements ViewData{
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
     private Presenter presenter;
+    private LinearLayout error_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class Fragment_Countries extends Fragment implements ViewData{
 
 
     private void initView(View view) {
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
         progressBar = (ProgressBar) view.findViewById(R.id.country_progressBar);
         mRecView = (RecyclerView) view.findViewById(R.id.recView_countries);
         mRecView.setHasFixedSize(true);
@@ -65,12 +68,16 @@ public class Fragment_Countries extends Fragment implements ViewData{
         adapter.notifyDataSetChanged();
         mRecView.setAdapter(adapter);
         progressBar.setVisibility(View.GONE);
+        mRecView.setVisibility(View.VISIBLE);
+        error_container.setVisibility(View.GONE);
     }
 
     @Override
     public void onCountryDataFailed(String error) {
         Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
         progressBar.setVisibility(View.GONE);
+        mRecView.setVisibility(View.GONE);
+        error_container.setVisibility(View.VISIBLE);
 
     }
 

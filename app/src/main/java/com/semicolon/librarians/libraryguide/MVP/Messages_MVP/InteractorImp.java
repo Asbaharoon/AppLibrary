@@ -72,10 +72,11 @@ public class InteractorImp implements Interactor {
     }
 
     @Override
-    public void sendMessage(String senderid, String receiverid, String sender_name, String receiver_name, String chat_user_token, String message, String sender_photo, final Context context, final onCompleteListener listener) {
+    public void sendMessage(String senderid, String receiverid, String sender_name, String receiver_name, String message,String chat_user_token, String sender_photo, final Context context, final onCompleteListener listener) {
 
 
-       Log.e("tooooooooooooo",chat_user_token);
+       Log.e("msg",message+"  "+chat_user_token);
+
        Map<String ,String> map = new HashMap<>();
 
         map.put("senderid",senderid);
@@ -101,7 +102,6 @@ public class InteractorImp implements Interactor {
                 if (response.isSuccessful())
                 {
                     listener.onMessageSendSuccess();
-                    Log.e("message send ",response.toString());
                 }else
                     {
                         listener.onFailed(context.getString(R.string.something_haywire));

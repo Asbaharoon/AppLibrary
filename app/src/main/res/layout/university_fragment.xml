@@ -21,7 +21,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"
+        android:visibility="visible"
         />
+    <LinearLayout
+        android:id="@+id/error_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        >
+        <ImageView
 
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/conn"
+            android:background="@drawable/no_friend_container"
+            android:padding="@dimen/_15sdp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/something_haywire"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/nodata_container"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="@drawable/no_friend_container"
+
+        android:visibility="gone"
+        >
+        <ImageView
+
+            android:layout_width="100sp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/nodata"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:padding="@dimen/_10sdp"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/there_are_no_universities_to_display"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            />
+    </LinearLayout>
 </FrameLayout>

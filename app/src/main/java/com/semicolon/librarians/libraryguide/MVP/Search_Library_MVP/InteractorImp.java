@@ -50,6 +50,8 @@ public class InteractorImp implements Interactor {
                         listener.hideProgress();
                     }else
                         {
+                            listener.onLibraryDataSuccess(libraryModelList);
+
                             Log.e("success","success<0");
                            listener.onLibraryDataFailed(context.getString(R.string.empty_field));
                            listener.hideProgress();

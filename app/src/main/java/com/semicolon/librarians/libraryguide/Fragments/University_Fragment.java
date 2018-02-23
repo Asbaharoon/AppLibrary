@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.semicolon.librarians.libraryguide.Activities.Activity_Search;
@@ -51,6 +52,7 @@ public class University_Fragment extends Fragment implements ViewData{
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Presenter presenter;
+    private LinearLayout error_container,nodata_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class University_Fragment extends Fragment implements ViewData{
 
     private void initView(View view) {
         context = view.getContext();
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        nodata_container= (LinearLayout) view.findViewById(R.id.nodata_container);
         progressBar = (ProgressBar) view.findViewById(R.id.uni_prgBar);
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.uni_swipe_refresh);
@@ -156,16 +160,30 @@ public class University_Fragment extends Fragment implements ViewData{
 
     @Override
     public void onUniversityDataSuccess(List<UniversityModel> universityModels) {
-        adapter = new UniversityAdapter(universityModels,getActivity());
-        uni_recView.setAdapter(adapter);
-        uni_recView.getAdapter().notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
+        if (universityModels.size()>0)
+        {
+            adapter = new UniversityAdapter(universityModels,getActivity());
+            uni_recView.setAdapter(adapter);
+            uni_recView.getAdapter().notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
+            uni_recView.setVisibility(View.VISIBLE);
+            error_container.setVisibility(View.GONE);
+            nodata_container.setVisibility(View.GONE);
+
+        }else
+            {
+                nodata_container.setVisibility(View.VISIBLE);
+            }
+
     }
 
     @Override
     public void onUniversityDataFailed(String error) {
-        CreateAlertDialog(error);
+        //CreateAlertDialog(error);
+        uni_recView.setVisibility(View.GONE);
+        error_container.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
+
 
     }
 

@@ -217,4 +217,59 @@ public class Preferences {
         editor.apply();
     }
 
+    public void CreateSharedForCountry(String id,String country_name)
+    {
+        SharedPreferences pref = context.getSharedPreferences("country_pref",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(id,country_name);
+        editor.apply();
+    }
+
+    public String getCountryById(String id)
+    {
+        SharedPreferences pref = context.getSharedPreferences("country_pref",Context.MODE_PRIVATE);
+
+        return pref.getString(id,"");
+    }
+
+    public void CreateSoundtoggle(String state)
+    {
+        SharedPreferences pref = context.getSharedPreferences("sound_pref",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("state",state);
+        editor.apply();
+    }
+    public void CreateVibratetoggle(String state)
+    {
+        SharedPreferences pref = context.getSharedPreferences("vibrate_pref",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("state",state);
+        editor.apply();
+    }
+    public String getSoundState()
+    {
+        SharedPreferences pref = context.getSharedPreferences("sound_pref",Context.MODE_PRIVATE);
+
+        return pref.getString("state","");
+    }
+    public String getVibrateState()
+    {
+        SharedPreferences pref = context.getSharedPreferences("vibrate_pref",Context.MODE_PRIVATE);
+
+        return pref.getString("state","");
+    }
+
+    public void CreatePref_forRingtone(String uri)
+    {
+        SharedPreferences pref = context.getSharedPreferences("tone_pref",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("tone",uri);
+        editor.apply();
+    }
+    public String getRingtone()
+    {
+        SharedPreferences pref = context.getSharedPreferences("tone_pref",Context.MODE_PRIVATE);
+
+        return pref.getString("tone","");
+    }
 }

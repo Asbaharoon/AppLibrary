@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class Fragment_Publisher_Search_Results extends Fragment implements ViewD
     private String pubName;
     private String country_id;
     private Bundle bundle;
+    private LinearLayout error_container,noresult_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -63,6 +65,9 @@ public class Fragment_Publisher_Search_Results extends Fragment implements ViewD
     }
 
     private void initView(View view) {
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        noresult_container = (LinearLayout) view.findViewById(R.id.noresult_container);
+
         progressBar = (ProgressBar) view.findViewById(R.id.pub_search_results_progressBar);
         mRecView = (RecyclerView) view.findViewById(R.id.recView_pub_search_results);
         mRecView.setHasFixedSize(true);
@@ -80,16 +85,30 @@ public class Fragment_Publisher_Search_Results extends Fragment implements ViewD
 
     @Override
     public void onPublisherDataSuccess(List<PublisherModel> publishersModelList) {
-        adapter = new Publisher_Search_Adapter(publishersModelList,getActivity());
-        adapter.notifyDataSetChanged();
-        mRecView.setAdapter(adapter);
-        progressBar.setVisibility(View.GONE);
+        if (publishersModelList.size()>0)
+        {
+            adapter = new Publisher_Search_Adapter(publishersModelList,getActivity());
+            adapter.notifyDataSetChanged();
+            mRecView.setAdapter(adapter);
+            progressBar.setVisibility(View.GONE);
+            mRecView.setVisibility(View.VISIBLE);
+            error_container.setVisibility(View.GONE);
+            noresult_container.setVisibility(View.VISIBLE);
+
+        }else
+            {
+                noresult_container.setVisibility(View.VISIBLE);
+            }
+
     }
 
     @Override
     public void onPublisherDataFailed(String error) {
         Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
         progressBar.setVisibility(View.GONE);
+        mRecView.setVisibility(View.GONE);
+        error_container.setVisibility(View.VISIBLE);
+
 
     }
 

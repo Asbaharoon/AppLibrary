@@ -66,19 +66,7 @@
         android:layout_below="@+id/logoContainer"
 
         >
-        <com.andexert.library.RippleView
-            android:id="@+id/ripple_signinBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:rv_centered="true"
-            app:rv_type="rectangle"
-            app:rv_rippleDuration="400"
-            app:rv_alpha="200"
-            app:rv_zoom="true"
-            app:rv_zoomDuration="200"
-            app:rv_zoomScale="1.05"
-            android:layout_marginBottom="@dimen/_5sdp"
-            >
+
         <Button
             android:id="@+id/chooser_signinBtn"
             android:layout_width="match_parent"
@@ -90,21 +78,10 @@
             android:textSize="@dimen/_14sdp"
             android:drawableLeft="@drawable/mail"
             android:paddingLeft="@dimen/_11sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
 
             />
-        </com.andexert.library.RippleView>
-        <com.andexert.library.RippleView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:rv_centered="true"
-            app:rv_type="rectangle"
-            app:rv_rippleDuration="400"
-            app:rv_alpha="200"
-            app:rv_zoom="true"
-            app:rv_zoomDuration="200"
-            app:rv_zoomScale="1.05"
-            android:layout_marginBottom="@dimen/_5sdp"
-            >
+
             <com.facebook.login.widget.LoginButton
                 xmlns:facebook="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/facebook_signinBtn"
@@ -117,20 +94,7 @@
                 facebook:com_facebook_confirm_logout="false"
 
                 />
-        </com.andexert.library.RippleView>
-        <com.andexert.library.RippleView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:rv_centered="true"
-            app:rv_type="rectangle"
-            app:rv_rippleDuration="400"
-            app:rv_alpha="200"
-            app:rv_zoom="true"
-            app:rv_zoomDuration="200"
-            app:rv_zoomScale="1.05"
-            app:rv_color="@color/whit_gray"
-            android:layout_marginBottom="@dimen/_5sdp"
-            >
+
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/googleSigninBtn"
                 android:layout_width="match_parent"
@@ -138,10 +102,9 @@
                 android:gravity="center"
 
                 ></com.google.android.gms.common.SignInButton>
-        </com.andexert.library.RippleView>
 
     </LinearLayout>
-    <RelativeLayout
+    <!--<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/base"
@@ -152,5 +115,5 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             />
-    </RelativeLayout>
+    </RelativeLayout>-->
 </RelativeLayout>

@@ -18,8 +18,8 @@ public interface Interactor {
         void onMessageSendSuccess();
         void onFailed(String error);
     }
-    void getMessages(String currUser_userName, String chatUser_userName, Context context,Interactor.onCompleteListener listener);
-    void sendMessage(String senderid,String receiverid,String sender_name,String receiver_name,String message,String chat_user_token,String sender_photo,Context context,Interactor.onCompleteListener listener);
+    void getMessages(String currUser_userName, String chatUser_userName, Context context, Interactor.onCompleteListener listener);
+    void sendMessage(String senderid, String receiverid, String sender_name, String receiver_name, String message, String chat_user_token, String sender_photo, Context context, Interactor.onCompleteListener listener);
 
 
 }

@@ -26,9 +26,10 @@ public class PresenterImp implements Presenter, Interactor.onCompleteListener {
     }
 
     @Override
-    public void sendMessage(String senderid, String receiverid, String sender_name, String receiver_name,String chat_user_token, String message, String sender_photo) {
-        interactor.sendMessage(senderid,receiverid,sender_name,receiver_name,chat_user_token,message,sender_photo,context,this);
+    public void sendMessage(String senderid, String receiverid, String sender_name, String receiver_name, String message, String chat_user_token, String sender_photo) {
+        interactor.sendMessage(senderid,receiverid,sender_name,receiver_name,message,chat_user_token,sender_photo,context,this);
     }
+
 
     @Override
     public void onMessagesSuccess(List<MessageModel> messageModelList) {

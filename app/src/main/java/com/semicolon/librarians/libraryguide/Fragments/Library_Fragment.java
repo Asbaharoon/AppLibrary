@@ -13,8 +13,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.semicolon.librarians.libraryguide.Activities.Activity_Search;
 import com.semicolon.librarians.libraryguide.Adapters.LibraryAdapter;
@@ -46,6 +46,7 @@ public class Library_Fragment extends Fragment implements ViewData {
     private LinearLayoutManager manager;
     private RecyclerView.Adapter adapter;
     private Presenter presenter;
+    private LinearLayout error_container,nodata_container;
 
 
     @Nullable
@@ -61,6 +62,8 @@ public class Library_Fragment extends Fragment implements ViewData {
 
     private void initView(View view) {
 
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        nodata_container= (LinearLayout) view.findViewById(R.id.nodata_container);
         lib_swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.lib_swipeRefresh);
         recView_library  = (RecyclerView) view.findViewById(R.id.recView_library);
         lib_progressBar  = (ProgressBar) view.findViewById(R.id.lib_progressBar);
@@ -221,17 +224,29 @@ public class Library_Fragment extends Fragment implements ViewData {
 
     @Override
     public void onLibraryDataSuccess(List<LibraryModel> libraryModelList) {
-        adapter = new LibraryAdapter(libraryModelList,getActivity());
-        adapter.notifyDataSetChanged();
-        recView_library.setAdapter(adapter);
-        lib_swipeRefresh.setRefreshing(false);
+        if (libraryModelList.size()>0)
+        {
+            adapter = new LibraryAdapter(libraryModelList,getActivity());
+            adapter.notifyDataSetChanged();
+            recView_library.setAdapter(adapter);
+            lib_swipeRefresh.setRefreshing(false);
+            recView_library.setVisibility(View.VISIBLE);
+            nodata_container.setVisibility(View.GONE);
+
+        }else
+            {
+                nodata_container.setVisibility(View.VISIBLE);
+            }
+
 
     }
 
     @Override
     public void onFailed(String error) {
-        Toast.makeText(getActivity(),  getString(R.string.error)+error, Toast.LENGTH_SHORT).show();
         lib_swipeRefresh.setRefreshing(false);
+        recView_library.setVisibility(View.GONE);
+        error_container.setVisibility(View.generateViewId());
+
 
     }
 

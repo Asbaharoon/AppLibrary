@@ -103,7 +103,6 @@ public class Locationservices_Update extends android.app.Service implements Goog
     public void onLocationChanged(Location location) {
 
         EventBus.getDefault().post(new Location_Model(location));
-        Log.e("updated location",""+location.getLatitude());
     }
     private void initLocationRequest()
     {
@@ -116,7 +115,14 @@ public class Locationservices_Update extends android.app.Service implements Goog
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //LocationServices.FusedLocationApi.removeLocationUpdates(client,this);
+        if (client!=null)
+        {
+            if (client.isConnected())
+            {
+                LocationServices.FusedLocationApi.removeLocationUpdates(client,this);
+
+            }
+        }
 
 
 

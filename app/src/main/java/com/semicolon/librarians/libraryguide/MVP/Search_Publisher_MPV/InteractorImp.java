@@ -44,6 +44,8 @@ public class InteractorImp implements Interactor {
                         listener.hideNoResults();
                     }else
                         {
+                            listener.onPublisherDataSuccess(publisherModelList);
+
                             listener.showNoResults();
                         }
                 }else

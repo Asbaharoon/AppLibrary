@@ -9,8 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.semicolon.librarians.libraryguide.Adapters.Library_Search_Adapter;
 import com.semicolon.librarians.libraryguide.MVP.Search_Library_MVP.Presenter;
@@ -33,6 +33,7 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
     private Bundle bundle;
     private String libName,lib_type,country_id;
     private Presenter presenter;
+    private LinearLayout error_container,noresult_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -68,6 +69,9 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
     }
 
     private void initView(View view) {
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        noresult_container = (LinearLayout) view.findViewById(R.id.noresult_container);
+
         progressBar = (ProgressBar) view.findViewById(R.id.lib_search_results_progressBar);
         mRecView = (RecyclerView) view.findViewById(R.id.recView_lib_search_results);
         mRecView.setHasFixedSize(true);
@@ -79,17 +83,28 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
 
     @Override
     public void onLibraryDataSuccess(List<LibraryModel> libraryModelList) {
-        adapter = new Library_Search_Adapter(libraryModelList,getActivity());
-        adapter.notifyDataSetChanged();
-        mRecView.setAdapter(adapter);
-        progressBar.setVisibility(View.GONE);
+        if (libraryModelList.size()>0)
+        {
+            adapter = new Library_Search_Adapter(libraryModelList,getActivity());
+            adapter.notifyDataSetChanged();
+            mRecView.setAdapter(adapter);
+            progressBar.setVisibility(View.GONE);
+            mRecView.setVisibility(View.VISIBLE);
+            noresult_container.setVisibility(View.GONE);
+
+        }else
+            {
+                noresult_container.setVisibility(View.VISIBLE);
+            }
+
 
     }
 
     @Override
     public void onLibraryDataFailed(String error) {
         progressBar.setVisibility(View.GONE);
-        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+        error_container.setVisibility(View.VISIBLE);
+        mRecView.setVisibility(View.GONE);
     }
 
     @Override

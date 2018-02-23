@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.semicolon.librarians.libraryguide.Activities.Activity_Search;
@@ -51,6 +52,7 @@ public class Publisher_Fragment extends Fragment implements ViewData {
     private Presenter presenter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout error_container,nodata_container;
 
 
 
@@ -68,6 +70,8 @@ public class Publisher_Fragment extends Fragment implements ViewData {
     private void initView(View view) {
 
         context = view.getContext();
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        nodata_container = (LinearLayout) view.findViewById(R.id.nodata_container);
         progressBar = (ProgressBar) view.findViewById(R.id.pub_prgBar);
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.pub_swipe_refresh);
@@ -212,17 +216,31 @@ public class Publisher_Fragment extends Fragment implements ViewData {
 
     @Override
     public void onPublisherDataSuccess(List<PublisherModel> publishersModelList) {
-        adapter = new PublisherAdapter(publishersModelList,context);
-        adapter.notifyDataSetChanged();
-        publisher_recView.setAdapter(adapter);
-        swipeRefreshLayout.setRefreshing(false);
+        if (publishersModelList.size()>0)
+        {
+            adapter = new PublisherAdapter(publishersModelList,context);
+            adapter.notifyDataSetChanged();
+            publisher_recView.setAdapter(adapter);
+            swipeRefreshLayout.setRefreshing(false);
+            publisher_recView.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.GONE);
+            error_container.setVisibility(View.GONE);
+            nodata_container.setVisibility(View.GONE);
+
+        }else
+            {
+                nodata_container.setVisibility(View.VISIBLE);
+            }
+
 
 
     }
 
     @Override
     public void onPublisherDataFailed(String error) {
-        CreateAlertDialog(error);
+        publisher_recView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        error_container.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(false);
 
 

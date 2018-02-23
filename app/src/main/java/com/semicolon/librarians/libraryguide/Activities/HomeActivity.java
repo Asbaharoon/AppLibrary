@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -64,7 +65,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.ViewData,ViewData{
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, com.semicolon.librarians.libraryguide.MVP.Update_UserStatue_MVP.ViewData, com.semicolon.librarians.libraryguide.MVP.UpdateToken.ViewData, com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.ViewData,ViewData{
 
     private Toolbar toolbar;
     //private ArcNavigationView arcNavigationView;
@@ -87,8 +88,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public CompanyModel company_Model = null;
 
     private Preferences preferences;
-    private Presenter presenter;
+    public Presenter presenter;
+    public com.semicolon.librarians.libraryguide.MVP.UpdateToken.Presenter tokenPresenter;
     public com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.Presenter chatRoomPresenter;
+    public com.semicolon.librarians.libraryguide.MVP.Update_UserStatue_MVP.Presenter locPresenter;
     private Target target;
     private Intent  intent;
 
@@ -107,8 +110,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         callbackManager = CallbackManager.Factory.create();
         manager = LoginManager.getInstance();
         presenter = new PresenterImp(this,this);
+        locPresenter = new com.semicolon.librarians.libraryguide.MVP.Update_UserStatue_MVP.PresenterImp(this,this);
         chatRoomPresenter = new com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.PresenterImp(this,this);
-
+        tokenPresenter = new com.semicolon.librarians.libraryguide.MVP.UpdateToken.PresenterImp(this,this);
         initView();
         setUpDrawer();
         setUpSigninWithGoogle();
@@ -170,6 +174,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 user_Data = UserData;
                 Check_CurrentUser_ForFragment();
 
+                tokenPresenter.UpdateToken(user_Data.getUserId(),FirebaseInstanceId.getInstance().getToken());
 
                 if (user_Data.getUserPhoto()==null)
                 {
@@ -208,12 +213,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             final PublisherModel publisherModel = (PublisherModel) intent.getSerializableExtra("publisherData");
             if (publisherModel != null) {
                 publisher_Model = publisherModel;
+
               /*  Calligrapher calligrapher = new Calligrapher(getApplicationContext());
                 calligrapher.setFont(this, Tags.font,true);
             */
 
 
                 Check_CurrentUser_ForFragment();
+                tokenPresenter.UpdateToken(publisherModel.getPub_username(),FirebaseInstanceId.getInstance().getToken());
+
 
                 if (!publisher_Model.getUser_photo().equals("0"))
                 {
@@ -241,12 +249,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             if (libraryModel != null) {
                 library_Model = libraryModel;
+
               /*  Calligrapher calligrapher = new Calligrapher(getApplicationContext());
                 calligrapher.setFont(this, Tags.font,true);
             */
 
 
                 Check_CurrentUser_ForFragment();
+                tokenPresenter.UpdateToken(libraryModel.getLib_username(),FirebaseInstanceId.getInstance().getToken());
 
                 if (!library_Model.getUser_photo().equals("0"))
                 {
@@ -274,11 +284,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             final UniversityModel universityModel = (UniversityModel) intent.getSerializableExtra("universityData");
             if (universityModel != null) {
                 university_Model = universityModel;
+
                /* Calligrapher calligrapher = new Calligrapher(getApplicationContext());
                 calligrapher.setFont(this, Tags.font,true);
 */
 
                Check_CurrentUser_ForFragment();
+                tokenPresenter.UpdateToken(universityModel.getUni_username(),FirebaseInstanceId.getInstance().getToken());
+
                 if (!university_Model.getUser_photo().equals("0"))
                 {
 
@@ -309,6 +322,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 */
 
                 Check_CurrentUser_ForFragment();
+                tokenPresenter.UpdateToken(companyModel.getComp_username(),FirebaseInstanceId.getInstance().getToken());
+
                 if (!company_Model.getUser_photo().equals("0"))
                 {
 
@@ -424,9 +439,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 }
 
-
-
-
     private void UpdateUI(String imageUrl, String name, String email) {
         if (imageUrl == null) {
 
@@ -516,12 +528,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void SignOut() {
-
         Auth.GoogleSignInApi.signOut(apiClient);
-            Log.e("google","signout");
-            apiClient.disconnect();
-        manager.unregisterCallback(callbackManager);
-        manager.logOut();
+        Log.e("google","signout");
+        apiClient.disconnect();
         if (user_Data!=null)
         {
             Preferences preference = new Preferences(HomeActivity.this);
@@ -578,13 +587,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             finish();
 
         }else
-            {
-                Preferences preference = new Preferences(HomeActivity.this);
-                preference.Session("loggedout");
+        {
+            Preferences preference = new Preferences(HomeActivity.this);
+            preference.Session("loggedout");
 
-                startActivity(new Intent(HomeActivity.this,ChooserSingin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK));
-                finish();
-            }
+            startActivity(new Intent(HomeActivity.this,ChooserSingin.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK));
+            finish();
+        }
+        manager.unregisterCallback(callbackManager);
+        manager.logOut();
+
 
     }
 
@@ -1129,6 +1141,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void OnLocationUpdated(Location_Model location_model )
     {
         Toast.makeText(this, ""+location_model.getLocation().getLatitude(), Toast.LENGTH_SHORT).show();
+        if (user_Data!=null)
+        {
+            locPresenter.UpdateUserData(user_Data.getUserId(),String.valueOf(location_model.getLocation().getLatitude()),String.valueOf(location_model.getLocation().getLongitude()));
+
+        }
+
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onTokenRefresh(RefreshToken token)
@@ -1183,8 +1201,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-
     @Override
     public void onBackPressed()
     {
@@ -1207,12 +1223,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }, 500);
 
 
-
-
-
-
-
         }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment :getSupportFragmentManager().getFragments())
+        {
+            fragment.onActivityResult(requestCode,resultCode,data);
+        }
+    }
+
+    @Override
+    public void onSuccess() {
+        Log.e("token updated","token updated");
+    }
+
+    @Override
+    public void onSucess() {
+
+    }
+
+    @Override
+    public void onFailed() {
 
     }
 }

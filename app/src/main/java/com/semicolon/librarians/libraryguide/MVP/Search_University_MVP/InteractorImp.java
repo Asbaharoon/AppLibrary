@@ -44,6 +44,8 @@ public class InteractorImp implements Interactor {
 
                             }else
                             {
+                                listener.onUniversityDataSuccess(universityModelList);
+
                                 listener.showNoResults();
                             }
                         }else

@@ -42,6 +42,8 @@ public class InteractorImp implements Interactor {
 
                     }else
                         {
+                            listener.onJobDataSuccess(jobsModelList);
+
                             listener.hideProgressBar();
                         }
                 }else

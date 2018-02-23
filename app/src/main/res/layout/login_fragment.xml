@@ -107,48 +107,25 @@
                 android:layout_height="wrap_content"
                 >
 
-                <com.andexert.library.RippleView
-                    android:id="@+id/ripple_et_forget_password"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rv_centered="true"
-                    app:rv_type="rectangle"
-                    app:rv_rippleDuration="800"
-                    app:rv_alpha="200"
-                    app:rv_zoom="true"
-                    app:rv_zoomDuration="200"
-                    app:rv_zoomScale="1.05"
-                    app:rv_color="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
-                    >
+
 
                     <TextView
+                        android:id="@+id/forget_password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/forget_password"
                         android:singleLine="true"
                         android:textColor="@color/base"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/_13sdp"
                         android:textStyle="normal"
                         android:layout_centerVertical="true"
                         android:paddingTop="@dimen/_3sdp"
                         android:paddingBottom="@dimen/_2sdp"
+                        android:layout_alignParentRight="true"
+                        android:clickable="true"
+
                         />
-                </com.andexert.library.RippleView>
-                <com.andexert.library.RippleView
-                    android:id="@+id/ripple_checkbox_rememberMe"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:rv_centered="true"
-                    app:rv_type="rectangle"
-                    app:rv_rippleDuration="800"
-                    app:rv_alpha="200"
-                    app:rv_zoom="true"
-                    app:rv_zoomDuration="200"
-                    app:rv_zoomScale="1.05"
-                    app:rv_color="@color/colorPrimary"
-                    android:layout_alignParentLeft="true"
-                    >
+
                     <CheckBox
                         android:id="@+id/remember_me"
                         android:layout_width="wrap_content"
@@ -158,66 +135,47 @@
                         app:backgroundTint="@color/colorPrimary"
                         app:buttonTint="@color/colorPrimary"
                         android:checked="false"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_alignParentLeft="true"
+
                         />
-                </com.andexert.library.RippleView>
+
             </RelativeLayout>
 
 
-            <com.andexert.library.RippleView
-                android:id="@+id/signinBtn_ripple"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:rv_centered="true"
-                app:rv_type="rectangle"
-                app:rv_rippleDuration="400"
-                app:rv_alpha="200"
-                app:rv_zoom="true"
-                app:rv_zoomDuration="200"
-                app:rv_zoomScale="1.05"
-                >
                 <Button
                     android:id="@+id/signinBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/sign_up"
+                    android:text="@string/sign_inbtn"
                     android:textColor="@color/base"
                     android:textAllCaps="false"
                     android:background="@drawable/button_bg"
                     android:textSize="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
 
                     />
-            </com.andexert.library.RippleView>
 
 
         </LinearLayout>
 
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 
-    <com.andexert.library.RippleView
-        android:id="@+id/ripple_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:rv_centered="true"
-        app:rv_type="rectangle"
-        app:rv_rippleDuration="800"
-        app:rv_alpha="200"
-        app:rv_zoom="true"
-        app:rv_zoomDuration="200"
-        app:rv_zoomScale="1.05"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        app:rv_color="@color/colorPrimary"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
 
-        >
      <LinearLayout
+
+         android:id="@+id/signUp"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:orientation="horizontal"
          android:layout_alignParentRight="true"
+         android:layout_alignParentBottom="true"
+         android:layout_marginTop="@dimen/_10sdp"
+         android:layout_marginBottom="@dimen/_10sdp"
+         android:clickable="true"
+         android:descendantFocusability="blocksDescendants"
+         android:background="@drawable/signup_container_ln"
+
          >
          <TextView
              android:id="@+id/login_fragment_signuptv"
@@ -226,9 +184,11 @@
              android:text="@string/don_t_have_an_account_yet"
              android:textColor="@color/centercolor"
              android:textSize="@dimen/_12sdp"
-             android:clickable="true"
+             android:clickable="false"
              android:paddingTop="@dimen/_2sdp"
              android:paddingBottom="@dimen/_2sdp"
+             android:longClickable="false"
+
              />
          <TextView
              android:layout_width="wrap_content"
@@ -236,14 +196,14 @@
              android:text="@string/signup_now"
              android:textColor="@color/base"
              android:textSize="@dimen/_12sdp"
-             android:clickable="true"
+             android:clickable="false"
              android:paddingTop="@dimen/_2sdp"
              android:paddingBottom="@dimen/_2sdp"
+             android:longClickable="false"
 
              />
      </LinearLayout>
 
-    </com.andexert.library.RippleView>
     </com.desarrollodroide.libraryfragmenttransactionextended.SlidingRelativeLayout>
 
 

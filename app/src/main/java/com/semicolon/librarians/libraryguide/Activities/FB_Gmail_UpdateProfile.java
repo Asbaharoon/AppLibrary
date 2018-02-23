@@ -1,13 +1,16 @@
 package com.semicolon.librarians.libraryguide.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -18,6 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.intrusoft.squint.DiagonalView;
 import com.semicolon.librarians.libraryguide.MVP.UpdateFB_GM_Signin_Profile_MVP.Presenter;
 import com.semicolon.librarians.libraryguide.MVP.UpdateFB_GM_Signin_Profile_MVP.PresenterImp;
@@ -33,51 +42,69 @@ import com.squareup.picasso.Target;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.OnClickListener,ViewData{
+public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.OnClickListener, ViewData,GoogleApiClient.OnConnectionFailedListener {
 
     private CircleImageView userImage;
-    private TextView userId,userName,userEmail,userPhone,userCountry;
-    private final int country_request_code=01;
-    private final int phone_request_user =02;
-    private String country_id="";
+    private TextView userId, userName, userEmail, userPhone, userCountry;
+    private final int country_request_code = 01;
+    private final int phone_request_user = 02;
+    private String country_id = "";
     private NormalUserData normalUserData;
     private DiagonalView diagonalView;
     private Presenter presenter;
     private Button updBtn;
     private ProgressDialog progressDialog;
+    private LocationManager manager;
+    private GoogleApiClient apiClient;
+    private CallbackManager callbackManager;
+    private LoginManager loginManager;
+    private String userPhoto;
+    private String user_id;
+    private String user_name;
+    private String user_phone;
+    private String user_email;
+    private String user_country;
+    private String token;
+    private com.semicolon.librarians.libraryguide.MVP.Update_UserStatue_MVP.Presenter pr;
+    private NormalUserData userData;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fb_gmail_update_profile);
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, Tags.font,true);
-
-        presenter = new PresenterImp(this,this);
+        calligrapher.setFont(this, Tags.font, true);
+        loginManager = LoginManager.getInstance();
+        callbackManager = CallbackManager.Factory.create();
+        manager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        token = FirebaseInstanceId.getInstance().getToken();
+        presenter = new PresenterImp(this, this);
         iniView();
         getDataFromIntent();
         CreateProgressDialog();
+
+        apiClient = new GoogleApiClient.Builder(this).addApi(Auth.GOOGLE_SIGN_IN_API).enableAutoManage(this,this).build();
+        apiClient.connect();
     }
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
-        if (intent!=null)
-        {
-            if (intent.hasExtra("userData"))
-            {
+        if (intent != null) {
+            if (intent.hasExtra("userData")) {
                 normalUserData = (NormalUserData) intent.getSerializableExtra("userData");
-                Log.e("emaillll",""+normalUserData.getUserEmail());
+                Log.e("emaillll", "" + normalUserData.getUserEmail());
                 UpdateUI(normalUserData);
             }
+
         }
     }
 
     private void UpdateUI(NormalUserData normalUserData) {
-        if (!TextUtils.isEmpty(normalUserData.getUserId())||normalUserData.getUserId()!=null)
-        {
+        if (!TextUtils.isEmpty(normalUserData.getUserId()) || normalUserData.getUserId() != null) {
             userId.setText(normalUserData.getUserId());
         }
-        if (!TextUtils.isEmpty(normalUserData.getUserPhoto())||normalUserData.getUserPhoto()!=null)
-        {
+        if (!TextUtils.isEmpty(normalUserData.getUserPhoto()) || normalUserData.getUserPhoto() != null) {
             Target target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -97,33 +124,29 @@ public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.On
             };
             Picasso.with(this).load(Uri.parse(normalUserData.getUserPhoto())).placeholder(R.drawable.user_profile).into(target);
         }
-        if (!TextUtils.isEmpty(normalUserData.getUserEmail())||normalUserData.getUserEmail()!=null)
-        {
+        if (!TextUtils.isEmpty(normalUserData.getUserEmail()) || normalUserData.getUserEmail() != null) {
             userEmail.setText(normalUserData.getUserEmail());
         }
-        if (!TextUtils.isEmpty(normalUserData.getUserPhone())||normalUserData.getUserPhone()!=null)
-        {
+        if (!TextUtils.isEmpty(normalUserData.getUserPhone()) || normalUserData.getUserPhone() != null) {
             userPhone.setText(normalUserData.getUserPhone());
         }
 
-        if (!TextUtils.isEmpty(normalUserData.getUserCountry())||normalUserData.getUserCountry()!=null)
-        {
+        if (!TextUtils.isEmpty(normalUserData.getUserCountry()) || normalUserData.getUserCountry() != null) {
             userCountry.setText(normalUserData.getUserCountry());
         }
-        if (normalUserData.getUserName()!=null||!TextUtils.isEmpty(normalUserData.getUserName()))
-        {
+        if (normalUserData.getUserName() != null || !TextUtils.isEmpty(normalUserData.getUserName())) {
             userName.setText(normalUserData.getUserName());
         }
     }
 
     private void iniView() {
-        updBtn      = (Button) findViewById(R.id.user_updBtn);
-        diagonalView= (DiagonalView) findViewById(R.id.secondImage);
-        userImage   = (CircleImageView) findViewById(R.id.userImage);
-        userId      = (TextView) findViewById(R.id.userId);
-        userName    = (TextView) findViewById(R.id.userName);
-        userEmail   = (TextView) findViewById(R.id.userEmail);
-        userPhone   = (TextView) findViewById(R.id.userPhone);
+        updBtn = (Button) findViewById(R.id.user_updBtn);
+        diagonalView = (DiagonalView) findViewById(R.id.secondImage);
+        userImage = (CircleImageView) findViewById(R.id.userImage);
+        userId = (TextView) findViewById(R.id.userId);
+        userName = (TextView) findViewById(R.id.userName);
+        userEmail = (TextView) findViewById(R.id.userEmail);
+        userPhone = (TextView) findViewById(R.id.userPhone);
         userCountry = (TextView) findViewById(R.id.userCountry);
         userCountry.setOnClickListener(this);
         userPhone.setOnClickListener(this);
@@ -133,32 +156,36 @@ public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.On
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.user_updBtn:
-                updataData();
+                updateData();
                 break;
             case R.id.userPhone:
                 getPhone();
                 break;
-                
+
             case R.id.userCountry:
                 getCountry();
                 break;
         }
     }
 
-    private void updataData() {
-        String userPhoto    = normalUserData.getUserPhoto();
-        String user_id      = userId.getText().toString();
-        String user_name    = userName.getText().toString();
-        String user_phone   = userPhone.getText().toString();
-        String user_email   = userEmail.getText().toString();
-        String user_country = userCountry.getText().toString();
+    private void updateData() {
+        userPhoto    = normalUserData.getUserPhoto();
+        user_id      = userId.getText().toString();
+        user_name    = userName.getText().toString();
+        user_phone   = userPhone.getText().toString();
+        user_email   = userEmail.getText().toString();
+        user_country = userCountry.getText().toString();
 
         presenter.UpdateUserData(userPhoto,user_id,user_name,user_email,user_phone,user_country);
 
+
     }
+
+
+
+
 
     private void getCountry() {
         Intent intent = new Intent(this, Activity_Search_Results.class);
@@ -218,16 +245,17 @@ public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.On
     }
 
     @Override
-    public void onNormalUserDataSuccess(NormalUserData normalUserData) {
+    public void onNormalUserDataSuccess(final NormalUserData normalUserData) {
+        Log.e("fffffffff","fff");
         final NormalUserData userData = normalUserData;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Preferences preferences = new Preferences(FB_Gmail_UpdateProfile.this);
-                preferences.Create_SharedPreference_User(userData);
+                preferences.Create_SharedPreference_User(normalUserData);
 
                 Intent intent = new Intent(FB_Gmail_UpdateProfile.this,HomeActivity.class);
-                intent.putExtra("userData",userData);
+                intent.putExtra("userData",normalUserData);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 Preferences pref = new Preferences(FB_Gmail_UpdateProfile.this);
                 pref.Session("loggedin");
@@ -235,6 +263,7 @@ public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.On
                 progressDialog.dismiss();
             }
         },1000);
+
     }
 
     @Override
@@ -256,5 +285,28 @@ public class FB_Gmail_UpdateProfile extends AppCompatActivity implements View.On
         progressDialog.setIndeterminateDrawable(drawable);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
+    }
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        progressDialog.dismiss();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (apiClient!=null)
+        {
+            if (apiClient.isConnected())
+            {
+                apiClient.clearDefaultAccountAndReconnect();
+                apiClient.disconnect();
+            }
+        }
+        loginManager.unregisterCallback(callbackManager);
+        loginManager.logOut();
+
+
     }
 }

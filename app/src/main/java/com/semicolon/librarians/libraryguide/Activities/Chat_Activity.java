@@ -2,47 +2,55 @@ package com.semicolon.librarians.libraryguide.Activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.semicolon.librarians.libraryguide.Adapters.MessageAdapter;
-import com.semicolon.librarians.libraryguide.MVP.Messages_MVP.Presenter;
-import com.semicolon.librarians.libraryguide.MVP.Messages_MVP.PresenterImp;
-import com.semicolon.librarians.libraryguide.MVP.Messages_MVP.ViewData;
+import com.semicolon.librarians.libraryguide.MVP.getLastMsg_MVP.Presenter;
+import com.semicolon.librarians.libraryguide.MVP.getLastMsg_MVP.PresenterImp;
+import com.semicolon.librarians.libraryguide.MVP.getLastMsg_MVP.ViewData;
 import com.semicolon.librarians.libraryguide.Models.CommonUsersData;
 import com.semicolon.librarians.libraryguide.Models.CompanyModel;
+import com.semicolon.librarians.libraryguide.Models.ID;
 import com.semicolon.librarians.libraryguide.Models.LibraryModel;
 import com.semicolon.librarians.libraryguide.Models.MessageModel;
 import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Manager_Notification;
 import com.semicolon.librarians.libraryguide.Services.NetworkConnection;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions;
 import hani.momanii.supernova_emoji_library.Helper.EmojiconEditText;
-import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class Chat_Activity extends AppCompatActivity implements View.OnClickListener,ViewData {
+public class Chat_Activity extends AppCompatActivity implements View.OnClickListener,ViewData, com.semicolon.librarians.libraryguide.MVP.Messages_MVP.ViewData {
 
     private Toolbar toolbar;
     private View customToolBarView;
@@ -50,6 +58,7 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
     private EmojiconEditText msg_et;
     private ImageButton sendBtn;
     private EmojIconActions iconActions;
+    private ImageView back_arrow;
     private View rootView;
     private String curr_user_type;
     private String chat_user_type;
@@ -79,20 +88,23 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
     private TextView user_chat_name,user_chat_status;
     private Target target;
 
-    private Presenter presenter;
+
+    private com.semicolon.librarians.libraryguide.MVP.Messages_MVP.Presenter presenter;
     private RecyclerView chatRecyclerView;
     private RecyclerView.LayoutManager manager;
     private RecyclerView.Adapter adapter;
+    private ProgressBar chat_progress;
+    private List<MessageModel>messageModelList;
+    private Presenter presenter2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, Tags.font,true);
-
         initView();
-        presenter = new PresenterImp(this,this);
+        presenter = new com.semicolon.librarians.libraryguide.MVP.Messages_MVP.PresenterImp(this,this);
+        presenter2 = new PresenterImp(this,this);
         getDataFromIntent();
     }
 
@@ -109,7 +121,6 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
                     curr_normalUserData = (NormalUserData) intent.getSerializableExtra("curr_user");
                     curr_user_id = curr_normalUserData.getUserId().toString();
                     curr_user_name = curr_normalUserData.getUserName().toString();
-
                     if (curr_normalUserData.getUserPhoto()==null)
                     {
                         curr_user_image=curr_normalUserData.getUser_photo().toString();
@@ -129,6 +140,8 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
                     curr_user_image = curr_publisherModel.getUser_photo();
                     Log.e("gggggg",curr_publisherModel.getPub_username());
 
+
+
                     break;
                 case "library":
                     curr_libraryModel = (LibraryModel) intent.getSerializableExtra("curr_user");
@@ -137,6 +150,7 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
                     curr_user_image = curr_libraryModel.getUser_photo();
 
                     Log.e("gggggg",curr_libraryModel.getLib_username());
+
 
                     break;
                 case "university":
@@ -338,6 +352,8 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
         user_chat_image   = (CircleImageView) customToolBarView.findViewById(R.id.user_chat_image);
         user_chat_name    = (TextView) customToolBarView.findViewById(R.id.user_chat_name);
         user_chat_status  = (TextView) customToolBarView.findViewById(R.id.user_chat_status);
+        back_arrow        = (ImageView) customToolBarView.findViewById(R.id.back_arrow);
+        back_arrow.setOnClickListener(this);
         getSupportActionBar().setCustomView(customToolBarView);
 
         rootView  = findViewById(R.id.rootView);
@@ -348,7 +364,8 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
         iconActions.ShowEmojIcon();
         iconActions.setIconsIds(R.drawable.ic_action_keyboard,R.drawable.emoji_icon);
         sendBtn.setOnClickListener(this);
-
+        chat_progress = (ProgressBar) findViewById(R.id.chat_progress);
+        chat_progress.getIndeterminateDrawable().setColorFilter(ActivityCompat.getColor(this,R.color.centercolor), PorterDuff.Mode.SRC_IN);
         chatRecyclerView = (RecyclerView) findViewById(R.id.chatRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
@@ -366,6 +383,9 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
             case R.id.sendBtn:
                 sendMessage();
                 break;
+            case R.id.back_arrow:
+                finish();
+                break;
 
         }
     }
@@ -377,7 +397,19 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
             if (!TextUtils.isEmpty(msg_et.getText().toString()))
             {
 
-                presenter.sendMessage(curr_user_id,chat_user_id,curr_user_name,chat_user_name,chat_user_token,msg_et.getText().toString(),curr_user_image);
+                String m =msg_et.getText().toString();
+                byte[] m2 = new byte[0];
+                try {
+                    m2 = m.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                new Manager_Notification();
+                EventBus.getDefault().post(new ID(curr_user_id));
+                String msg = Base64.encodeToString(m2,Base64.DEFAULT);
+                presenter.sendMessage(curr_user_id,chat_user_id,curr_user_name,chat_user_name,msg, chat_user_token,curr_user_image);
+                msg_et.setText("");
+
 
             }
         }else
@@ -391,11 +423,11 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
         user_chat_name.setText(user_chat_Name.toString());
         if (user_chat_Status.equals("Active Now"))
         {
-            user_chat_status.setText(getString(R.string.active_now));
+            //user_chat_status.setText(getString(R.string.active_now));
 
         }else
             {
-                user_chat_status.setText(user_chat_Status);
+                //user_chat_status.setText(user_chat_Status);
             }
         if (TextUtils.isEmpty(image_url))
         {
@@ -446,9 +478,18 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onMessagesSuccess(List<MessageModel> messageModelList) {
+        this.messageModelList= messageModelList;
         adapter = new MessageAdapter(this,messageModelList,curr_user_id,chat_user_id,chat_user_type);
         adapter.notifyDataSetChanged();
         chatRecyclerView.setAdapter(adapter);
+        chatRecyclerView.scrollToPosition(adapter.getItemCount()-1);
+        chat_progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onMessagesSuccess(MessageModel messageModel) {
+        this.messageModelList.add(messageModel);
+        adapter.notifyDataSetChanged();
         chatRecyclerView.scrollToPosition(adapter.getItemCount()-1);
     }
 
@@ -456,13 +497,16 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
     public void onFailed(String error) {
 
         Log.e("error",error);
+        chat_progress.setVisibility(View.GONE);
+
     }
 
     @Override
     public void onMessageSendSuccess() {
-        Log.e("message send","message send");
-        msg_et.setText(null);
+        presenter2.getMessages(curr_user_id,chat_user_id);
     }
+
+
 
     @Override
     protected void onStart() {

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/_5sdp"
+    >
+<ImageView
+    android:id="@+id/userImage"
+    android:layout_width="@dimen/_45sdp"
+    android:layout_height="@dimen/_45sdp"
+    android:layout_alignParentLeft="true"
+    />
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/userImage"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textSize="@dimen/_14sdp"
+        android:layout_toLeftOf="@+id/date"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/base"
+        android:gravity="left|center_vertical"
+        android:maxLines="1"
+
+
+        />
+    <TextView
+        android:id="@+id/msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/userImage"
+        android:layout_below="@+id/userName"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:textSize="@dimen/_14sdp"
+        android:textColor="@color/base"
+        android:maxLines="1"
+
+
+        />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textColor="@color/base"
+
+
+
+        />
+</RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class Fragment_University_Search_Results extends Fragment implements View
     private String country_id;
     private Bundle bundle;
     private Presenter presenter;
+    private LinearLayout error_container,noresult_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -62,6 +64,9 @@ public class Fragment_University_Search_Results extends Fragment implements View
     }
 
     private void initView(View view) {
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        noresult_container = (LinearLayout) view.findViewById(R.id.noresult_container);
+
         progressBar = (ProgressBar) view.findViewById(R.id.uni_search_results_progressBar);
         mRecView = (RecyclerView) view.findViewById(R.id.recView_uni_search_results);
         mRecView.setHasFixedSize(true);
@@ -79,16 +84,27 @@ public class Fragment_University_Search_Results extends Fragment implements View
 
     @Override
     public void onUniversityDataSuccess(List<UniversityModel> universityModelList) {
-        adapter = new University_Search_Adapter(universityModelList,getActivity());
-        adapter.notifyDataSetChanged();
-        mRecView.setAdapter(adapter);
-        progressBar.setVisibility(View.GONE);
+        if (universityModelList.size()>0)
+        {
+            adapter = new University_Search_Adapter(universityModelList,getActivity());
+            adapter.notifyDataSetChanged();
+            mRecView.setAdapter(adapter);
+            progressBar.setVisibility(View.GONE);
+            error_container.setVisibility(View.GONE);
+            noresult_container.setVisibility(View.GONE);
+
+        }else
+            {
+                noresult_container.setVisibility(View.VISIBLE);
+            }
+
     }
 
     @Override
     public void onUniversityDataFailed(String error) {
-        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
         progressBar.setVisibility(View.GONE);
+        mRecView.setVisibility(View.GONE);
+        error_container.setVisibility(View.VISIBLE);
 
     }
 

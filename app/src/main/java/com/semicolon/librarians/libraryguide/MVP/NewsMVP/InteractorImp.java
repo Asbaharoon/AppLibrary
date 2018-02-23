@@ -40,6 +40,8 @@ public class InteractorImp implements com.semicolon.librarians.libraryguide.MVP.
                         listener.hideProgressBar();
                     }else
                         {
+                            listener.onNewsDataSuccess(newsModelList);
+
                             listener.hideProgressBar();
 
                         }

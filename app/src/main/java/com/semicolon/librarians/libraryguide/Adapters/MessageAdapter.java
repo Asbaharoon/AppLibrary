@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -91,7 +93,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             {
                 Log.e("item1","2");
 
-                ((ViewHolder2)holder).Message.setText(messageModel.getMessage().toString());
+                byte[] decode = Base64.decode(messageModel.getMessage().toString(),Base64.DEFAULT);
+                try {
+                    String decoded_msg = new String(decode,"UTF-8");
+                    ((ViewHolder2)holder).Message.setText(decoded_msg);
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 GetuserPhoto(chatuserType);
             }
 
@@ -116,8 +126,17 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         public void BindData(String msg,String date)
         {
-            Message.setText(msg);
-            Date.setText(date);
+
+            byte [] decode = Base64.decode(msg,Base64.DEFAULT);
+            try {
+                String decoded_msg = new String(decode,"UTF-8");
+                Message.setText(decoded_msg);
+                Date.setText(date);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+
         }
     }
     public class ViewHolder2 extends RecyclerView.ViewHolder{
@@ -249,6 +268,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
     @Override
     public int getItemViewType(int position) {
+        Log.e("from"," "+messageModelList.get(position).getFrom()+"  "+curr_user_id);
         if (messageModelList.get(position).getFrom().equals(curr_user_id))
         {
             return ITEM_ONE;
@@ -256,5 +276,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             {
                 return ITEM_TWO;
             }
+    }
+
+    public void UpdateData(MessageModel messageModel,String curr_user_id,String chatuserid,String chat_user_type)
+    {
+        this.curr_user_id =curr_user_id;
+        this.chatuserid = chatuserid;
+        this.chatuserType=chat_user_type;
+
+        messageModelList.add(messageModel);
+        notifyDataSetChanged();
     }
 }

@@ -11,6 +11,7 @@ import com.semicolon.librarians.libraryguide.Models.MessageModel;
 import com.semicolon.librarians.libraryguide.Models.NewsModel;
 import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
+import com.semicolon.librarians.libraryguide.Models.Tes;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 
 import java.util.List;
@@ -192,9 +193,19 @@ public interface Service {
     @FormUrlEncoded
     @POST("/api/chat")
     Call<ResponseBody> SendMessages(@FieldMap Map<String ,String> map);
+    /////////////////--------------get last msg-----------//////////////////////
+    @FormUrlEncoded
+    @POST("/api/getlastchatrecord/")
+    Call<MessageModel> getLastMsg(@FieldMap Map<String ,String> map);
 
     /////////////////---------UpdateTokenAndLocation----///////////////////////
-
+    @FormUrlEncoded
+    @POST("/api/updateuserstatue")
+    Call<Tes>UpdateUserStatue(@FieldMap  Map<String,String> map);
+    ////////////////----------------UpdateToken---------///////////////////////
+    @FormUrlEncoded
+    @POST("/api/updatetoken")
+    Call<ResponseBody>UpdateToken(@FieldMap  Map<String,String> map);
 
 
 }

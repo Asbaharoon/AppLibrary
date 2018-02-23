@@ -62,6 +62,7 @@ public class Home_Fragment extends Fragment  {
                 if (user_Data!=null)
                  {
 
+
                      Bundle bundle = new Bundle();
                      bundle.putSerializable("user_data",user_Data);
                      final Chat_Fragment chat_fragment = new Chat_Fragment();
@@ -82,7 +83,7 @@ public class Home_Fragment extends Fragment  {
                             navBar.setCurrentItem(0,false);
 
                         }
-                    },5000);
+                    },500);
 
                 }
                 else if (library_Model!=null)

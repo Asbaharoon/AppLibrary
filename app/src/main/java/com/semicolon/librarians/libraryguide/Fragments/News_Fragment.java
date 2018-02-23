@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.semicolon.librarians.libraryguide.Adapters.NewsAdapter;
@@ -32,6 +33,7 @@ public class News_Fragment extends Fragment implements ViewData {
     private Presenter presenter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout error_container,nodata_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class News_Fragment extends Fragment implements ViewData {
 
 
     private void initView(View view) {
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        nodata_container= (LinearLayout) view.findViewById(R.id.nodata_container);
         context = view.getContext();
         progressBar = (ProgressBar) view.findViewById(R.id.news_prgBar);
         progressBar.setVisibility(View.VISIBLE);
@@ -78,17 +82,30 @@ public class News_Fragment extends Fragment implements ViewData {
 
     @Override
     public void onNewsDataSuccess(List<NewsModel> newsModelList) {
-        adapter = new NewsAdapter(newsModelList,context);
-        news_recView.setAdapter(adapter);
-        news_recView.getAdapter().notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
+        if (newsModelList.size()>0)
+        {
+            adapter = new NewsAdapter(newsModelList,context);
+            news_recView.setAdapter(adapter);
+            news_recView.getAdapter().notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);news_recView.setVisibility(View.VISIBLE);
+            error_container.setVisibility(View.GONE);
+            nodata_container.setVisibility(View.GONE);
+
+        }else
+            {
+                nodata_container.setVisibility(View.VISIBLE);
+
+            }
+
 
     }
 
     @Override
     public void onNewsDataFailed(String error) {
-        CreateAlertDialog(error);
+        //CreateAlertDialog(error);
         swipeRefreshLayout.setRefreshing(false);
+        error_container.setVisibility(View.VISIBLE);
+        news_recView.setVisibility(View.GONE);
 
 
     }

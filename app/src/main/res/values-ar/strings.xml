@@ -64,6 +64,9 @@
     <string name="user_name">اسم المستخدم</string>
     <string name="pass">كلمه المرور</string>
     <string name="sign_up">انشاء حساب</string>
+    <string name="sign_inbtn">تسجيل الدخول</string>
+    <string name="sign_up_btn">انشاء حساب</string>
+
     <string name="remember_me">تزكرني</string>
     <string name="forget_password">هل نسيت كلمه المرور ؟</string>
     <string name="don_t_have_an_account_yet">لا امتلك حساب </string>
@@ -150,8 +153,14 @@
     <string name="ch_photo">اختار صوره للملف الشخصي</string>
     <string name="no_data_found">لاتوجد بيانات منفضلك تحقق من نوع المستخدم</string>
     <string name="nodata_2">لا توجد بيانات تحقق من نوع المستخدم. او انشاء حساب جديد</string>
-
-
+    <string name="nofriends">لايوجد لديك اصدقاء.</string>
+    <string name="there_are_no_publishers_to_display">لا يوجد ناشرين لعرضها</string>
+    <string name="there_are_no_universities_to_display">لا توجد جامعات لعرضها</string>
+    <string name="there_are_no_libraries_to_display">لا توجد مكتبات لعرضها</string>
+    <string name="there_are_no_companies_to_display">لا توجد شركات لعرضها</string>
+    <string name="there_is_no_news_to_display">لا توجد اخبار لعرضها</string>
+    <string name="there_are_no_jobs_to_display">لا توجد وظائف لعرضها</string>
+    <string name="there_are_no_results">لا توجد نتائج</string>
 
 
 </resources>

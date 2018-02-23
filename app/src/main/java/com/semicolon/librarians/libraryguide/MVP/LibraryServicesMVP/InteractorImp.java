@@ -39,6 +39,8 @@ public class InteractorImp implements Interactor {
                         listener.hideProgressBar();
                     }else
                         {
+                            listener.onLibraryServicesDataSuccess(libraryServicesModelList);
+
                             listener.hideProgressBar();
                         }
                 }else

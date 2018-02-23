@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-feature android:name="android.hardware.location.gps" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission
         android:name="android.permission.GET_TASKS"
         tools:ignore="ProtectedPermissions" />
@@ -44,10 +46,11 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <meta-data
+        <!--<meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
-            tools:replace="android:value" />
+            tools:replace="android:value" />-->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -79,20 +82,30 @@
         <activity
             android:name="com.semicolon.librarians.libraryguide.Activities.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            >
 
         </activity>
         <activity
             android:name="com.semicolon.librarians.libraryguide.Activities.MapsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.NearbyActivity" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Search" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Search_Results" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Chat_Activity" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_PhoneNumber" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Profile" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.FB_Gmail_UpdateProfile"></activity>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.DisplayUserLocation_OnMap"></activity>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.NearbyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Search" android:screenOrientation="portrait"
+            />
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Search_Results"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Chat_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_PhoneNumber"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Profile"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.FB_Gmail_UpdateProfile"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.semicolon.librarians.libraryguide.Activities.DisplayUserLocation_OnMap"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

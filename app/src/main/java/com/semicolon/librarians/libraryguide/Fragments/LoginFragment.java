@@ -21,11 +21,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.andexert.library.RippleView;
 import com.desarrollodroide.libraryfragmenttransactionextended.FragmentTransactionExtended;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.romainpiel.shimmer.Shimmer;
@@ -52,12 +52,14 @@ import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class LoginFragment extends Fragment implements Login_ViewData{
     //
-    private TextView signupTv;
+    private TextView signupTv,forget_password;
+    private LinearLayout signUp;
     private ShimmerTextView shimmerTextView;
     private ExpandableRelativeLayout login_expandlayout;
     private FragmentTransactionExtended fragmentTransactionExtended;
     private EditText userName,password;
-    private RippleView rippleView,ripple_et_forget_password,signinBtn_ripple;
+    //private RippleView rippleView,ripple_et_forget_password,signinBtn_ripple;
+    private Button signinBtn;
     Context mContext;
     Handler handler;
     private Login_PresenterImp presenterImp;
@@ -84,26 +86,30 @@ public class LoginFragment extends Fragment implements Login_ViewData{
 
         CreateProgressDialog();
 
-        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onClick(View view) {
                 navigate_to_signup_fragment();
+
             }
         });
-        ripple_et_forget_password.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        forget_password.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onClick(View view) {
                 navigate_to_ForgetPassword_fragment();
+
             }
         });
-        signinBtn_ripple.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onClick(View view) {
                 String user_Name = userName.getText().toString().trim();
                 String Password = password.getText().toString().trim();
                 presenterImp.Validate_Credential("",user_Name,Password);
+
             }
         });
+
         setUpShimmer();
 
         presenterImp = new Login_PresenterImp(getActivity(),this);
@@ -155,10 +161,10 @@ public class LoginFragment extends Fragment implements Login_ViewData{
         login_expandlayout = (ExpandableRelativeLayout) view.findViewById(R.id.login_expandlayout);
         login_expandlayout.collapse();
         handler= new Handler();
-        rippleView = (RippleView) view.findViewById(R.id.ripple_et);
-        ripple_et_forget_password = (RippleView) view.findViewById(R.id.ripple_et_forget_password);
-        signinBtn_ripple = (RippleView) view.findViewById(R.id.signinBtn_ripple);
-        userName = (EditText) view.findViewById(R.id.userName);
+        forget_password = (TextView) view.findViewById(R.id.forget_password);
+        signUp = (LinearLayout) view.findViewById(R.id.signUp);
+        signinBtn = (Button) view.findViewById(R.id.signinBtn);
+         userName = (EditText) view.findViewById(R.id.userName);
         password = (EditText) view.findViewById(R.id.password);
 
         remember_me = (CheckBox) view.findViewById(R.id.remember_me);

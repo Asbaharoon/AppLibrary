@@ -3,15 +3,72 @@
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent">
-<ProgressBar
-    android:id="@+id/lib_search_results_progressBar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    />
+
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recView_lib_search_results"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    ></android.support.v7.widget.RecyclerView>
+    >
+
+</android.support.v7.widget.RecyclerView>
+    <ProgressBar
+        android:id="@+id/lib_search_results_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+    <LinearLayout
+        android:id="@+id/error_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        >
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/conn"
+            android:background="@drawable/no_friend_container"
+            android:padding="@dimen/_15sdp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/something_haywire"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/noresult_container"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:visibility="gone"
+        >
+        <ImageView
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_200sdp"
+            android:src="@drawable/nosearch"
+            android:background="@drawable/no_friend_container"
+            android:padding="@dimen/_60sdp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/there_are_no_results"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            />
+    </LinearLayout>
 </FrameLayout>

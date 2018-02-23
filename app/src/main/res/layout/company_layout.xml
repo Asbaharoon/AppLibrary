@@ -333,30 +333,18 @@
 
 
             />
-        <com.andexert.library.RippleView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:rv_centered="true"
-            app:rv_type="rectangle"
-            app:rv_rippleDuration="400"
-            app:rv_alpha="200"
-            app:rv_zoom="true"
-            app:rv_zoomDuration="200"
-            app:rv_zoomScale="1.05"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            >
             <Button
                 android:id="@+id/company_SignInBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_up"
+                android:text="@string/sign_up_btn"
                 android:textColor="@color/base"
                 android:textSize="@dimen/_16sdp"
                 android:background="@drawable/button_bg"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
 
                 />
-        </com.andexert.library.RippleView>
 
 
 

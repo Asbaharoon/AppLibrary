@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.semicolon.librarians.libraryguide.Adapters.JobsAdapter;
@@ -35,6 +36,7 @@ public class Jobs_Fragment extends Fragment implements ViewData {
     private Presenter presenter;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout error_container,nodata_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class Jobs_Fragment extends Fragment implements ViewData {
 
     private void initView(View view) {
         context = view.getContext();
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        nodata_container = (LinearLayout) view.findViewById(R.id.nodata_container);
         progressBar = (ProgressBar) view.findViewById(R.id.job_prgBar);
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.job_swipe_refresh);
@@ -77,10 +81,19 @@ public class Jobs_Fragment extends Fragment implements ViewData {
 
     @Override
     public void onJobDataSuccess(List<JobsModel> jobsModelList) {
-        adapter = new JobsAdapter(jobsModelList,context);
-        adapter.notifyDataSetChanged();
-        job_recView.setAdapter(adapter);
-        swipeRefreshLayout.setRefreshing(false);
+        if (jobsModelList.size()>0)
+        {
+            adapter = new JobsAdapter(jobsModelList,context);
+            adapter.notifyDataSetChanged();
+            job_recView.setAdapter(adapter);
+            swipeRefreshLayout.setRefreshing(false);
+            nodata_container.setVisibility(View.GONE);
+
+        }else
+            {
+                nodata_container.setVisibility(View.VISIBLE);
+            }
+
 
     }
 
@@ -94,7 +107,10 @@ public class Jobs_Fragment extends Fragment implements ViewData {
 
     @Override
     public void onJobDataFailed(String error) {
-        CreateAlertDialog(error);
+        error_container.setVisibility(View.VISIBLE);
+        job_recView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        //CreateAlertDialog(error);
         swipeRefreshLayout.setRefreshing(false);
 
     }

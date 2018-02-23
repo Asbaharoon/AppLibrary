@@ -1,11 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/_5sdp"
+    >
+
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/base"
+    app:cardCornerRadius="@dimen/_5sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Settings"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notification &amp; Sounds"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:padding="@dimen/_5sdp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="@color/whit_gray"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Sound"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/centercolor"
+                android:textStyle=""
+                />
+            <it.beppi.tristatetogglebutton_library.TriStateToggleButton
+                android:id="@+id/sound_btn"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_5sdp"
+                app:tbOnColor="@color/centercolor"
+                app:tbDefaultStatus="off"
+                app:tbOffColor="#bdbdbd"
+                app:tbAnimate="true"
+                app:tbIsMidSelectable="false"
+                app:tbSpotColor="#f5f5f5"
+                android:layout_alignParentRight="true"
+
+
+                />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="@color/whit_gray"
+            android:layout_marginBottom="@dimen/_10sdp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Vibrate"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_5sdp"
+                android:textColor="@color/centercolor"
+                />
+            <it.beppi.tristatetogglebutton_library.TriStateToggleButton
+                android:id="@+id/vibrate_btn"
+
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_5sdp"
+                app:tbOnColor="@color/centercolor"
+                app:tbDefaultStatus="off"
+                app:tbOffColor="#bdbdbd"
+
+                app:tbAnimate="true"
+                app:tbIsMidSelectable="false"
+                app:tbSpotColor="#f5f5f5"
+                android:layout_alignParentRight="true"
+
+
+
+                />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/sel_not"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|left"
+            android:text="Notification sound"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/centercolor"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingTop="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_10sdp"
+            android:paddingLeft="@dimen/_5sdp"
+            android:drawableRight="@drawable/notif"
+            android:paddingRight="@dimen/_10sdp"
+            android:background="@drawable/item_search_bg"
+            android:clickable="true"
+            />
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+
 </RelativeLayout>

@@ -108,7 +108,7 @@ public class Fragment_LibraryProfile extends Fragment implements View.OnClickLis
     private void updateUI(LibraryModel libraryModel) {
         lib_name.setText(libraryModel.getLib_name().toString());
         Log.e("lib_type",""+libraryModel.getLib_type());
-        //lib_type.setText(libraryModel.getLib_type().toString());
+        lib_type.setText(libraryModel.getLib_type().toString());
         lib_email.setText(libraryModel.getLib_email().toString());
         lib_phone.setText(libraryModel.getLib_phone().toString());
         lib_country.setText(libraryModel.getLib_country().toString());

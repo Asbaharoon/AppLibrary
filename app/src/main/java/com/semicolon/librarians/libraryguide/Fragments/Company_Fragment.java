@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.semicolon.librarians.libraryguide.Adapters.CompanyAdapter;
@@ -46,6 +47,7 @@ public class Company_Fragment extends Fragment implements ViewData {
     private Context context ;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout error_container,nodata_container;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class Company_Fragment extends Fragment implements ViewData {
         presenter = new PresenterImp(this,getActivity());
         progressBar = (ProgressBar) view.findViewById(R.id.comp_prgBar);
         progressBar.setVisibility(View.VISIBLE);
+        error_container = (LinearLayout) view.findViewById(R.id.error_container);
+        nodata_container = (LinearLayout) view.findViewById(R.id.nodata_container);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.comp_swipe_refresh);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getActivity(),R.color.centercolor));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -112,10 +116,19 @@ public class Company_Fragment extends Fragment implements ViewData {
 
     @Override
     public void onCompanyDataSuccess(List<CompanyModel> companyModelList) {
-        adapter = new CompanyAdapter(companyModelList,getActivity());
-        adapter.notifyDataSetChanged();
-        comp_recView.setAdapter(adapter);
-        swipeRefreshLayout.setRefreshing(false);
+        if (companyModelList.size()>0)
+        {
+            adapter = new CompanyAdapter(companyModelList,getActivity());
+            adapter.notifyDataSetChanged();
+            comp_recView.setAdapter(adapter);
+            swipeRefreshLayout.setRefreshing(false);
+            nodata_container.setVisibility(View.GONE);
+
+        }else
+            {
+                nodata_container.setVisibility(View.VISIBLE);
+            }
+
 
     }
     private void getDataFromBundle() {
@@ -161,8 +174,12 @@ public class Company_Fragment extends Fragment implements ViewData {
     }
     @Override
     public void onCompanyDataFailed(String error) {
-        CreateAlertDialog(error);
+        //CreateAlertDialog(error);
         swipeRefreshLayout.setRefreshing(false);
+        error_container.setVisibility(View.VISIBLE);
+        comp_recView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+
 
     }
 

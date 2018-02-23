@@ -74,6 +74,7 @@ public class InteractorImp implements Interactor {
         map.put("user_email",user_email);
         map.put("user_phone",user_phone);
         map.put("user_country",user_country);
+
         Retrofit retrofit = setUpRetrofit();
 
         Service service = retrofit.create(Service.class);

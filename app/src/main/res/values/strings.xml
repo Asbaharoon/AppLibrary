@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Library guide</string>
     <string name="title_activity_chooser_singin">Library guide</string>
-    <string name="facebook_app_id">156588275066033</string>
+    <!--//<string name="facebook_app_id">156588275066033</string>-->
+    <string name="facebook_app_id">1400115610100283</string>
+    <string name="fb_login_protocol_scheme">fb1400115610100283</string>
+<!--
     <string name="fb_login_protocol_scheme">fb156588275066033</string>
+-->
     <string name="google_maps_key">  AIzaSyDFYFBvXcuJdcQnlsaEHKANimuB5F8MwDA  </string>
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
@@ -17,7 +21,7 @@
         <item>Company</item>
     </string-array>
 
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Library guide</string>
     <string name="invalid_firstName">invalid First name</string>
     <string name="invalid_lastName">invalid Last name</string>
     <string name="invalidEmail">invalid email</string>
@@ -47,7 +51,7 @@
     <string name="address">ADDRESS :</string>
     <string name="distance">DISTANCE :</string>
     <string name="recover_account">Recover your account.We will send you a link to change your password.</string>
-    <string name="library_app">Library App</string>
+    <string name="library_app">Library guide</string>
     <string name="date">Date</string>
     <string name="from">From</string>
     <string name="to">To</string>
@@ -60,6 +64,8 @@
     <string name="reg_address">Address</string>
     <string name="user_name">Username</string>
     <string name="pass">Password</string>
+    <string name="sign_inbtn">Sign In</string>
+    <string name="sign_up_btn">Sign Up</string>
     <string name="sign_up">sign up</string>
     <string name="remember_me">Remember me</string>
     <string name="forget_password">Forget password ?</string>
@@ -147,6 +153,14 @@
     <string name="ch_photo">choose profile photo</string>
     <string name="no_data_found">No data founded please check user type</string>
     <string name="nodata_2">No data founded please check user type.if you don’t have an account please create one</string>
+    <string name="nofriends">You have no friends.</string>
+    <string name="there_are_no_publishers_to_display">There are no publishers to display</string>
+    <string name="there_are_no_universities_to_display">There are no universities to display</string>
+    <string name="there_are_no_libraries_to_display">There are no libraries to display</string>
+    <string name="there_are_no_companies_to_display">There are no companies to display</string>
+    <string name="there_is_no_news_to_display">There is no news to display</string>
+    <string name="there_are_no_jobs_to_display">There are no jobs to display</string>
+    <string name="there_are_no_results">There are no results</string>
 
     <integer-array name="fab_colors">
         <item>@color/base</item>
