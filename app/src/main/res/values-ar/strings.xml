@@ -168,5 +168,14 @@
     <string name="there_are_no_ads_to_display">لا توجد اعلانات لعرضها</string>
     <string name="prof_up_suc">تم تحديث الملف الشخصي بنجاح</string>
 
-
+    <string name="intro1">اختار الدخول</string>
+    <string name="intro2">الصفحه الشخصيه</string>
+    <string name="intro3">الاقرب لك</string>
+    <string name="intro4">اختيار الاقرب</string>
+    <string name="intro5">محادثه</string>
+    <string name="home1">اختيار طريقه الدخول الى البرنامج</string>
+    <string name="home2">الصفحه الشخصيه لعرض معلوماتك الشخصيه ويمكنك التعديل عليها</string>
+    <string name="home3">الخريطه توضح الاقرب لك من المكتبات ,المستخدمين و الناشرين والجامعات ايضا </string>
+    <string name="home4">عند اختيار الاقرب لك يظهر لك تلك الصفحه لترى معلوماته</string>
+    <string name="home5">محاثه يمكنك من خلالها الدردشه مع الناشرين والاستفسار عن اى شيئ</string>
 </resources>

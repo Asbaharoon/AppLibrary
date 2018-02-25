@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Libguide.iml" filepath="$PROJECT_DIR$/Libguide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AppLibrary.iml" filepath="$PROJECT_DIR$/AppLibrary.iml" />
+      <module fileurl="file://E:\android\projects\AppLibrary\Libguide.iml" filepath="E:\android\projects\AppLibrary\Libguide.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

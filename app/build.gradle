@@ -79,6 +79,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     compile 'com.github.BeppiMenozzi:TriStateToggleButton:1.1.4'
     compile 'com.github.hassanusman:CircularDialogs:1.2'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
+    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
     compile('com.lamudi.phonefield:phone-field:0.1.3@aar') {
         transitive = true
     }
