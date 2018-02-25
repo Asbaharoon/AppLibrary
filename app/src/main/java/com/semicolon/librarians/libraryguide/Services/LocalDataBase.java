@@ -27,7 +27,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
     private static final String TABLE_COMPANIES              ="COMPANIES";
     private static final String TABLE_USERS_USER_TYPE        ="USER_TYPE";
 
-    private static final String TABLE_USERS_ID               ="ID";
+    private static final String TABLE_USERS_ID               ="CurrUserID";
     private static final String TABLE_USERS_PHOTO            ="PHOTO";
     private static final String TABLE_USERS_NAME             ="NAME";
     private static final String TABLE_USERS_EMAIL            ="EMAIL";
@@ -35,7 +35,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
     private static final String TABLE_USERS_COUNTRY          ="COUNTRY";
     private static final String TABLE_USERS_USERNAME         ="USER_NAME";
 
-    private static final String TABLE_PUBLISHERS_ID          ="ID";
+    private static final String TABLE_PUBLISHERS_ID          ="CurrUserID";
     private static final String TABLE_PUBLISHERS_PHOTO       ="PHOTO";
     private static final String TABLE_PUBLISHERS_NAME        ="NAME";
     private static final String TABLE_PUBLISHERS_EMAIL       ="EMAIL";
@@ -47,7 +47,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
     private static final String TABLE_PUBLISHERS_USERNAME    ="USER_NAME";
 
 
-    private static final String TABLE_LIBRARIES_ID           ="ID";
+    private static final String TABLE_LIBRARIES_ID           ="CurrUserID";
     private static final String TABLE_LIBRARIES_PHOTO        ="PHOTO";
     private static final String TABLE_LIBRARIES_NAME         ="NAME";
     private static final String TABLE_LIBRARIES_TYPE         ="TYPE";
@@ -57,7 +57,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
     private static final String TABLE_LIBRARIES_ADDRESS      ="ADDRESS";
     private static final String TABLE_LIBRARIES_USERNAME     ="USER_NAME";
 
-    private static final String TABLE_UNIVERSITIES_ID        ="ID";
+    private static final String TABLE_UNIVERSITIES_ID        ="CurrUserID";
     private static final String TABLE_UNIVERSITIES_PHOTO     ="PHOTO";
     private static final String TABLE_UNIVERSITIES_NAME      ="NAME";
     private static final String TABLE_UNIVERSITIES_EMAIL     ="EMAIL";
@@ -68,7 +68,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
     private static final String TABLE_UNIVERSITIES_WEBSITE   ="WEBSITE";
     private static final String TABLE_UNIVERSITIES_USERNAME  ="USER_NAME";
 
-    private static final String TABLE_COMPANIES_ID           ="ID";
+    private static final String TABLE_COMPANIES_ID           ="CurrUserID";
     private static final String TABLE_COMPANIES_PHOTO        ="PHOTO";
     private static final String TABLE_COMPANIES_NAME         ="NAME";
     private static final String TABLE_COMPANIES_EMAIL        ="EMAIL";

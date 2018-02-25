@@ -68,8 +68,6 @@ import com.semicolon.librarians.libraryguide.Services.Preferences;
 import com.semicolon.librarians.libraryguide.Services.Service;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -120,7 +118,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_chooser_singin);
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
         Calligrapher calligrapher = new Calligrapher(this);
         calligrapher.setFont(this, Tags.font, true);
         presenter = new PresenterImp(this, this);

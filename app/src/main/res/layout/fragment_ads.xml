@@ -2,10 +2,34 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:text="Fragment Ads"
-    android:gravity="center"
-    />
+    <LinearLayout
+        android:id="@+id/nodata_container"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="@drawable/no_friend_container"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        >
+        <ImageView
+
+            android:layout_width="100sp"
+            android:layout_height="@dimen/_100sdp"
+            android:src="@drawable/nodata"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:padding="@dimen/_10sdp"
+
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/there_are_no_ads_to_display"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_10sdp"
+
+            />
+    </LinearLayout>
 </RelativeLayout>

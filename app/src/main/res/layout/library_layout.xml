@@ -250,7 +250,7 @@
 
             >
             <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/lib_type"
+                andridd:idid@+id/lib_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:backgroundTint="@color/centercolor"
@@ -259,8 +259,8 @@
 
             <com.github.aakira.expandablelayout.ExpandableRelativeLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/library_spinner_expanded"
-                android:layout_below="@+id/lib_type"
+                andridd:idid@+id/library_spinner_expanded"
+                android:layout_belowid@+id/lib_type"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:ael_expanded="false"
@@ -271,7 +271,7 @@
 
 
                 <com.rengwuxian.materialedittext.MaterialEditText
-                    android:id="@+id/library_otherType"
+                    andridd:idid@+id/library_otherType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:met_autoValidate="true"

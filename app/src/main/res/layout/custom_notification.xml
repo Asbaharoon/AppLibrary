@@ -10,6 +10,7 @@
     android:layout_width="@dimen/_45sdp"
     android:layout_height="@dimen/_45sdp"
     android:layout_alignParentLeft="true"
+    android:scaleType="fitXY"
     />
     <TextView
         android:id="@+id/userName"
@@ -46,8 +47,10 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_5sdp"
         android:textColor="@color/base"
+
 
 
 

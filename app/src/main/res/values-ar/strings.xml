@@ -31,7 +31,7 @@
     <string name="welcome_to_library_guide">مرحبا بكم في, دليل المكتبات</string>
     <string name="sign_in_with_my_account">تسجيل الدخول</string>
     <string name="facebook_signin">تسجيل الدخول</string>
-    <string name="id">id</string>
+    <string name="UserId">UserId</string>
     <string name="name">الاسم</string>
     <string name="e_mail_address">البريد الالكتروني</string>
     <string name="update_profile">تحديث الملف الشخصي</string>
@@ -46,7 +46,7 @@
     <string name="more">المزيد</string>
     <string name="open_profile">الملف الشخصي</string>
     <string name="send_message">ارسال رساله</string>
-    <string name="cancel">اغلاق</string>
+    <string name="cancel">إلغاء</string>
     <string name="address">العنوان :</string>
     <string name="distance">المسافه :</string>
     <string name="recover_account">استرداد حسابك. سوف نرسل لك رابط لتغيير كلمة المرور الخاصة بك.</string>
@@ -161,6 +161,12 @@
     <string name="there_is_no_news_to_display">لا توجد اخبار لعرضها</string>
     <string name="there_are_no_jobs_to_display">لا توجد وظائف لعرضها</string>
     <string name="there_are_no_results">لا توجد نتائج</string>
+    <string name="enter_your_name">أدخل إسمك</string>
+    <string name="done">تم</string>
+    <string name="enter_email_address">أدخل البريد الإلكتروني</string>
+    <string name="empty_name">الإسم لا ينبغي ان يكون فارغا </string>
+    <string name="there_are_no_ads_to_display">لا توجد اعلانات لعرضها</string>
+    <string name="prof_up_suc">تم تحديث الملف الشخصي بنجاح</string>
 
 
 </resources>

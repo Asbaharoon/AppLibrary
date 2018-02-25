@@ -13,14 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.semicolon.librarians.libraryguide.MVP.DisplayUsersDataMVP.Presenter;
-import com.semicolon.librarians.libraryguide.MVP.DisplayUsersDataMVP.PresenterImp;
-import com.semicolon.librarians.libraryguide.MVP.DisplayUsersDataMVP.ViewData;
-import com.semicolon.librarians.libraryguide.Models.CompanyModel;
-import com.semicolon.librarians.libraryguide.Models.LibraryModel;
 import com.semicolon.librarians.libraryguide.Models.MessageModel;
-import com.semicolon.librarians.libraryguide.Models.NormalUserData;
-import com.semicolon.librarians.libraryguide.Models.PublisherModel;
-import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.squareup.picasso.Picasso;
@@ -36,7 +29,7 @@ import hani.momanii.supernova_emoji_library.Helper.EmojiconTextView;
  * Created by Delta on 14/02/2018.
  */
 
-public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ViewData {
+public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
     private final int ITEM_ONE=1;
     private final int ITEM_TWO=2;
@@ -50,15 +43,17 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private String chatuserType;
     private Presenter presenter;
     private ViewHolder2 holder2;
+    private String chat_userImage;
 
-    public MessageAdapter(Context context, List<MessageModel> messageModelList, String curr_user_id, String chatuserid, String chatuserType) {
+    public MessageAdapter(Context context, List<MessageModel> messageModelList, String curr_user_id, String chatuserid, String chatuserType,String chat_userImage) {
         this.context = context;
         this.messageModelList = messageModelList;
         this.curr_user_id = curr_user_id;
         this.chatuserid = chatuserid;
         this.chatuserType = chatuserType;
+        this.chat_userImage = chat_userImage;
 
-        presenter = new PresenterImp(this,context);
+       // presenter = new PresenterImp(this,context);
     }
 
     @Override
@@ -96,13 +91,13 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 byte[] decode = Base64.decode(messageModel.getMessage().toString(),Base64.DEFAULT);
                 try {
                     String decoded_msg = new String(decode,"UTF-8");
-                    ((ViewHolder2)holder).Message.setText(decoded_msg);
-
+                    //((ViewHolder2)holder).Message.setText(decoded_msg);
+                    ((ViewHolder2)holder).BindData(chat_userImage,decoded_msg);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
 
-                GetuserPhoto(chatuserType);
+                //GetuserPhoto(chatuserType);
             }
 
 
@@ -150,8 +145,9 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         }
 
-        public void BindData(String photo)
+        public void BindData(String photo,String msg)
         {
+            Message.setText(msg);
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -186,7 +182,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    public void GetuserPhoto(String chatuserType)
+   /* public void GetuserPhoto(String chatuserType)
     {
         switch (chatuserType)
         {
@@ -207,8 +203,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 break;
 
         }
-    }
-    @Override
+    }*/
+   /* @Override
     public void onNormalUserDataSuccess(NormalUserData normalUserData) {
         if (normalUserData.getUserPhoto()==null)
         {
@@ -260,7 +256,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onFailed(String error) {
 
-    }
+    }*/
 
     @Override
     public int getItemCount() {

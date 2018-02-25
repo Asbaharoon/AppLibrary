@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.intrusoft.squint.DiagonalView;
@@ -32,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 06/02/2018.
@@ -41,6 +43,7 @@ public class Fragment_LibraryProfile extends Fragment implements View.OnClickLis
 
     private LibraryModel libraryModel=null;
     private CircleImageView lib_image;
+    private ImageView back;
     private TextView lib_name,lib_type,lib_email,lib_phone,lib_country,lib_address;
     private Button msgBtn,locBtn,updBtn;
     private String who_visit_myProfile="";
@@ -53,6 +56,8 @@ public class Fragment_LibraryProfile extends Fragment implements View.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
 
@@ -82,7 +87,13 @@ public class Fragment_LibraryProfile extends Fragment implements View.OnClickLis
         msgBtn      = (Button) view.findViewById(R.id.profile_lib_msgBtn);
         locBtn      = (Button) view.findViewById(R.id.profile_lib_locBtn);
         updBtn      = (Button) view.findViewById(R.id.profile_lib_updBtn);
-
+        back        = (ImageView) view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
         msgBtn.setOnClickListener(this);
         locBtn.setOnClickListener(this);
         updBtn.setOnClickListener(this);

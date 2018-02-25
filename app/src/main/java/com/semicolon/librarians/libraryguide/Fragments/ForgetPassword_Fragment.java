@@ -14,6 +14,8 @@ import android.widget.EditText;
 import com.semicolon.librarians.libraryguide.R;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 
+import me.anwarshahriar.calligrapher.Calligrapher;
+
 /**
  * Created by Delta on 22/12/2017.
  */
@@ -25,6 +27,8 @@ public class ForgetPassword_Fragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
 

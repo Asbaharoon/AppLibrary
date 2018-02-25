@@ -17,8 +17,10 @@ import android.widget.Toast;
 
 import com.semicolon.librarians.libraryguide.R;
 import com.semicolon.librarians.libraryguide.Services.Preferences;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import it.beppi.tristatetogglebutton_library.TriStateToggleButton;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 15/12/2017.
@@ -31,6 +33,9 @@ public class Settings_Fragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
+
 
     }
 

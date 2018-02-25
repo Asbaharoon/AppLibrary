@@ -3,6 +3,7 @@ package com.semicolon.librarians.libraryguide.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
@@ -183,7 +184,7 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     {
         Target target;
         ImageView library_image;
-        TextView library_name,library_country,library_type,library_services;
+        TextView library_name,library_country,library_type,library_services,more;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -201,11 +202,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
             library_name        = (TextView) titleView.findViewById(R.id.library_name);
             library_country         = (TextView) titleView.findViewById(R.id.library_country);
             library_type      = (TextView) titleView.findViewById(R.id.library_type);
+            more = (TextView) itemView.findViewById(R.id.more);
 
 
-       }
+        }
         public void BindData(final LibraryModel libraryModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),Tags.font);
+
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -238,6 +242,12 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
             String s_Date = dateFormat.format(new Date(sd));
             String e_Date = dateFormat.format(new Date(ed));*/
 
+
+
+            library_name.setTypeface(typeface);
+            library_country.setTypeface(typeface);
+            library_type.setTypeface(typeface);
+            more.setTypeface(typeface);
 
             library_name.setText(libraryModel.getLib_name());
             library_country.setText(libraryModel.getLib_country().toString());

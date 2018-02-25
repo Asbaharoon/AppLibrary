@@ -3,6 +3,7 @@ package com.semicolon.librarians.libraryguide.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
@@ -174,7 +175,7 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
     {
         Target target;
         ImageView publisher_image;
-        TextView publisher_name,publisher_country,publisher_email,publisher_phone,publisher_site;
+        TextView publisher_name,publisher_country,publisher_email,publisher_phone,more,publisher_site;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -193,12 +194,13 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
             publisher_country         = (TextView) titleView.findViewById(R.id.publisher_country);
             publisher_email      = (TextView) titleView.findViewById(R.id.publisher_email);
             publisher_site  = (TextView) titleView.findViewById(R.id.publisher_site);
+            more = (TextView) itemView.findViewById(R.id.more);
 
-
-
-       }
+        }
         public void BindData(PublisherModel publisherModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),Tags.font);
+
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -225,12 +227,12 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
 
                 }
 
-           /* Long sd = Long.getLong(PublisherModel.getPublishertartDate());
-            Long ed = Long.getLong(PublisherModel.getJobEndDate());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yy");
-            String s_Date = dateFormat.format(new Date(sd));
-            String e_Date = dateFormat.format(new Date(ed));*/
 
+            publisher_name.setTypeface(typeface);
+            publisher_country.setTypeface(typeface);
+            publisher_email.setTypeface(typeface);
+            publisher_site.setTypeface(typeface);
+            more.setTypeface(typeface);
 
             publisher_name.setText(publisherModel.getPub_name().toString());
             publisher_country.setText(publisherModel.getPub_country().toString());

@@ -17,8 +17,11 @@ import com.semicolon.librarians.libraryguide.MVP.LibraryTypeMVP.PresenterImp;
 import com.semicolon.librarians.libraryguide.MVP.LibraryTypeMVP.ViewData;
 import com.semicolon.librarians.libraryguide.Models.LibraryType_Model;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 28/01/2018.
@@ -34,6 +37,8 @@ public class Fragment_LibType extends Fragment implements ViewData{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
 

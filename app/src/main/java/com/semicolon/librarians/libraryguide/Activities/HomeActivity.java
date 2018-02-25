@@ -103,6 +103,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Calligrapher calligrapher = new Calligrapher(this);
         calligrapher.setFont(this, Tags.font,true);
 
+
         EventBus.getDefault().register(this);
 
         apiClient = new GoogleApiClient.Builder(HomeActivity.this).addApi(Auth.GOOGLE_SIGN_IN_API).enableAutoManage(HomeActivity.this,this).addApi(Auth.GOOGLE_SIGN_IN_API).build();

@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
@@ -17,15 +18,14 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.semicolon.librarians.libraryguide.Activities.ChooserSingin;
 import com.semicolon.librarians.libraryguide.Activities.HomeActivity;
-import com.semicolon.librarians.libraryguide.Models.ID;
+import com.semicolon.librarians.libraryguide.Models.MessageModel;
 import com.semicolon.librarians.libraryguide.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -39,150 +39,254 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  */
 
 public class Manager_Notification {
-    String curr_username;
 
-    public Manager_Notification() {
-        EventBus.getDefault().register(this);
-    }
+    public String mMsg="";
 
 
-
-    public void CreateNotification(Map<String,String> map, final Context context, long sentTime)
+    public void CreateNotification(final Map<String,String> map, final Context context, final long sentTime, final String curr_username, final String chat_username)
     {
 
-        final Target target;
-        final RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.custom_notification);
-        String encodeMsg = map.get("message");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm aa");
-        Date date = new Date(sentTime);
-        String time = dateFormat.format(date);
-        try {
-            byte[] bytes = Base64.decode(encodeMsg,Base64.DEFAULT);
-            String decodeMsg = new String(bytes,"UTF-8");
-            remoteViews.setTextViewText(R.id.userName,map.get("sender_name"));
-            remoteViews.setTextViewText(R.id.msg,decodeMsg);
-            remoteViews.setTextViewText(R.id.date,time);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
-        target = new Target() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                remoteViews.setImageViewBitmap(R.id.userImage,bitmap);
-                Log.e("loaded","loaded");
-            }
+            public void run() {
+                final String from_id =map.get("from_sender");
+                final String to_receiver = map.get("to_receiver");
 
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+                final Target target;
+                final RemoteViews remoteViews = new RemoteViews(context.getPackageName(),R.layout.custom_notification);
+                String encodeMsg = map.get("message");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+                Date date = new Date(sentTime);
+                String time = dateFormat.format(date);
+                final String d = map.get("sent_date");
 
-            }
 
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
+                try {
+                    byte[] bytes = Base64.decode(encodeMsg,Base64.DEFAULT);
+                    String decodeMsg = new String(bytes,"UTF-8");
+                    mMsg = decodeMsg;
+                    remoteViews.setTextViewText(R.id.userName,map.get("sender_name"));
+                    remoteViews.setTextViewText(R.id.msg,decodeMsg);
+                    remoteViews.setTextViewText(R.id.date,time);
 
-            }
-        };
-
-        final String image = map.get("sender_photo");
-
-        if (image.startsWith("http"))
-        {
-            Handler  handler = new Handler(context.getMainLooper());
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Picasso.with(context).load(image).into(target);
-
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
                 }
-            },1);
-        }else
-            {
-                Handler  handler = new Handler(context.getMainLooper());
-                handler.postDelayed(new Runnable() {
+
+
+                target = new Target() {
                     @Override
-                    public void run() {
-                        Picasso.with(context).load(Tags.image_path+image).into(target);
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        remoteViews.setImageViewBitmap(R.id.userImage,bitmap);
+                        Log.e("loaded","loaded");
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
 
                     }
-                },1);
 
-            }
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
 
+                    }
+                };
 
+                final String image = map.get("sender_photo");
 
-        Preferences pref = new Preferences(context);
-        String soundState = pref.getSoundState();
-        String vibrateState=pref.getVibrateState();
-        String toneUri = pref.getRingtone();
-        ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        String currClass = am.getRunningTasks(1).get(0).topActivity.getClassName();
-        Log.e("currclass",currClass);
-
-        if (currClass.equals("com.semicolon.librarians.libraryguide.Activities.Chat_Activity"))
-        {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setContent(remoteViews);
-            if (soundState.equals("on"))
-            {
-                if (TextUtils.isEmpty(toneUri)|| toneUri==null)
+                if (image.startsWith("http"))
                 {
-                    builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    Handler  handler = new Handler(context.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Picasso.with(context).load(image).into(target);
 
+                        }
+                    },1);
                 }else
                 {
-                    builder.setSound(Uri.parse(toneUri));
+                    Handler  handler = new Handler(context.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Picasso.with(context).load(Tags.image_path+image).into(target);
 
+                        }
+                    },1);
 
                 }
 
-                if (vibrateState.equals("on"))
-                {
-                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(500);
-                }
-            }else if (soundState.equals("off"))
-            {
-                if (vibrateState.equals("on"))
-                {
-                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(500);
-                }
-            }
+
+
+                Preferences pref = new Preferences(context);
+                final String soundState = pref.getSoundState();
+                final String vibrateState=pref.getVibrateState();
+                final String toneUri = pref.getRingtone();
+                ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+                final String currClass = am.getRunningTasks(1).get(0).topActivity.getClassName();
+                Log.e("currclass",currClass);
+
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (currClass.equals("com.semicolon.librarians.libraryguide.Activities.ChooserSingin"))
+                        {
+
+                        }else if (currClass.equals("com.semicolon.librarians.libraryguide.Activities.FB_Gmail_UpdateProfile"))
+                        {
+
+                        }else if (currClass.equals("com.semicolon.librarians.libraryguide.Activities.LoginActivity"))
+                        {
+
+                        }
+                        else if (currClass.equals("com.semicolon.librarians.libraryguide.Activities.MapsActivity"))
+                        {
+
+                        }
+                        else if (currClass.equals("com.semicolon.librarians.libraryguide.Activities.Chat_Activity"))
+                        {
+                            Log.e("11111111111111111","11111111111111111");
+                            Log.e("11111111111111111",from_id+"  from "+chat_username+"    "+" to "+curr_username);
+
+                            if (from_id.equals(curr_username))
+                                {
+                                    Log.e("777777","7777777777777");
+                                    /*new Handler(context.getMainLooper()).postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Log.e("mmmmmmmssssssssssss",mMsg);
+                                            EventBus.getDefault().post(new MessageModel(mMsg,chat_username,curr_username,d,""));
+                                        }
+                                    },100);*/
+                            }
+                            else if(from_id.equals(chat_username))
+                            {
+                                Log.e("22222222222222222","22222222222222222");
+
+                                new Handler(context.getMainLooper()).postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        EventBus.getDefault().post(new MessageModel(mMsg,chat_username,curr_username,d,""));
+                                    }
+                                },100);
+                            }
+                            else {
+                                Log.e("444444444444444","4444444444444444");
+
+
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                                builder.setContent(remoteViews);
+                                if (soundState.equals("on"))
+                                {
+                                    if (TextUtils.isEmpty(toneUri)|| toneUri==null)
+                                    {
+                                        builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+                                    }else
+                                    {
+                                        builder.setSound(Uri.parse(toneUri));
+
+
+                                    }
+
+                                    if (vibrateState.equals("on"))
+                                    {
+                                        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                        vibrator.vibrate(500);
+                                    }
+                                }else if (soundState.equals("off"))
+                                {
+                                    if (vibrateState.equals("on"))
+                                    {
+                                        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                        vibrator.vibrate(500);
+                                    }
+                                }
 
 
 
-            Intent intent = new Intent(context, HomeActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-            builder.setContentIntent(pendingIntent);
-            builder.setSmallIcon(R.mipmap.ic_launcher_round);
+                                Intent intent = new Intent(context, ChooserSingin.class);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                                builder.setContentIntent(pendingIntent);
+                                builder.setSmallIcon(R.mipmap.ic_launcher_round);
 
             /*Notification notification = builder.build();
             notification.contentView = remoteViews;*/
-            NotificationManager manager = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
-            manager.notify(100,builder.build());
-        }
+                                NotificationManager manager = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
+                                manager.notify(100,builder.build());
+                            }
 
 
+                        }
+
+
+
+
+
+                        else
+                        {
+
+
+                            Log.e("5555555555555555","555555555555555555555");
+
+
+                            NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+                            builder.setContent(remoteViews);
+                            if (soundState.equals("on"))
+                            {
+                                if (TextUtils.isEmpty(toneUri)|| toneUri==null)
+                                {
+                                    builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+
+                                }else
+                                {
+                                    builder.setSound(Uri.parse(toneUri));
+
+
+                                }
+
+                                if (vibrateState.equals("on"))
+                                {
+                                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                    vibrator.vibrate(500);
+                                }
+                            }else if (soundState.equals("off"))
+                            {
+                                if (vibrateState.equals("on"))
+                                {
+                                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                                    vibrator.vibrate(500);
+                                }
+                            }
+
+
+
+                            Intent intent = new Intent(context, HomeActivity.class);
+                            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                            builder.setContentIntent(pendingIntent);
+                            builder.setSmallIcon(R.mipmap.ic_launcher_round);
+
+            /*Notification notification = builder.build();
+            notification.contentView = remoteViews;*/
+                            NotificationManager manager = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
+                            manager.notify(100,builder.build());
+                        }
+
+                    }
+                },100);
+
+
+
+
+            }
+        },1000);
 
 
 
 
     }
 
-
-    public void setCurr_username(String curr_username) {
-        this.curr_username = curr_username;
-        Log.e("currrrrrrr",curr_username);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setCurruserName(ID id)
-    {
-        Log.e("currrrrrrr222",id.getUsername());
-
-    }
 
 }

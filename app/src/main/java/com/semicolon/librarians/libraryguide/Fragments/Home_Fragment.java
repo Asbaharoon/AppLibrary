@@ -20,6 +20,9 @@ import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 15/12/2017.
@@ -38,7 +41,8 @@ public class Home_Fragment extends Fragment  {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
     }
 
     @Nullable
@@ -63,12 +67,18 @@ public class Home_Fragment extends Fragment  {
                  {
 
 
-                     Bundle bundle = new Bundle();
-                     bundle.putSerializable("user_data",user_Data);
-                     final Chat_Fragment chat_fragment = new Chat_Fragment();
-                     chat_fragment.setArguments(bundle);
-                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack("chat_fragment").commitAllowingStateLoss();
-                     navBar.setCurrentItem(0,false);
+                     new Handler().postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+                             Bundle bundle = new Bundle();
+                             bundle.putSerializable("user_data",user_Data);
+                             final Chat_Fragment chat_fragment = new Chat_Fragment();
+                             chat_fragment.setArguments(bundle);
+                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack("chat_fragment").commitAllowingStateLoss();
+
+                         }
+                     },100);
+                       navBar.setCurrentItem(0,false);
                 }else if (publisher_Model!=null)
                 {
                     Bundle bundle = new Bundle();

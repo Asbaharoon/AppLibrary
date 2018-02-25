@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -29,8 +30,22 @@ public class Activity_PhoneNumber extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_phone_number);
         Calligrapher calligrapher = new Calligrapher(this);
         calligrapher.setFont(this, Tags.font,true);
-
         initView();
+
+        getDateFromUpdateProfileIntent();
+    }
+
+    private void getDateFromUpdateProfileIntent() {
+        Intent intent = getIntent();
+        if (intent!=null)
+        {
+            if (intent.hasExtra("phone"))
+            {
+                String phone = intent.getStringExtra("phone");
+                Log.e("phhhhhhhhhhh",phone);
+                phone_input.setPhoneNumber(phone);
+            }
+        }
     }
 
     private void initView() {

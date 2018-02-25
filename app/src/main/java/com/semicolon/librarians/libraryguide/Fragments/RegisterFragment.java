@@ -124,6 +124,8 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
 
 

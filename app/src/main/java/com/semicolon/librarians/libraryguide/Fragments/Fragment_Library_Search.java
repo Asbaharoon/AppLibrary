@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import com.semicolon.librarians.libraryguide.Activities.Activity_Search;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 21/01/2018.
@@ -23,6 +26,8 @@ public class Fragment_Library_Search extends Fragment implements View.OnClickLis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
 

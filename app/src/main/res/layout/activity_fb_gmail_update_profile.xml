@@ -67,7 +67,7 @@
                 android:id="@+id/userId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/id"
+                android:hint="@string/UserId"
                 android:textSize="@dimen/_16sdp"
                 android:fontFamily="sans-serif-condensed"
                 android:layout_gravity="center_horizontal"
@@ -204,7 +204,7 @@
         android:textColor="@color/black"
         />
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userImage"
+        andridd:idid@+id/userImage"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_100sdp"
         android:layout_gravity="center_horizontal"
@@ -215,7 +215,7 @@
         android:layout_marginBottom="@dimen/_10sdp"
         />
     <TextView
-        android:id="@+id/userId"
+        andridd:idid@+id/userId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Your Id"
@@ -229,7 +229,7 @@
 
         />
     <TextView
-        android:id="@+id/userName"
+        andridd:idid@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Name"

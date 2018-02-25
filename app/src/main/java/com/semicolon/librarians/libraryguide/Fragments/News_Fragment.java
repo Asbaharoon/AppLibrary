@@ -20,9 +20,12 @@ import com.semicolon.librarians.libraryguide.MVP.NewsMVP.PresenterImp;
 import com.semicolon.librarians.libraryguide.MVP.NewsMVP.ViewData;
 import com.semicolon.librarians.libraryguide.Models.NewsModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 
 public class News_Fragment extends Fragment implements ViewData {
@@ -38,6 +41,8 @@ public class News_Fragment extends Fragment implements ViewData {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
 

@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.intrusoft.squint.DiagonalView;
 import com.semicolon.librarians.libraryguide.Activities.Activity_Profile;
 import com.semicolon.librarians.libraryguide.Activities.Chat_Activity;
 import com.semicolon.librarians.libraryguide.Activities.DisplayUserLocation_OnMap;
+import com.semicolon.librarians.libraryguide.Activities.UpdateProfiles;
 import com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.Presenter;
 import com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.PresenterImp;
 import com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.ViewData;
@@ -32,6 +34,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 06/02/2018.
@@ -40,6 +43,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Fragment_UserProfile extends Fragment implements View.OnClickListener , com.semicolon.librarians.libraryguide.MVP.DisplayUsersDataMVP.ViewData,ViewData{
     private NormalUserData userData=null;
     private CircleImageView userImage;
+    private ImageView back;
     private TextView userName,userEmail,userPhone,userCountry;
     private Button msgBtn,locBtn,updBtn;
     private String who_visit_myProfile="";
@@ -52,6 +56,8 @@ public class Fragment_UserProfile extends Fragment implements View.OnClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
     @Nullable
@@ -77,7 +83,13 @@ public class Fragment_UserProfile extends Fragment implements View.OnClickListen
         msgBtn      = (Button) view.findViewById(R.id.profile_user_msgBtn);
         locBtn      = (Button) view.findViewById(R.id.profile_user_locBtn);
         updBtn      = (Button) view.findViewById(R.id.profile_user_updBtn);
-
+        back        = (ImageView) view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
         msgBtn.setOnClickListener(this);
         locBtn.setOnClickListener(this);
         updBtn.setOnClickListener(this);
@@ -293,8 +305,16 @@ public class Fragment_UserProfile extends Fragment implements View.OnClickListen
                 DisplayUserLocationOnMap();
                 break;
             case R.id.profile_user_updBtn:
+                UpdateProfile();
                 break;
         }
+    }
+
+    private void UpdateProfile() {
+        Intent intent = new Intent(getActivity(), UpdateProfiles.class);
+        intent.putExtra("userType","user");
+        intent.putExtra("userData",userData);
+        startActivity(intent);
     }
 
     private void Create_ChatRoom() {

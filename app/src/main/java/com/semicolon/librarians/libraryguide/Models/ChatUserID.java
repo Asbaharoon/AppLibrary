@@ -6,13 +6,13 @@ import java.io.Serializable;
  * Created by Delta on 23/02/2018.
  */
 
-public class ID implements Serializable {
+public class ChatUserID implements Serializable {
     private String username;
 
-    public ID() {
+    public ChatUserID() {
     }
 
-    public ID(String username) {
+    public ChatUserID(String username) {
         this.username = username;
     }
 

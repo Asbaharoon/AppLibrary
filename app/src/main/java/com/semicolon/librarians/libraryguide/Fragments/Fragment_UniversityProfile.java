@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.intrusoft.squint.DiagonalView;
@@ -32,6 +33,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 06/02/2018.
@@ -40,6 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Fragment_UniversityProfile extends Fragment implements View.OnClickListener, com.semicolon.librarians.libraryguide.MVP.DisplayUsersDataMVP.ViewData,ViewData{
     private UniversityModel universityModel=null;
     private CircleImageView uni_image;
+    private ImageView back;
     private TextView uni_name,uni_email,uni_phone,uni_country,uni_major,uni_address,uni_website;
     private Button msgBtn,locBtn,updBtn;
     private String who_visit_myProfile="";
@@ -52,6 +55,8 @@ public class Fragment_UniversityProfile extends Fragment implements View.OnClick
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
     @Nullable
@@ -81,6 +86,15 @@ public class Fragment_UniversityProfile extends Fragment implements View.OnClick
         msgBtn      = (Button) view.findViewById(R.id.profile_uni_msgBtn);
         locBtn      = (Button) view.findViewById(R.id.profile_uni_locBtn);
         updBtn      = (Button) view.findViewById(R.id.profile_uni_updBtn);
+
+        back        = (ImageView) view.findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
         msgBtn.setOnClickListener(this);
         locBtn.setOnClickListener(this);
         updBtn.setOnClickListener(this);

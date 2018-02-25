@@ -35,6 +35,7 @@ public class InteractorImp implements Interactor {
             public void onResponse(Call<List<LibraryModel>> call, Response<List<LibraryModel>> response) {
                 if (response.isSuccessful())
                 {
+
                     if (TextUtils.isEmpty(lib_userName))
                     {
                         List<LibraryModel> libraryModelList = response.body();
@@ -75,6 +76,8 @@ public class InteractorImp implements Interactor {
 
                             }else
                             {
+                                listener.onLibraryDataSuccess(libraryModelList2);
+
                                 listener.hideProgressBar();
                             }
                         }

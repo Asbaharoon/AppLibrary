@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,8 +28,11 @@ import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 15/12/2017.
@@ -48,7 +52,15 @@ public class Library_Fragment extends Fragment implements ViewData {
     private Presenter presenter;
     private LinearLayout error_container,nodata_container;
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
+
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -162,13 +174,7 @@ public class Library_Fragment extends Fragment implements ViewData {
         }
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        setHasOptionsMenu(true);
 
-
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -235,6 +241,9 @@ public class Library_Fragment extends Fragment implements ViewData {
 
         }else
             {
+                Log.e("empty","empty list library");
+                recView_library.setVisibility(View.VISIBLE);
+
                 nodata_container.setVisibility(View.VISIBLE);
             }
 

@@ -13,8 +13,11 @@ import android.view.ViewGroup;
 import com.semicolon.librarians.libraryguide.Adapters.Publisher_Search_Adapter;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 21/01/2018.
@@ -32,6 +35,8 @@ public class Fragment_Publisher_Search extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
 
     }

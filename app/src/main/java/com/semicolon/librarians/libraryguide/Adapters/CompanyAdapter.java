@@ -3,6 +3,7 @@ package com.semicolon.librarians.libraryguide.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
@@ -218,7 +219,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder
     {
         ImageView comp_image;
-        TextView comp_name,comp_country,comp_email,comp_phone,comp_site;
+        TextView comp_name,comp_country,comp_email,comp_phone,comp_site,more;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -228,6 +229,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             comp_country = (TextView) itemView.findViewById(R.id.company_country);
             comp_email = (TextView) itemView.findViewById(R.id.company_email);
             comp_site  = (TextView) itemView.findViewById(R.id.company_site);
+            more = (TextView) itemView.findViewById(R.id.more);
 
 
         }
@@ -237,6 +239,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
         public void BindData(CompanyModel companyModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),Tags.font);
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -263,6 +266,13 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
             }
 
+
+            comp_name.setTypeface(typeface);
+            comp_phone.setTypeface(typeface);
+            comp_country.setTypeface(typeface);
+            comp_site.setTypeface(typeface);
+            comp_email.setTypeface(typeface);
+            more.setTypeface(typeface);
 
             comp_name.setText(companyModel.getComp_name().toString());
             comp_phone.setText(companyModel.getComp_phone().toString());

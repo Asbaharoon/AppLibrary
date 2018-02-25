@@ -2,9 +2,11 @@ package com.semicolon.librarians.libraryguide.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +21,8 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Delta on 22/01/2018.
@@ -67,6 +69,7 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
         Target target;
 
         FoldingCell foldCell;
+        TextView more,date_tv,from_tv,to_tv,contact_tv,job_req_tv;
         ImageView Title_job_image,Content_job_image;
         TextView Title_jobTitle,Title_jobDate,Title_jobContent,Title_jobCompanyName;
         TextView Content_jobTitle,Content_jobStartDate,Content_jobEndDate,Content_jobRequirements,Content_jobCompanyName,Content_jobPhone,Content_jobEmail;
@@ -91,6 +94,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
             Title_jobDate         = (TextView) titleView.findViewById(R.id.job_date);
             Title_jobContent      = (TextView) titleView.findViewById(R.id.job_content);
             Title_jobCompanyName  = (TextView) titleView.findViewById(R.id.job_companyName);
+            more                  = (TextView) titleView.findViewById(R.id.more);
+
         }
 
         private void initContentView(View contentView) {
@@ -103,11 +108,20 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
             Content_jobEmail  = (TextView) contentView.findViewById(R.id.job_companyEmail_content);
             Content_jobPhone  = (TextView) contentView.findViewById(R.id.job_companyPhone_content);
 
+            date_tv = (TextView) contentView.findViewById(R.id.date_tv);
+            from_tv = (TextView) contentView.findViewById(R.id.from_tv);
+            to_tv   = (TextView) contentView.findViewById(R.id.to_tv);
+            contact_tv = (TextView) contentView.findViewById(R.id.contact_tv);
+            job_req_tv = (TextView) contentView.findViewById(R.id.job_req_tv);
+
 
 
         }
+
         public void BindData(JobsModel jobsModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),Tags.font);
+
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -128,26 +142,48 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
             Picasso.with(context).load(Uri.parse(Tags.image_path+jobsModel.getJobImage())).into(target);
             Picasso.with(context).load(Uri.parse(Tags.image_path+jobsModel.getJobImage())).into(target);
 
-            Long sd = Long.getLong(jobsModel.getJobStartDate());
-            Long ed = Long.getLong(jobsModel.getJobEndDate());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yy");
-            /*String s_Date = dateFormat.format(new Date(sd));
-            String e_Date = dateFormat.format(new Date(ed));
+            /*Log.e("sdaaaaaaaaate",""+jobsModel.getJobStartDate());
+            Log.e("edaaaaaaaaate",""+jobsModel.getJobEndDate());
 */
-            Long l_date = Long.parseLong(jobsModel.getJobStartDate().toString());
-            String date = new SimpleDateFormat("dd,MMM,yyyy", Locale.getDefault()).format(l_date);
+            Long sd = Long.parseLong(jobsModel.getJobStartDate().toString());
+            Long ed = Long.parseLong(jobsModel.getJobEndDate().toString());
+            Log.e("sdaaaaaaaaate",""+sd);
+            Log.e("edaaaaaaaaate",""+ed);
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MMM,yyyy");
+
+            String s_Date = dateFormat.format(new Date(sd)).toString();
+            String e_Date = dateFormat.format(new Date(ed)).toString();
+
+           // Long l_date = Long.parseLong(jobsModel.getJobStartDate().toString());
+
+            Title_jobTitle.setTypeface(typeface);
+            Title_jobDate.setTypeface(typeface);
+            Title_jobContent.setTypeface(typeface);
+            Title_jobCompanyName.setTypeface(typeface);
+            more.setTypeface(typeface);
 
             Title_jobTitle.setText(jobsModel.getJobTitle().toString());
-            Title_jobDate.setText(date);
+            Title_jobDate.setText(s_Date);
             Title_jobContent.setText(jobsModel.getJobRequirements());
             Title_jobCompanyName.setText(jobsModel.getJob_companyName());
 
 
 
+            Content_jobTitle.setTypeface(typeface);
+            Content_jobRequirements.setTypeface(typeface);
+            Content_jobCompanyName.setTypeface(typeface);
+            Content_jobPhone.setTypeface(typeface);
+            Content_jobEmail.setTypeface(typeface);
+            date_tv.setTypeface(typeface);
+            from_tv.setTypeface(typeface);
+            to_tv.setTypeface(typeface);
+            contact_tv.setTypeface(typeface);
+            job_req_tv.setTypeface(typeface);
+
             Content_jobTitle.setText(jobsModel.getJobTitle().toString());
-           /* Content_jobStartDate.setText(s_Date);
+            Content_jobStartDate.setText(s_Date);
             Content_jobEndDate.setText(e_Date);
-*/
             Content_jobRequirements.setText(jobsModel.getJobRequirements());
             Content_jobCompanyName.setText(jobsModel.getJob_companyName());
             Content_jobPhone.setText(jobsModel.getJobPhone());

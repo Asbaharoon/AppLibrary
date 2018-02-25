@@ -49,7 +49,7 @@ public class Preferences {
             }
         editor.apply();
 
-        Log.e("ID",userData.getUserId()+"\n"+"Photo"+userData.getUser_photo()+"\n"+"link"+userData.getUserPhoto());
+        Log.e("CurrUserID",userData.getUserId()+"\n"+"Photo"+userData.getUser_photo()+"\n"+"link"+userData.getUserPhoto());
 
     }
     public void Create_SharedPreference_Publisher(PublisherModel publisherModel)
@@ -68,7 +68,7 @@ public class Preferences {
         editor.putString("site",publisherModel.getPub_website());
         editor.putString("photo",publisherModel.getUser_photo());
         editor.apply();
-        Log.e("ID",publisherModel.getPub_username()+"\n"+"Photo"+publisherModel.getUser_photo());
+        Log.e("CurrUserID",publisherModel.getPub_username()+"\n"+"Photo"+publisherModel.getUser_photo());
 
     }
     public void Create_SharedPreference_Library(LibraryModel libraryModel)
@@ -86,7 +86,7 @@ public class Preferences {
         editor.putString("address",libraryModel.getLib_address());
         editor.putString("photo",libraryModel.getUser_photo());
         editor.apply();
-        Log.e("ID",libraryModel.getLib_username()+"\n"+"Photo"+libraryModel.getUser_photo());
+        Log.e("CurrUserID",libraryModel.getLib_username()+"\n"+"Photo"+libraryModel.getUser_photo());
 
     }
     public void Create_SharedPreference_University(UniversityModel universityModel)
@@ -105,7 +105,7 @@ public class Preferences {
         editor.putString("site",universityModel.getUni_site());
         editor.putString("photo",universityModel.getUser_photo());
         editor.apply();
-        Log.e("ID",universityModel.getUni_username()+"\n"+"Photo"+universityModel.getUser_photo());
+        Log.e("CurrUserID",universityModel.getUni_username()+"\n"+"Photo"+universityModel.getUser_photo());
 
     }
     public void Create_SharedPreference_Company(CompanyModel companyModel)
@@ -124,7 +124,7 @@ public class Preferences {
         editor.putString("site",companyModel.getComp_site());
         editor.putString("photo",companyModel.getUser_photo());
         editor.apply();
-        Log.e("ID",companyModel.getComp_username()+"\n"+"Photo"+companyModel.getUser_photo());
+        Log.e("CurrUserID",companyModel.getComp_username()+"\n"+"Photo"+companyModel.getUser_photo());
 
     }
 

@@ -28,20 +28,21 @@ import com.semicolon.librarians.libraryguide.MVP.getLastMsg_MVP.PresenterImp;
 import com.semicolon.librarians.libraryguide.MVP.getLastMsg_MVP.ViewData;
 import com.semicolon.librarians.libraryguide.Models.CommonUsersData;
 import com.semicolon.librarians.libraryguide.Models.CompanyModel;
-import com.semicolon.librarians.libraryguide.Models.ID;
 import com.semicolon.librarians.libraryguide.Models.LibraryModel;
 import com.semicolon.librarians.libraryguide.Models.MessageModel;
 import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
-import com.semicolon.librarians.libraryguide.Services.Manager_Notification;
+import com.semicolon.librarians.libraryguide.Services.MyFirebaseMessgaesServices;
 import com.semicolon.librarians.libraryguide.Services.NetworkConnection;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -105,6 +106,7 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
         presenter = new com.semicolon.librarians.libraryguide.MVP.Messages_MVP.PresenterImp(this,this);
         presenter2 = new PresenterImp(this,this);
         getDataFromIntent();
+        EventBus.getDefault().register(this);
     }
 
     private void getDataFromIntent() {
@@ -346,6 +348,7 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         customToolBarView = LayoutInflater.from(this).inflate(R.layout.chat_custom_toolbar,null);
         user_chat_image   = (CircleImageView) customToolBarView.findViewById(R.id.user_chat_image);
@@ -403,8 +406,8 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                new Manager_Notification();
-                EventBus.getDefault().post(new ID(curr_user_id));
+
+                new MyFirebaseMessgaesServices(curr_user_id,chat_user_id);
                 String msg = Base64.encodeToString(m2,Base64.DEFAULT);
                 presenter.sendMessage(curr_user_id,chat_user_id,curr_user_name,chat_user_name,msg, chat_user_token,curr_user_image);
                 msg_et.setText("");
@@ -478,7 +481,7 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onMessagesSuccess(List<MessageModel> messageModelList) {
         this.messageModelList= messageModelList;
-        adapter = new MessageAdapter(this,messageModelList,curr_user_id,chat_user_id,chat_user_type);
+        adapter = new MessageAdapter(this,messageModelList,curr_user_id,chat_user_id,chat_user_type,chat_user_image);
         adapter.notifyDataSetChanged();
         chatRecyclerView.setAdapter(adapter);
         chatRecyclerView.scrollToPosition(adapter.getItemCount()-1);
@@ -512,4 +515,23 @@ public class Chat_Activity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         presenter.getMessages(curr_user_id,chat_user_id);
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getNotfMsg(MessageModel messageModel)
+    {
+
+        String dmsg = messageModel.getMessage();
+        try {
+            byte [] bytes = dmsg.getBytes("Utf-8");
+            String m = Base64.encodeToString(bytes,Base64.DEFAULT);
+            messageModelList.add(new MessageModel(m,messageModel.getFrom(),messageModel.getTo(),messageModel.getDate(),""));
+            adapter.notifyDataSetChanged();
+            chatRecyclerView.scrollToPosition(messageModelList.size()-1);
+
+            Log.e("nooooooooooooot",m);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

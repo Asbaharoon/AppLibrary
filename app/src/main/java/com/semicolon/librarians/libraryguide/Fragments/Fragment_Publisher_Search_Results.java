@@ -18,8 +18,11 @@ import com.semicolon.librarians.libraryguide.MVP.Search_Publisher_MPV.PresenterI
 import com.semicolon.librarians.libraryguide.MVP.Search_Publisher_MPV.ViewData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 29/01/2018.
@@ -39,6 +42,8 @@ public class Fragment_Publisher_Search_Results extends Fragment implements ViewD
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
 
     }
@@ -93,7 +98,7 @@ public class Fragment_Publisher_Search_Results extends Fragment implements ViewD
             progressBar.setVisibility(View.GONE);
             mRecView.setVisibility(View.VISIBLE);
             error_container.setVisibility(View.GONE);
-            noresult_container.setVisibility(View.VISIBLE);
+            noresult_container.setVisibility(View.GONE);
 
         }else
             {

@@ -30,9 +30,12 @@ import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 15/12/2017.
@@ -160,6 +163,9 @@ public class Publisher_Fragment extends Fragment implements ViewData {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
+
 
     }
 

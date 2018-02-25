@@ -1,4 +1,4 @@
-package com.semicolon.librarians.libraryguide.MVP.UpdateFB_GM_Signin_Profile_MVP;
+package com.semicolon.librarians.libraryguide.MVP.UpdateUsersProfile_MVP;
 
 import android.content.Context;
 

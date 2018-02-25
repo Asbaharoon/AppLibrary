@@ -2,6 +2,7 @@ package com.semicolon.librarians.libraryguide.Adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -68,7 +69,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>  {
 
         FoldingCell foldCell;
         ImageView Title_news_image;
-        TextView news_Title,news_Date,news_Detail;
+        TextView news_Title,news_Date,news_Detail,more;
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -89,6 +90,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>  {
             news_Title        = (TextView) titleView.findViewById(R.id.item_news_title);
             news_Date         = (TextView) titleView.findViewById(R.id.item_news_date);
             news_Detail      = (TextView) titleView.findViewById(R.id.item_news_detail);
+            more = (TextView) itemView.findViewById(R.id.more);
         }
 
         private void initContentView(View contentView) {
@@ -102,6 +104,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>  {
         }
         public void BindData(NewsModel NewsModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),Tags.font);
+
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -125,6 +129,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder>  {
 
             Long l_date = Long.parseLong(NewsModel.getnews_date().toString());
             String date = new SimpleDateFormat("dd,MMM,yyyy", Locale.getDefault()).format(l_date);
+
+            news_Title.setTypeface(typeface);
+            news_Detail.setTypeface(typeface);
+            news_Date.setTypeface(typeface);
+            more.setTypeface(typeface);
 
             news_Title.setText(NewsModel.getnews_title().toString());
             news_Detail.setText(NewsModel.getnews_details());

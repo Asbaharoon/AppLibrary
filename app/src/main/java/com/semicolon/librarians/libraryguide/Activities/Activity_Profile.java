@@ -182,7 +182,7 @@ public class Activity_Profile extends AppCompatActivity {
 
         }else if (intent.hasExtra("userId"))
         {
-            Log.e("userID intent","ID");
+            Log.e("userID intent","CurrUserID");
             final String userId = intent.getStringExtra("userId");
             //final NormalUserData currUserData = (NormalUserData) intent.getSerializableExtra("userData");
             final String visitor=intent.getStringExtra("who_visit_myProfile");
@@ -204,7 +204,7 @@ public class Activity_Profile extends AppCompatActivity {
 
         }else if (intent.hasExtra("pubId"))
         {
-            Log.e("pubID intent","ID");
+            Log.e("pubID intent","CurrUserID");
             final String pubId = intent.getStringExtra("pubId");
             final String visitor=intent.getStringExtra("who_visit_myProfile");
             Handler handler = new Handler();
@@ -225,7 +225,7 @@ public class Activity_Profile extends AppCompatActivity {
 
         }else if (intent.hasExtra("libId"))
         {
-            Log.e("libID intent","ID");
+            Log.e("libID intent","CurrUserID");
             final String libId = intent.getStringExtra("libId");
             final String visitor=intent.getStringExtra("who_visit_myProfile");
 
@@ -247,7 +247,7 @@ public class Activity_Profile extends AppCompatActivity {
 
         }else if (intent.hasExtra("uniId"))
         {
-            Log.e("uniID intent","ID");
+            Log.e("uniID intent","CurrUserID");
             final String uniId = intent.getStringExtra("uniId");
             final String visitor=intent.getStringExtra("who_visit_myProfile");
 
@@ -269,7 +269,7 @@ public class Activity_Profile extends AppCompatActivity {
 
         }else if (intent.hasExtra("compId"))
         {
-            Log.e("compID intent","ID");
+            Log.e("compID intent","CurrUserID");
             final String compId = intent.getStringExtra("compId");
             final String visitor=intent.getStringExtra("who_visit_myProfile");
 

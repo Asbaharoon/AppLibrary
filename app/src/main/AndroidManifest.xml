@@ -8,9 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <uses-feature android:name="android.hardware.location.gps" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission
         android:name="android.permission.GET_TASKS"
         tools:ignore="ProtectedPermissions" />
@@ -24,20 +26,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name="com.semicolon.librarians.libraryguide.Services.Locationservices_Update" />
-        <service android:name="com.semicolon.librarians.libraryguide.Services.MyFirebaseInstanceIdServices">
+        <service android:name=".Services.Locationservices_Update" />
+        <service android:name=".Services.MyFirebaseInstanceIdServices">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.semicolon.librarians.libraryguide.Services.MyFirebaseMessgaesServices">
+        <service android:name=".Services.MyFirebaseMessgaesServices">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
         <activity
-            android:name="com.semicolon.librarians.libraryguide.Activities.LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -46,11 +48,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <!--<meta-data
+        <!--
+            <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
-            tools:replace="android:value" />-->
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+            tools:replace="android:value" />
+        -->
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -69,10 +75,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.semicolon.librarians.libraryguide.Activities.ChooserSingin"
+            android:name=".Activities.ChooserSingin"
             android:label="@string/title_activity_chooser_singin"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -80,32 +86,46 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.semicolon.librarians.libraryguide.Activities.HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activities.MapsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.NearbyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.Activity_Search"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.Activity_Search_Results"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.Chat_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.Activity_PhoneNumber"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+
+            />
+        <activity
+            android:name=".Activities.Activity_Profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.FB_Gmail_UpdateProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.DisplayUserLocation_OnMap"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.UpdateProfiles" />
+        <activity android:name=".Activities.Profile_Items"
+            android:windowSoftInputMode="adjustResize"
             >
 
         </activity>
-        <activity
-            android:name="com.semicolon.librarians.libraryguide.Activities.MapsActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.NearbyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Search" android:screenOrientation="portrait"
-            />
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Search_Results"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Chat_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_PhoneNumber"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.Activity_Profile"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.FB_Gmail_UpdateProfile"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name="com.semicolon.librarians.libraryguide.Activities.DisplayUserLocation_OnMap"
-            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

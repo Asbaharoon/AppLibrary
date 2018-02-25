@@ -3,6 +3,7 @@ package com.semicolon.librarians.libraryguide.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.semicolon.librarians.libraryguide.Activities.Activity_Search_Results;
 import com.semicolon.librarians.libraryguide.Models.LibraryType_Model;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.util.List;
 
@@ -77,7 +79,10 @@ public class LibraryTypeAdapter extends RecyclerView.Adapter<LibraryTypeAdapter.
 
         public void BindData(LibraryType_Model libraryTypeModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(), Tags.font);
+
             lib_type.setText(libraryTypeModel.getLib_type_title());
+            lib_type.setTypeface(typeface);
         }
     }
 

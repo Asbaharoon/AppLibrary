@@ -3,6 +3,7 @@ package com.semicolon.librarians.libraryguide.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
@@ -318,6 +319,8 @@ public class Library_Search_Adapter extends RecyclerView.Adapter<Library_Search_
         }
         public void BindData(LibraryModel libraryModel)
         {
+            Typeface typeface = Typeface.createFromAsset(context.getAssets(),Tags.font);
+
             target = new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
@@ -343,6 +346,8 @@ public class Library_Search_Adapter extends RecyclerView.Adapter<Library_Search_
 
             lib_name.setText(libraryModel.getLib_name().toString());
             libCountry.setText(libraryModel.getLib_country().toString());
+            lib_name.setTypeface(typeface);
+            libCountry.setTypeface(typeface);
 
 
 

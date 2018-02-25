@@ -4,7 +4,7 @@
     <!--//<string name="facebook_app_id">156588275066033</string>-->
     <string name="facebook_app_id">1400115610100283</string>
     <string name="fb_login_protocol_scheme">fb1400115610100283</string>
-<!--
+    <!--
     <string name="fb_login_protocol_scheme">fb156588275066033</string>
 -->
     <string name="google_maps_key">  AIzaSyDFYFBvXcuJdcQnlsaEHKANimuB5F8MwDA  </string>
@@ -32,7 +32,7 @@
     <string name="welcome_to_library_guide">Welcome to, Library Guide</string>
     <string name="sign_in_with_my_account">Sign in with my account</string>
     <string name="facebook_signin">Sign in with Facebook</string>
-    <string name="id">id</string>
+    <string name="UserId">UserId</string>
     <string name="name">Name</string>
     <string name="e_mail_address">E-mail address</string>
     <string name="update_profile">update profile</string>
@@ -161,6 +161,12 @@
     <string name="there_is_no_news_to_display">There is no news to display</string>
     <string name="there_are_no_jobs_to_display">There are no jobs to display</string>
     <string name="there_are_no_results">There are no results</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="done">done</string>
+    <string name="enter_email_address">Enter email Address</string>
+    <string name="empty_name">name shouldn\'t be empty</string>
+    <string name="there_are_no_ads_to_display">There are no ads to display</string>
+    <string name="prof_up_suc">Profile updated successfully</string>
 
     <integer-array name="fab_colors">
         <item>@color/base</item>

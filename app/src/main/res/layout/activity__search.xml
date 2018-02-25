@@ -135,7 +135,7 @@
                         android:layout_height="1.7px"
                         android:background="@color/whit_gray"/>
                     <!--<TextView
-                        android:id="@+id/libService_search"
+                        andridd:idid@+id/libService_search"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="?actionBarSize"

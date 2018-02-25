@@ -18,8 +18,11 @@ import com.semicolon.librarians.libraryguide.MVP.Search_Library_MVP.PresenterImp
 import com.semicolon.librarians.libraryguide.MVP.Search_Library_MVP.ViewData;
 import com.semicolon.librarians.libraryguide.Models.LibraryModel;
 import com.semicolon.librarians.libraryguide.R;
+import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.util.List;
+
+import me.anwarshahriar.calligrapher.Calligrapher;
 
 /**
  * Created by Delta on 29/01/2018.
@@ -38,6 +41,8 @@ public class Fragment_Library_Search_Results extends Fragment implements ViewDat
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Calligrapher calligrapher = new Calligrapher(getActivity());
+        calligrapher.setFont(getActivity(), Tags.font,true);
 
     }
 
