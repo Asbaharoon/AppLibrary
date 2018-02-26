@@ -23,6 +23,7 @@
 
 
     <!--library layout-->
+    <color name="splash">#0D47A1</color>
     <color name="error">#f00</color>
     <color name="base">#fff</color>
     <color name="black">#000</color>

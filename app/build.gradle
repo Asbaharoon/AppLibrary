@@ -63,7 +63,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.0.0' 
+
     compile 'com.yarolegovich:lovely-dialog:1.0.7'
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
     compile 'io.github.yavski:fab-speed-dial:1.0.6'

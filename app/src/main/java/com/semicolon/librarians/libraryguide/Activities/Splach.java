@@ -43,7 +43,7 @@ public class Splach extends AwesomeSplash {
    /* you don't have to override every property */
 
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.colorPrimary); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.splash); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(2000); //int ms
         // configSplash.setRevealFlagX(MediaBrowserCompat.MediaItem.Flags.REVEAL_LEFT);  //or Flags.REVEAL_LEFT
         // configSplash.setRevealFlagY(MediaBrowserCompat.MediaItem.Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
@@ -62,9 +62,9 @@ public class Splach extends AwesomeSplash {
         configSplash.setOriginalWidth(400); //in relation to your svg (path) resource
         configSplash.setAnimPathStrokeDrawingDuration(3000);
         configSplash.setPathSplashStrokeSize(3); //I advise value be <5
-        configSplash.setPathSplashStrokeColor(R.color.colorPrimary); //any color you want form colors.xml
+        configSplash.setPathSplashStrokeColor(R.color.splash); //any color you want form colors.xml
         configSplash.setAnimPathFillingDuration(3000);
-        configSplash.setPathSplashFillColor(R.color.colorPrimary); //path object filling color
+        configSplash.setPathSplashFillColor(R.color.splash); //path object filling color
 
 
         //Customize Title

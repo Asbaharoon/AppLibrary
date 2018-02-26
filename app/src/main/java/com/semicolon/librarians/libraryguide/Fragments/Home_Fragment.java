@@ -77,7 +77,7 @@ public class Home_Fragment extends Fragment  {
                              getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_fragmentsContainer,chat_fragment,"chat_fragment").addToBackStack("chat_fragment").commitAllowingStateLoss();
 
                          }
-                     },100);
+                     },2000);
                        navBar.setCurrentItem(0,false);
                 }else if (publisher_Model!=null)
                 {

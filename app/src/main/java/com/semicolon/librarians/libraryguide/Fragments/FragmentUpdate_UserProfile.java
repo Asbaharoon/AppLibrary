@@ -308,7 +308,7 @@ public class FragmentUpdate_UserProfile extends Fragment implements ViewData,Vie
         dialog.dismiss();
 
         new CDialog(getActivity()).createAlert(getString(R.string.prof_up_suc), CDConstants.SUCCESS,CDConstants.MEDIUM)
-                .setAnimation(CDConstants.SCALE_FROM_RIGHT_TO_LEFT)
+                .setAnimation(CDConstants.SCALE_FROM_TOP_TO_BOTTOM)
                 .setDuration(2000)
                 .setTextSize(CDConstants.LARGE_TEXT_SIZE)
                 .show();
