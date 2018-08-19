@@ -1,49 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_width="match_parent"
+<android.support.v7.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/_5sdp"
+    app:cardBackgroundColor="@color/base"
+    app:contentPadding="@dimen/_5sdp"
+    app:cardCornerRadius="@dimen/_5sdp"
+    >
 
 
-            <RelativeLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <ImageView
+            android:id="@+id/library_image"
+            android:src="@drawable/user_profile"
+            android:layout_width="0dp"
+            android:layout_weight=".7"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
+            />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_alignParentTop="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:background="@color/base"
+                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_above="@+id/more"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
                 >
-                <ImageView
-                    android:id="@+id/library_image"
-                    android:src="@drawable/user_profile"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:scaleType="centerCrop"
-                    android:layout_alignParentLeft="true"
-                    />
                 <TextView
                     android:id="@+id/library_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textSize="@dimen/_18sdp"
+                    android:textSize="14sp"
                     android:textColor="@android:color/black"
                     android:paddingRight="@dimen/_2sdp"
-                    android:layout_toRightOf="@+id/library_image"
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:singleLine="true"
 
                     />
                 <TextView
                     android:id="@+id/library_country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_16sdp"
-                    android:singleLine="true"
-                    android:ellipsize="end"
+                    android:textSize="13sp"
                     android:textColor="#424242"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_below="@+id/library_name"
-                    android:layout_toRightOf="@+id/library_image"
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="3dp"
+                    android:singleLine="true"
+
 
 
 
@@ -54,43 +69,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:layout_marginRight="@dimen/_5sdp"
-                    android:textSize="@dimen/_16sdp"
-                    android:ellipsize="end"
+                    android:layout_marginRight="5dp"
+                    android:textSize="12sp"
                     android:textColor="#757575"
-
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:layout_below="@+id/library_country"
-                    android:layout_toRightOf="@+id/library_image"
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginTop="3dp"
 
                     />
 
-                <TextView
-                    android:id="@+id/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/more"
-                    android:textSize="@dimen/_12sdp"
-                    android:textColor="@color/centercolor"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/library_type"
 
 
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5px"
-                    android:background="@color/whit_gray"
-                    android:layout_below="@+id/more"
-                    android:layout_toRightOf="@+id/library_image"
-                    android:layout_marginLeft="@dimen/_5sdp"
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more"
+                android:textSize="@dimen/_11sdp"
+                android:textColor="@color/centercolor"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_alignParentBottom="true"
+                android:paddingLeft="@dimen/_5sdp"
+                android:paddingRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
 
 
-                    />
-            </RelativeLayout>
 
-    </FrameLayout>
+
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
 

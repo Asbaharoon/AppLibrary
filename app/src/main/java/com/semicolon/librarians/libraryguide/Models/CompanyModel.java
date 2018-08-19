@@ -38,6 +38,8 @@ public class CompanyModel implements Serializable {
     @SerializedName("company_google_lng")
     private String comp_lng;
     private String user_token;
+    private String title;
+    private int success;
 
     public CompanyModel() {
     }
@@ -178,5 +180,13 @@ public class CompanyModel implements Serializable {
 
     public void setUser_token(String user_token) {
         this.user_token = user_token;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getSuccess() {
+        return success;
     }
 }

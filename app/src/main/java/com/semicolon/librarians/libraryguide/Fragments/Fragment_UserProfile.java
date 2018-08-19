@@ -115,10 +115,18 @@ public class Fragment_UserProfile extends Fragment implements View.OnClickListen
     }
 
     private void updateUI(NormalUserData userData) {
-        userName.setText(userData.getUserName().toString());
-        userEmail.setText(userData.getUserEmail().toString());
-        userPhone.setText(userData.getUserPhone().toString());
-        userCountry.setText(userData.getUserCountry().toString());
+        userName.setText(userData.getUserName());
+        userEmail.setText(userData.getUserEmail());
+        userPhone.setText(userData.getUserPhone());
+        if (userData.getTitle()==null)
+        {
+            userCountry.setText(userData.getUserCountry());
+
+        }else
+        {
+            userCountry.setText(userData.getTitle());
+
+        }
 
         if (userData.getUserPhoto()!=null)
         {
@@ -193,13 +201,13 @@ public class Fragment_UserProfile extends Fragment implements View.OnClickListen
         {
             msgBtn.setVisibility(View.GONE);
             locBtn.setVisibility(View.GONE);
-            updBtn.setVisibility(View.VISIBLE);
+            //updBtn.setVisibility(View.VISIBLE);
         }
         else
             {
                 msgBtn.setVisibility(View.VISIBLE);
                 locBtn.setVisibility(View.VISIBLE);
-                updBtn.setVisibility(View.GONE);
+                //updBtn.setVisibility(View.GONE);
             }
     }
 

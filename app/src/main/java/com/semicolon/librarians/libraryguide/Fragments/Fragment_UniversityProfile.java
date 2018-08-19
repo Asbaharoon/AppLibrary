@@ -118,13 +118,21 @@ public class Fragment_UniversityProfile extends Fragment implements View.OnClick
     }
 
     private void updateUI(UniversityModel universityModel) {
-        uni_name.setText(universityModel.getUni_name().toString());
-        uni_email.setText(universityModel.getUni_email().toString());
-        uni_phone.setText(universityModel.getUni_phone().toString());
-        uni_country.setText(universityModel.getUni_country().toString());
-        uni_address.setText(universityModel.getUni_address().toString());
-        uni_major.setText(universityModel.getUni_major().toString());
-        uni_website.setText(universityModel.getUni_site().toString());
+        uni_name.setText(universityModel.getUni_name());
+        uni_email.setText(universityModel.getUni_email());
+        uni_phone.setText(universityModel.getUni_phone());
+        if (universityModel.getTitle()==null)
+        {
+            uni_country.setText(universityModel.getUni_country());
+
+        }else
+        {
+            uni_country.setText(universityModel.getTitle());
+
+        }
+        uni_address.setText(universityModel.getUni_address());
+        uni_major.setText(universityModel.getUni_major());
+        uni_website.setText(universityModel.getUni_site());
 
 
         if (!universityModel.getUser_photo().equals("0"))
@@ -177,13 +185,13 @@ public class Fragment_UniversityProfile extends Fragment implements View.OnClick
         {
             msgBtn.setVisibility(View.GONE);
             locBtn.setVisibility(View.GONE);
-            updBtn.setVisibility(View.VISIBLE);
+           // updBtn.setVisibility(View.VISIBLE);
         }
         else
         {
             msgBtn.setVisibility(View.VISIBLE);
             locBtn.setVisibility(View.VISIBLE);
-            updBtn.setVisibility(View.GONE);
+            //updBtn.setVisibility(View.GONE);
         }
     }
     private void updateUI2(UniversityModel universityModel) {

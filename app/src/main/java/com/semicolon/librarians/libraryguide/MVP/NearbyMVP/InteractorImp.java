@@ -74,11 +74,13 @@ public class InteractorImp implements Interactor {
                             {
                                 if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng()))
                                 {
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat().toString()),Double.parseDouble(user_Data.getUser_google_lng().toString()))<25
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat().toString()),Double.parseDouble(user_Data.getUser_google_lng().toString()))>=0
                                             &&!user_Data.getUserId().equals(currUserId))
                                     {
                                         NearbyUserDataList.add(user_Data);
                                         Log.e("user data ",user_Data.getUserName());
+                                        Log.e("user data size",NearbyUserDataList.size()+"");
+
 
                                     }
                                 }
@@ -102,10 +104,12 @@ public class InteractorImp implements Interactor {
 
                                 if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng()))
                                 {
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))>=0)
                                     {
                                         NearbyUserDataList.add(user_Data);
                                         Log.e("user data ",user_Data.getUserName());
+                                        Log.e("user data size",NearbyUserDataList.size()+"");
+
                                     }
                                 }
 
@@ -127,9 +131,10 @@ public class InteractorImp implements Interactor {
                                 if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng())) {
 
 
-                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(user_Data.getUser_google_lat()), Double.parseDouble(user_Data.getUser_google_lng())) < 25) {
+                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(user_Data.getUser_google_lat()), Double.parseDouble(user_Data.getUser_google_lng())) >=0) {
                                         NearbyUserDataList.add(user_Data);
                                         Log.e("user data ", user_Data.getUserName());
+                                        Log.e("user data size",NearbyUserDataList.size()+"");
 
                                     }
                                 }
@@ -147,10 +152,11 @@ public class InteractorImp implements Interactor {
                             for (NormalUserData user_Data:normalUserDataList)
                             {
                                 if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng())){
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
+                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))>=0)
                                 {
                                     NearbyUserDataList.add(user_Data);
                                     Log.e("user data ",user_Data.getUserName());
+                                    Log.e("user data size",NearbyUserDataList.size()+"");
 
                                 }
 
@@ -169,10 +175,11 @@ public class InteractorImp implements Interactor {
                         case "company":
                             for (NormalUserData user_Data:normalUserDataList)
                             {
-                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))<25)
+                                if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()))>=0)
                                 {
                                     NearbyUserDataList.add(user_Data);
                                     Log.e("user data ",user_Data.getUserName());
+                                    Log.e("user data size",NearbyUserDataList.size()+"");
 
                                 }
 
@@ -220,9 +227,10 @@ public class InteractorImp implements Interactor {
                             for (PublisherModel pub_Data:PublisherDataList)
                             {
                                 if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
-                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(pub_Data.getPub_lat()), Double.parseDouble(pub_Data.getPub_lng())) < 25) {
+                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(pub_Data.getPub_lat()), Double.parseDouble(pub_Data.getPub_lng())) >=0) {
                                         NearbyPublisherDataList.add(pub_Data);
                                         Log.e("user data ", pub_Data.getPub_username());
+                                        Log.e("publisher data size",NearbyPublisherDataList.size()+"");
 
                                     }
 
@@ -242,10 +250,11 @@ public class InteractorImp implements Interactor {
                             {
                                 if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
-                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(pub_Data.getPub_lat()), Double.parseDouble(pub_Data.getPub_lng())) < 25
+                                    if (distance(currLatLng.latitude, currLatLng.longitude, Double.parseDouble(pub_Data.getPub_lat()), Double.parseDouble(pub_Data.getPub_lng())) >=0
                                             && !pub_Data.getPub_username().equals(currUserId)) {
                                         NearbyPublisherDataList.add(pub_Data);
                                         Log.e("user data ", pub_Data.getPub_username());
+                                        Log.e("publisher data size",NearbyPublisherDataList.size()+"");
 
                                     }
                                 }
@@ -265,9 +274,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))>=0) {
                                         NearbyPublisherDataList.add(pub_Data);
                                         Log.e("user data ", pub_Data.getPub_username());
+                                        Log.e("publisher data size",NearbyPublisherDataList.size()+"");
 
                                     }
                                 }
@@ -287,9 +297,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))>=0) {
                                         NearbyPublisherDataList.add(pub_Data);
                                         Log.e("user data ", pub_Data.getPub_username());
+                                        Log.e("publisher data size",NearbyPublisherDataList.size()+"");
 
                                     }
                                 }
@@ -309,9 +320,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (pub_Data.getPub_lat()!=null||!TextUtils.isEmpty(pub_Data.getPub_lat())&&pub_Data.getPub_lng()!=null||!TextUtils.isEmpty(pub_Data.getPub_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(pub_Data.getPub_lat()),Double.parseDouble(pub_Data.getPub_lng()))>=0) {
                                         NearbyPublisherDataList.add(pub_Data);
                                         Log.e("user data ", pub_Data.getPub_username());
+                                        Log.e("publisher data size",NearbyPublisherDataList.size()+"");
 
                                     }
                                 }
@@ -364,11 +376,14 @@ public class InteractorImp implements Interactor {
                         case "user":
                             for (LibraryModel lib_Data:LibraryDataList)
                             {
+                                Log.e("libdata",lib_Data.getLib_country());
+
                                 if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))>=0) {
                                         NearbyLibraryDataList.add(lib_Data);
                                         Log.e("user data ", lib_Data.getLib_username());
+                                        Log.e("library data size",NearbyLibraryDataList.size()+"");
 
                                     }
                                 }
@@ -388,9 +403,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))>=0) {
                                         NearbyLibraryDataList.add(lib_Data);
                                         Log.e("user data ", lib_Data.getLib_username());
+                                        Log.e("library data size",NearbyLibraryDataList.size()+"");
 
                                     }
                                 }
@@ -410,10 +426,11 @@ public class InteractorImp implements Interactor {
                             {
                                 if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))>=0
                                         &&!lib_Data.getLib_username().equals(currUserId)) {
                                         NearbyLibraryDataList.add(lib_Data);
                                         Log.e("user data ", lib_Data.getLib_username());
+                                        Log.e("library data size",NearbyLibraryDataList.size()+"");
 
                                     }
                                 }
@@ -433,9 +450,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))>=0) {
                                         NearbyLibraryDataList.add(lib_Data);
                                         Log.e("user data ", lib_Data.getLib_username());
+                                        Log.e("library data size",NearbyLibraryDataList.size()+"");
 
                                     }
                                 }
@@ -455,9 +473,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (lib_Data.getLat()!=null||!TextUtils.isEmpty(lib_Data.getLat())&&lib_Data.getLng()!=null||!TextUtils.isEmpty(lib_Data.getLng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(lib_Data.getLat()),Double.parseDouble(lib_Data.getLng()))>=0) {
                                         NearbyLibraryDataList.add(lib_Data);
                                         Log.e("user data ", lib_Data.getLib_username());
+                                        Log.e("library data size",NearbyLibraryDataList.size()+"");
 
                                     }
                                 }
@@ -513,9 +532,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))>=0) {
                                         NearbyUniversityDataList.add(uni_Data);
                                         Log.e("user data ", uni_Data.getUni_username());
+                                        Log.e("university data size",NearbyUniversityDataList.size()+"");
 
                                     }
                                 }
@@ -535,9 +555,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))>=0) {
                                         NearbyUniversityDataList.add(uni_Data);
                                         Log.e("user data ", uni_Data.getUni_username());
+                                        Log.e("university data size",NearbyUniversityDataList.size()+"");
 
                                     }
                                 }
@@ -557,9 +578,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))>=0) {
                                         NearbyUniversityDataList.add(uni_Data);
                                         Log.e("user data ", uni_Data.getUni_username());
+                                        Log.e("university data size",NearbyUniversityDataList.size()+"");
 
                                     }
                                 }
@@ -579,10 +601,11 @@ public class InteractorImp implements Interactor {
                             {
                                 if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))>=0
                                         &&!uni_Data.getUni_username().equals(currUserId)) {
                                         NearbyUniversityDataList.add(uni_Data);
                                         Log.e("user data ", uni_Data.getUni_username());
+                                        Log.e("university data size",NearbyUniversityDataList.size()+"");
 
                                     }
                                 }
@@ -601,9 +624,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (uni_Data.getUni_lat()!=null||!TextUtils.isEmpty(uni_Data.getUni_lat())&&uni_Data.getUni_lng()!=null||!TextUtils.isEmpty(uni_Data.getUni_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(uni_Data.getUni_lat()),Double.parseDouble(uni_Data.getUni_lng()))>=0) {
                                         NearbyUniversityDataList.add(uni_Data);
                                         Log.e("user data ", uni_Data.getUni_username());
+                                        Log.e("university data size",NearbyUniversityDataList.size()+"");
 
                                     }
                                 }
@@ -657,9 +681,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))>=0) {
                                         NearbyCompanyDataList.add(comp_Data);
                                         Log.e("user data ", comp_Data.getComp_username());
+                                        Log.e("company data size",NearbyCompanyDataList.size()+"");
 
                                     }
                                 }
@@ -678,9 +703,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))>=0) {
                                         NearbyCompanyDataList.add(comp_Data);
                                         Log.e("user data ", comp_Data.getComp_username());
+                                        Log.e("company data size",NearbyCompanyDataList.size()+"");
 
                                     }
                                 }
@@ -699,9 +725,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))>=0) {
                                         NearbyCompanyDataList.add(comp_Data);
                                         Log.e("user data ", comp_Data.getComp_username());
+                                        Log.e("company data size",NearbyCompanyDataList.size()+"");
 
                                     }
                                 }
@@ -720,9 +747,10 @@ public class InteractorImp implements Interactor {
                             {
                                 if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25) {
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))>=0) {
                                         NearbyCompanyDataList.add(comp_Data);
                                         Log.e("user data ", comp_Data.getComp_username());
+                                        Log.e("company data size",NearbyCompanyDataList.size()+"");
 
                                     }
                                 }
@@ -741,10 +769,11 @@ public class InteractorImp implements Interactor {
                             {
                                 if (comp_Data.getComp_lat()!=null||!TextUtils.isEmpty(comp_Data.getComp_lat())&&comp_Data.getComp_lng()!=null||!TextUtils.isEmpty(comp_Data.getComp_lng())) {
 
-                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))<25
+                                    if (distance(currLatLng.latitude,currLatLng.longitude,Double.parseDouble(comp_Data.getComp_lat()),Double.parseDouble(comp_Data.getComp_lng()))>=0
                                         &&!comp_Data.getComp_username().equals(currUserId)) {
                                         NearbyCompanyDataList.add(comp_Data);
                                         Log.e("user data ", comp_Data.getComp_username());
+                                        Log.e("company data size",NearbyCompanyDataList.size()+"");
 
                                     }
                                 }
@@ -769,6 +798,7 @@ public class InteractorImp implements Interactor {
             @Override
             public void onFailure(Call<List<CompanyModel>> call, Throwable t) {
                 listener.onFailed(context.getString(R.string.something_haywire));
+                Log.e("error",t.getMessage());
 
             }
         });

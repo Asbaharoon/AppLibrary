@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +56,8 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 
         final LibraryModel libraryModel = libraryModelList.get(position);
         holder.BindData(libraryModel);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,9 +254,17 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
             more.setTypeface(typeface);
 
             library_name.setText(libraryModel.getLib_name());
-            library_country.setText(libraryModel.getLib_country().toString());
+            if (libraryModel.getTitle()==null)
+            {
+                library_country.setText(libraryModel.getLib_country());
+
+            }else
+                {
+                    library_country.setText(libraryModel.getTitle());
+
+                }
             //library_services.setText(publisherModel.getPub_email());
-            library_type.setText(libraryModel.getLib_type());
+            library_type.setText(libraryModel.getType_title());
             Log.e("libusername",""+libraryModel.getLib_username());
 
 
@@ -262,6 +274,10 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     }
 
 
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

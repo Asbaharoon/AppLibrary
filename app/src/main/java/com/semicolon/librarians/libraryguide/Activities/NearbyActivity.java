@@ -290,7 +290,7 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
                 {
                     final LatLng latLng = new LatLng(Double.parseDouble(user_Data.getUser_google_lat()),Double.parseDouble(user_Data.getUser_google_lng()));
 
-                    if (user_Data.getUserPhoto() != null) {
+                    if (user_Data.getUserPhoto() != null&&!TextUtils.isEmpty(user_Data.getUserPhoto())) {
 
                         Log.e("userdata1", "userface_google");
 
@@ -310,6 +310,7 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
                             }
                         };
+
                         Picasso.with(this).load(user_Data.getUserPhoto()).placeholder(R.drawable.user_profile).into(target);
                     } else {
 
@@ -634,7 +635,7 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
                             Picasso.with(this).load(Tags.image_path + normalUser_Data.getUser_photo()).into(target);
 
                         }
-                    } else {
+                    } else if (normalUser_Data.getUserPhoto() !=null &&!TextUtils.isEmpty(normalUser_Data.getUserPhoto())){
                         Picasso.with(this).load(normalUser_Data.getUserPhoto()).into(target);
 
                     }

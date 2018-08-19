@@ -31,6 +31,8 @@ public class NormalUserData implements Serializable {
     private String user_google_lng;
     private String user_token;
 
+    private String title;
+    private int success;
 
     public NormalUserData() {
     }
@@ -128,11 +130,19 @@ public class NormalUserData implements Serializable {
         this.user_google_lng = user_google_lng;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     public String getUser_token() {
         return user_token;
     }
 
     public void setUser_token(String user_token) {
         this.user_token = user_token;
+    }
+
+    public int getSuccess() {
+        return success;
     }
 }

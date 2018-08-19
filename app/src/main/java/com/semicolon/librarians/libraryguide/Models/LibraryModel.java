@@ -23,8 +23,8 @@ public class LibraryModel implements Serializable {
     private String lib_address;
     @SerializedName("library_phone")
     private String lib_phone;
-    @SerializedName("type_title")
-    private String lib_type;
+    //@SerializedName("type_title")
+    private String type_title;
     @SerializedName("user_username")
     private String lib_username;
     private String lib_password;
@@ -32,22 +32,143 @@ public class LibraryModel implements Serializable {
     private String lat;
     @SerializedName("library_google_lng")
     private String lng;
-
+    private String title;
+    private String type;
     private String user_token;
+    private int success;
 
 
     public LibraryModel() {
+    }
+
+    public String getUser_type() {
+        return user_type;
     }
 
     public String getUser_photo() {
         return user_photo;
     }
 
+    public String getLib_name() {
+        return lib_name;
+    }
+
+    public String getLib_email() {
+        return lib_email;
+    }
+
+    public String getLib_country() {
+        return lib_country;
+    }
+
+    public String getLib_address() {
+        return lib_address;
+    }
+
+    public String getLib_phone() {
+        return lib_phone;
+    }
+
+    public String getType_title() {
+        return type_title;
+    }
+
+    public String getLib_username() {
+        return lib_username;
+    }
+
+    public String getLib_password() {
+        return lib_password;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public String getUser_token() {
+        return user_token;
+    }
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
     public void setUser_photo(String user_photo) {
         this.user_photo = user_photo;
     }
 
-    public LibraryModel(String user_type, String user_photo, String lib_name, String lib_email, String lib_country, String lib_address, String lib_phone, String lib_type, String lib_username, String lib_password, String lat, String lng) {
+    public void setLib_name(String lib_name) {
+        this.lib_name = lib_name;
+    }
+
+    public void setLib_email(String lib_email) {
+        this.lib_email = lib_email;
+    }
+
+    public void setLib_country(String lib_country) {
+        this.lib_country = lib_country;
+    }
+
+    public void setLib_address(String lib_address) {
+        this.lib_address = lib_address;
+    }
+
+    public void setLib_phone(String lib_phone) {
+        this.lib_phone = lib_phone;
+    }
+
+    public void setType_title(String type_title) {
+        this.type_title = type_title;
+    }
+
+    public void setLib_username(String lib_username) {
+        this.lib_username = lib_username;
+    }
+
+    public void setLib_password(String lib_password) {
+        this.lib_password = lib_password;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public void setUser_token(String user_token) {
+        this.user_token = user_token;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    /* public String getUser_photo() {
+        return user_photo;
+    }
+
+    public void setUser_photo(String user_photo) {
+        this.user_photo = user_photo;
+    }
+*/
+   /* public LibraryModel(String user_type, String user_photo, String lib_name, String lib_email, String lib_country, String lib_address, String lib_phone, String lib_type, String lib_username, String lib_password, String lat, String lng) {
         this.user_type = user_type;
         this.user_photo = user_photo;
 
@@ -61,8 +182,8 @@ public class LibraryModel implements Serializable {
         this.lib_password = lib_password;
         this.lat = lat;
         this.lng = lng;
-    }
-
+    }*/
+/*
     public String getUser_type() {
         return user_type;
     }
@@ -158,4 +279,8 @@ public class LibraryModel implements Serializable {
     public void setUser_token(String user_token) {
         this.user_token = user_token;
     }
+
+    public int getSuccess() {
+        return success;
+    }*/
 }

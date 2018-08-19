@@ -7,7 +7,9 @@
     xmlns:folding-cell="http://schemas.android.com/apk/res-auto"
     folding-cell:animationDuration="3000"
     folding-cell:cameraHeight="30"
-    folding-cell:backSideColor="@color/whit_gray">
+    folding-cell:backSideColor="@color/whit_gray"
+    android:layout_margin="5dp"
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -245,7 +247,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:textSize="@dimen/_15sdp"
+                        android:textSize="@dimen/_12sdp"
                         android:textColor="@android:color/black"
                         android:paddingRight="@dimen/_2sdp"
                         android:gravity="center_vertical|left"
@@ -277,7 +279,7 @@
                         android:layout_marginTop="@dimen/_5sdp"
                         android:maxLines="3"
                         android:ellipsize="end"
-                        android:textSize="@dimen/_13sdp"
+                        android:textSize="@dimen/_11sdp"
                         android:textColor="#757575"
                         android:paddingRight="@dimen/_20sdp"
                         android:layout_toRightOf="@+id/job_image"
@@ -293,7 +295,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:layout_marginRight="@dimen/_5sdp"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/_11sdp"
                         android:ellipsize="end"
                         android:textColor="#212121"
                         android:layout_marginTop="@dimen/_5sdp"
@@ -311,7 +313,7 @@
                         android:text="@string/more"
                         android:gravity="end"
                         android:paddingRight="@dimen/_5sdp"
-                        android:textSize="@dimen/_12sdp"
+                        android:textSize="@dimen/_11sdp"
                         android:layout_gravity="left|center_vertical"
                         android:textColor="@color/centercolor"
                         android:layout_alignParentRight="true"

@@ -199,7 +199,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
         values.put(TABLE_USERS_USER_TYPE,libraryModel.getUser_type());
         values.put(TABLE_LIBRARIES_PHOTO,"");
         values.put(TABLE_LIBRARIES_NAME,libraryModel.getLib_name());
-        values.put(TABLE_LIBRARIES_TYPE,libraryModel.getLib_type());
+        values.put(TABLE_LIBRARIES_TYPE,libraryModel.getType_title());
         values.put(TABLE_LIBRARIES_EMAIL,libraryModel.getLib_email());
         values.put(TABLE_LIBRARIES_PHONE,libraryModel.getLib_phone());
         values.put(TABLE_LIBRARIES_COUNTRY,libraryModel.getLib_country());
@@ -324,7 +324,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
         values.put(TABLE_USERS_USER_TYPE,libraryModel.getUser_type());
         values.put(TABLE_LIBRARIES_PHOTO,"");
         values.put(TABLE_LIBRARIES_NAME,libraryModel.getLib_name());
-        values.put(TABLE_LIBRARIES_TYPE,libraryModel.getLib_type());
+        values.put(TABLE_LIBRARIES_TYPE,libraryModel.getType_title());
         values.put(TABLE_LIBRARIES_EMAIL,libraryModel.getLib_email());
         values.put(TABLE_LIBRARIES_PHONE,libraryModel.getLib_phone());
         values.put(TABLE_LIBRARIES_COUNTRY,libraryModel.getLib_country());
@@ -514,7 +514,7 @@ public class LocalDataBase extends SQLiteOpenHelper {
                 libraryModel.setUser_type(cursor.getString(cursor.getColumnIndex(TABLE_USERS_USER_TYPE)));
                 //libraryModel.setLib_phone(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_PHOTO)));
                 libraryModel.setLib_name(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_NAME)));
-                libraryModel.setLib_type(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_TYPE)));
+                libraryModel.setType_title(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_TYPE)));
                 libraryModel.setLib_email(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_EMAIL)));
                 libraryModel.setLib_phone(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_PHONE)));
                 libraryModel.setLib_country(cursor.getString(cursor.getColumnIndex(TABLE_LIBRARIES_COUNTRY)));

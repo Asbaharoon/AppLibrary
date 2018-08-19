@@ -119,13 +119,21 @@ public class Fragment_CompanyProfile extends Fragment implements View.OnClickLis
     }
 
     private void updateUI(CompanyModel companyModel) {
-        comp_name.setText(companyModel.getComp_name().toString());
-        comp_email.setText(companyModel.getComp_email().toString());
-        comp_phone.setText(companyModel.getComp_phone().toString());
-        comp_country.setText(companyModel.getComp_country().toString());
-        comp_address.setText(companyModel.getComp_address().toString());
-        comp_town.setText(companyModel.getComp_town().toString());
-        comp_website.setText(companyModel.getComp_site().toString());
+        comp_name.setText(companyModel.getComp_name());
+        comp_email.setText(companyModel.getComp_email());
+        comp_phone.setText(companyModel.getComp_phone());
+        if (companyModel.getTitle()==null)
+        {
+            comp_country.setText(companyModel.getComp_country());
+
+        }else
+        {
+            comp_country.setText(companyModel.getTitle());
+
+        }
+        comp_address.setText(companyModel.getComp_address());
+        comp_town.setText(companyModel.getComp_town());
+        comp_website.setText(companyModel.getComp_site());
 
         if (!companyModel.getUser_photo().equals("0"))
         {
@@ -177,13 +185,13 @@ public class Fragment_CompanyProfile extends Fragment implements View.OnClickLis
         {
             msgBtn.setVisibility(View.GONE);
             locBtn.setVisibility(View.GONE);
-            updBtn.setVisibility(View.VISIBLE);
+           // updBtn.setVisibility(View.VISIBLE);
         }
         else
         {
             msgBtn.setVisibility(View.VISIBLE);
             locBtn.setVisibility(View.VISIBLE);
-            updBtn.setVisibility(View.GONE);
+            //updBtn.setVisibility(View.GONE);
         }
     }
     private void updateUI2(CompanyModel companyModel) {

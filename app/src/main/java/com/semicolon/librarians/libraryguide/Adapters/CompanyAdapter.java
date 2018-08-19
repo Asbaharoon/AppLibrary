@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +56,9 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder holder, int position) {
         CompanyModel companyModel = companyModelList.get(position);
         holder.BindData(companyModel);
+
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -225,10 +230,10 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
             super(itemView);
             comp_image = (ImageView) itemView.findViewById(R.id.company_image);
             comp_name  = (TextView) itemView.findViewById(R.id.company_name);
-            comp_phone = (TextView) itemView.findViewById(R.id.company_phone);
+            //comp_phone = (TextView) itemView.findViewById(R.id.company_phone);
             comp_country = (TextView) itemView.findViewById(R.id.company_country);
-            comp_email = (TextView) itemView.findViewById(R.id.company_email);
-            comp_site  = (TextView) itemView.findViewById(R.id.company_site);
+            //comp_email = (TextView) itemView.findViewById(R.id.company_email);
+            //comp_site  = (TextView) itemView.findViewById(R.id.company_site);
             more = (TextView) itemView.findViewById(R.id.more);
 
 
@@ -268,22 +273,34 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.ViewHold
 
 
             comp_name.setTypeface(typeface);
-            comp_phone.setTypeface(typeface);
+            //comp_phone.setTypeface(typeface);
             comp_country.setTypeface(typeface);
-            comp_site.setTypeface(typeface);
-            comp_email.setTypeface(typeface);
+            /*comp_site.setTypeface(typeface);
+            comp_email.setTypeface(typeface);*/
             more.setTypeface(typeface);
 
-            comp_name.setText(companyModel.getComp_name().toString());
-            comp_phone.setText(companyModel.getComp_phone().toString());
-            comp_country.setText(companyModel.getComp_country());
-            comp_site.setText(companyModel.getComp_site().toString());
-            comp_email.setText(companyModel.getComp2_email().toString());
+            comp_name.setText(companyModel.getComp_name());
+            //comp_phone.setText(companyModel.getComp_phone());
+            if (companyModel.getTitle()==null)
+            {
+                comp_country.setText(companyModel.getComp_country());
+
+            }else
+            {
+                comp_country.setText(companyModel.getTitle());
+
+            }
+            //comp_site.setText(companyModel.getComp_site());
+            //comp_email.setText(companyModel.getComp2_email());
 
         }
     }
 
 
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    android:layout_width="match_parent"
+<android.support.v7.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="@dimen/_5sdp"
+    app:cardBackgroundColor="@color/base"
+    app:cardCornerRadius="@dimen/_5sdp"
+    android:layout_margin="5dp"
 
+    >
 
-            <RelativeLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        >
+        <ImageView
+            android:id="@+id/company_image"
+            android:src="@drawable/user_profile"
+            android:layout_width="0dp"
+            android:layout_weight=".7"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="centerCrop"
+
+            />
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:layout_height="match_parent">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_5sdp"
-                android:background="@color/base"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_above="@id/more"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 >
-                <ImageView
-                    android:id="@+id/company_image"
-                    android:src="@drawable/user_profile"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:scaleType="centerCrop"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="@dimen/_5sdp"
-
-                    />
                 <TextView
                     android:id="@+id/company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:textSize="@dimen/_15sdp"
+                    android:singleLine="true"
+                    android:textSize="14sp"
                     android:textColor="@android:color/black"
-                    android:paddingRight="@dimen/_2sdp"
-                    android:layout_toRightOf="@+id/company_image"
-                    android:layout_marginLeft="@dimen/_5sdp"                    android:layout_alignParentTop="true"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:paddingRight="5dp"
+                    android:layout_marginLeft="5dp"                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="5dp"
 
                     />
                 <TextView
@@ -42,29 +56,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_2sdp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
+                    android:singleLine="true"
                     android:textColor="#212121"
-                    android:textSize="@dimen/_14sdp"
-                    android:layout_toRightOf="@+id/company_image"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_below="@+id/company_name"
-                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:textSize="13sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="3dp"
 
 
 
                     />
-                <TextView
+               <!-- <TextView
                     android:id="@+id/company_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_13sdp"
+                    android:textSize="@dimen/_11sdp"
                     android:singleLine="true"
-                    android:ellipsize="end"
                     android:gravity="left|center"
                     android:layout_gravity="left|center"
                     android:textColor="#757575"
-                    android:layout_toRightOf="@+id/company_image"
                     android:layout_marginLeft="@dimen/_5sdp"                    android:layout_below="@+id/company_country"
 
                     />
@@ -74,11 +83,8 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:textSize="@dimen/_13sdp"
-                    android:ellipsize="end"
+                    android:textSize="12sp"
                     android:textColor="#757575"
-                    android:layout_toRightOf="@+id/company_image"
-                    android:layout_below="@+id/company_phone"
                     android:layout_marginLeft="@dimen/_5sdp"
 
 
@@ -89,39 +95,30 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:layout_marginRight="@dimen/_5sdp"
-                    android:textSize="@dimen/_13sdp"
-                    android:ellipsize="end"
+                    android:textSize="12sp"
                     android:textColor="#757575"
-                    android:layout_toRightOf="@+id/company_image"
-                    android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_below="@+id/company_email"
-
-
-                    />
-                <TextView
-                    android:id="@+id/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/more"
-                    android:textSize="@dimen/_12sdp"
-                    android:textStyle="bold"
-                    android:textColor="@color/centercolor"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
-                    android:layout_below="@+id/company_site"
-                    android:layout_alignParentRight="true"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5px"
-                    android:background="@color/whit_gray"
-                    android:layout_below="@+id/more"
-                    android:layout_toRightOf="@+id/company_image"
                     android:layout_marginLeft="@dimen/_5sdp"
 
 
                     />
-            </RelativeLayout>
+-->
+            </LinearLayout>
+            <TextView
+                android:id="@+id/more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/more"
+                android:textSize="@dimen/_12sdp"
+                android:textStyle="bold"
+                android:textColor="@color/centercolor"
+                android:layout_marginBottom="@dimen/_5sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
 
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 

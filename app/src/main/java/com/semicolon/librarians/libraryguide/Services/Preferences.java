@@ -34,7 +34,15 @@ public class Preferences {
         editor.putString("name",userData.getUserName());
         editor.putString("email",userData.getUserEmail());
         editor.putString("phone",userData.getUserPhone());
-        editor.putString("country",userData.getUserCountry());
+        if (userData.getTitle()==null)
+        {
+            editor.putString("country",userData.getUserCountry());
+
+        }else
+            {
+                editor.putString("country",userData.getTitle());
+
+            }
 
         if (userData.getUserPhoto()==null)
         {
@@ -62,7 +70,16 @@ public class Preferences {
         editor.putString("name",publisherModel.getPub_name());
         editor.putString("email",publisherModel.getPub_email());
         editor.putString("phone",publisherModel.getPub_phone());
-        editor.putString("country",publisherModel.getPub_country());
+        if (publisherModel.getTitle()==null)
+        {
+            editor.putString("country",publisherModel.getPub_country());
+
+        }else
+        {
+            editor.putString("country",publisherModel.getTitle());
+
+        }
+
         editor.putString("address",publisherModel.getPub_address());
         editor.putString("town",publisherModel.getPub_town());
         editor.putString("site",publisherModel.getPub_website());
@@ -73,16 +90,25 @@ public class Preferences {
     }
     public void Create_SharedPreference_Library(LibraryModel libraryModel)
     {
+        Log.e("modddddddd",libraryModel.getType_title()+"");
         SharedPreferences sharedPreferences = context.getSharedPreferences("lib_pref",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("type",libraryModel.getUser_type());
         editor.putString("id",libraryModel.getLib_username());
         editor.putString("name",libraryModel.getLib_name());
-        editor.putString("libType",libraryModel.getLib_type());
+        editor.putString("libType",libraryModel.getType_title());
         editor.putString("email",libraryModel.getLib_email());
         editor.putString("phone",libraryModel.getLib_phone());
-        editor.putString("country",libraryModel.getLib_country());
+        if (libraryModel.getTitle()==null)
+        {
+            editor.putString("country",libraryModel.getLib_country());
+
+        }else
+        {
+            editor.putString("country",libraryModel.getTitle());
+
+        }
         editor.putString("address",libraryModel.getLib_address());
         editor.putString("photo",libraryModel.getUser_photo());
         editor.apply();
@@ -99,7 +125,15 @@ public class Preferences {
         editor.putString("name",universityModel.getUni_name());
         editor.putString("email",universityModel.getUni_email());
         editor.putString("phone",universityModel.getUni_phone());
-        editor.putString("country",universityModel.getUni_country());
+        if (universityModel.getTitle()==null)
+        {
+            editor.putString("country",universityModel.getUni_country());
+
+        }else
+        {
+            editor.putString("country",universityModel.getTitle());
+
+        }
         editor.putString("address",universityModel.getUni_address());
         editor.putString("major",universityModel.getUni_major());
         editor.putString("site",universityModel.getUni_site());
@@ -118,7 +152,15 @@ public class Preferences {
         editor.putString("name",companyModel.getComp_name());
         editor.putString("email",companyModel.getComp_email());
         editor.putString("phone",companyModel.getComp_phone());
-        editor.putString("country",companyModel.getComp_country());
+        if (companyModel.getTitle()==null)
+        {
+            editor.putString("country",companyModel.getComp_country());
+
+        }else
+        {
+            editor.putString("country",companyModel.getTitle());
+
+        }
         editor.putString("address",companyModel.getComp_address());
         editor.putString("town",companyModel.getComp_town());
         editor.putString("site",companyModel.getComp_site());

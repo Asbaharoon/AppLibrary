@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +56,8 @@ public class University_Search_Adapter extends RecyclerView.Adapter<University_S
     public void onBindViewHolder(final ViewHolder holder, int position) {
         UniversityModel universityModel = universityModelList.get(position);
         holder.BindData(universityModel);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -350,8 +354,16 @@ public class University_Search_Adapter extends RecyclerView.Adapter<University_S
             uni_name.setTypeface(typeface);
             uni_country.setTypeface(typeface);
 
-            uni_name.setText(universityModel.getUni_name().toString());
-            uni_country.setText(universityModel.getUni_country().toString());
+            uni_name.setText(universityModel.getUni_name());
+            if (universityModel.getTitle()==null)
+            {
+                uni_country.setText(universityModel.getUni_country());
+
+            }else
+                {
+                    uni_country.setText(universityModel.getTitle());
+
+                }
 
 
 
@@ -359,7 +371,10 @@ public class University_Search_Adapter extends RecyclerView.Adapter<University_S
         }
     }
 
-
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

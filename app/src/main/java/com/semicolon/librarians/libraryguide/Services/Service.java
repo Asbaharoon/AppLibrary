@@ -116,7 +116,7 @@ public interface Service {
     Call<List<PublisherModel>> getPublisherSearch_Data(@FieldMap Map<String,String> map);
 
     ////////////////////------------Countries-------///////////////////////////
-    @GET("api/service/countries")
+    @GET("api/countries")
     Call<List<CountriesModel>> getCountryData();
     ///////////////////-------------Companies-------///////////////////////////
 

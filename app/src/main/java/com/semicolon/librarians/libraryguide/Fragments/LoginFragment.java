@@ -283,6 +283,8 @@ public class LoginFragment extends Fragment implements Login_ViewData{
 
     @Override
     public void onSuccess_LibraryData(final LibraryModel libraryModel) {
+
+        Log.e("libTyprw",libraryModel.getType_title()+"0145");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

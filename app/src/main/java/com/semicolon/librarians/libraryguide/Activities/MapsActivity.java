@@ -307,10 +307,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         {
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MapsActivity.this,is_available,9001);
             dialog.show();
-        }else if (is_available == ConnectionResult.NETWORK_ERROR)
-        {
-            Toast.makeText(MapsActivity.this, getString(R.string.network_connection), Toast.LENGTH_SHORT).show();
-            return false;
         }
         return false;
     }

@@ -124,7 +124,15 @@ public class Fragment_PublisherProfile extends Fragment implements View.OnClickL
         pub_name.setText(publisherModel.getPub_name().toString());
         pub_email.setText(publisherModel.getPub_email().toString());
         pub_phone.setText(publisherModel.getPub_phone().toString());
-        pub_country.setText(publisherModel.getPub_country().toString());
+        if (publisherModel.getTitle()==null)
+        {
+            pub_country.setText(publisherModel.getPub_country().toString());
+
+        }else
+        {
+            pub_country.setText(publisherModel.getTitle());
+
+        }
         pub_address.setText(publisherModel.getPub_address().toString());
         pub_town.setText(publisherModel.getPub_town().toString());
         pub_website.setText(publisherModel.getPub_website().toString());
@@ -178,13 +186,13 @@ public class Fragment_PublisherProfile extends Fragment implements View.OnClickL
         {
             msgBtn.setVisibility(View.GONE);
             locBtn.setVisibility(View.GONE);
-            updBtn.setVisibility(View.VISIBLE);
+            //updBtn.setVisibility(View.VISIBLE);
         }
         else
         {
             msgBtn.setVisibility(View.VISIBLE);
             locBtn.setVisibility(View.VISIBLE);
-            updBtn.setVisibility(View.GONE);
+            //updBtn.setVisibility(View.GONE);
         }
     }
     private void updateUI2(PublisherModel publisherModel) {

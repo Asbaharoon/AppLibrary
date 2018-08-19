@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +58,8 @@ public class Library_Search_Adapter extends RecyclerView.Adapter<Library_Search_
     public void onBindViewHolder(final ViewHolder holder, int position) {
         LibraryModel libraryModel = libraryModelList.get(position);
         holder.BindData(libraryModel);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -344,8 +348,16 @@ public class Library_Search_Adapter extends RecyclerView.Adapter<Library_Search_
                 Picasso.with(context).load(Uri.parse(Tags.image_path+libraryModel.getUser_photo())).placeholder(R.drawable.user_profile).into(target);
             }
 
-            lib_name.setText(libraryModel.getLib_name().toString());
-            libCountry.setText(libraryModel.getLib_country().toString());
+            lib_name.setText(libraryModel.getLib_name());
+            if (libraryModel.getTitle()==null)
+            {
+                libCountry.setText(libraryModel.getLib_country());
+
+            }else
+                {
+                    libCountry.setText(libraryModel.getTitle());
+
+                }
             lib_name.setTypeface(typeface);
             libCountry.setTypeface(typeface);
 
@@ -356,6 +368,10 @@ public class Library_Search_Adapter extends RecyclerView.Adapter<Library_Search_
     }
 
 
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

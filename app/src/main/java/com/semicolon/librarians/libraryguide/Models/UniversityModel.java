@@ -36,6 +36,9 @@ public class UniversityModel implements Serializable {
     private String uni_lng;
     private String user_token;
 
+    private String title;
+    private int success;
+
 
     public UniversityModel() {
     }
@@ -166,5 +169,13 @@ public class UniversityModel implements Serializable {
 
     public void setUser_token(String user_token) {
         this.user_token = user_token;
+    }
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

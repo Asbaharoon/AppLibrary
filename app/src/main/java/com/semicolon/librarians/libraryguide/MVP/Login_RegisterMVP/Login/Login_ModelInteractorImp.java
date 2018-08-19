@@ -319,6 +319,7 @@ public class Login_ModelInteractorImp implements Login_ModelInteractor {
                     {
                         if (libraryData.getUser_type().equals("library"))
                         {
+                            Log.e("lt",libraryData.getType_title()+"0001111");
                             listener.onSuccess_LibraryData(libraryData);
                             listener.hideProgressDialog();
                         }

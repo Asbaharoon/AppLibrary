@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -49,6 +51,8 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
     public void onBindViewHolder(final ViewHolder holder, int position) {
         JobsModel jobsModel = jobsModelList.get(position);
         holder.BindData(jobsModel);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,6 +200,10 @@ public class JobsAdapter extends RecyclerView.Adapter<JobsAdapter.ViewHolder>  {
     }
 
 
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

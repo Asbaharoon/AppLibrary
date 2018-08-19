@@ -118,11 +118,19 @@ public class Fragment_LibraryProfile extends Fragment implements View.OnClickLis
 
     private void updateUI(LibraryModel libraryModel) {
         lib_name.setText(libraryModel.getLib_name().toString());
-        Log.e("lib_type",""+libraryModel.getLib_type());
-        lib_type.setText(libraryModel.getLib_type().toString());
+        Log.e("lib_type",""+libraryModel.getType_title()+"00000");
+        lib_type.setText(libraryModel.getType_title().toString());
         lib_email.setText(libraryModel.getLib_email().toString());
+        if (libraryModel.getTitle()==null)
+        {
+            lib_country.setText(libraryModel.getLib_country().toString());
+
+        }else
+            {
+                lib_country.setText(libraryModel.getTitle());
+
+            }
         lib_phone.setText(libraryModel.getLib_phone().toString());
-        lib_country.setText(libraryModel.getLib_country().toString());
         lib_address.setText(libraryModel.getLib_address().toString());
 
         if (!libraryModel.getUser_photo().equals("0"))
@@ -175,19 +183,19 @@ public class Fragment_LibraryProfile extends Fragment implements View.OnClickLis
         {
             msgBtn.setVisibility(View.GONE);
             locBtn.setVisibility(View.GONE);
-            updBtn.setVisibility(View.VISIBLE);
+           // updBtn.setVisibility(View.VISIBLE);
         }
         else
         {
             msgBtn.setVisibility(View.VISIBLE);
             locBtn.setVisibility(View.VISIBLE);
-            updBtn.setVisibility(View.GONE);
+            //updBtn.setVisibility(View.GONE);
         }
 
     }
     private void updateUI2(LibraryModel libraryModel) {
         lib_name.setText(libraryModel.getLib_name());
-        lib_type.setText(libraryModel.getLib_type());
+        lib_type.setText(libraryModel.getType_title());
         lib_email.setText(libraryModel.getLib_email());
         lib_phone.setText(libraryModel.getLib_phone());
         lib_country.setText(libraryModel.getLib_country());

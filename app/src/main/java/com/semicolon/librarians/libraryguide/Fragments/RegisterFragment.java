@@ -1183,7 +1183,7 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             }
         },500);
 
-        Toast.makeText(mContext, "lib success"+libraryModel.getLib_name()+"\n"+libraryModel.getLat()+"\n"+libraryModel.getUser_type(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(mContext, "lib success"+libraryModel.getLib_name()+"\n"+libraryModel.getLat()+"\n"+libraryModel.getUser_type(), Toast.LENGTH_SHORT).show();
 
 
 

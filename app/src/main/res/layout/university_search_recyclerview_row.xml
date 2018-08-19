@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout android:layout_width="match_parent"
+<android.support.v7.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -7,8 +7,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="@dimen/_2sdp"
         app:cardCornerRadius="@dimen/_5sdp"
+        app:cardBackgroundColor="@color/base"
+        app:contentPadding="@dimen/_5sdp"
+
         >
 
         <RelativeLayout
@@ -31,10 +33,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_5sdp"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="14sp"
                 android:textColor="@android:color/black"
-                android:maxLines="2"
-                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_toRightOf="@+id/university_image"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_marginLeft="@dimen/_5sdp"
@@ -44,14 +45,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/_5sdp"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="13sp"
                 android:textColor="#757575"
-                android:singleLine="true"
-                android:ellipsize="end"
                 android:layout_toRightOf="@+id/university_image"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:layout_below="@+id/university_name"
                 android:layout_marginLeft="@dimen/_5sdp"
+                android:singleLine="true"
 
 
 
@@ -79,5 +79,5 @@
 
         </LinearLayout>-->
     </android.support.v7.widget.CardView>
-    </FrameLayout>
+    </android.support.v7.widget.CardView>
 

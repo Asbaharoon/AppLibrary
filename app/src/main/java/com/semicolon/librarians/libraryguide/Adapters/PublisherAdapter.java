@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,6 +56,8 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
 
         final PublisherModel PublishersModel = PublisherModelList.get(position);
         holder.BindData(PublishersModel);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,8 +196,8 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
             publisher_image       = (ImageView) titleView.findViewById(R.id.publisher_image);
             publisher_name        = (TextView) titleView.findViewById(R.id.publisher_name);
             publisher_country         = (TextView) titleView.findViewById(R.id.publisher_country);
-            publisher_email      = (TextView) titleView.findViewById(R.id.publisher_email);
-            publisher_site  = (TextView) titleView.findViewById(R.id.publisher_site);
+            //publisher_email      = (TextView) titleView.findViewById(R.id.publisher_email);
+            //publisher_site  = (TextView) titleView.findViewById(R.id.publisher_site);
             more = (TextView) itemView.findViewById(R.id.more);
 
         }
@@ -230,14 +234,22 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
 
             publisher_name.setTypeface(typeface);
             publisher_country.setTypeface(typeface);
-            publisher_email.setTypeface(typeface);
-            publisher_site.setTypeface(typeface);
+            //publisher_email.setTypeface(typeface);
+            //publisher_site.setTypeface(typeface);
             more.setTypeface(typeface);
 
-            publisher_name.setText(publisherModel.getPub_name().toString());
-            publisher_country.setText(publisherModel.getPub_country().toString());
-            publisher_email.setText(publisherModel.getPub_email());
-            publisher_site.setText(publisherModel.getPub_website());
+            publisher_name.setText(publisherModel.getPub_name());
+            if (publisherModel.getTitle()==null)
+            {
+                publisher_country.setText(publisherModel.getPub_country());
+
+            }else
+            {
+                publisher_country.setText(publisherModel.getTitle());
+
+            }
+            //publisher_email.setText(publisherModel.getPub_email());
+            //publisher_site.setText(publisherModel.getPub_website());
             Log.e("pubusername",""+publisherModel.getPub_username());
 
 
@@ -247,6 +259,10 @@ public class PublisherAdapter extends RecyclerView.Adapter<PublisherAdapter.View
     }
 
 
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

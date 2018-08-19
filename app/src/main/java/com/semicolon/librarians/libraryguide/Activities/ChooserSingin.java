@@ -389,6 +389,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
             case "library":
                 SharedPreferences sharedPreferences_lib = getSharedPreferences("lib_pref", MODE_PRIVATE);
 
+
                 String l_id = sharedPreferences_lib.getString("id", "");
                 String l_type = sharedPreferences_lib.getString("type", "");
                 String l_photo = sharedPreferences_lib.getString("photo", "");
@@ -399,12 +400,13 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 String l_country = sharedPreferences_lib.getString("country", "");
                 String l_address = sharedPreferences_lib.getString("address", "");
 
+                Log.e("libTyp",l_libType);
                 LibraryModel libraryModel = new LibraryModel();
                 libraryModel.setLib_username(l_id);
                 libraryModel.setUser_type(l_type);
                 libraryModel.setUser_photo(l_photo);
                 libraryModel.setLib_name(l_name);
-                libraryModel.setLib_type(l_libType);
+                libraryModel.setType_title(l_libType);
                 libraryModel.setLib_email(l_email);
                 libraryModel.setLib_phone(l_phone);
                 libraryModel.setLib_country(l_country);

@@ -210,10 +210,10 @@ public class Manager_Notification {
                                 Intent intent = new Intent(context, ChooserSingin.class);
                                 PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
                                 builder.setContentIntent(pendingIntent);
-                                builder.setSmallIcon(R.mipmap.ic_launcher_round);
+                                builder.setSmallIcon(R.mipmap.note_icon);
 
-            /*Notification notification = builder.build();
-            notification.contentView = remoteViews;*/
+                                /*Notification notification = builder.build();
+                                notification.contentView = remoteViews;*/
                                 NotificationManager manager = (NotificationManager)context.getSystemService(NOTIFICATION_SERVICE);
                                 manager.notify(100,builder.build());
                             }
@@ -266,7 +266,7 @@ public class Manager_Notification {
                             Intent intent = new Intent(context, HomeActivity.class);
                             PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
                             builder.setContentIntent(pendingIntent);
-                            builder.setSmallIcon(R.mipmap.ic_launcher_round);
+                            builder.setSmallIcon(R.mipmap.note_icon);
 
             /*Notification notification = builder.build();
             notification.contentView = remoteViews;*/

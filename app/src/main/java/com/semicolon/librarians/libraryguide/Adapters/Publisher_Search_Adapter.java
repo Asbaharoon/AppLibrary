@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -56,6 +58,8 @@ public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Sea
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final PublisherModel PublishersModel = PublisherModelList.get(position);
         holder.BindData(PublishersModel);
+        Animation animation = AnimationUtils.loadAnimation(context,R.anim.rec_anim);
+        holder.itemView.startAnimation(animation);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -352,8 +356,16 @@ public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Sea
             publisher_name.setTypeface(typeface);
             publisher_country.setTypeface(typeface);
 
-            publisher_name.setText(publisherModel.getPub_name().toString());
-            publisher_country.setText(publisherModel.getPub_country().toString());
+            publisher_name.setText(publisherModel.getPub_name());
+            if (publisherModel.getTitle()==null)
+            {
+                publisher_country.setText(publisherModel.getPub_country());
+
+            }else
+                {
+                    publisher_country.setText(publisherModel.getTitle());
+
+                }
 
 
 
@@ -362,6 +374,10 @@ public class Publisher_Search_Adapter extends RecyclerView.Adapter<Publisher_Sea
     }
 
 
-
+    @Override
+    public void onViewDetachedFromWindow(ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
 }
 

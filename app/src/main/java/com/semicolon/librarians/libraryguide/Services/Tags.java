@@ -12,7 +12,7 @@ public class Tags {
     public static final String name_Regex="[^0-9@!#$%\\^&()-\\*\\+<>/\\+~\\s]+$";
     public static final String pass_Regex="^[A-Za-z0-9_.-]+$";
     public static final String phone_Regex="[0-9()/\\.N,;#\\*\\+\\-\\s]+$";
-    public static final String font = "fonts/kacst_title.ttf";
+    public static final String font = "fonts/JannaLT-Regular.ttf";
     //http://librarians.liboasis.com/api/service/library_news
     //http://librarians.liboasis.com/api/service/publishers
     //http://librarians.liboasis.com/api/service/jobs

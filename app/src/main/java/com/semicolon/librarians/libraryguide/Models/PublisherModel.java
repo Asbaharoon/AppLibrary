@@ -35,7 +35,9 @@ public class PublisherModel implements Serializable {
     @SerializedName("publisher_google_lng")
     private String pub_lng;
     private String user_token;
+    private String title;
 
+    private int success;
     public PublisherModel() {
     }
 
@@ -166,5 +168,13 @@ public class PublisherModel implements Serializable {
 
     public void setUser_token(String user_token) {
         this.user_token = user_token;
+    }
+
+    public int getSuccess() {
+        return success;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }

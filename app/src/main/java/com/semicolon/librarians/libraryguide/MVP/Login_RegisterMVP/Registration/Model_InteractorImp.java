@@ -469,7 +469,7 @@ public class Model_InteractorImp implements Model_Interactor {
         userMap.put("user_email",email);
         userMap.put("user_country",country);
         userMap.put("user_phone",phone);
-        userMap.put("user_photo",photo);
+        //userMap.put("user_photo",photo);
         userMap.put("user_username",username);
         userMap.put("user_pass",password);
         userMap.put("user_google_lat",lat);
@@ -484,6 +484,7 @@ public class Model_InteractorImp implements Model_Interactor {
             public void onResponse(Call<NormalUserData> call, final Response<NormalUserData> response) {
                 if (response.isSuccessful())
                 {
+                    Log.e("user_register","1");
                     new android.os.Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -496,6 +497,8 @@ public class Model_InteractorImp implements Model_Interactor {
 
                 }
                 else {
+                    Log.e("user_register","0");
+
                     listener.hideProgress_Dialog();
                     Converter<ResponseBody,ErrorUtils> converter = retrofit.responseBodyConverter(ErrorUtils.class,new Annotation[0]);
                     try {
@@ -511,6 +514,8 @@ public class Model_InteractorImp implements Model_Interactor {
 
             @Override
             public void onFailure(Call<NormalUserData> call, Throwable t) {
+                Log.e("user_register","2");
+
                 listener.hideProgress_Dialog();
                 listener.onFailed(context.getString(R.string.something_haywire));
             }

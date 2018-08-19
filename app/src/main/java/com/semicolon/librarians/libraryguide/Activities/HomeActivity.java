@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ProgressDialog progressDialog;
     private CallbackManager callbackManager;
     private LoginManager manager;
-
+    private String library_type="";
     public NormalUserData user_Data = null;
     public PublisherModel publisher_Model = null;
     public LibraryModel library_Model = null;
@@ -179,9 +179,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 if (user_Data.getUserPhoto()==null)
                 {
-                   /* Calligrapher calligrapher = new Calligrapher(getApplicationContext());
-                    calligrapher.setFont(this, Tags.font,true);
-             */       if (!user_Data.getUser_photo().equals("0"))
+                    if (!user_Data.getUser_photo().equals("0"))
                     {
 
 
@@ -250,7 +248,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             if (libraryModel != null) {
                 library_Model = libraryModel;
-
+                library_type = library_Model.getType_title();
+                Log.e("ytttttt",library_type+"12345");
+                library_Model.setType_title(library_type);
               /*  Calligrapher calligrapher = new Calligrapher(getApplicationContext());
                 calligrapher.setFont(this, Tags.font,true);
             */
@@ -655,6 +655,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         }else if (library_Model!=null)
                         {
+
                             Intent intent = new Intent(HomeActivity.this,Activity_Profile.class);
                             intent.putExtra("who_visit_myProfile","me");
                             intent.putExtra("libraryData",library_Model);
@@ -1031,7 +1032,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onLibraryDataSuccess(final LibraryModel libraryModel)
     {
         library_Model = libraryModel;
-
+        libraryModel.setType_title(library_type);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -1141,7 +1142,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void OnLocationUpdated(Location_Model location_model )
     {
-        Toast.makeText(this, ""+location_model.getLocation().getLatitude(), Toast.LENGTH_SHORT).show();
         if (user_Data!=null)
         {
             locPresenter.UpdateUserData(user_Data.getUserId(),String.valueOf(location_model.getLocation().getLatitude()),String.valueOf(location_model.getLocation().getLongitude()));
