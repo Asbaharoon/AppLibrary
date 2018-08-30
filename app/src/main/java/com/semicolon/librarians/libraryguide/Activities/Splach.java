@@ -33,6 +33,7 @@ public class Splach extends AwesomeSplash {
                     //  Launch application introduction screen
                     Intent i = new Intent(Splach.this, MyIntro.class);
                     startActivity(i);
+                    finish();
                     SharedPreferences.Editor e = getSharedPreferences.edit();
                     e.putBoolean("firstStart", false);
                     e.apply();
@@ -81,6 +82,7 @@ public class Splach extends AwesomeSplash {
     public void animationsFinished() {
         Intent i =new Intent(this,ChooserSingin.class);
         startActivity(i);
+        finish();
         //transit to another activity here
         //or do whatever you want
     }
