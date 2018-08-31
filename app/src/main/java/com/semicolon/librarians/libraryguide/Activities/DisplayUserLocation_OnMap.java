@@ -1,6 +1,8 @@
 package com.semicolon.librarians.libraryguide.Activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -9,8 +11,10 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -31,6 +35,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.semicolon.librarians.libraryguide.Models.CompanyModel;
@@ -54,7 +59,6 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
 
     private GoogleMap mMap;
     private boolean  PERMISSION_GRANTED =false;
-    private static final String INTERNET = "android.permission.INTERNET";
     private static final String ACCESS_COARSE_LOCATION = "android.permission.ACCESS_COARSE_LOCATION";
     private static final String ACCESS_FINE_LOCATION = "android.permission.ACCESS_FINE_LOCATION";
     private final int  PERMISSION_REQUST=1;
@@ -67,6 +71,9 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
     private View customMarkerView;
     private CircleImageView circleImageView;
     private Target target;
+    private LocationManager manager;
+    private AlertDialog gpsDialog;
+    private final int gps_req = 2330;
 
 
     @Override
@@ -79,11 +86,16 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
         customMarkerView = LayoutInflater.from(this).inflate(R.layout.custom_marker, null);
         circleImageView = (CircleImageView) customMarkerView.findViewById(R.id.custom_userImage);
 
-        CheckPermissions();
+        if (isServiceOk())
+        {
+            CheckPermissions();
+
+        }
         getDataFromIntent();
 
 
     }
+
 
     private void getDataFromIntent()
     {
@@ -142,6 +154,14 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
         if (googleMap!=null)
         {
             mMap = googleMap;
+            mMap = googleMap;
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.setBuildingsEnabled(true);
+            mMap.setTrafficEnabled(false);
+            mMap.setIndoorEnabled(true);
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.maps));
 
 
             if (userData!=null)
@@ -387,20 +407,53 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
     }
     private void CheckPermissions()
     {
-        String [] permissions = new String[]{INTERNET,ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION};
-        if (ContextCompat.checkSelfPermission(this,INTERNET)!= PackageManager.PERMISSION_GRANTED||
-                ContextCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED||
-                ContextCompat.checkSelfPermission(this,ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED
+        String [] permissions = new String[]{ACCESS_FINE_LOCATION,ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
 
-                )
         {
-            PERMISSION_GRANTED =false;
-            ActivityCompat.requestPermissions(this,permissions,PERMISSION_REQUST);
+
+           if (ContextCompat.checkSelfPermission(this,ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED)
+           {
+               if (CheckGps())
+               {
+                   initMap();
+
+               }else
+               {
+                   CreateGpsAlert();
+               }
+           }else
+               {
+                   ActivityCompat.requestPermissions(this,permissions,PERMISSION_REQUST);
+
+               }
         }else
         {
-            PERMISSION_GRANTED = true;
+            ActivityCompat.requestPermissions(this,permissions,PERMISSION_REQUST);
         }
     }
+
+    private void CreateGpsAlert() {
+        gpsDialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.open_gps)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent, gps_req);
+                    }
+                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                }).setCancelable(false).create();
+        gpsDialog.setCanceledOnTouchOutside(false);
+        gpsDialog.show();
+    }
+
     private boolean isServiceOk()
     {
         GoogleApiAvailability availability = GoogleApiAvailability.getInstance();
@@ -416,6 +469,42 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
         }
         return false;
     }
+
+    private boolean CheckGps() {
+        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (manager != null) {
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==gps_req)
+        {
+            if (resultCode==RESULT_OK)
+            {
+                if (CheckGps())
+                {
+                    initMap();
+                }else
+                {
+                    CreateGpsAlert();
+                }
+            }else {
+                if (CheckGps()) {
+                    initMap();
+                } else {
+                    CreateGpsAlert();
+                }
+            }
+        }
+    }
+
     private Bitmap drawCustomMarker(View view, Bitmap bitmap)
     {
 
@@ -442,32 +531,32 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
         {
             LatLng latlng = new LatLng(Double.parseDouble(userData.getUser_google_lat()),Double.parseDouble(userData.getUser_google_lng()));
             mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16.7f));
 
         }else if (publisherModel!=null)
         {
             LatLng latlng = new LatLng(Double.parseDouble(publisherModel.getPub_lat()),Double.parseDouble(publisherModel.getPub_lng()));
             mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16.7f));
         }
         else if (libraryModel!=null)
         {
 
             LatLng latlng = new LatLng(Double.parseDouble(libraryModel.getLat()),Double.parseDouble(libraryModel.getLng()));
             mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16.7f));
         }
         else if (universityModel!=null)
         {
             LatLng latlng = new LatLng(Double.parseDouble(universityModel.getUni_lat()),Double.parseDouble(universityModel.getUni_lng()));
             mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16.7f));
         }
         else if (companyModel!=null)
         {
             LatLng latlng = new LatLng(Double.parseDouble(companyModel.getComp_lat()),Double.parseDouble(companyModel.getComp_lng()));
             mMap.addMarker(new MarkerOptions().position(latlng).icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16.7f));
 
 
         }
@@ -668,17 +757,6 @@ public class DisplayUserLocation_OnMap extends AppCompatActivity implements OnMa
     }
 
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (PERMISSION_GRANTED==true)
-        {
-            if (isServiceOk()==true)
-            {
-                initMap();
-            }
-        }
-    }
 
 
 }
