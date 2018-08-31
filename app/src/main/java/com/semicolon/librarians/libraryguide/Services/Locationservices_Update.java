@@ -69,8 +69,8 @@ public class Locationservices_Update extends android.app.Service implements Goog
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Location location = LocationServices.FusedLocationApi.getLastLocation(client);
-        Log.e("loc"," "+location.getLatitude());
+       // Location location = LocationServices.FusedLocationApi.getLastLocation(client);
+        //Log.e("loc"," "+location.getLatitude());
         startLocationUpdate();
     }
 

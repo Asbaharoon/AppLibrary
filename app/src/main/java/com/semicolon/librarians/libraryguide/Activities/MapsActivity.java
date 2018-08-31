@@ -1,23 +1,33 @@
 package com.semicolon.librarians.libraryguide.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,22 +35,31 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.semicolon.librarians.libraryguide.Adapters.PlaceAutocompleteAdapter;
 import com.semicolon.librarians.libraryguide.R;
-import com.semicolon.librarians.libraryguide.Services.NetworkConnection;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 
 import java.io.IOException;
@@ -48,7 +67,7 @@ import java.util.List;
 
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback ,GoogleApiClient.OnConnectionFailedListener,View.OnClickListener{
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, LocationListener {
 
     private AutoCompleteTextView library_search_ed;
     private GoogleMap mMap;
@@ -60,109 +79,91 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private PlaceAutocompleteAdapter autocompleteAdapter;
     private GeoDataClient geoDataClient;
     private TextView tv_ok;
-    boolean permission_granted=false,is_connected=false;
+    boolean permission_granted = false, is_connected = false;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private double myLat = 0.0, myLng = 0.0;
+    private LatLngBounds latLngBounds = new LatLngBounds(
+            new LatLng(-33.880490, 151.184363),
+            new LatLng(-33.858754, 151.229596));
 
-
-
-    private static LatLng latLng;
+    private PlaceAutocompleteAdapter adapter;
+    private Marker marker;
+    private String country_code = "SA";
+    private AutocompleteFilter filter;
+    private LocationManager manager;
+    private final int gps_req = 2330;
+    private AlertDialog gpsDialog;
+    private LatLng startPos;
+    private LatLng endPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Calligrapher calligrapher = new Calligrapher(this);
-        calligrapher.setFont(this, Tags.font,true);
+        calligrapher.setFont(this, Tags.font, true);
 
         initView();
-        CheckPermission();
-        Check_Connectivity();
+        if (isServiceOk()) {
+            CheckPermission();
+        }
 
+
+    }
+
+    private boolean CheckGps() {
+        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (manager != null) {
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void CreateGpsAlert() {
+        gpsDialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.open_gps)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent, gps_req);
+                    }
+                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                }).setCancelable(false).create();
+        gpsDialog.setCanceledOnTouchOutside(false);
+        gpsDialog.show();
     }
 
     private void initView() {
         tv_ok = (TextView) findViewById(R.id.tv_ok);
         tv_ok.setOnClickListener(this);
-        geoDataClient = Places.getGeoDataClient(this,null);
+        geoDataClient = Places.getGeoDataClient(this, null);
         library_search_ed = (AutoCompleteTextView) findViewById(R.id.library_search_tv);
-       /* autocompleteAdapter = new PlaceAutocompleteAdapter(this,geoDataClient,new LatLngBounds(
-                new LatLng(-33.880490, 151.184363),
-                new LatLng(-33.858754, 151.229596)),null);*/
-        //library_search_ed.setAdapter(autocompleteAdapter);
         library_search_ed.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH
                         || actionId == EditorInfo.IME_ACTION_DONE
-                        ||actionId == EditorInfo.IME_ACTION_GO
+                        || actionId == EditorInfo.IME_ACTION_GO
                         || keyEvent.getAction() == KeyEvent.ACTION_DOWN
                         || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) {
-                    String lib_loc = library_search_ed.getText().toString();
-                    if (TextUtils.isEmpty(lib_loc))
-                    {
-                        Toast.makeText(MapsActivity.this, R.string.enter_lib_loc, Toast.LENGTH_SHORT).show();
-
-                    }else
-                    {
-                        if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                        }
-                        try {
-                            Geocoder geocoder = new Geocoder(MapsActivity.this);
-
-                            List<Address> addresses = geocoder.getFromLocationName(lib_loc,1);
-                            if (addresses.size()>0)
-                            {
-                                if (addresses.get(0)!=null)
-                                {
-                                    latLng = new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude());
-                                    mMap.clear();
-
-                                    if (!TextUtils.isEmpty(addresses.get(0).getLocality()))
-                                    {
-                                        mMap.setMyLocationEnabled(false);
-                                        mMap.addMarker(new MarkerOptions()
-                                                .icon(BitmapDescriptorFactory.defaultMarker())
-                                                .title(addresses.get(0).getLocality().toString().isEmpty()||addresses.get(0).getLocality().toString()==null?"unknown":addresses.get(0).getLocality().toString())
-                                                .position(new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude())));
-                                        Log.e("title", addresses.get(0).getLocality());
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
-                                        tv_ok.setVisibility(View.VISIBLE);
-
-                                    }else
-                                        {
-                                            Toast.makeText(MapsActivity.this, getString(R.string.error), Toast.LENGTH_SHORT).show();
-                                        }
-
-
-                                    InputMethodManager methodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    methodManager.hideSoftInputFromWindow(library_search_ed.getWindowToken(),0);
-
-                                }
-                                else
-                                    {
-
-                                    }
-
-                            }
-                            else
-                                {
-                                    Toast.makeText(MapsActivity.this, R.string.invalid_address, Toast.LENGTH_SHORT).show();
-                                }
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-
 
                 }
                 return false;
             }
         });
 
-    }
 
+    }
 
 
     private void initMap() {
@@ -174,57 +175,110 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         if (googleMap != null) {
             mMap = googleMap;
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.setBuildingsEnabled(true);
+            mMap.setTrafficEnabled(false);
+            mMap.setIndoorEnabled(true);
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.maps));
 
-            getDeviceLocation();
+            // getDeviceLocation();
         }
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        }
+        mMap.setMyLocationEnabled(true);
+        Log.e("b","mm");
+        initGoogleApiClient();
+
+        geoDataClient = Places.getGeoDataClient(this,null);
+        /*filter = new AutocompleteFilter.Builder()
+                .setCountry(country_code)
+                .build();*/
+        filter = new AutocompleteFilter.Builder()
+                .setCountry(country_code)
+                .build();
+
+        adapter = new PlaceAutocompleteAdapter(this,geoDataClient,latLngBounds,filter);
+        library_search_ed.setAdapter(adapter);
+        library_search_ed.setOnItemClickListener(itemClickListener);
 
     }
 
-    private void getDeviceLocation() {
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+    private void initGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+        googleApiClient.connect();
+    }
+
+    private void initLocationRequest() {
+        locationRequest = new LocationRequest();
+        locationRequest.setSmallestDisplacement(10f);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    private void startLocationUpdate() {
+        initLocationRequest();
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+            String[] Permitions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION};
+            ActivityCompat.requestPermissions(this,Permitions,7788);
+        }else
+        {
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
         }
-        Task<Location> task = mFusedLocationProviderClient.getLastLocation();
-        task.addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful()) {
-                    Location location = task.getResult();
-                    LatLng latLng = null;
-                    if (location != null) {
-                        latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        Geocoder geocoder = new Geocoder(MapsActivity.this);
-                        try {
-                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+    }
 
-                            mMap.addMarker(new MarkerOptions().title(addresses.get(0).getLocality().toString())
-                                    .position(latLng).icon(BitmapDescriptorFactory.defaultMarker()));
-                            if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-                                return;
-                            }
-                            mMap.setMyLocationEnabled(true);
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11f));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+    private void getCountryCode(double myLat, double myLng) {
+        Geocoder geocoder = new Geocoder(this);
+        try {
+            List<Address> addressList = geocoder.getFromLocation(myLat,myLng,1);
+            if (addressList.size()>0)
+            {
+                Address address = addressList.get(0);
+                if (address!=null)
+                {
+                    country_code = address.getCountryCode();
+                    filter = new AutocompleteFilter.Builder()
+                            .setCountry(country_code)
+                            .build();
+                    adapter = new PlaceAutocompleteAdapter(this,geoDataClient,latLngBounds,filter);
+                    library_search_ed.setAdapter(adapter);
+                    library_search_ed.setOnItemClickListener(itemClickListener);
 
                 }
             }
-        });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void CheckPermission()
     {
-        String [] permissions=new String[]{INTERNET,ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION};
+        String [] permissions=new String[]{ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION};
 
-        if (ActivityCompat.checkSelfPermission(this,INTERNET)== PackageManager.PERMISSION_GRANTED
-                &&ActivityCompat.checkSelfPermission(this,ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED
-                &&ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
+        if (ActivityCompat.checkSelfPermission(this,ACCESS_COARSE_LOCATION)== PackageManager.PERMISSION_GRANTED)
         {
-            permission_granted=true;
+            if (ActivityCompat.checkSelfPermission(this,ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED)
+            {
+                if (CheckGps())
+                {
+                    initMap();
+
+                }else
+                    {
+                        CreateGpsAlert();
+                    }
+            }else
+                {
+                    ActivityCompat.requestPermissions(this,permissions,PERMISSION_REQUEST);
+
+                }
         }
         else
         {
@@ -246,15 +300,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (grantResults[i]!=PackageManager.PERMISSION_GRANTED)
                     {
                         Toast.makeText(MapsActivity.this, R.string.ser_not_found, Toast.LENGTH_SHORT).show();
-                        permission_granted =false;
-                        break;
+                        return;
 
                     }
-                    else
-                    {
-                        permission_granted =true;
-                        //initMap();
-                    }
+
+                }
+                if (CheckGps())
+                {
+                    initMap();
+                }else
+                {
+                    CreateGpsAlert();
                 }
             }
 
@@ -271,26 +327,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onClick(View view) {
         if (view.getId()==R.id.tv_ok)
         {
-            if (latLng!=null)
-            {
-                Intent intent = new Intent();
-                intent.putExtra("lat",latLng.latitude);
-                intent.putExtra("lng",latLng.longitude);
-                setResult(MapsActivity.RESULT_OK,intent);
+            Intent intent = new Intent();
+            intent.putExtra("lat",myLat);
+            intent.putExtra("lng",myLng);
+            setResult(MapsActivity.RESULT_OK,intent);
 
-                Log.e("lat",""+latLng.latitude+"lng"+latLng.longitude);
 
-                finish();
-            }
+            finish();
 
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Check_Connectivity();
-    }
+
 
 
 
@@ -310,35 +358,178 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         return false;
     }
-    private void Check_Connectivity()
-    {
-        is_connected = new NetworkConnection(this).CheckConnection();
 
-        if (permission_granted)
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdate();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        if (googleApiClient!=null)
+            googleApiClient.connect();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+         if (requestCode==gps_req)
         {
-            if (is_connected)
+            if (resultCode==RESULT_OK)
             {
-                if (isServiceOk())
+                if (CheckGps())
                 {
                     initMap();
-                }
-                else
+                }else
                 {
-                    Toast.makeText(this, getString(R.string.ser_not_found), Toast.LENGTH_SHORT).show();
-
+                    CreateGpsAlert();
                 }
-            }else
-            {
-                Toast.makeText(this, getString(R.string.network_connection), Toast.LENGTH_SHORT).show();
+            }else {
+                if (CheckGps()) {
+                   initMap();
+                } else {
+                    CreateGpsAlert();
+                }
             }
-
-        }
-        else
-        {
-            Toast.makeText(this, R.string.per_not_granted, Toast.LENGTH_SHORT).show();
-
         }
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location!=null)
+        {
+            myLat = location.getLatitude();
+            myLng = location.getLongitude();
+            AddMarker(myLat,myLng);
+            tv_ok.setVisibility(View.VISIBLE);
+            getCountryCode(myLat,myLng);
+            mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+
+                    myLat = cameraPosition.target.latitude;
+                    myLat = cameraPosition.target.longitude;
+                    marker.setPosition(cameraPosition.target);
+
+                    Log.e("lat",myLat+"");
+                    Log.e("lng",myLat+"");
+
+                }
+            });
+            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+        }
+    }
+
+    private void AddMarker(double myLat, double myLng) {
+        marker =mMap.addMarker(new MarkerOptions().position(new LatLng(myLat,myLng)).icon(BitmapDescriptorFactory.fromBitmap(createMarkerBitmap())));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLat,myLng),16.7f));
+
+    }
+
+    private Bitmap createMarkerBitmap()
+    {
+        Bitmap bitmap1 = BitmapFactory.decodeResource(this.getResources(),R.drawable.map_marker);
+        int newWidth = 55;
+        int newHeight = 55;
+        float scaleWidth = ((float)newWidth/bitmap1.getWidth());
+        float scaleHeight = ((float)newHeight/bitmap1.getHeight());
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth,scaleHeight);
+        Bitmap returnedBitmap = Bitmap.createBitmap(bitmap1,0,0,bitmap1.getWidth(),bitmap1.getHeight(),matrix,true);
+        return returnedBitmap;
+    }
+    private AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            AutocompletePrediction item = adapter.getItem(i);
+            String place_id = item.getPlaceId();
+            PendingResult<PlaceBuffer> bufferPendingResult = Places.GeoDataApi.getPlaceById(googleApiClient,place_id);
+            bufferPendingResult.setResultCallback(resultCallback);
+
+        }
+    };
+
+    private ResultCallback<PlaceBuffer> resultCallback = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(@NonNull PlaceBuffer places) {
+
+            try {
+                if (!places.getStatus().isSuccess())
+                {
+                    places.release();
+                    return;
+                }
+                tv_ok.setText(null);
+                Place place = places.get(0);
+                myLat = place.getLatLng().latitude;
+                myLng = place.getLatLng().longitude;
+
+
+                startPos = marker.getPosition();
+                endPos = place.getLatLng();
+                animateMarker(startPos,endPos,marker,"0");
+
+
+                places.release();
+            }catch (NullPointerException e)
+            {
+
+            }
+
+        }
+    };
+
+
+    private void animateMarker(LatLng startPos, LatLng endPos, final Marker marker, final String flag)
+    {
+        final LatLng startPosition = startPos;
+        final LatLng finalPosition = endPos;
+        final Handler handler = new Handler();
+        final long start = SystemClock.uptimeMillis();
+        final Interpolator interpolator = new AccelerateDecelerateInterpolator();
+        final float durationInMs = 3000;
+        final boolean hideMarker = false;
+
+        handler.post(new Runnable() {
+            long elapsed;
+            float t;
+            float v;
+
+            @Override
+            public void run() {
+                // Calculate progress using interpolator
+                elapsed = SystemClock.uptimeMillis() - start;
+                t = elapsed / durationInMs;
+                v = interpolator.getInterpolation(t);
+
+                LatLng currentPosition = new LatLng(
+                        startPosition.latitude * (1 - t) + finalPosition.latitude * t,
+                        startPosition.longitude * (1 - t) + finalPosition.longitude * t);
+
+
+                marker.setPosition(currentPosition);
+                if (flag=="0")
+                {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                }
+                // Repeat till progress is complete.
+                if (t < 1) {
+                    // Post again 16ms later.
+                    handler.postDelayed(this, 16);
+                } else {
+                    if (hideMarker) {
+                        marker.setVisible(false);
+                    } else {
+                        marker.setVisible(true);
+                    }
+
+
+                }
+            }
+        });
+    }
 
 }

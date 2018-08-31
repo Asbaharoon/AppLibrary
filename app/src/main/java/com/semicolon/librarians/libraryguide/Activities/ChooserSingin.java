@@ -1,9 +1,10 @@
 package com.semicolon.librarians.libraryguide.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -15,7 +16,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -50,9 +53,9 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
@@ -86,7 +89,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ChooserSingin extends AppCompatActivity implements View.OnClickListener, FacebookCallback<LoginResult>, GoogleApiClient.OnConnectionFailedListener, ViewData {
+public class ChooserSingin extends AppCompatActivity implements View.OnClickListener, FacebookCallback<LoginResult>, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, LocationListener, ViewData {
 
     private ShimmerTextView shimmerTextView;
     //private RippleView ripple_signinBtn;
@@ -109,11 +112,18 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     private FusedLocationProviderClient fusedLocationProviderClient;
     // private RelativeLayout progressBar_container;
     private Presenter presenter;
-    private LocationManager locationManager;
     private Location location;
     private boolean isGPS;
     private boolean isNetwork;
     private Dialog setting_dialog;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private double myLat = 0.0, myLng = 0.0;
+    private LocationManager manager;
+    private final int gps_req=2330;
+    private AlertDialog gpsDialog;
+    private Profile myProfile;
+    private String login_type="0";
 
 
     @Override
@@ -130,14 +140,13 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         connection = new NetworkConnection(this);
         //////////////////////////////////////////////////////////////
         initView();
+
+
         setUpShimmer();
         setUpProgressdialog();
         setUpUserProfile();
+        initGoogleApiClient();
         ///////////////////////////////////////////////////////////////////////////////
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        isGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        isNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
 
         signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         apiClient = new GoogleApiClient.Builder(getApplicationContext()).enableAutoManage(ChooserSingin.this, ChooserSingin.this).addApi(Auth.GOOGLE_SIGN_IN_API, signInOptions).build();
@@ -159,7 +168,49 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         } catch (NoSuchAlgorithmException e) {
 
         }
+    }
 
+    private boolean CheckGPS() {
+        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (manager!=null)
+        {
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private void CreateGpsAlert()
+    {
+         gpsDialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.open_gps)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent,gps_req);
+                    }
+                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                     @Override
+                     public void onClick(DialogInterface dialogInterface, int i) {
+                         dialogInterface.dismiss();
+                         finish();
+                     }
+                 }).setCancelable(false).create();
+        gpsDialog.setCanceledOnTouchOutside(false);
+        gpsDialog.show();
+    }
+    private void initGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        googleApiClient.connect();
     }
 
 
@@ -210,6 +261,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 getUserData(currentProfile);
+                Log.e("pro", currentProfile.getFirstName());
 
             }
         };
@@ -420,7 +472,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 String l_country = sharedPreferences_lib.getString("country", "");
                 String l_address = sharedPreferences_lib.getString("address", "");
 
-                Log.e("libTyp",l_libType);
+                Log.e("libTyp", l_libType);
                 LibraryModel libraryModel = new LibraryModel();
                 libraryModel.setLib_username(l_id);
                 libraryModel.setUser_type(l_type);
@@ -578,6 +630,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
         this.token = loginResult.getAccessToken();
         if (loginResult.getAccessToken() != null) {
             Profile profile = Profile.getCurrentProfile();
+            this.myProfile =profile;
             getUserData(profile);
 
 
@@ -592,7 +645,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     private void getUserData(Profile profile) {
         if (profile != null) {
-            dialog.show();
+            //dialog.show();
+            this.myProfile =profile;
             //progressBar_container.setVisibility(View.VISIBLE);
             getDeviceLocationFB(profile);
 
@@ -642,6 +696,40 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
                 dialog.dismiss();
             }
 
+        }else if (requestCode==gps_req)
+        {
+            if (resultCode==RESULT_OK)
+            {
+                if (CheckGPS())
+                {
+                    if (login_type.equals("fb"))
+                    {
+                        getDeviceLocationFB(this.myProfile);
+                    }else if (login_type.equals("gm"))
+                    {
+                        getDeviceLocationGm(this.account);
+                    }
+                }else
+                    {
+                        CreateGpsAlert();
+                    }
+            }else
+                {
+                    if (CheckGPS())
+                    {
+                        if (login_type.equals("fb"))
+                        {
+                            getDeviceLocationFB(this.myProfile);
+                        }else if (login_type.equals("gm"))
+                        {
+                            getDeviceLocationGm(this.account);
+                        }
+                    }else
+                    {
+                        CreateGpsAlert();
+                    }
+                }
+
         }
     }
 
@@ -663,230 +751,197 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     private void getDeviceLocationFB(final Profile profile) {
 
+        login_type="fb";
+        if (!CheckGPS())
+        {
+            CreateGpsAlert();
+        }else
+            {
+                dialog.show();
 
-        dialog.show();
+                Log.e("123123", "123123");
+                String userID = profile.getId();
+                String userName = profile.getName();
+                String userPhoto = "https://graph.facebook.com/" + userID + "/picture?type=large";
+                final String user_token = FirebaseInstanceId.getInstance().getToken();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        // progressBar_container.setVisibility(View.VISIBLE);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        Task<Location> lastLocation = fusedLocationProviderClient.getLastLocation();
-        lastLocation.addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful()) {
-                    Location location = task.getResult();
-                    if (location != null) {
-                        String userID = profile.getId();
-                        String userName = profile.getName();
-                        String userPhoto = "https://graph.facebook.com/" + userID + "/picture?type=large";
-                        String user_lat = String.valueOf(location.getLatitude());
-                        String user_lng = String.valueOf(location.getLongitude());
-                        final String user_token = FirebaseInstanceId.getInstance().getToken();
+                Map<String, String> map = new HashMap<>();
+                map.put("user_username", userID);
+                map.put("user_name", userName);
+                map.put("photo_link", userPhoto);
+                map.put("user_google_lat", String.valueOf(myLat));
+                map.put("user_google_lng", String.valueOf(myLng));
+                map.put("user_token", user_token);
 
-                        Map<String, String> map = new HashMap<>();
-                        map.put("user_username", userID);
-                        map.put("user_name", userName);
-                        map.put("photo_link", userPhoto);
-                        map.put("user_google_lat", user_lat);
-                        map.put("user_google_lng", user_lng);
-                        map.put("user_token", user_token);
+                Retrofit retrofit = setUpRetrofit("http://librarians.liboasis.com/");
+                Service service = retrofit.create(Service.class);
 
-                        Retrofit retrofit = setUpRetrofit("http://librarians.liboasis.com/");
-                        Service service = retrofit.create(Service.class);
+                Call<NormalUserData> call = service.UploadUserDataWithFacebook(map);
 
-                        Call<NormalUserData> call = service.UploadUserDataWithFacebook(map);
+                call.enqueue(new Callback<NormalUserData>() {
+                    @Override
+                    public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
+                        if (response.isSuccessful()) {
+                            final NormalUserData userData = response.body();
+                            Log.e("faaaaaaaaacelogin", userData.getUserEmail() + "   " + userData.getUserCountry() + "   " + userData.getUserPhone());
+                            if (userData.getUserCountry() == null || userData.getUserPhone() == null || userData.getUserEmail() == null) {
 
-                        call.enqueue(new Callback<NormalUserData>() {
-                            @Override
-                            public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
-                                if (response.isSuccessful()) {
-                                    final NormalUserData userData = response.body();
-                                    Log.e("faaaaaaaaacelogin", userData.getUserEmail() + "   " + userData.getUserCountry() + "   " + userData.getUserPhone());
-                                    if (userData.getUserCountry() == null || userData.getUserPhone() == null || userData.getUserEmail() == null) {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(ChooserSingin.this, FB_Gmail_UpdateProfile.class);
+                                        intent.putExtra("userData", userData);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Intent intent = new Intent(ChooserSingin.this, FB_Gmail_UpdateProfile.class);
-                                                intent.putExtra("userData", userData);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                                                startActivity(intent);
-                                                //progressBar_container.setVisibility(View.GONE);
-                                                dialog.dismiss();
-                                            }
-                                        }, 5000);
-                                    } else {
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-
-                                                Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
-                                                intent.putExtra("userData", userData);
-                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                Preferences pref = new Preferences(ChooserSingin.this);
-                                                pref.Session("loggedin");
-                                                startActivity(intent);
-                                                //progressBar_container.setVisibility(View.GONE);
-                                                dialog.dismiss();
-                                            }
-                                        }, 10000);
-                                    }
-
-                                } else {
-
-                                    dialog.dismiss();
-                                    //progressBar_container.setVisibility(View.GONE);
-
-                                    Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
-
-                                }
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<NormalUserData> call, Throwable t) {
-                                dialog.dismiss();
-                                // progressBar_container.setVisibility(View.GONE);
-                                Log.e("error", t.getMessage());
-                                Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                    }
-
-                }
-            }
-        });
-
-
-
-
-
-
-
-      /*  */
-
-    }
-
-    private void getDeviceLocationGm(final GoogleSignInAccount account) {
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        Task<Location> lastLocation = fusedLocationProviderClient.getLastLocation();
-        lastLocation.addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
-                if (task.isSuccessful())
-                {
-                    //progressBar_container.setVisibility(View.VISIBLE);
-                    Location location = task.getResult();
-                    if (location!=null)
-                    {
-                        if (account!=null)
-                        {
-                            String userID = account.getId();
-                            String userName = account.getDisplayName();
-                            String userEmail = account.getEmail();
-                            String userPhoto="";
-                            if (account.getPhotoUrl()!=null)
-                            {
-                                userPhoto = account.getPhotoUrl().toString();
-
-                            }
-                            String user_lat  = String.valueOf(location.getLatitude());
-                            String user_lng = String.valueOf(location.getLongitude());
-                            String user_token = FirebaseInstanceId.getInstance().getToken();
-
-                            Map<String, String> map = new HashMap<>();
-                            map.put("user_username", userID);
-                            map.put("user_name", userName);
-                            map.put("user_email", userEmail);
-                            map.put("photo_link", userPhoto);
-                            map.put("user_google_lat", user_lat);
-                            map.put("user_google_lng", user_lng);
-                            map.put("user_token", user_token);
-
-                            Retrofit retrofit = setUpRetrofit("http://librarians.liboasis.com/");
-                            Service service = retrofit.create(Service.class);
-
-                            Call<NormalUserData> call = service.UploadUserDataWithGoogle(map);
-
-                            call.enqueue(new Callback<NormalUserData>() {
-                                @Override
-                                public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
-                                    if (response.isSuccessful()) {
-                                        final NormalUserData userData = response.body();
-
-                                        if (userData.getUserCountry() == null || userData.getUserPhone() == null || userData.getUserEmail() == null) {
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Intent intent = new Intent(ChooserSingin.this, FB_Gmail_UpdateProfile.class);
-                                                    intent.putExtra("userData", userData);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                                                    Log.e("mmmm", "" + userData.getUserEmail());
-
-                                                    startActivity(intent);
-                                                    apiClient.disconnect();
-                                                    dialog.dismiss();
-                                                    // progressBar_container.setVisibility(View.GONE);
-
-                                                }
-                                            }, 10000);
-                                        } else {
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-
-                                                    Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
-                                                    intent.putExtra("userData", userData);
-                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                    Preferences pref = new Preferences(ChooserSingin.this);
-                                                    pref.Session("loggedin");
-
-                                                    startActivity(intent);
-                                                    dialog.dismiss();
-                                                    // progressBar_container.setVisibility(View.GONE);
-
-                                                }
-                                            }, 2000);
-                                        }
-
-                                    } else {
+                                        startActivity(intent);
+                                        //progressBar_container.setVisibility(View.GONE);
                                         dialog.dismiss();
-                                        // progressBar_container.setVisibility(View.GONE);
-
-                                        Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
-
                                     }
+                                }, 5000);
+                            } else {
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
 
-                                }
+                                        Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+                                        intent.putExtra("userData", userData);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        Preferences pref = new Preferences(ChooserSingin.this);
+                                        pref.Session("loggedin");
+                                        startActivity(intent);
+                                        //progressBar_container.setVisibility(View.GONE);
+                                        dialog.dismiss();
+                                    }
+                                }, 10000);
+                            }
 
-                                @Override
-                                public void onFailure(Call<NormalUserData> call, Throwable t) {
+                        } else {
 
-                                    dialog.dismiss();
-                                    // progressBar_container.setVisibility(View.GONE);
-                                    Log.e("error", t.getMessage());
+                            dialog.dismiss();
+                            //progressBar_container.setVisibility(View.GONE);
 
-                                    Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
-                                }
-                            });
+                            Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
 
                         }
 
                     }
 
+                    @Override
+                    public void onFailure(Call<NormalUserData> call, Throwable t) {
+                        dialog.dismiss();
+                        // progressBar_container.setVisibility(View.GONE);
+                        Log.e("error", t.getMessage());
+                        Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+
+
+    }
+
+
+
+    private void getDeviceLocationGm(final GoogleSignInAccount account) {
+
+        login_type="gm";
+
+        if (!CheckGPS())
+        {
+            CreateGpsAlert();
+        }else
+            {
+                if (account != null) {
+                    String userID = account.getId();
+                    String userName = account.getDisplayName();
+                    String userEmail = account.getEmail();
+                    String userPhoto = "";
+                    if (account.getPhotoUrl() != null) {
+                        userPhoto = account.getPhotoUrl().toString();
+
+                    }
+                    String user_token = FirebaseInstanceId.getInstance().getToken();
+
+                    Map<String, String> map = new HashMap<>();
+                    map.put("user_username", userID);
+                    map.put("user_name", userName);
+                    map.put("user_email", userEmail);
+                    map.put("photo_link", userPhoto);
+                    map.put("user_google_lat", String.valueOf(myLat));
+                    map.put("user_google_lng", String.valueOf(myLng));
+                    map.put("user_token", user_token);
+
+                    Retrofit retrofit = setUpRetrofit("http://librarians.liboasis.com/");
+                    Service service = retrofit.create(Service.class);
+
+                    Call<NormalUserData> call = service.UploadUserDataWithGoogle(map);
+
+                    call.enqueue(new Callback<NormalUserData>() {
+                        @Override
+                        public void onResponse(Call<NormalUserData> call, Response<NormalUserData> response) {
+                            if (response.isSuccessful()) {
+                                final NormalUserData userData = response.body();
+
+                                if (userData.getUserCountry() == null || userData.getUserPhone() == null || userData.getUserEmail() == null) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(ChooserSingin.this, FB_Gmail_UpdateProfile.class);
+                                            intent.putExtra("userData", userData);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                                            Log.e("mmmm", "" + userData.getUserEmail());
+
+                                            startActivity(intent);
+                                            apiClient.disconnect();
+                                            dialog.dismiss();
+                                            // progressBar_container.setVisibility(View.GONE);
+
+                                        }
+                                    }, 10000);
+                                } else {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+                                            intent.putExtra("userData", userData);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            Preferences pref = new Preferences(ChooserSingin.this);
+                                            pref.Session("loggedin");
+
+                                            startActivity(intent);
+                                            dialog.dismiss();
+                                            // progressBar_container.setVisibility(View.GONE);
+
+                                        }
+                                    }, 2000);
+                                }
+
+                            } else {
+                                dialog.dismiss();
+                                // progressBar_container.setVisibility(View.GONE);
+
+                                Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<NormalUserData> call, Throwable t) {
+
+                            dialog.dismiss();
+                            // progressBar_container.setVisibility(View.GONE);
+                            Log.e("error", t.getMessage());
+
+                            Toast.makeText(ChooserSingin.this, R.string.something_haywire, Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
+
             }
-        });
 
 
 
@@ -903,7 +958,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         Profile profile = Profile.getCurrentProfile();
-            getUserData(profile);
+        getUserData(profile);
 
     }
 
@@ -918,7 +973,7 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
-      //  progressBar_container.setVisibility(View.VISIBLE);
+        //  progressBar_container.setVisibility(View.VISIBLE);
     }
 
 
@@ -939,14 +994,13 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.chooser_menu,menu);
+        getMenuInflater().inflate(R.menu.chooser_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==R.id.help)
-        {
+        if (item.getItemId() == R.id.help) {
             Toast.makeText(this, R.string.help, Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
@@ -955,8 +1009,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onNormalUserDataSuccess(NormalUserData normalUserData) {
-        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-        intent.putExtra("userData",normalUserData);
+        Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+        intent.putExtra("userData", normalUserData);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         dialog.dismiss();
@@ -968,8 +1022,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onPublisherDataSuccess(PublisherModel publisherModel) {
-        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-        intent.putExtra("publisherData",publisherModel);
+        Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+        intent.putExtra("publisherData", publisherModel);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         dialog.dismiss();
@@ -980,8 +1034,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onLibraryDataSuccess(LibraryModel libraryModel) {
-        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-        intent.putExtra("libraryData",libraryModel);
+        Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+        intent.putExtra("libraryData", libraryModel);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         dialog.dismiss();
@@ -992,8 +1046,8 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onCompanyDataSuccess(CompanyModel companyModel) {
-        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-        intent.putExtra("companyData",companyModel);
+        Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+        intent.putExtra("companyData", companyModel);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         dialog.dismiss();
@@ -1004,18 +1058,88 @@ public class ChooserSingin extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onUniversityDataSuccess(UniversityModel universityModel) {
-        Intent intent = new Intent(ChooserSingin.this,HomeActivity.class);
-        intent.putExtra("universityData",universityModel);
+        Intent intent = new Intent(ChooserSingin.this, HomeActivity.class);
+        intent.putExtra("universityData", universityModel);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         dialog.dismiss();
-      //  progressBar_container.setVisibility(View.GONE);
+        //  progressBar_container.setVisibility(View.GONE);
 
     }
 
     @Override
     public void onFailed(String error) {
-        Toast.makeText(this,getString(R.string.something_haywire), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.something_haywire), Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdate();
+    }
+
+    private void startLocationUpdate() {
+        InitLocationRequest();
+        Log.e("df","fgfg");
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] Permitions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION};
+            ActivityCompat.requestPermissions(this,Permitions,7788);
+        }else
+            {
+                LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+            }
+
+
+
+    }
+
+    private void InitLocationRequest()
+    {
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setSmallestDisplacement(10f);
+    }
+    @Override
+    public void onConnectionSuspended(int i) {
+        if (googleApiClient!=null)
+            googleApiClient.connect();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location!=null)
+        {
+            myLat = location.getLatitude();
+            myLng = location.getLongitude();
+            Log.e("Laaaaaaaaaaat",myLat+"");
+            Log.e("Looooong",myLng+"");
+
+        }
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==7788)
+        {
+            if (grantResults.length>0)
+            {
+                for (int i =0;i<grantResults.length;i++)
+                {
+                    if (grantResults[i]!=PackageManager.PERMISSION_GRANTED)
+                    {
+                        return;
+                    }
+
+                }
+                startLocationUpdate();
+
+            }
+        }
     }
 
 

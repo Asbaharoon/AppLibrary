@@ -35,7 +35,7 @@
             android:drawablePadding="@dimen/_5sdp"
             android:background="@android:color/transparent"
             android:textSize="@dimen/_12sdp"
-            android:imeOptions="actionSearch|actionGo"
+            android:imeOptions="actionSearch"
             android:singleLine="true"
 
             />

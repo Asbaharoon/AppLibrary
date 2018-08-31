@@ -5,7 +5,7 @@
     <string name="facebook_app_id">1400115610100283</string>
     <string name="fb_login_protocol_scheme">fb1400115610100283</string>
 
-    <string name="google_maps_key">  AIzaSyDFYFBvXcuJdcQnlsaEHKANimuB5F8MwDA  </string>
+    <string name="google_maps_key">AIzaSyB4fp4Tgthn5lLEaps6BM_uGHo0ZVMn3eM</string>
     <string name="drawer_open">فتح</string>
     <string name="drawer_close">اغلاق</string>
     <string-array name="spinnerArray">
@@ -183,4 +183,6 @@
     <string name="home3">الخريطه توضح الاقرب لك من المكتبات ,المستخدمين و الناشرين والجامعات ايضا </string>
     <string name="home4">عند اختيار الاقرب لك يظهر لك تلك الصفحه لترى معلوماته</string>
     <string name="home5">محادثه يمكنك من خلالها الدردشه مع الناشرين والاستفسار عن اى شيئ</string>
+    <string name="open_gps">قم بفتح GPS حتى يتمكن التطبيق من تحديد موقعك</string>
+    <string name="ok">حسنا</string>
 </resources>

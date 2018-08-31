@@ -188,4 +188,6 @@
     <string name="home3">Near by to shwo the nearest publisher ,library or university </string>
     <string name="home4">when You select the near by user</string>
     <string name="home5">chat screen you can see user and make friands and chat with them</string>
+    <string name="open_gps">Open GPS so the app can determine your location.</string>
+    <string name="ok">OK</string>
 </resources>

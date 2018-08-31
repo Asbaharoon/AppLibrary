@@ -2,9 +2,11 @@ package com.semicolon.librarians.libraryguide.Fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,15 +14,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,10 +39,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.rengwuxian.materialedittext.validation.RegexpValidator;
@@ -69,7 +76,7 @@ import me.anwarshahriar.calligrapher.Calligrapher;
  * Created by Delta on 08/12/2017.
  */
 
-public class RegisterFragment extends Fragment implements ViewData, View.OnClickListener {
+public class RegisterFragment extends Fragment implements ViewData, View.OnClickListener,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
 
     private ExpandableRelativeLayout layout_normal_user, layout_pub, layout_lib,layout_university,layout_company;
     private AppCompatSpinner spinner;
@@ -119,7 +126,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     private TextView addPhoto_tv_user,addPhoto_tv_pub,addPhoto_tv_lib,addPhoto_tv_uni,addPhoto_tv_comp;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private ProgressDialog  progressDialog;
-
+    private LocationManager manager;
+    private AlertDialog gpsDialog;
+    private final int gps_req = 2233;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private double myLat = 0.0, myLng = 0.0;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -136,10 +148,13 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
+        manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
         initView(view);
         Calligrapher calligrapher = new Calligrapher(getActivity().getApplicationContext());
         calligrapher.setFont(view, Tags.font);
 
+        initGoogleApiClient();
         init_normalUserView(view);
         init_publisherView(view);
         init_libraryView(view);
@@ -147,7 +162,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         init_companyView(view);
         initView(view);
         CreateProgressDialog();
-
         presenter = new PresenterImp(mContext,this);
         return view;
     }
@@ -196,8 +210,12 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView) adapterView.getSelectedView()).setGravity(Gravity.CENTER);
-                ((TextView) adapterView.getSelectedView()).setTextColor(ContextCompat.getColor(mContext, R.color.label));
+                 if ((TextView) adapterView.getSelectedView()!=null)
+                {
+                    ((TextView) adapterView.getSelectedView()).setGravity(Gravity.CENTER);
+                    ((TextView) adapterView.getSelectedView()).setTextColor(ContextCompat.getColor(mContext, R.color.label));
+
+                }
                 if (adapterView.getSelectedItem().toString().equals(getString(R.string.normal_user))) {
 
                               if (layout_pub.isExpanded() || layout_lib.isExpanded()||layout_university.isExpanded()||layout_company.isExpanded()) {
@@ -332,6 +350,14 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     }
 
+    private void initGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+        googleApiClient.connect();
+    }
     private void init_normalUserView(View view) {
         View userView = view.findViewById(R.id.normal_user_layout);
         if (userView != null) {
@@ -1232,7 +1258,14 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.n_SignInBtn:
-                getDeviceLocation();
+                if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                {
+                    getDeviceLocation();
+
+                }else
+                    {
+                        CreateGpsAlert();
+                    }
                 break;
             case R.id.user_country:
                 getCountry(COUNTRY_REQUEST_USER);
@@ -1313,6 +1346,28 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
     }
 
+
+    private void CreateGpsAlert()
+    {
+        gpsDialog = new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.open_gps)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent,gps_req);
+                    }
+                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        getActivity().finish();
+                    }
+                }).setCancelable(false).create();
+        gpsDialog.setCanceledOnTouchOutside(false);
+        gpsDialog.show();
+    }
     private void getPhoneNumber(int phone_request_user) {
 
         Intent intent = new Intent(getActivity(), Activity_PhoneNumber.class);
@@ -1573,6 +1628,29 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
                 }
 
             }
+        }else if (requestCode==gps_req)
+        {
+            if (resultCode==Activity.RESULT_OK)
+            {
+                if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                {
+                    getDeviceLocation();
+                }else
+                {
+                    CreateGpsAlert();
+                }
+            }else
+            {
+                if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                {
+                    getDeviceLocation();
+
+                }else
+                {
+                    CreateGpsAlert();
+                }
+            }
+
         }
     }
 
@@ -1645,49 +1723,29 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
     }
     private void getDeviceLocation()
     {
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
+
+
+        int userType = spinner.getSelectedItemPosition();
+        if (userType==0)
+        {
+            initNormalUserData(String.valueOf(myLat),String.valueOf(myLng));
         }
-        Task<Location> locationTask = mFusedLocationProviderClient.getLastLocation();
-        locationTask.addOnCompleteListener(new OnCompleteListener<Location>() {
-            @Override
-            public void onComplete(@NonNull Task<Location> task) {
+        else if (userType==1)
+        {
+            initPublisherData(String.valueOf(myLat),String.valueOf(myLng));
+        }else if (userType==2)
+        {
+            initLibraryData(String.valueOf(myLat),String.valueOf(myLng));
+        }
+        else if (userType==3)
+        {
+            initUniversityData(String.valueOf(myLat),String.valueOf(myLng));
+        }
+        else if (userType==4)
+        {
+            initCompanyData(String.valueOf(myLat),String.valueOf(myLng));
+        }
 
-                if (task.isSuccessful())
-                {
-                    Location location = task.getResult();
-                    if (location!=null)
-                    {
-
-                        double lat = location.getLatitude();
-                        double lng = location.getLongitude();
-                        int userType = spinner.getSelectedItemPosition();
-                        if (userType==0)
-                        {
-                            initNormalUserData(String.valueOf(lat),String.valueOf(lng));
-                        }
-                        else if (userType==1)
-                        {
-                            initPublisherData(String.valueOf(lat),String.valueOf(lng));
-                        }else if (userType==2)
-                        {
-                            initLibraryData(String.valueOf(lat),String.valueOf(lng));
-                        }
-                        else if (userType==3)
-                        {
-                            initUniversityData(String.valueOf(lat),String.valueOf(lng));
-                        }
-                        else if (userType==4)
-                        {
-                            initCompanyData(String.valueOf(lat),String.valueOf(lng));
-                        }
-
-
-                    }
-                }
-            }
-        });
     }
     private void initNormalUserData(String lat,String lng)
     {
@@ -1774,6 +1832,76 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
         presenter.CompanyRegistration(userType,comp_image,comp_name,comp_email,comp_country,comp_phone,comp_userName,comp_password,comp_address,comp_town,comp_site,lat,lng,token);
 
+    }
+
+    private void InitLocationRequest()
+    {
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setSmallestDisplacement(10f);
+    }
+    private void startLocationUpdate() {
+        InitLocationRequest();
+        Log.e("df","fgfg");
+
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] Permitions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION};
+            ActivityCompat.requestPermissions(getActivity(),Permitions,7788);
+        }else
+        {
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+        }
+
+
+
+    }
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdate();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        if (googleApiClient!=null)
+            googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location!=null)
+        {
+            myLat = location.getLatitude();
+            myLng = location.getLongitude();
+        }
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==7788)
+        {
+            if (grantResults.length>0)
+            {
+                for (int i =0;i<grantResults.length;i++)
+                {
+                    if (grantResults[i]!=PackageManager.PERMISSION_GRANTED)
+                    {
+                        return;
+                    }
+
+                }
+                startLocationUpdate();
+
+            }
+        }
     }
 }
 

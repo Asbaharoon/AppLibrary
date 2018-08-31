@@ -1,7 +1,9 @@
 package com.semicolon.librarians.libraryguide.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -10,9 +12,13 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,17 +29,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.semicolon.librarians.libraryguide.MVP.NearbyMVP.Presenter;
@@ -46,7 +57,6 @@ import com.semicolon.librarians.libraryguide.Models.NormalUserData;
 import com.semicolon.librarians.libraryguide.Models.PublisherModel;
 import com.semicolon.librarians.libraryguide.Models.UniversityModel;
 import com.semicolon.librarians.libraryguide.R;
-import com.semicolon.librarians.libraryguide.Services.NetworkConnection;
 import com.semicolon.librarians.libraryguide.Services.Tags;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -62,7 +72,7 @@ import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 import me.anwarshahriar.calligrapher.Calligrapher;
 
-public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallback, com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.ViewData, ViewData {
+public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallback, com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.ViewData, ViewData,GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,LocationListener {
     private FabSpeedDial filtered_fab;
     private GoogleMap mMap;
     private NormalUserData user_Data = null;
@@ -94,8 +104,11 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
     private List<UniversityModel> universityModel_List;
     private List<CompanyModel> companyModel_List;
     private com.semicolon.librarians.libraryguide.MVP.Create_ChatRoom_MVP.Presenter chatRoomPresenter;
-
-
+    private LocationManager manager;
+    private AlertDialog gpsDialog;
+    private final int gps_req = 2330;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +119,12 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
         calligrapher.setFont(this, Tags.font,true);
 
         initView();
-        CheckPermission();
-        CheckConnectivity();
+
+        if (isServiceOk())
+        {
+            CheckPermission();
+
+        }
         getDataFrom_Intent();
 
     }
@@ -250,31 +267,10 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
 
         }
     }
-    private void CheckConnectivity()
-    {
-        NetworkConnection connection = new NetworkConnection(this);
-        isConnected = connection.CheckConnection();
-        if (isConnected) {
-            if (PERMISSION_GRANTED == true) {
-                if (isServiceOk()) {
-                    initMap();
-                    filtered_fab.show();
-                } else {
-                    Toast.makeText(this, getString(R.string.ser_not_found), Toast.LENGTH_SHORT).show();
-                    filtered_fab.hide();
-                }
 
-            } else {
-                Toast.makeText(this, getString(R.string.per_not_granted), Toast.LENGTH_SHORT).show();
-                filtered_fab.hide();
 
-            }
-        } else {
-            Toast.makeText(this, getString(R.string.network_connection), Toast.LENGTH_SHORT).show();
-            filtered_fab.hide();
 
-        }
-    }
+
     private void initMap()
     {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.nearby_map);
@@ -285,6 +281,16 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
     {
         if (googleMap != null) {
             mMap = googleMap;
+            mMap = googleMap;
+            mMap.getUiSettings().setZoomControlsEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.setBuildingsEnabled(true);
+            mMap.setTrafficEnabled(false);
+            mMap.setIndoorEnabled(true);
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.maps));
+            initGoogleApiClient();
+
             if (user_Data != null) {
                 if (user_Data.getUser_google_lat()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lat())&&user_Data.getUser_google_lng()!=null||!TextUtils.isEmpty(user_Data.getUser_google_lng()))
                 {
@@ -561,22 +567,90 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
         }
 
     }
+    private void initGoogleApiClient() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .addApi(Places.GEO_DATA_API)
+                .build();
+        googleApiClient.connect();
+    }
+
+    private void initLocationRequest() {
+        locationRequest = new LocationRequest();
+        locationRequest.setSmallestDisplacement(10f);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    private void startLocationUpdate() {
+        initLocationRequest();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            String[] Permitions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION};
+            ActivityCompat.requestPermissions(this,Permitions,7788);
+        }else
+        {
+            LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+        }
+    }
     private void CheckPermission()
     {
 
-        String[] permissions = new String[]{INTERNET, ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
+        String[] permissions = new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION};
 
-        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, INTERNET) == PackageManager.PERMISSION_GRANTED) {
-            PERMISSION_GRANTED = true;
+        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            if (ActivityCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            {
+                if (CheckGps())
+                {
+                    initMap();
+                }else
+                    {
+                        CreateGpsAlert();
+                    }
+            }
         } else {
-            PERMISSION_GRANTED = false;
             ActivityCompat.requestPermissions(NearbyActivity.this, permissions, PERMISSION_REQUEST);
         }
 
     }
-    private boolean isServiceOk() {
+    private boolean CheckGps()
+    {
+        manager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (manager != null) {
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private void CreateGpsAlert()
+    {
+        gpsDialog = new AlertDialog.Builder(this)
+                .setMessage(R.string.open_gps)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent, gps_req);
+                    }
+                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        finish();
+                    }
+                }).setCancelable(false).create();
+        gpsDialog.setCanceledOnTouchOutside(false);
+        gpsDialog.show();
+    }
+
+    private boolean isServiceOk()
+    {
         availability = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this);
         if (availability == ConnectionResult.SUCCESS) {
             return true;
@@ -593,9 +667,39 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
         if (grantResults.length > 0) {
             for (int index = 0; index < grantResults.length; index++) {
                 if (grantResults[index] != PackageManager.PERMISSION_GRANTED) {
-                    PERMISSION_GRANTED = false;
+                    return;
+                }
+
+            }
+            if (CheckGps())
+            {
+                initMap();
+            }else
+            {
+                CreateGpsAlert();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==gps_req)
+        {
+            if (resultCode==RESULT_OK)
+            {
+                if (CheckGps())
+                {
+                    initMap();
+                }else
+                {
+                    CreateGpsAlert();
+                }
+            }else {
+                if (CheckGps()) {
+                    initMap();
                 } else {
-                    PERMISSION_GRANTED = true;
+                    CreateGpsAlert();
                 }
             }
         }
@@ -1521,5 +1625,29 @@ public class NearbyActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocationUpdate();
+    }
 
+    @Override
+    public void onConnectionSuspended(int i) {
+        if (googleApiClient!=null)
+            googleApiClient.connect();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location!=null)
+        {
+
+        }
+        LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient,this);
+
+    }
 }
