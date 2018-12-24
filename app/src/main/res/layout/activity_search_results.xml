@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="com.semicolon.librarians.libraryguide.Activities.Activity_Search_Results"
     android:orientation="vertical"
+    android:background="#eee"
     >
 
     <android.support.design.widget.AppBarLayout
@@ -21,14 +22,28 @@
             android:background="@color/base"
             app:titleTextColor="@android:color/black"
             >
-            <TextView
-                android:id="@+id/toolBar_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_16sdp"
-                android:textColor="@color/black"
-                android:layout_gravity="center"
-                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:id="@+id/toolBar_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:layout_centerInParent="true"
+                    />
+                <ImageView
+                    android:id="@+id/image_back"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/back_arrow"
+                    android:padding="15dp"
+
+                    />
+            </RelativeLayout>
+
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
    <FrameLayout

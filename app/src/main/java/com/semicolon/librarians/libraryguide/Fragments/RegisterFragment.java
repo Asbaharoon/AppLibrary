@@ -369,12 +369,10 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             n_userFirstName = (MaterialEditText) userView.findViewById(R.id.user_firstName);
             n_userFirstName.setAutoValidate(true);
-            n_userFirstName.addValidator(new RegexpValidator(getString(R.string.inv_fn), Tags.name_Regex));
             n_userFirstName.setShowClearButton(false);
 
             n_userLastName = (MaterialEditText) userView.findViewById(R.id.user_lastName);
             n_userLastName.setAutoValidate(true);
-            n_userLastName.addValidator(new RegexpValidator(getString(R.string.inv_ln), Tags.name_Regex));
             n_userLastName.setShowClearButton(false);
 
 
@@ -424,13 +422,11 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             publisher_firstName = (MaterialEditText) publisherView.findViewById(R.id.publisher_firstName);
             publisher_firstName.setAutoValidate(true);
             publisher_firstName.setShowClearButton(false);
-            publisher_firstName.addValidator(new RegexpValidator(getString(R.string.inv_fn), Tags.name_Regex));
 
 
             publisher_lastName = (MaterialEditText) publisherView.findViewById(R.id.publisher_lasttName);
             publisher_lastName.setAutoValidate(true);
             publisher_lastName.setShowClearButton(false);
-            publisher_lastName.addValidator(new RegexpValidator(getString(R.string.inv_ln), Tags.name_Regex));
 
 
             publisherEmail = (MaterialEditText) publisherView.findViewById(R.id.publisher_email);
@@ -497,7 +493,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
             libraryName = (MaterialEditText) libraryView.findViewById(R.id.library_Name);
             libraryName.setAutoValidate(true);
             libraryName.setShowClearButton(false);
-            libraryName.addValidator(new RegexpValidator(getString(R.string.inv_lib_name), Tags.name_Regex));
 
             libraryEmail = (MaterialEditText) libraryView.findViewById(R.id.library_email);
             libraryEmail.setAutoValidate(true);
@@ -554,7 +549,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             universityName = (MaterialEditText) universityView.findViewById(R.id.university_Name);
             universityName.setAutoValidate(true);
-            universityName.addValidator(new RegexpValidator(getString(R.string.inv_name), Tags.name_Regex));
             universityName.setShowClearButton(false);
 
 
@@ -620,7 +614,6 @@ public class RegisterFragment extends Fragment implements ViewData, View.OnClick
 
             companyName = (MaterialEditText) companyView.findViewById(R.id.company_Name);
             companyName.setAutoValidate(true);
-            companyName.addValidator(new RegexpValidator(getString(R.string.inv_name), Tags.name_Regex));
             companyName.setShowClearButton(false);
 
 

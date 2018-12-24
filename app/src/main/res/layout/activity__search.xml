@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eee"
     tools:context="com.semicolon.librarians.libraryguide.Activities.Activity_Search">
 
     <FrameLayout
@@ -22,32 +23,50 @@
             >
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:layout_marginBottom="@dimen/_5sdp"
                 >
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/search_toolBar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:minHeight="?actionBarSize"
+                    android:layout_height="match_parent"
                     android:background="@android:color/transparent"
-
+                    app:contentInsetEnd="0dp"
+                    app:contentInsetStart="0dp"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetRight="0dp"
 
                     >
-                    <TextView
-                        android:id="@+id/toolBar_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/_16sdp"
-                        android:textColor="@color/black"
-                        android:layout_gravity="center"
-                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <TextView
+                            android:id="@+id/toolBar_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"
+                            android:layout_centerInParent="true"
+                            />
+
+                        <ImageView
+                            android:id="@+id/image_back"
+                            android:layout_width="56dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/back_arrow"
+                            android:padding="15dp"
+
+                            />
+                    </RelativeLayout>
+
                 </android.support.v7.widget.Toolbar>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="?actionBarSize"
+                android:minHeight="56dp"
                 android:layout_marginTop="@dimen/_30sdp"
                 >
                 <LinearLayout
@@ -58,17 +77,22 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                        <TextView
-                            android:id="@+id/search_type_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/_17sdp"
-                            android:minHeight="?actionBarSize"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="@dimen/_55sdp"
-                            android:layout_gravity="left|center_vertical"
-
-                            />
+                        <EditText
+                            android:id="@+id/edt_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="#fff"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:textColorHint="#9e9e9e"
+                            android:hint="Search"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"
+                            android:drawableStart="@drawable/search_icon"
+                            android:paddingStart="8dp"
+                            android:drawablePadding="8dp"
+                            tools:ignore="RtlCompat" />
+                        <!--
                         <com.miguelcatalan.materialsearchview.MaterialSearchView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -80,7 +104,7 @@
 
                             >
                         </com.miguelcatalan.materialsearchview.MaterialSearchView>
-
+-->
 
                     </FrameLayout>
                     <View
@@ -91,23 +115,21 @@
                         android:id="@+id/country_search"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="?actionBarSize"
+                        android:minHeight="56dp"
                         android:singleLine="true"
                         android:hint="@string/select_country"
-                        android:gravity="center_vertical|left"
+                        android:gravity="center_vertical"
                         android:textSize="@dimen/_15sdp"
-                        android:drawableLeft="@drawable/places_icon"
-                        android:drawablePadding="@dimen/_22sdp"
+                        android:drawableStart="@drawable/map_icon"
+                        android:drawablePadding="8dp"
                         android:background="@drawable/item_search_bg"
                         android:clickable="true"
-                        android:paddingLeft="@dimen/_8sdp"
+                        android:paddingStart="8dp"
                         android:textColorHint="#9e9e9e"
                         android:textColor="@color/black"
 
 
-
-
-                        />
+                        tools:ignore="RtlCompat" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1.7px"
@@ -116,20 +138,20 @@
                         android:id="@+id/libType_search"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="?actionBarSize"
+                        android:minHeight="56dp"
                         android:singleLine="true"
                         android:hint="@string/select_library_type"
-                        android:gravity="center_vertical|left"
-                        android:textSize="@dimen/_15sdp"
-                        android:drawableLeft="@drawable/lib_type"
-                        android:drawablePadding="@dimen/_22sdp"
+                        android:gravity="center_vertical"
+                        android:textSize="16sp"
+                        android:drawableStart="@drawable/lib_type_icon"
+                        android:drawablePadding="8dp"
                         android:background="@drawable/item_search_bg"
                         android:clickable="true"
-                        android:paddingLeft="@dimen/_8sdp"
+                        android:paddingStart="8dp"
                         android:visibility="gone"
 
 
-                        />
+                        tools:ignore="RtlCompat" />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1.7px"
@@ -152,9 +174,23 @@
                         android:visibility="gone"
 
                         />-->
+
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="130dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimary"
+                android:background="#fff"
+                android:textSize="17sp"
+                android:text="@string/search3"
+                />
         </LinearLayout>
 
 

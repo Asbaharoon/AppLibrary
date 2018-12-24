@@ -30,8 +30,8 @@
     <string name="invalid_lastName">الاسم الاخير غير صالح</string>
     <string name="invalidEmail">البريد الالكتروني غير صالح</string>
     <string name="invalid_url">الرابط غير صالح</string>
-    <string name="select_country">اختار الدول</string>
-    <string name="select_library_type">اختار نوع المكتبه</string>
+    <string name="select_country">إختر الدولة</string>
+    <string name="select_library_type">إختر نوع المكتبه</string>
     <string name="type_message">كتابه رساله......</string>
     <string name="welcome_to_library_guide">مرحبا بكم في, دليل المكتبات</string>
     <string name="sign_in_with_my_account">تسجيل الدخول</string>
@@ -185,4 +185,6 @@
     <string name="home5">محادثه يمكنك من خلالها الدردشه مع الناشرين والاستفسار عن اى شيئ</string>
     <string name="open_gps">قم بفتح GPS حتى يتمكن التطبيق من تحديد موقعك</string>
     <string name="ok">حسنا</string>
+    <string name="field_req">هذا الحقل مطلوب</string>
+    <string name="search3">إبحث</string>
 </resources>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.semicolon.librarians.libraryguide.Fragments.Fragment_Countries;
@@ -28,6 +30,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Locale;
+
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class Activity_Search_Results extends AppCompatActivity implements ViewData {
@@ -41,6 +45,7 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
     public UniversityModel universityModel =null;
     public CompanyModel companyModel;
     public Presenter presenter;
+    private ImageView image_back;
 
 
 
@@ -190,7 +195,21 @@ public class Activity_Search_Results extends AppCompatActivity implements ViewDa
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolBar_tv = (TextView) findViewById(R.id.toolBar_tv);
+        toolBar_tv =  findViewById(R.id.toolBar_tv);
+        image_back =  findViewById(R.id.image_back);
+
+        if (Locale.getDefault().getLanguage().equals("ar"))
+        {
+            image_back.setRotation(180f);
+        }
+
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         /*mRecView = (RecyclerView) findViewById(R.id.recView_countries);
         manager = new LinearLayoutManager(this);
         mRecView.setLayoutManager(manager);

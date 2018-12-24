@@ -2,18 +2,17 @@ package com.semicolon.librarians.libraryguide.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mukesh.countrypicker.fragments.CountryPicker;
 import com.semicolon.librarians.libraryguide.Models.CompanyModel;
 import com.semicolon.librarians.libraryguide.Models.CountriesModel;
@@ -29,13 +28,17 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Locale;
+
 import me.anwarshahriar.calligrapher.Calligrapher;
 
 public class Activity_Search extends AppCompatActivity implements View.OnClickListener{
 
     private Toolbar mToolbar;
-    private MaterialSearchView msv;
+    //private MaterialSearchView msv;
     private TextView search_type_tv,search_country,libType_search;
+    private EditText edt_search;
+    private Button btn_search;
     CountryPicker countryPicker;
     private final String TAG="COUNTRY_PICKER";
     private TextView toolBar_tv;
@@ -55,6 +58,8 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     private final int REQ_CODE_LIB_TYPE =222;
     private final int REQ_CODE_LIB_SERVICES =333;
 
+    private ImageView image_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,198 +76,30 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     private void initView()
     {
 
-        search_type_tv = (TextView) findViewById(R.id.search_type_tv);
-        search_country = (TextView) findViewById(R.id.country_search);
-        msv = (MaterialSearchView) findViewById(R.id.msv);
-        new Handler().postDelayed(new Runnable() {
+        edt_search =  findViewById(R.id.edt_search);
+        //search_type_tv =  findViewById(R.id.search_type_tv);
+
+        search_country = findViewById(R.id.country_search);
+        btn_search = findViewById(R.id.btn_search);
+        image_back =  findViewById(R.id.image_back);
+
+        if (Locale.getDefault().getLanguage().equals("ar"))
+        {
+            image_back.setRotation(180f);
+        }
+        // msv = (MaterialSearchView) findViewById(R.id.msv);
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 msv.showSearch(true);
 
             }
-        },500);
+        },500);*/
 
-        msv.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+        /*msv.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (searchType.equals("library_search"))
-                {
-                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id)&&!TextUtils.isEmpty(libType_id))
-                    {
 
-                        if (userData!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","library");
-                            intent.putExtra("libraryName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("lib_type",libType_id);
-                            intent.putExtra("userData",userData);
-                            startActivity(intent);
-
-                        }else if (publisherModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","library");
-                            intent.putExtra("libraryName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("lib_type",libType_id);
-                            intent.putExtra("pubData",publisherModel);
-                            startActivity(intent);
-
-                        }
-                        else if (libraryModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","library");
-                            intent.putExtra("libraryName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("lib_type",libType_id);
-                            intent.putExtra("libData",libraryModel);
-                            startActivity(intent);
-
-                        }
-                        else if (universityModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","library");
-                            intent.putExtra("libraryName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("lib_type",libType_id);
-                            intent.putExtra("uniData",universityModel);
-                            startActivity(intent);
-
-                        }else if (companyModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","library");
-                            intent.putExtra("libraryName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("lib_type",libType_id);
-                            intent.putExtra("compData",userData);
-                            startActivity(intent);
-
-                        }
-
-                           Log.e("Data",query+"\n"+country_id+"\n"+"\n"+libType_id);
-                    }/*else if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id)&&!TextUtils.isEmpty(libType_id))
-                    {
-                        Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                        intent.putExtra("searchType","library");
-                        intent.putExtra("libraryName",query);
-                        intent.putExtra("country_id",country_id);
-                        intent.putExtra("service_id","");
-                        intent.putExtra("lib_type",libType_id);
-                        startActivity(intent);
-                        Log.e("lib",query+"\n"+country_id+"\n"+libService_id+"\n"+libType_id);
-
-
-                    }*/
-                }else if (searchType.equals("publisher_search"))
-                {
-                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
-                    {
-                        if (userData!=null)
-                        {
-
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","publisher");
-                            intent.putExtra("pubName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("userData",userData);
-                            startActivity(intent);
-                        }else if (publisherModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","publisher");
-                            intent.putExtra("pubName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("pubData",publisherModel);
-
-                            startActivity(intent);
-                        }else if (libraryModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","publisher");
-                            intent.putExtra("pubName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("libData",libraryModel);
-                            startActivity(intent);
-                        }
-                        else if (universityModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","publisher");
-                            intent.putExtra("pubName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("uniData",universityModel);
-                            startActivity(intent);
-                        }
-                        else if (companyModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","publisher");
-                            intent.putExtra("pubName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("compData",companyModel);
-                            startActivity(intent);
-                        }
-
-                    }
-
-
-                }
-                else if (searchType.equals("university_search"))
-                {
-                    if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
-                    {
-                        if (userData!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","university");
-                            intent.putExtra("uniName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("userData",userData);
-
-                            startActivity(intent);
-                        }else if (publisherModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","university");
-                            intent.putExtra("uniName",query);
-                            intent.putExtra("country_id",country_id);
-                            startActivity(intent);
-                        }else if (libraryModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","university");
-                            intent.putExtra("uniName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("libData",libraryModel);
-
-                            startActivity(intent);
-                        }else if (universityModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","university");
-                            intent.putExtra("uniName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("uniData",universityModel);
-
-                            startActivity(intent);
-                        }else if (companyModel!=null)
-                        {
-                            Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
-                            intent.putExtra("searchType","university");
-                            intent.putExtra("uniName",query);
-                            intent.putExtra("country_id",country_id);
-                            intent.putExtra("compData",companyModel);
-
-                            startActivity(intent);
-                        }
-
-                    }
-                }
                 return true;
             }
 
@@ -270,10 +107,10 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
-        });
+        });*/
 
-        msv.setCloseIcon(null);
-        msv.setBackIcon(null);
+        /*msv.setCloseIcon(null);
+        msv.setBackIcon(null);*/
         mToolbar = (Toolbar) findViewById(R.id.search_toolBar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
@@ -284,7 +121,250 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         libType_search = (TextView) findViewById(R.id.libType_search);
         libType_search.setOnClickListener(this);
 
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = edt_search.getText().toString().trim();
+                Search(query);
+            }
+        });
+
+        image_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
     }
+
+    private void Search(String query)
+    {
+        if (searchType.equals("library_search"))
+        {
+
+            if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id)&&!TextUtils.isEmpty(libType_id))
+            {
+
+                edt_search.setError(null);
+                search_country.setError(null);
+                libType_search.setError(null);
+                //search_type_tv.setError(null);
+                if (userData!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","library");
+                    intent.putExtra("libraryName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("lib_type",libType_id);
+                    intent.putExtra("userData",userData);
+                    startActivity(intent);
+
+                }else if (publisherModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","library");
+                    intent.putExtra("libraryName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("lib_type",libType_id);
+                    intent.putExtra("pubData",publisherModel);
+                    startActivity(intent);
+
+                }
+                else if (libraryModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","library");
+                    intent.putExtra("libraryName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("lib_type",libType_id);
+                    intent.putExtra("libData",libraryModel);
+                    startActivity(intent);
+
+                }
+                else if (universityModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","library");
+                    intent.putExtra("libraryName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("lib_type",libType_id);
+                    intent.putExtra("uniData",universityModel);
+                    startActivity(intent);
+
+                }else if (companyModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","library");
+                    intent.putExtra("libraryName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("lib_type",libType_id);
+                    intent.putExtra("compData",userData);
+                    startActivity(intent);
+
+                }
+
+                Log.e("Data",query+"\n"+country_id+"\n"+"\n"+libType_id);
+            }else
+                {
+                    if (TextUtils.isEmpty(query))
+                    {
+                        edt_search.setError(getString(R.string.field_req));
+                    }
+                    if (TextUtils.isEmpty(libType_id))
+                    {
+                        libType_search.setError(getString(R.string.field_req));
+
+                    }
+                    if (TextUtils.isEmpty(country_id))
+                    {
+                        search_country.setError(getString(R.string.field_req));
+
+                    }
+                }
+
+            }
+
+
+
+            else if (searchType.equals("publisher_search"))
+            {
+
+
+                if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
+                {
+                    edt_search.setError(null);
+                    search_country.setError(null);
+                if (userData!=null)
+                {
+
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","publisher");
+                    intent.putExtra("pubName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("userData",userData);
+                    startActivity(intent);
+                }else if (publisherModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","publisher");
+                    intent.putExtra("pubName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("pubData",publisherModel);
+
+                    startActivity(intent);
+                }else if (libraryModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","publisher");
+                    intent.putExtra("pubName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("libData",libraryModel);
+                    startActivity(intent);
+                }
+                else if (universityModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","publisher");
+                    intent.putExtra("pubName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("uniData",universityModel);
+                    startActivity(intent);
+                }
+                else if (companyModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","publisher");
+                    intent.putExtra("pubName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("compData",companyModel);
+                    startActivity(intent);
+                }
+
+            }else
+                {
+                    if (TextUtils.isEmpty(query))
+                    {
+                        edt_search.setError(getString(R.string.field_req));
+                    }
+
+                    if (TextUtils.isEmpty(country_id))
+                    {
+                        search_country.setError(getString(R.string.field_req));
+
+                    }
+                }
+
+
+        }
+        else if (searchType.equals("university_search"))
+        {
+            if (!TextUtils.isEmpty(query)&&!TextUtils.isEmpty(country_id))
+            {
+                edt_search.setError(null);
+                search_country.setError(null);
+                if (userData!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","university");
+                    intent.putExtra("uniName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("userData",userData);
+
+                    startActivity(intent);
+                }else if (publisherModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","university");
+                    intent.putExtra("uniName",query);
+                    intent.putExtra("country_id",country_id);
+                    startActivity(intent);
+                }else if (libraryModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","university");
+                    intent.putExtra("uniName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("libData",libraryModel);
+
+                    startActivity(intent);
+                }else if (universityModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","university");
+                    intent.putExtra("uniName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("uniData",universityModel);
+
+                    startActivity(intent);
+                }else if (companyModel!=null)
+                {
+                    Intent intent = new Intent(Activity_Search.this,Activity_Search_Results.class);
+                    intent.putExtra("searchType","university");
+                    intent.putExtra("uniName",query);
+                    intent.putExtra("country_id",country_id);
+                    intent.putExtra("compData",companyModel);
+
+                    startActivity(intent);
+                }
+
+            }else
+                {
+                    if (TextUtils.isEmpty(query))
+                    {
+                        edt_search.setError(getString(R.string.field_req));
+                    }
+
+                    if (TextUtils.isEmpty(country_id))
+                    {
+                        search_country.setError(getString(R.string.field_req));
+
+                    }
+                }
+        }
+    }
+
     private void getDataFromIntent()
     {
         Intent intent = getIntent();
@@ -292,8 +372,9 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         {
             searchType ="library_search";
             toolBar_tv.setText(R.string.lib_search);
-            msv.setHint(getString(R.string.librart_name));
-            search_type_tv.setText(R.string.librart_name);
+            edt_search.setHint(getString(R.string.librart_name));
+            //search_type_tv.setText(R.string.librart_name);
+            edt_search.setHint(getString(R.string.librart_name));
             libType_search.setVisibility(View.VISIBLE);
 
             if (intent.hasExtra("userData"))
@@ -318,8 +399,10 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         else if (intent.hasExtra("publisher_search"))
         {
             searchType ="publisher_search";
-            msv.setHint(getString(R.string.pub_name));
-            search_type_tv.setText(getString(R.string.pub_name));
+            edt_search.setHint(getString(R.string.pub_name));
+            //search_type_tv.setText(getString(R.string.pub_name));
+            edt_search.setHint(getString(R.string.pub_name));
+
             toolBar_tv.setText(R.string.pub_search);
             if (intent.hasExtra("userData"))
             {
@@ -342,8 +425,10 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
         }else if (intent.hasExtra("university_search"))
         {
             searchType ="university_search";
-            msv.setHint(getString(R.string.university_name));
-            search_type_tv.setText(getString(R.string.university_name));
+            edt_search.setHint(getString(R.string.university_name));
+            //search_type_tv.setText(getString(R.string.university_name));
+            edt_search.setHint(getString(R.string.university_name));
+
             toolBar_tv.setText(R.string.uni_search);
             if (intent.hasExtra("userData"))
             {
@@ -368,15 +453,9 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     }
     public void setQuery(String query)
     {
-        if (msv.isSearchOpen())
-        {
-            msv.setQuery(query,false);
-        }else
-        {
-            msv.setQuery(query,false);
-        }
+        edt_search.setText(query);
     }
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
         getMenuInflater().inflate(R.menu.search,menu);
@@ -389,7 +468,7 @@ public class Activity_Search extends AppCompatActivity implements View.OnClickLi
     {
 
         return true;
-    }
+    }*/
     @Override
     public void onClick(View view)
     {

@@ -2,7 +2,9 @@
 <FrameLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
-android:layout_height="match_parent">
+android:layout_height="match_parent"
+    android:background="#eee"
+    >
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recView_lib_search_results"
@@ -16,6 +18,7 @@ android:layout_height="match_parent">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+
         />
     <LinearLayout
         android:id="@+id/error_container"
@@ -46,28 +49,27 @@ android:layout_height="match_parent">
     </LinearLayout>
     <LinearLayout
         android:id="@+id/noresult_container"
-        android:layout_width="@dimen/_200sdp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center"
         android:visibility="gone"
         >
         <ImageView
 
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:src="@drawable/nosearch"
-            android:background="@drawable/no_friend_container"
-            android:padding="@dimen/_60sdp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/no_search_icon"
+            android:padding="20dp"
+            android:layout_gravity="center_horizontal"
             />
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/there_are_no_results"
-            android:gravity="center_horizontal"
-            android:textSize="@dimen/_16sdp"
+            android:textSize="18sp"
             android:textColor="@color/black"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_gravity="center_horizontal"
 
             />
     </LinearLayout>

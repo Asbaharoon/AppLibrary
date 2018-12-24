@@ -190,4 +190,6 @@
     <string name="home5">chat screen you can see user and make friands and chat with them</string>
     <string name="open_gps">Open GPS so the app can determine your location.</string>
     <string name="ok">OK</string>
+    <string name="field_req">This field required</string>
+    <string name="search3">Search</string>
 </resources>
